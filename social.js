@@ -28,12 +28,14 @@
     var week = w % WEEKS_PER_SEASON + 1;
     var seasonStart = ANCHOR + (season - 1) * WEEKS_PER_SEASON * WEEK;
     return {
-      season: season, week: week, key: weekKey(season, week),
+      index: w, season: season, week: week, key: weekKey(season, week), theme: themeFor(w),
       weekStart: ANCHOR + w * WEEK, weekEnd: ANCHOR + (w + 1) * WEEK,
       seasonStart: seasonStart, seasonEnd: seasonStart + WEEKS_PER_SEASON * WEEK
     };
   }
   function weekKey(season, week) { return "s" + season + "w" + week; }
+  /* Every week has its own Sachgebiet, in turn: Glaube, Reinheit, Gebet, Fasten, Zakāt & Ḥaǧǧ, Alltag, … */
+  function themeFor(weekIndex) { var G = APP.GROUPS; return G[weekIndex % G.length]; }
   function day(ms) { return new Date(ms).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }); }
   function dayLong(ms) { return new Date(ms).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" }); }
   function pts(n) { return Number(n || 0).toLocaleString("de-DE"); }
@@ -50,8 +52,10 @@
       return ((t ^ t >>> 14) >>> 0) / 4294967296;
     };
   }
-  function weeklyQuestions(key) {
-    return APP.pickQuestions(APP.QUESTIONS.slice(), COMP_QUESTIONS, seeded("fiqh-kompass:" + key));
+  function weeklyQuestions(cal) {
+    var ids = cal.theme.topics.map(function (t) { return t.id; });
+    var pool = APP.QUESTIONS.filter(function (q) { return ids.indexOf(q.t) !== -1; });
+    return APP.pickQuestions(pool, COMP_QUESTIONS, seeded("fiqh-kompass:" + cal.key));
   }
 
   /* ---------- state ---------- */
@@ -61,6 +65,7 @@
   var players = {};           // uid -> sanitized player doc (everyone)
   var avatars = {};           // uid -> validated data: URL
   var friends = [];           // uids
+  var blocked = [];           // uids this player blocked (chat)
   var loaded = false;         // first players snapshot arrived
   var topFilter = APP.store("top") || "season";
   var genderFilter = APP.store("gender") || "all";
@@ -78,7 +83,7 @@
       });
     }
     return {
-      nick: typeof d.nick === "string" ? d.nick.slice(0, 20) : "",
+      nick: typeof d.nick === "string" ? d.nick.slice(0, 24) : "",
       nickKey: typeof d.nickKey === "string" ? d.nickKey : "",
       g: d.g === "f" ? "f" : d.g === "m" ? "m" : "",
       total: num(d.total), games: num(d.games), comp: comp, at: String(d.at || "")
@@ -156,9 +161,9 @@
       btn.disabled = false;
       var counted = 0;
       APP.startQuiz({
-        questions: weeklyQuestions(cal.key),
+        questions: weeklyQuestions(cal),
         rnd: seeded("fiqh-kompass:options:" + cal.key),
-        label: "Wettbewerb S" + cal.season + "·W" + cal.week,
+        label: "Wettbewerb · " + cal.theme.name,
         onProgress: function (p) {
           entry.score = p.score; entry.correct = p.correct; entry.answered = p.answered;
           save().catch(function () {});
@@ -236,26 +241,30 @@
     renderBoard(cal);
     if (!guest) renderFriends(cal);
     if (mine) renderAccount();
+    if (window.FIQH_CHAT) window.FIQH_CHAT.refresh();
   }
 
   function renderComp(cal) {
     $("#comp-eyebrow").textContent = "Wochenwettbewerb · Saison " + cal.season;
     $("#comp-title").textContent = "Woche " + cal.week + " von " + WEEKS_PER_SEASON;
+    $("#comp-theme").textContent = cal.theme.name;
+    $("#comp-theme-topics").textContent = cal.theme.topics.map(function (t) { return t.title; }).join(" · ");
     $("#comp-sub").textContent = "Saison " + cal.season + " läuft vom " + day(cal.seasonStart) + " bis " +
-      day(cal.seasonEnd - 1) + " – jede Woche 15 neue Fragen, die Summe der vier Wochen entscheidet.";
+      day(cal.seasonEnd - 1) + ". Jede Woche ein anderes Sachgebiet, 15 Fragen – die Summe der vier Wochen entscheidet.";
     updateCountdown();
 
     var comp = mine ? mine.comp : {};
     $("#comp-weeks").innerHTML = [1, 2, 3, 4].map(function (w) {
       var e = comp[weekKey(cal.season, w)];
       var start = cal.seasonStart + (w - 1) * WEEK;
+      var theme = themeFor(cal.index - cal.week + w).name;
       var cls = w === cal.week ? "now" : w > cal.week ? "future" : "";
       var val, note;
       if (e) { cls += " done"; val = pts(e.score); note = e.done ? e.correct + " / 15 richtig" : "abgebrochen"; }
       else if (w < cal.week) { val = "–"; note = mine ? "verpasst" : "vorbei"; }
       else if (w === cal.week) { val = "offen"; note = "bis " + dayLong(cal.weekEnd - 1); }
       else { val = "–"; note = "ab " + day(start); }
-      return '<li class="week ' + cls + '"><span>Woche ' + w + "</span><b>" + esc(val) + "</b><small>" + esc(note) + "</small></li>";
+      return '<li class="week ' + cls + '"><span>Woche ' + w + '</span><em>' + esc(theme) + "</em><b>" + esc(val) + "</b><small>" + esc(note) + "</small></li>";
     }).join("");
 
     var btn = $("#comp-start");
@@ -315,18 +324,26 @@
     li.innerHTML = '<span class="rank-pos">' + opts.pos + '.</span><img alt="" src="' + esc(opts.avatar) + '">' +
       '<span class="rank-name"><strong></strong><small></small></span>' +
       '<span class="rank-pts">' + pts(opts.score) + "<small>" + esc(opts.unit) + "</small></span>" +
-      (opts.action ? '<button type="button" class="icon-btn"></button>' : '<span class="icon-spacer"></span>');
+      '<span class="row-actions"></span>';
     $("strong", li).textContent = opts.name;
     $("small", li).textContent = opts.sub;
-    if (opts.action) {
-      var b = $(".icon-btn", li);
-      b.textContent = opts.action.label;
-      b.title = opts.action.title;
-      b.setAttribute("aria-label", opts.action.title);
-      b.addEventListener("click", opts.action.run);
-    }
+    var actions = (opts.actions || [opts.action]).filter(Boolean);
+    var box = $(".row-actions", li);
+    if (!actions.length) box.innerHTML = '<span class="icon-spacer"></span>';
+    actions.forEach(function (a) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "icon-btn";
+      b.textContent = a.label;
+      b.title = a.title;
+      b.setAttribute("aria-label", a.title);
+      b.addEventListener("click", a.run);
+      box.appendChild(b);
+    });
     return li;
   }
+  /* Chat only between two brothers or two sisters (the server rules enforce it too). */
+  function canChat(id) { return !!(mine && players[id] && players[id].g && players[id].g === mine.g && id !== me); }
   function addAction(id) {
     if (!me || id === me || friends.indexOf(id) !== -1) return null;
     return { label: "+", title: "Als Freund hinzufügen", run: function () { addFriend(id); } };
@@ -440,7 +457,10 @@
       list.appendChild(row({
         pos: i + 1, me: r.id === me, score: r.p.total, unit: "Punkte",
         name: displayName(r.id), avatar: avatarOf(r.id), sub: sub,
-        action: r.id === me ? null : { label: "×", title: "Aus Freunden entfernen", run: function () { removeFriend(r.id); } }
+        actions: r.id === me ? [] : [
+          canChat(r.id) ? { label: "✉", title: "Nachricht schreiben", run: function () { if (window.FIQH_CHAT) window.FIQH_CHAT.openWith(r.id); } } : null,
+          { label: "×", title: "Aus Freunden entfernen", run: function () { removeFriend(r.id); } }
+        ]
       }));
     });
     if (!friends.length) empty(list, "Noch keine Freunde. Such unten nach Spielernamen oder tippe in einer Rangliste auf +.");
@@ -518,6 +538,9 @@
     draftImg = null;
     accMsg("");
     if (open) {
+      $("#acc-nick-hint").textContent = mine.g === "f"
+        ? "Als Schwester spielst du mit einer Kunya: Umm …, Bint …, Mutter von … oder Tochter von …. Jeden Namen gibt es nur einmal."
+        : "3–24 Zeichen, jeden Namen gibt es nur einmal.";
       $("#acc-nick").value = mine.nick || "";
       $("#acc-preview").src = avatarOf(me);
       $("#acc-nick").focus();
@@ -573,7 +596,7 @@
     clearTimeout(nameTimer);
     var v = e.target.value.trim();
     if (!v || B.nameKey(v) === mine.nickKey) { accMsg(""); return; }
-    var err = B.checkName(v);
+    var err = B.checkName(v, mine.g);
     if (err) { accMsg(err, "bad"); return; }
     nameTimer = setTimeout(function () {
       B.nameAvailable(v).then(function (free) {
@@ -587,9 +610,9 @@
     var nick = $("#acc-nick").value.trim().normalize("NFC");
     var jobs = [];
     if (nick !== mine.nick) {
-      var err = B.checkName(nick);
+      var err = B.checkName(nick, mine.g);
       if (err) { accMsg(err, "bad"); return; }
-      jobs.push(B.changeName(mine.nickKey, nick).then(function () { mine.nick = nick; mine.nickKey = B.nameKey(nick); }));
+      jobs.push(B.changeName(mine.nickKey, nick, mine.g).then(function () { mine.nick = nick; mine.nickKey = B.nameKey(nick); }));
     }
     if (draftImg !== null) {
       var img = draftImg;
@@ -621,7 +644,22 @@
     $("#social-on").hidden = true;
   }
 
-  window.FIQH_SOCIAL = { mine: function () { return mine; }, render: render };
+  window.FIQH_SOCIAL = {
+    mine: function () { return mine; },
+    me: function () { return me; },
+    canPlay: canPlay,
+    canChat: canChat,
+    players: function () { return players; },
+    name: function (id) { return displayName(id); },
+    avatar: function (id) { return avatarOf(id); },
+    blocked: function () { return blocked.slice(); },
+    setBlocked: function (id, on) {
+      blocked = blocked.filter(function (x) { return x !== id; });
+      if (on) blocked.push(id);
+      return B.doc("users/" + me).update({ blocked: blocked.slice(0, 500) });
+    },
+    render: render
+  };
 
   if (!B || !B.available) {
     off("Online-Funktionen noch nicht eingerichtet",
@@ -650,7 +688,7 @@
     var token = ++authToken;
     var sameUser = u && me === u.uid;
     authUser = u;
-    if (!u) { me = null; mine = null; friends = []; $("#acc-form").hidden = true; $("#acc-edit").hidden = false; render(); return; }
+    if (!u) { me = null; mine = null; friends = []; blocked = []; $("#acc-form").hidden = true; $("#acc-edit").hidden = false; render(); return; }
     if (sameUser && mine) { render(); return; }   // e.g. e-mail just confirmed
     me = u.uid;
     mine = null;
@@ -660,6 +698,8 @@
       mine = snaps[0].exists ? cleanPlayer(snaps[0].data()) : null;
       var f = snaps[1].exists ? snaps[1].data().friends : [];
       friends = Array.isArray(f) ? f.filter(function (x) { return typeof x === "string" && x !== me; }) : [];
+      var bl = snaps[1].exists ? snaps[1].data().blocked : [];
+      blocked = Array.isArray(bl) ? bl.filter(function (x) { return typeof x === "string"; }) : [];
       if (!mine) showError("Zu deinem Konto gibt es kein Spielerprofil. Melde dich ab und registriere dich neu oder wende dich an die Betreiber.");
       render();
     }, function (e) { showError(B.message(e)); });

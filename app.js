@@ -76,7 +76,7 @@
   }
 
   /* ---------- views ---------- */
-  var views = { nachschlagen: $("#view-lookup"), quiz: $("#view-quiz"), wettbewerb: $("#view-social") };
+  var views = { nachschlagen: $("#view-lookup"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
   function showView(name, push) {
     if (!views[name]) name = "nachschlagen";
     Object.keys(views).forEach(function (k) { views[k].hidden = k !== name; });
@@ -89,13 +89,39 @@
     emit("view", name);
   }
   $all(".tab").forEach(function (b) {
-    b.addEventListener("click", function () { showView(b.getAttribute("data-view")); window.scrollTo(0, 0); });
+    b.addEventListener("click", function () {
+      var v = b.getAttribute("data-view");
+      if (v === "nachschlagen" && views.nachschlagen && !views.nachschlagen.hidden && currentTopic) { $("#search").value = ""; showOverview(); }
+      showView(v);
+      window.scrollTo(0, 0);
+    });
   });
 
   /* =====================================================
      NACHSCHLAGEN
      ===================================================== */
-  var currentTopic = TOPICS[0] && TOPICS[0].id;
+  var currentTopic = null;   // null = overview of all topics
+
+  /* Overview: every topic as a card, grouped; the text opens on click. */
+  function showOverview() {
+    currentTopic = null;
+    store("topic", null);
+    $("#lookup").className = "wrap lookup is-overview";
+    $all(".topic-link").forEach(function (b) { b.setAttribute("aria-current", "false"); });
+    var html = GROUPS.map(function (g) {
+      return '<section class="ov-group"><h2 class="ov-head">' + esc(g.name) + ' <small>' + g.topics.length + " Themen</small></h2>" +
+        '<div class="ov-grid">' + g.topics.map(function (t) {
+          return '<button type="button" class="topic-card" data-open-topic="' + t.id + '">' +
+            '<span class="tc-ar" lang="ar" dir="rtl">' + esc(t.ar) + "</span>" +
+            '<strong class="tc-title">' + esc(t.title) + "</strong>" +
+            '<span class="tc-intro">' + esc(t.intro) + "</span>" +
+            '<span class="tc-meta">' + t.sections.length + " Abschnitte · " + countFor(t.id) + " Quizfragen</span></button>";
+        }).join("") + "</div></section>";
+    }).join("");
+    var art = $("#article");
+    art.innerHTML = html;
+    wireArticle(art);
+  }
 
   function renderTopicNav() {
     var nav = $("#topic-nav");
@@ -120,10 +146,12 @@
     if (!t) return;
     currentTopic = id;
     store("topic", id);
+    $("#lookup").className = "wrap lookup is-detail";
     $all(".topic-link").forEach(function (b) {
       b.setAttribute("aria-current", b.getAttribute("data-topic") === id ? "true" : "false");
     });
-    var html = '<header class="article-head">' +
+    var html = '<button type="button" class="back-link" data-overview>← Alle Themen</button>' +
+      '<header class="article-head">' +
       '<p class="eyebrow">' + esc(topicSource(t)) + "</p>" +
       '<h2>' + esc(t.title) + ' <span class="h-ar" lang="ar" dir="rtl">' + esc(t.ar) + "</span></h2>" +
       '<p class="lede">' + esc(t.intro) + "</p>" +
@@ -167,7 +195,11 @@
       a.addEventListener("click", function () {
         $("#search").value = "";
         openTopic(a.getAttribute("data-open-topic"));
+        window.scrollTo(0, 0);
       });
+    });
+    $all("[data-overview]", root).forEach(function (a) {
+      a.addEventListener("click", function () { $("#search").value = ""; showOverview(); window.scrollTo(0, 0); });
     });
   }
 
@@ -184,7 +216,8 @@
   function runSearch(q) {
     var art = $("#article");
     var query = q.trim();
-    if (!query) { openTopic(currentTopic, true); return; }
+    if (!query) { if (currentTopic) openTopic(currentTopic, true); else showOverview(); return; }
+    $("#lookup").className = "wrap lookup is-detail";
     var terms = normalize(query).split(/\s+/).filter(Boolean);
     var rawTerms = query.split(/\s+/).filter(Boolean);
     var hits = [];
@@ -198,7 +231,8 @@
       });
     });
     var total = hits.reduce(function (n, h) { return n + h.items.length; }, 0);
-    var html = '<header class="article-head"><p class="eyebrow">Suche</p><h2>„' + esc(query) + "“</h2>" +
+    var html = '<button type="button" class="back-link" data-overview>← Alle Themen</button>' +
+      '<header class="article-head"><p class="eyebrow">Suche</p><h2>„' + esc(query) + "“</h2>" +
       '<p class="lede">' + (total ? total + " Treffer in " + hits.length + " Abschnitten" : "Keine Treffer. Versuche einen anderen Begriff, z. B. „Mest“, „Qibla“ oder „Kaffāra“.") + "</p></header>";
     html += hits.map(function (h) {
       return '<section class="entry"><p class="hit-topic"><button type="button" class="linkish" data-open-topic="' + h.t.id + '">' +
@@ -567,7 +601,7 @@
     (listeners[name] || []).forEach(function (fn) { try { fn(data); } catch (e) { console.error(e); } });
   }
   window.FIQH_APP = {
-    TOPICS: TOPICS, QUESTIONS: QUESTIONS, TOPIC_BY_ID: TOPIC_BY_ID,
+    TOPICS: TOPICS, QUESTIONS: QUESTIONS, TOPIC_BY_ID: TOPIC_BY_ID, GROUPS: GROUPS,
     esc: esc, store: store, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
     showView: showView, startQuiz: startQuiz, renderSetup: renderSetup,
     isPlaying: function () { return !!game && !$("#quiz-play").hidden; },
@@ -589,8 +623,7 @@
   $("#stat-sections").textContent = TOPICS.reduce(function (n, t) { return n + t.sections.length; }, 0);
 
   renderTopicNav();
-  var savedTopic = store("topic");
-  openTopic(TOPIC_BY_ID[savedTopic] ? savedTopic : currentTopic, true);
+  showOverview();
   renderSetup();
   var hash = (location.hash || "").replace("#", "");
   showView(views[hash] ? hash : (store("view") || "nachschlagen"), false);

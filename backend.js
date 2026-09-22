@@ -6,20 +6,31 @@
      usernames/<key>   { uid, name }       one document per player name, key = name in lower case
      users/<uid>       private: { birthYear, parentalConsent, termsAt, createdAt, friends }, after deletion only { deletedAt }
      players/<uid>     public:  { nick, nickKey, g, total, games, comp, at }
-     avatars/<uid>     public:  { img }   128 x 128 JPEG as data URL                       */
+     avatars/<uid>     public:  { img }   128 x 128 JPEG as data URL
+     chats/<a>_<b>     { members: [a, b], last, updatedAt, read: { uid: time } }   only brother-brother or sister-sister
+       messages/<id>   { from, text, at }
+     reports/<id>      { from, about, chatId, text, at }   only readable in the Firebase console        */
 (function () {
   "use strict";
   if (window.FIQH_BACKEND) return;
 
-  var NAME_RE = /^[A-Za-z0-9ÄÖÜäöüß_.-]{3,20}$/;
+  /* Letters incl. German umlauts and Turkish ç ş ğ ı, digits, _ . - and single spaces. */
+  var NAME_RE = /^[A-Za-z0-9ÄÖÜäöüßÇçŞşĞğı_.-]+( [A-Za-z0-9ÄÖÜäöüßÇçŞşĞğı_.-]+)*$/;
+  /* Sisters play under a kunya ("Umm Yusuf", "Bint Ömer"), never their own first name. */
+  var KUNYA_PREFIXES = ["Umm", "Bint", "Mutter von", "Tochter von"];
+  var KUNYA_RE = /^(umm|bint|mutter von|tochter von) \S/;
   var RESERVED = ["admin", "administrator", "moderator", "mod", "support", "fiqh", "fiqhkompass", "fiqh-kompass", "system", "root", "null", "undefined"];
   function nameKey(name) { return String(name || "").normalize("NFC").toLowerCase(); }
-  function checkName(name) {
+  function isKunya(name) { return KUNYA_RE.test(nameKey(name)); }
+  /* gender: "m", "f" or empty (then only the general rules are checked). */
+  function checkName(name, gender) {
     name = String(name || "").normalize("NFC").trim();
-    if (name.length < 3 || name.length > 20) return "Der Spielername muss 3–20 Zeichen lang sein.";
-    if (!NAME_RE.test(name)) return "Erlaubt sind Buchstaben (auch ä, ö, ü, ß), Ziffern sowie _ . und -.";
-    if (!/[A-Za-zÄÖÜäöüß]/.test(name)) return "Der Spielername braucht mindestens einen Buchstaben.";
+    if (name.length < 3 || name.length > 24) return "Der Spielername muss 3–24 Zeichen lang sein.";
+    if (!NAME_RE.test(name)) return "Erlaubt sind Buchstaben (auch ä, ö, ü, ß, ç, ş, ğ), Ziffern, _ . - und einzelne Leerzeichen.";
+    if (!/[A-Za-zÄÖÜäöüßÇçŞşĞğı]/.test(name)) return "Der Spielername braucht mindestens einen Buchstaben.";
     if (RESERVED.indexOf(nameKey(name)) !== -1) return "Dieser Name ist reserviert.";
+    if (gender === "f" && !isKunya(name)) return "Schwestern spielen mit einer Kunya, z. B. „Umm Yusuf“ oder „Bint Ömer“.";
+    if (gender === "m" && isKunya(name)) return "Namen mit Umm, Bint, Mutter von oder Tochter von sind Schwestern vorbehalten.";
     return "";
   }
   function checkPassword(pw, email, name) {
@@ -65,7 +76,7 @@
     return MESSAGES[code] || (e && e.userMessage) || "Das hat nicht geklappt. Versuch es bitte noch einmal.";
   }
 
-  var helpers = { checkName: checkName, checkPassword: checkPassword, passwordStrength: passwordStrength, nameKey: nameKey, message: message };
+  var helpers = { KUNYA_PREFIXES: KUNYA_PREFIXES, isKunya: isKunya, checkName: checkName, checkPassword: checkPassword, passwordStrength: passwordStrength, nameKey: nameKey, message: message };
 
   var cfg = window.FIQH_FIREBASE;
   if (!cfg || !window.firebase || !firebase.initializeApp) {
@@ -85,6 +96,7 @@
   // During a registration the new login exists a moment before its profile: hold back until both are there.
   auth.onAuthStateChanged(function () { known = true; if (!registering) notify(); });
 
+  function millis(v) { return v && v.toMillis ? v.toMillis() : typeof v === "number" ? v : 0; }
   function snapOf(s) { return { id: s.id, exists: s.exists, data: function () { return s.data(); } }; }
   function simpleUser(u) { return u ? { uid: u.uid, email: u.email, emailVerified: !!u.emailVerified } : null; }
 
@@ -119,7 +131,7 @@
     register: function (d) {
       var name = String(d.name).normalize("NFC").trim();
       var key = nameKey(name);
-      var err = checkName(name) || checkPassword(d.password, d.email, name);
+      var err = checkName(name, d.gender) || checkPassword(d.password, d.email, name);
       if (err) return Promise.reject({ userMessage: err });
       return api.nameAvailable(name).then(function (free) {
         if (!free) throw { code: "name-taken" };
@@ -176,9 +188,9 @@
       return api.reauth(password).then(function () { return auth.currentUser.verifyBeforeUpdateEmail(email); });
     },
 
-    changeName: function (oldKey, name) {
+    changeName: function (oldKey, name, gender) {
       name = String(name).normalize("NFC").trim();
-      var err = checkName(name);
+      var err = checkName(name, gender);
       if (err) return Promise.reject({ userMessage: err });
       var key = nameKey(name), uid = auth.currentUser.uid;
       return api.nameAvailable(name).then(function (free) {
@@ -189,6 +201,56 @@
         b.update(fs.doc("players/" + uid), { nick: name, nickKey: key, at: new Date().toISOString() });
         return b.commit().catch(function (e) { throw e && e.code === "permission-denied" && key !== oldKey ? { code: "name-taken" } : e; });
       });
+    },
+
+    /* ---------- chat ---------- */
+    chatId: function (a, b) { return [a, b].sort().join("_"); },
+    /* Opens the conversation with another player, creating it on first use.
+       The rules refuse it unless both are brothers or both are sisters. */
+    openChat: function (other) {
+      var uid = auth.currentUser.uid, id = api.chatId(uid, other);
+      var ref = fs.doc("chats/" + id);
+      return ref.get().then(function (s) {
+        if (s.exists) return id;
+        return ref.set({ members: [uid, other].sort(), createdAt: FieldValue.serverTimestamp(), updatedAt: FieldValue.serverTimestamp(), last: null, read: {} })
+          .then(function () { return id; });
+      });
+    },
+    watchChats: function (uid, next, err) {
+      return fs.collection("chats").where("members", "array-contains", uid).onSnapshot(function (qs) {
+        next(qs.docs.map(function (d) {
+          var c = d.data({ serverTimestamps: "estimate" }), read = {};
+          Object.keys(c.read || {}).forEach(function (k) { read[k] = millis(c.read[k]); });
+          return {
+            id: d.id, members: c.members || [], updatedAt: millis(c.updatedAt), read: read,
+            last: c.last ? { text: String(c.last.text || ""), from: c.last.from, at: millis(c.last.at) } : null
+          };
+        }));
+      }, err);
+    },
+    watchMessages: function (chatId, next, err) {
+      return fs.collection("chats/" + chatId + "/messages").orderBy("at").limitToLast(200).onSnapshot(function (qs) {
+        next(qs.docs.map(function (d) {
+          var m = d.data({ serverTimestamps: "estimate" });
+          return { id: d.id, from: m.from, text: String(m.text || ""), at: millis(m.at), pending: d.metadata.hasPendingWrites };
+        }));
+      }, err);
+    },
+    sendMessage: function (chatId, text) {
+      var uid = auth.currentUser.uid, b = fs.batch(), now = FieldValue.serverTimestamp();
+      b.set(fs.collection("chats/" + chatId + "/messages").doc(), { from: uid, text: text, at: now });
+      var upd = { last: { text: text.slice(0, 120), from: uid, at: now }, updatedAt: now };
+      upd["read." + uid] = now;
+      b.update(fs.doc("chats/" + chatId), upd);
+      return b.commit();
+    },
+    markRead: function (chatId) {
+      var upd = {};
+      upd["read." + auth.currentUser.uid] = FieldValue.serverTimestamp();
+      return fs.doc("chats/" + chatId).update(upd);
+    },
+    report: function (about, chatId, text) {
+      return fs.collection("reports").add({ from: auth.currentUser.uid, about: about, chatId: chatId, text: String(text || "").slice(0, 1000), at: FieldValue.serverTimestamp() });
     },
 
     /* Deletes everything stored about the player, then the login itself. */

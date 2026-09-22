@@ -8,7 +8,7 @@ async function t(name, p, ok) {
   catch (e) { fail++; console.log('  FAIL', name, '-', e.message.split('\n')[0]); }
 }
 function reg(db, uid, name, g = 'm', year = 1995) {
-  const key = name.toLowerCase(), b = db.batch();
+  const key = name.normalize('NFC').toLowerCase(), b = db.batch();
   b.set(db.doc('usernames/' + key), { uid, name });
   b.set(db.doc('users/' + uid), { birthYear: year, parentalConsent: false, termsAt: TS(), createdAt: TS(), friends: [] });
   b.set(db.doc('players/' + uid), { nick: name, nickKey: key, g, total: 0, games: 0, comp: {}, at: 'x' });
@@ -40,6 +40,23 @@ function reg(db, uid, name, g = 'm', year = 1995) {
     const db = env.authenticatedContext('x1', { email_verified: false }).firestore();
     return reg(db, 'x1', 'Xaver', 'x');
   })(), false);
+
+  console.log('Kunya für Schwestern');
+  const ctx = (uid, v = false) => env.authenticatedContext(uid, { email_verified: v }).firestore();
+  await t('Schwester ohne Kunya ("Fatima") abgelehnt', reg(ctx('f1'), 'f1', 'Fatima', 'f'), false);
+  await t('Bruder mit Kunya ("Umm Ali") abgelehnt', reg(ctx('m1'), 'm1', 'Umm Ali', 'm'), false);
+  await t('Schwester "Umm Yusuf"', reg(ctx('sara'), 'sara', 'Umm Yusuf', 'f'), true);
+  await t('Schwester "Bint Ömer" (türkische Buchstaben)', reg(ctx('zey'), 'zey', 'Bint Ömer', 'f'), true);
+  await t('"BINT ÖMER" ist derselbe Name wie "Bint Ömer"', reg(ctx('f2'), 'f2', 'BINT ÖMER', 'f'), false);
+  await t('Schwester "Tochter von Şükrü"', reg(ctx('ayse'), 'ayse', 'Tochter von Şükrü', 'f'), true);
+  await t('Kunya später gegen Vornamen tauschen geht nicht', (async () => {
+    const db = ctx('sara', true), b = db.batch();
+    b.delete(db.doc('usernames/umm yusuf'));
+    b.set(db.doc('usernames/fatima'), { uid: 'sara', name: 'Fatima' });
+    b.update(db.doc('players/sara'), { nick: 'Fatima', nickKey: 'fatima' });
+    return b.commit();
+  })(), false);
+  await t('Doppelte Leerzeichen im Namen abgelehnt', ctx('q').doc('usernames/umm  ali').set({ uid: 'q', name: 'Umm  Ali' }), false);
 
   console.log('Lesen');
   await t('Gast liest Rangliste (players)', guest().collection('players').get(), true);
@@ -92,6 +109,38 @@ function reg(db, uid, name, g = 'm', year = 1995) {
     return b.commit();
   })(), true);
   await t('Alter Name ist wieder frei', reg(env.authenticatedContext('carl', { email_verified: false }).firestore(), 'carl', 'Aisha_1'), true);
+
+  console.log('Chat');
+  const chatAB = 'alice_bob', chatAS = 'alice_sara', chatSZ = 'sara_zey';
+  const newChat = (db, m) => db.doc('chats/' + m.join('_')).set({ members: m, createdAt: TS(), updatedAt: TS(), last: null, read: {} });
+  const msg = (db, chat, from, text) => db.collection('chats/' + chat + '/messages').add({ from, text, at: TS() });
+  await t('Unbestätigt: kein Chat', newChat(ctx('alice'), ['alice', 'bob']), false);
+  await t('Bruder–Bruder: Chat anlegen', newChat(aliceV(), ['alice', 'bob']), true);
+  await t('Bruder–Schwester: Chat verboten', newChat(aliceV(), ['alice', 'sara']), false);
+  await t('Schwester–Bruder: Chat verboten', newChat(ctx('sara', true), ['alice', 'sara']), false);
+  await t('Schwester–Schwester: Chat anlegen', newChat(ctx('sara', true), ['sara', 'zey']), true);
+  await t('Chat für zwei andere anlegen', newChat(aliceV(), ['sara', 'zey']), false);
+  await t('Chat mit drei Personen', aliceV().doc('chats/x').set({ members: ['alice', 'bob', 'carl'], createdAt: TS(), updatedAt: TS(), last: null, read: {} }), false);
+  await t('Nachricht senden', msg(aliceV(), chatAB, 'alice', 'Salam, wie weit bist du?'), true);
+  await t('Gegenüber liest Nachrichten', bob().collection('chats/' + chatAB + '/messages').get(), true);
+  await t('Dritte lesen nicht mit', ctx('sara', true).collection('chats/' + chatAB + '/messages').get(), false);
+  await t('Gast liest keine Chats', guest().doc('chats/' + chatAB).get(), false);
+  await t('Chatliste (nur eigene)', bob().collection('chats').where('members', 'array-contains', 'bob').get(), true);
+  await t('Unter fremdem Namen senden', msg(bob(), chatAB, 'alice', 'gefälscht'), false);
+  await t('Leere Nachricht', msg(bob(), chatAB, 'bob', ''), false);
+  await t('Zu lange Nachricht (1001 Zeichen)', msg(bob(), chatAB, 'bob', 'x'.repeat(1001)), false);
+  await t('Nachricht in fremden Chat', msg(aliceV(), chatSZ, 'alice', 'hallo'), false);
+  await t('Nachricht nachträglich ändern', (async () => {
+    const db = aliceV(); const qs = await db.collection('chats/' + chatAB + '/messages').get();
+    return qs.docs[0].ref.update({ text: 'geändert' });
+  })(), false);
+  await t('Mitglieder des Chats ändern', aliceV().doc('chats/' + chatAB).update({ members: ['alice', 'sara'] }), false);
+  await t('Bob blockiert Alice', bob().doc('users/bob').update({ blocked: ['alice'] }), true);
+  await t('Blockiert: Alice kann Bob nicht schreiben', msg(aliceV(), chatAB, 'alice', 'Hallo?'), false);
+  await t('Blockiert: Bob schreibt Alice auch nicht', msg(bob(), chatAB, 'bob', 'Hallo'), false);
+  await t('Nachricht melden', aliceV().collection('reports').add({ from: 'alice', about: 'bob', chatId: chatAB, text: 'unfreundlich', at: TS() }), true);
+  await t('Meldungen kann niemand lesen', aliceV().collection('reports').get(), false);
+  await t('Blockierung aufheben', bob().doc('users/bob').update({ blocked: [] }), true);
 
   console.log('Konto löschen');
   await t('Konto löschen (alles weg, Markierung bleibt)', (async () => {

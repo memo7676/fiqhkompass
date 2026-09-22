@@ -2,7 +2,7 @@
 
 Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht 1–16“ (Google-Drive-Ordner „Fiqh“), vertieft und erweitert mit Hamdi Döndüren, „Delilleriyle İslâm İlmihali“.
 
-- **Nachschlagen**: 25 Themengebiete in sechs Sachgebieten mit Volltextsuche:
+- **Nachschlagen**: zuerst eine Übersicht aller Themen; der Text eines Themas öffnet sich erst mit einem Klick. Dazu Volltextsuche. 25 Themengebiete in sechs Sachgebieten:
   - Glaube & Grundlagen
   - Reinheit
   - Gebet (mit Adhān, Gemeinschaft, Freitag/Fest, Nawāfil, Sahw/Tilāwa, Totengebet)
@@ -18,17 +18,21 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - Bestwerte und Auswertung mit Links zum Nachlesen
 - **Konten** (Registrierung mit E-Mail und Passwort, E-Mail-Bestätigung, Passwort vergessen, Konto löschen):
   - Spielername, den es nur einmal gibt. Groß- und Kleinschreibung zählt dabei nicht, Ali und ali sind also derselbe Name
+  - Schwestern melden sich mit einer Kunya an (Umm …, Bint …, Mutter von …, Tochter von …); diese Beinamen sind Schwestern vorbehalten
   - Geschlecht (Bruder/Schwester), Geburtsjahr; unter 16 Jahren nur mit Einverständnis der Eltern
   - Zustimmung zu Datenschutz und Regeln ([`datenschutz.html`](datenschutz.html))
   - eigenes Profilbild, das im Browser auf 128 × 128 px verkleinert wird
 - **Wettbewerb & Freunde**:
   - Wochenquiz mit 15 Fragen, für alle dieselben, ein Versuch pro Woche
+  - jede Woche ein anderes Sachgebiet, der Reihe nach: Glaube & Grundlagen, Reinheit, Gebet, Fasten, Zakāt & Ḥaǧǧ, Alltag & Gesellschaft
   - eine Saison dauert 4 Wochen (Start: Montag, 21.09.2026). Die Summe der vier Wochen entscheidet
   - Top 10 weltweit (diese Saison oder aller Zeiten, alle, nur Brüder oder nur Schwestern) und Saisonrangliste
   - Freunde über den Spielernamen finden und Gesamtpunkte vergleichen
 
-  Ranglisten sieht jeder, mitspielen können alle mit bestätigter E-Mail-Adresse.
-  Die Server-Regeln in [`firestore.rules`](firestore.rules) sichern das ab: eindeutige Namen, nur eigene Daten, Punkte können nicht sinken, kein zweiter Versuch pro Woche. Getestet wird das in `tests/`.
+- **Chat** zwischen Spielern: Brüder mit Brüdern, Schwestern mit Schwestern, nie zwischen Bruder und Schwester. Mit Ungelesen-Anzeige, Blockieren und Melden.
+
+  Ranglisten sieht jeder, mitspielen und chatten können alle mit bestätigter E-Mail-Adresse.
+  Die Server-Regeln in [`firestore.rules`](firestore.rules) sichern das ab: eindeutige Namen, Kunya für Schwestern, nur eigene Daten, Punkte können nicht sinken, kein zweiter Versuch pro Woche, Chat nur unter Brüdern bzw. Schwestern. Getestet wird das in `tests/` (76 Fälle).
 
 Einrichtung von Firebase und GitHub Pages: [`SETUP.md`](SETUP.md). Ohne Firebase funktionieren Nachschlagen und Quiz trotzdem.
 
@@ -37,4 +41,4 @@ Lokal: einfach `index.html` im Browser öffnen, ohne Build-Schritt.
 Wo die Inhalte stehen:
 - `data.js`: Inhalte aus dem Unterricht
 - `buch/*.js`: Ergänzungen aus dem İlmihal. Sie hängen sich über `FIQH.addSections`, `FIQH.addTopic` und `FIQH.addQuestions` an.
-- `backend.js`: Verbindung zu Firebase, `auth.js`: Anmelden und Registrieren, `social.js`: Wettbewerb und Ranglisten
+- `backend.js`: Verbindung zu Firebase, `auth.js`: Anmelden und Registrieren, `social.js`: Wettbewerb und Ranglisten, `chat.js`: Chat

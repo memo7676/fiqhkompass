@@ -54,6 +54,11 @@ Für eine öffentliche Seite in Deutschland sind Impressum und Datenschutzhinwei
   Jeder Seitenbesuch im Reiter „Wettbewerb“ liest einmal alle Spielerprofile. Bis einige hundert Spieler reicht das gut.
 - **Moderation:** Unpassende Namen oder Bilder kannst du in der Firebase-Konsole löschen oder ändern:
   **Firestore → `players` / `avatars` / `usernames`**. Konten sperren geht unter **Authentication → Nutzer**.
-- **Regeln testen:** `cd tests && npm install && npm test` startet den Firestore-Emulator (Java nötig) und prüft 44 Fälle,
-  z. B. doppelte Namen, fremde Punkte, einen zweiten Versuch pro Woche oder Skripte als Profilbild.
+  Gemeldete Chats stehen unter **Firestore → `reports`**, mit Begründung, den letzten Nachrichten und der Chat-ID.
+  Schau dort regelmäßig nach.
+- **Neue Regeln:** Wenn sich `firestore.rules` ändert (zuletzt für Kunya und Chat), den Inhalt erneut unter **Firestore → Regeln** einfügen und veröffentlichen.
+- **Chat-Index:** Der Chat braucht keinen eigenen Index. Falls Firebase im Browser trotzdem „requires an index“ meldet, führt der Link in der Fehlermeldung direkt zum Anlegen.
+- **Regeln testen:** `cd tests && npm install && npm test` startet den Firestore-Emulator (Java nötig) und prüft 76 Fälle,
+  z. B. doppelte Namen, Kunya-Pflicht, fremde Punkte, einen zweiten Versuch pro Woche, Chat zwischen Bruder und Schwester,
+  Mitlesen durch Dritte, Blockieren oder Skripte als Profilbild.
 - **Regeln per Kommandozeile hochladen** (statt Schritt 6): `npx firebase-tools deploy --only firestore:rules --project <projekt-id>`.

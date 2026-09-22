@@ -145,6 +145,22 @@ button { font: inherit; color: inherit; }
 }
 
 .article { min-width: 0; }
+/* overview first, text on click */
+.lookup.is-overview { grid-template-columns: 1fr; gap: 18px; }
+.lookup.is-overview .side { position: static; max-height: none; overflow: visible; }
+.lookup.is-overview .search { max-width: 560px; }
+.lookup.is-overview .topic-nav { display: none; }
+.ov-group + .ov-group { margin-top: 26px; }
+.ov-head { font: 800 1.35rem/1.2 var(--display); margin: 0 0 12px; display: flex; align-items: baseline; gap: 10px; }
+.ov-head small { font: 600 .8rem/1 var(--body); color: var(--muted); letter-spacing: .02em; }
+.ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.topic-card { text-align: left; display: grid; gap: 4px; align-content: start; padding: 16px 18px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; box-shadow: var(--shadow); transition: border-color .15s, transform .1s; }
+.topic-card:hover { border-color: var(--primary); transform: translateY(-1px); }
+.tc-ar { font: 400 1.25rem/1.3 var(--arabic); color: var(--primary); justify-self: end; max-width: 100%; }
+.tc-title { font: 700 1.2rem/1.25 var(--display); }
+.tc-intro { color: var(--muted); font-size: .9rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.tc-meta { font-size: .78rem; font-weight: 600; color: var(--accent); margin-top: 4px; }
+.back-link { border: 0; background: none; padding: 0; margin: 0 0 10px; color: var(--primary); font-weight: 700; cursor: pointer; }
 .article-head { padding-bottom: 10px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
 .eyebrow { margin: 0 0 4px; text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; font-weight: 700; color: var(--accent); }
 .article h2 { font: 800 clamp(1.7rem, 3.2vw, 2.3rem)/1.15 var(--display); margin: 0 0 8px; text-wrap: balance; }
@@ -174,6 +190,7 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
   .topic-nav { display: flex; overflow-x: auto; gap: 6px; padding-bottom: 6px; scroll-snap-type: x proximity; }
   .topic-link { flex: none; background: var(--surface); border: 1px solid var(--line); scroll-snap-align: start; max-width: 230px; }
   .topic-link[aria-current="true"] { box-shadow: inset 0 -3px 0 var(--primary); }
+  .lookup.is-detail .topic-nav { display: none; }
   .nav-group { flex: none; align-self: center; margin: 0; padding: 0 2px 0 8px; writing-mode: vertical-rl; transform: rotate(180deg); font-size: .62rem; letter-spacing: .08em; }
   .nav-group:first-child { padding-left: 0; }
 }
@@ -342,6 +359,10 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
 .week { border: 1.5px solid var(--line); border-radius: var(--radius); padding: 10px 12px; background: var(--surface-2); display: grid; gap: 2px; min-width: 0; }
 .week span { font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .week b { font: 800 1.2rem/1.2 var(--display); font-variant-numeric: tabular-nums; }
+.week em { font-style: normal; font-weight: 700; font-size: .85rem; color: var(--ink); overflow-wrap: anywhere; }
+.comp-theme { margin: 8px 0 0; display: grid; gap: 2px; }
+.comp-theme strong { font: 800 1.25rem/1.2 var(--display); color: var(--primary); }
+.comp-theme small { color: var(--muted); font-size: .85rem; }
 .week small { color: var(--muted); font-size: .78rem; }
 .week.now { border-color: var(--accent); background: var(--accent-soft); }
 .week.done b { color: var(--primary); }
@@ -379,6 +400,7 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
 .icon-btn { border: 1px solid var(--line); background: var(--surface); width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: 700; color: var(--muted); line-height: 1; }
 .icon-btn:hover { border-color: var(--primary); color: var(--primary); }
 .icon-spacer { width: 30px; }
+.row-actions { display: flex; gap: 6px; }
 .empty { color: var(--muted); padding: 10px 6px; }
 .friend-search { display: grid; gap: 6px; margin-top: 6px; }
 .friend-search .step-label { margin: 0; }
@@ -431,7 +453,8 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
 .acc-btn img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
 .acc-btn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 @media (max-width: 480px) {
-  .acc-btn { order: 2; }
+  .acc-btn { order: 2; max-width: 150px; font-size: .9rem; }
+  .masthead .wrap { gap: 10px; }
   .tabs { order: 3; }
 }
 .guest-cta { padding: 26px; display: flex; gap: 20px; align-items: center; justify-content: space-between; flex-wrap: wrap; border-top: 4px solid var(--primary); }
@@ -472,6 +495,14 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
 .check { display: flex; gap: 10px; align-items: flex-start; font-size: .92rem; cursor: pointer; }
 .check input { margin-top: 4px; width: 18px; height: 18px; flex: none; accent-color: var(--primary); }
 .check a { color: var(--primary); }
+.kunya { display: grid; gap: 10px; padding: 14px 16px; border-radius: 12px; background: var(--accent-soft); border: 1.5px solid var(--accent); }
+.kunya p { margin: 0; font-size: .92rem; }
+.kunya .kunya-title { font: 800 1.1rem/1.25 var(--display); color: var(--ink); }
+.kunya-row { display: grid; grid-template-columns: minmax(0, 11em) minmax(0, 1fr); gap: 10px; }
+@media (max-width: 420px) { .kunya-row { grid-template-columns: 1fr; } }
+.kunya .field input, .kunya .field select { background: var(--surface); }
+.kunya-preview strong { font: 800 1.1rem/1.2 var(--display); color: var(--primary); }
+.name-wait { margin: -4px 0 0; color: var(--muted); font-size: .85rem; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-msg { margin: 0; font-size: .92rem; }
 .form-msg:empty { display: none; }
@@ -493,6 +524,76 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
 .foot-links { margin-top: 8px !important; }
 .foot-links a { color: inherit; }
 
+/* ---------- chat ---------- */
+.tab { position: relative; }
+.tab-badge { display: inline-grid; place-items: center; min-width: 1.35em; height: 1.35em; margin-left: 5px; padding: 0 4px; border-radius: 999px; background: var(--bad); color: #fff; font-size: .72rem; font-weight: 800; vertical-align: .1em; }
+@media (max-width: 480px) {
+  .tab { padding: 7px 4px; font-size: .88rem; }
+  .tab-badge { position: absolute; top: -2px; right: 0; margin: 0; }
+}
+.chat-wrap { padding-block: 20px 60px; }
+.chat-off { padding: 26px; display: grid; gap: 10px; }
+.chat-off h2 { font: 800 1.8rem/1.15 var(--display); margin: 0; }
+.chat-off p:not(.eyebrow) { margin: 0; color: var(--muted); max-width: 62ch; }
+.chat-layout { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 16px; align-items: start; }
+.chat-layout[hidden] { display: none; }
+.chat-list-panel { display: grid; overflow: hidden; }
+.chat-list-head { padding: 16px; display: grid; gap: 8px; border-bottom: 1px solid var(--line); }
+.chat-list-head h2 { font: 800 1.35rem/1.2 var(--display); margin: 0; }
+.chat-rule { margin: 0; font-size: .82rem; color: var(--muted); }
+.chat-list-head input { width: 100%; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); border-radius: var(--radius); padding: 9px 12px; font: inherit; }
+.chat-list { list-style: none; margin: 0; padding: 6px; display: grid; gap: 2px; max-height: 60vh; overflow: auto; }
+.chat-item { width: 100%; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 10px; align-items: center; text-align: left; border: 0; background: none; padding: 9px 10px; border-radius: 10px; cursor: pointer; }
+.chat-item:hover { background: var(--surface-2); }
+.chat-item[aria-current="true"] { background: var(--primary-soft); }
+.chat-item img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.chat-item .ci-text { display: grid; min-width: 0; }
+.chat-item strong, .chat-item small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chat-item small { color: var(--muted); font-size: .85rem; }
+.chat-item .ci-meta { display: grid; justify-items: end; gap: 4px; font-size: .75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.chat-item.unread strong { color: var(--primary); }
+.chat-item.unread small { color: var(--ink); font-weight: 600; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--bad); }
+.convo { min-height: 420px; display: grid; }
+.convo-empty { display: grid; place-items: center; padding: 30px; text-align: center; color: var(--muted); }
+.convo-empty p { max-width: 36ch; margin: 0; }
+.convo-inner { display: flex; flex-direction: column; height: min(72vh, 680px); }
+.convo-inner .msgs { flex: 1 1 auto; min-height: 0; }
+.convo-inner[hidden] { display: none; }
+.convo-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.convo-head img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.convo-who { display: grid; min-width: 0; flex: 1; }
+.convo-who strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.convo-who small { color: var(--muted); font-size: .8rem; }
+.convo-tools { display: flex; gap: 12px; font-size: .88rem; }
+.convo-back { display: none; }
+.report-box { display: grid; gap: 8px; padding: 12px 14px; background: var(--bad-soft); border-bottom: 1px solid var(--line); font-size: .9rem; }
+.report-box textarea { width: 100%; border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 10px; font: inherit; background: var(--surface); color: var(--ink); resize: vertical; }
+.report-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.msgs { list-style: none; margin: 0; padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; background: var(--surface-2); }
+.msg { max-width: min(78%, 520px); padding: 8px 12px 6px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); align-self: flex-start; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.45; }
+.msg time { display: block; font-size: .7rem; color: var(--muted); text-align: right; margin-top: 2px; font-variant-numeric: tabular-nums; }
+.msg.mine { align-self: flex-end; background: var(--primary); border-color: var(--primary); color: var(--primary-ink); border-bottom-right-radius: 4px; }
+.msg.mine time { color: color-mix(in srgb, var(--primary-ink) 75%, transparent); }
+.msg:not(.mine) { border-bottom-left-radius: 4px; }
+.msg.pending { opacity: .7; }
+.msg-day { align-self: center; font-size: .75rem; font-weight: 700; color: var(--muted); background: var(--surface); border: 1px solid var(--line); padding: 2px 10px; border-radius: 999px; margin: 6px 0; }
+.msgs .empty { align-self: center; color: var(--muted); padding: 20px; text-align: center; }
+.convo-note { margin: 0; padding: 10px 14px; font-size: .88rem; background: var(--accent-soft); border-top: 1px solid var(--line); }
+.composer { display: flex; gap: 8px; padding: 10px 12px 4px; border-top: 1px solid var(--line); align-items: flex-end; }
+.composer textarea { flex: 1; min-width: 0; resize: none; max-height: 140px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); border-radius: var(--radius); padding: 10px 12px; font: inherit; line-height: 1.4; }
+.composer textarea:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
+.composer-hint { padding: 0 14px 10px; color: var(--muted); font-size: .75rem; }
+@media (hover: none) { .composer-hint { display: none; } }
+@media (max-width: 760px) {
+  .chat-layout { grid-template-columns: 1fr; }
+  .chat-layout.has-active .chat-list-panel { display: none; }
+  .chat-layout:not(.has-active) .convo { display: none; }
+  .convo-back { display: inline-grid; place-items: center; }
+  .convo-inner { height: calc(100dvh - 190px); min-height: 380px; }
+  .convo-tools { flex-direction: column; gap: 2px; align-items: flex-end; }
+}
+
 .foot { border-top: 1px solid var(--line); padding-block: 20px 34px; color: var(--muted); font-size: .85rem; }
 .foot p { margin: 0; max-width: 80ch; }
 </style>
@@ -513,6 +614,7 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
       <button type="button" class="tab" role="tab" data-view="nachschlagen" aria-selected="true">Nachschlagen</button>
       <button type="button" class="tab" role="tab" data-view="quiz" aria-selected="false">Quiz</button>
       <button type="button" class="tab" role="tab" data-view="wettbewerb" aria-selected="false">Wettbewerb</button>
+      <button type="button" class="tab" role="tab" data-view="chat" aria-selected="false">Chat<span class="tab-badge" id="chat-badge" hidden></span></button>
     </nav>
     <button type="button" class="acc-btn" id="acc-btn" hidden><img alt="" id="acc-btn-img" hidden><span id="acc-btn-text">Anmelden</span></button>
   </div>
@@ -526,7 +628,7 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
       <p>Zusammengefasst aus dem Fiqh-Unterricht und vertieft mit dem „Delilleriyle İslâm İlmihali“ von Hamdi Döndüren: von den Quellen des Rechts und dem Īmān über Reinheit, Gebet und Fasten bis zu Zakāt, Ḥaǧǧ, Opfer, Familie und Handel. Der Schwerpunkt liegt auf der hanafitischen Rechtsschule, Unterschiede zu den anderen Madhabs sind jeweils genannt. Abschnitte aus dem Buch tragen die Seitenzahl als Marke.</p>
       <div class="stats"><span><b id="stat-topics">25</b> Themengebiete</span><span><b id="stat-sections">0</b> Abschnitte</span><span><b id="stat-questions">0</b> Quizfragen</span></div>
     </div>
-    <div class="wrap lookup">
+    <div class="wrap lookup is-overview" id="lookup">
       <aside class="side">
         <form class="search" id="search-form" role="search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
@@ -699,8 +801,8 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
           <form class="acc-form" id="acc-form" hidden>
             <div class="acc-field">
               <label class="step-label" for="acc-nick">Spielername</label>
-              <input id="acc-nick" type="text" maxlength="20" autocomplete="username" spellcheck="false" placeholder="z. B. Yusuf_Hanafi">
-              <small class="acc-hint">3–20 Zeichen, jeden Namen gibt es nur einmal.</small>
+              <input id="acc-nick" type="text" maxlength="24" autocomplete="username" spellcheck="false">
+              <small class="acc-hint" id="acc-nick-hint">3–24 Zeichen, jeden Namen gibt es nur einmal.</small>
             </div>
             <div class="acc-field">
               <span class="step-label">Profilbild</span>
@@ -725,6 +827,7 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
             <div>
               <p class="eyebrow" id="comp-eyebrow">Wochenwettbewerb</p>
               <h2 id="comp-title">Woche 1 von 4</h2>
+              <p class="comp-theme">Thema dieser Woche: <strong id="comp-theme"></strong><small id="comp-theme-topics"></small></p>
               <p class="comp-sub" id="comp-sub"></p>
             </div>
             <div class="countdown" id="comp-countdown" aria-live="off"></div>
@@ -735,6 +838,7 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
             <p class="comp-state" id="comp-state"></p>
           </div>
           <ul class="rules">
+            <li>jede Woche ein anderes Sachgebiet</li>
             <li>15 Fragen, für alle dieselben</li>
             <li>ein Versuch pro Woche</li>
             <li>4 Wochen werden summiert</li>
@@ -799,6 +903,67 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
 
     </div>
   </section>
+
+  <!-- ================= CHAT ================= -->
+  <section id="view-chat" aria-label="Chat" hidden>
+    <div class="wrap chat-wrap">
+      <div class="panel chat-off" id="chat-off">
+        <p class="eyebrow">Chat</p>
+        <h2 id="chat-off-title">Chat mit anderen Spielern</h2>
+        <p id="chat-off-text">Melde dich an, um mit anderen Spielern zu schreiben.</p>
+        <div class="guest-actions" id="chat-off-actions">
+          <button type="button" class="btn btn-primary" id="chat-login">Anmelden</button>
+          <button type="button" class="btn" id="chat-register">Registrieren</button>
+        </div>
+      </div>
+
+      <div class="chat-layout" id="chat-on" hidden>
+        <aside class="panel chat-list-panel">
+          <div class="chat-list-head">
+            <h2>Nachrichten</h2>
+            <p class="chat-rule" id="chat-rule"></p>
+            <label class="visually-hidden" for="chat-new">Spieler suchen</label>
+            <input id="chat-new" type="search" autocomplete="off" placeholder="Neuer Chat: Spielername suchen">
+            <ul class="hits" id="chat-new-hits"></ul>
+          </div>
+          <ul class="chat-list" id="chat-list"></ul>
+        </aside>
+
+        <section class="panel convo" id="convo" aria-live="polite">
+          <div class="convo-empty" id="convo-empty">
+            <p>Wähle links ein Gespräch oder suche nach einem Spielernamen, um einen neuen Chat zu beginnen.</p>
+          </div>
+          <div class="convo-inner" id="convo-inner" hidden>
+            <header class="convo-head">
+              <button type="button" class="icon-btn convo-back" id="convo-back" aria-label="Zurück zur Liste">←</button>
+              <img alt="" id="convo-img">
+              <div class="convo-who"><strong id="convo-name"></strong><small id="convo-sub"></small></div>
+              <div class="convo-tools">
+                <button type="button" class="linkish" id="convo-report">Melden</button>
+                <button type="button" class="linkish" id="convo-block">Blockieren</button>
+              </div>
+            </header>
+            <form class="report-box" id="report-box" hidden>
+              <label for="report-text"><strong>Was ist passiert?</strong> Die letzten Nachrichten dieses Chats werden mitgeschickt.</label>
+              <textarea id="report-text" rows="2" maxlength="500"></textarea>
+              <div class="report-actions">
+                <button type="submit" class="btn btn-danger">Meldung senden</button>
+                <button type="button" class="btn" id="report-cancel">Abbrechen</button>
+              </div>
+            </form>
+            <ol class="msgs" id="msgs"></ol>
+            <p class="convo-note" id="convo-note" hidden></p>
+            <form class="composer" id="composer">
+              <label class="visually-hidden" for="msg-text">Nachricht</label>
+              <textarea id="msg-text" rows="1" maxlength="1000" placeholder="Nachricht schreiben …"></textarea>
+              <button type="submit" class="btn btn-primary" id="msg-send">Senden</button>
+            </form>
+            <small class="composer-hint" id="composer-hint">Enter zum Senden, Umschalt + Enter für eine neue Zeile.</small>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="foot">
@@ -835,11 +1000,40 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
 
   <!-- Registrieren -->
   <form class="auth-pane" data-pane="register" novalidate hidden>
-    <p class="auth-lede">Alle Felder sind Pflichtfelder. Dein Spielername, Geschlecht und deine Punkte sind in den Ranglisten öffentlich, E-Mail-Adresse und Geburtsjahr nicht.</p>
-    <div class="field">
+    <p class="auth-lede">Alle Felder sind Pflichtfelder. Dein Spielername, ob du Bruder oder Schwester bist und deine Punkte sind in den Ranglisten öffentlich, E-Mail-Adresse und Geburtsjahr nicht. <strong>Schwestern melden sich mit einer Kunya an</strong> (z. B. Umm Yusuf, Bint Ömer).</p>
+    <fieldset class="field">
+      <legend>Ich bin</legend>
+      <div class="radios">
+        <label class="radio"><input type="radio" name="rg-gender" value="m" required> <span>ein Mann (Bruder)</span></label>
+        <label class="radio"><input type="radio" name="rg-gender" value="f"> <span>eine Frau (Schwester)</span></label>
+      </div>
+    </fieldset>
+    <p class="hint name-wait" id="rg-name-wait">Wähle zuerst aus, ob du Bruder oder Schwester bist – danach legst du deinen Spielernamen fest.</p>
+    <div class="field" id="rg-name-plain" hidden>
       <label for="rg-name">Spielername</label>
-      <input id="rg-name" type="text" autocomplete="username" maxlength="20" spellcheck="false" required aria-describedby="rg-name-hint">
-      <small class="hint" id="rg-name-hint">3–20 Zeichen: Buchstaben, Ziffern, _ . -. Jeden Namen gibt es nur einmal.</small>
+      <input id="rg-name" type="text" autocomplete="username" maxlength="24" spellcheck="false" aria-describedby="rg-name-hint">
+      <small class="hint" id="rg-name-hint">3–24 Zeichen: Buchstaben, Ziffern, _ . -. Jeden Namen gibt es nur einmal.</small>
+    </div>
+    <div class="kunya" id="rg-kunya-wrap" hidden>
+      <p class="kunya-title">Schwestern melden sich mit einer Kunya an</p>
+      <p>Statt deines eigenen Vornamens wählst du einen Beinamen, zum Beispiel <strong>Umm Yusuf</strong> (Mutter von Yusuf) oder <strong>Bint Ömer</strong> (Tochter von Ömer). Nur dieser Name ist in Ranglisten und im Chat zu sehen, dein Vorname bleibt privat.</p>
+      <div class="kunya-row">
+        <div class="field">
+          <label for="rg-kunya-pre">Beginn</label>
+          <select id="rg-kunya-pre">
+            <option value="Umm">Umm (Mutter von)</option>
+            <option value="Bint">Bint (Tochter von)</option>
+            <option value="Mutter von">Mutter von</option>
+            <option value="Tochter von">Tochter von</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="rg-kunya-name">Name des Kindes bzw. Vaters</label>
+          <input id="rg-kunya-name" type="text" maxlength="18" spellcheck="false" placeholder="z. B. Ömer">
+        </div>
+      </div>
+      <p class="kunya-preview">Dein Spielername: <strong id="rg-kunya-preview">–</strong></p>
+      <small class="hint" id="rg-kunya-hint">Jeden Namen gibt es nur einmal.</small>
     </div>
     <div class="field">
       <label for="rg-email">E-Mail-Adresse</label>
@@ -856,13 +1050,6 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
       <label for="rg-pw2">Passwort wiederholen</label>
       <input id="rg-pw2" type="password" autocomplete="new-password" maxlength="128" required>
     </div>
-    <fieldset class="field">
-      <legend>Ich bin</legend>
-      <div class="radios">
-        <label class="radio"><input type="radio" name="rg-gender" value="m" required> <span>ein Mann (Bruder)</span></label>
-        <label class="radio"><input type="radio" name="rg-gender" value="f"> <span>eine Frau (Schwester)</span></label>
-      </div>
-    </fieldset>
     <div class="field">
       <label for="rg-year">Geburtsjahr</label>
       <select id="rg-year" required><option value="">Bitte wählen</option><option value="2020">2020</option><option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option><option value="2006">2006</option><option value="2005">2005</option><option value="2004">2004</option><option value="2003">2003</option><option value="2002">2002</option><option value="2001">2001</option><option value="2000">2000</option><option value="1999">1999</option><option value="1998">1998</option><option value="1997">1997</option><option value="1996">1996</option><option value="1995">1995</option><option value="1994">1994</option><option value="1993">1993</option><option value="1992">1992</option><option value="1991">1991</option><option value="1990">1990</option><option value="1989">1989</option><option value="1988">1988</option><option value="1987">1987</option><option value="1986">1986</option><option value="1985">1985</option><option value="1984">1984</option><option value="1983">1983</option><option value="1982">1982</option><option value="1981">1981</option><option value="1980">1980</option><option value="1979">1979</option><option value="1978">1978</option><option value="1977">1977</option><option value="1976">1976</option><option value="1975">1975</option><option value="1974">1974</option><option value="1973">1973</option><option value="1972">1972</option><option value="1971">1971</option><option value="1970">1970</option><option value="1969">1969</option><option value="1968">1968</option><option value="1967">1967</option><option value="1966">1966</option><option value="1965">1965</option><option value="1964">1964</option><option value="1963">1963</option><option value="1962">1962</option><option value="1961">1961</option><option value="1960">1960</option><option value="1959">1959</option><option value="1958">1958</option><option value="1957">1957</option><option value="1956">1956</option><option value="1955">1955</option><option value="1954">1954</option><option value="1953">1953</option><option value="1952">1952</option><option value="1951">1951</option><option value="1950">1950</option><option value="1949">1949</option><option value="1948">1948</option><option value="1947">1947</option><option value="1946">1946</option><option value="1945">1945</option><option value="1944">1944</option><option value="1943">1943</option><option value="1942">1942</option><option value="1941">1941</option><option value="1940">1940</option><option value="1939">1939</option><option value="1938">1938</option><option value="1937">1937</option><option value="1936">1936</option><option value="1935">1935</option><option value="1934">1934</option><option value="1933">1933</option><option value="1932">1932</option><option value="1931">1931</option><option value="1930">1930</option><option value="1929">1929</option><option value="1928">1928</option><option value="1927">1927</option><option value="1926">1926</option><option value="1925">1925</option><option value="1924">1924</option><option value="1923">1923</option><option value="1922">1922</option><option value="1921">1921</option><option value="1920">1920</option></select>
@@ -955,6 +1142,7 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
 <script src="buch/10-alltag.js"></script>
 <script src="app.js"></script>
 <script src="social.js"></script>
+<script src="chat.js"></script>
 <script src="auth.js"></script>
 </body>
 </html>

@@ -70,37 +70,62 @@
   });
 
   /* ---------- Registrieren ---------- */
+  /* Brothers type a player name, sisters build a kunya: prefix + name of child or father. */
+  var NAME_HINT = "3–24 Zeichen: Buchstaben, Ziffern, _ . -. Jeden Namen gibt es nur einmal.";
+  var KUNYA_HINT = "Jeden Namen gibt es nur einmal.";
+  function gender() { var g = $('input[name="rg-gender"]:checked', pane("register")); return g ? g.value : ""; }
+  function regName() {
+    if (gender() === "f") {
+      var n = $("#rg-kunya-name").value.trim();
+      return n ? $("#rg-kunya-pre").value + " " + n : "";
+    }
+    return $("#rg-name").value.trim();
+  }
   var nameTimer = null, nameState = { value: "", free: null };
   function nameHint(text, kind) {
-    var h = $("#rg-name-hint");
+    var f = gender() === "f";
+    var h = f ? $("#rg-kunya-hint") : $("#rg-name-hint");
     h.textContent = text;
     h.className = "hint" + (kind ? " " + kind : "");
-    $("#rg-name").setAttribute("aria-invalid", kind === "bad" ? "true" : "false");
+    (f ? $("#rg-kunya-name") : $("#rg-name")).setAttribute("aria-invalid", kind === "bad" ? "true" : "false");
   }
-  $("#rg-name").addEventListener("input", function (e) {
+  function checkRegName() {
     clearTimeout(nameTimer);
-    var v = e.target.value.trim();
+    var g = gender(), v = regName();
+    $("#rg-kunya-preview").textContent = g === "f" && v ? v : "–";
     nameState = { value: v, free: null };
-    if (!v) { nameHint("3–20 Zeichen: Buchstaben, Ziffern, _ . -. Jeden Namen gibt es nur einmal."); return; }
-    var err = B.checkName(v);
+    if (!v) { nameHint(g === "f" ? KUNYA_HINT : NAME_HINT); return; }
+    var err = B.checkName(v, g);
     if (err) { nameHint(err, "bad"); return; }
     nameHint("Prüfe, ob der Name frei ist …");
     nameTimer = setTimeout(function () {
       B.nameAvailable(v).then(function (free) {
-        if ($("#rg-name").value.trim() !== v) return;
+        if (regName() !== v) return;
         nameState = { value: v, free: free };
         nameHint(free ? "„" + v + "“ ist frei." : "„" + v + "“ ist schon vergeben. Wähle einen anderen Namen.", free ? "good" : "bad");
       }, function () { nameHint("Konnte nicht prüfen, ob der Name frei ist.", "bad"); });
     }, 350);
-  });
+  }
+  function showNameFields() {
+    var g = gender();
+    $("#rg-name-wait").hidden = !!g;
+    $("#rg-name-plain").hidden = g !== "m";
+    $("#rg-kunya-wrap").hidden = g !== "f";
+    $("#rg-name-hint").textContent = NAME_HINT; $("#rg-name-hint").className = "hint";
+    $("#rg-kunya-hint").textContent = KUNYA_HINT; $("#rg-kunya-hint").className = "hint";
+    if (g) checkRegName();
+  }
+  $all('input[name="rg-gender"]', pane("register")).forEach(function (r) { r.addEventListener("change", showNameFields); });
+  ["#rg-name", "#rg-kunya-name"].forEach(function (sel) { $(sel).addEventListener("input", checkRegName); });
+  $("#rg-kunya-pre").addEventListener("change", checkRegName);
   var METER = [["0%", "var(--bad)"], ["25%", "var(--bad)"], ["50%", "var(--accent)"], ["75%", "var(--good)"], ["100%", "var(--good)"]];
   $("#rg-pw").addEventListener("input", function (e) {
     var v = e.target.value, s = v ? Math.max(1, B.passwordStrength(v)) : 0;
-    if (v && B.checkPassword(v, $("#rg-email").value, $("#rg-name").value)) s = 1;
+    if (v && B.checkPassword(v, $("#rg-email").value, regName())) s = 1;
     var m = $("#rg-meter");
     m.style.width = METER[s][0];
     m.style.background = METER[s][1];
-    var err = v ? B.checkPassword(v, $("#rg-email").value, $("#rg-name").value) : "";
+    var err = v ? B.checkPassword(v, $("#rg-email").value, regName()) : "";
     var hint = $("#rg-pw-hint");
     hint.textContent = err || (v ? ["", "Schwach", "Geht so – länger oder mit Sonderzeichen ist sicherer.", "Gut", "Sehr gut"][s] : "Mindestens 8 Zeichen mit Buchstaben und Ziffern. Länger ist sicherer.");
     hint.className = "hint" + (err ? " bad" : s >= 3 ? " good" : "");
@@ -115,20 +140,20 @@
     e.preventDefault();
     var f = e.target;
     if ($("#rg-website").value) return;   // bots fill the hidden field
-    var name = $("#rg-name").value.trim();
+    var g = gender();
+    var name = regName();
     var email = $("#rg-email").value.trim();
     var pw = $("#rg-pw").value, pw2 = $("#rg-pw2").value;
-    var g = $('input[name="rg-gender"]:checked', f);
     var year = +$("#rg-year").value;
     var problems = [];
-    var nameErr = B.checkName(name);
+    var nameErr = !g ? "" : !name ? (g === "f" ? "Bitte deine Kunya vervollständigen (z. B. Bint Ömer)." : "Bitte einen Spielernamen eingeben.") : B.checkName(name, g);
+    if (!g) problems.push("Bitte angeben, ob du ein Mann oder eine Frau bist.");
     if (nameErr) problems.push(nameErr);
     else if (nameState.value === name && nameState.free === false) problems.push("Der Spielername ist schon vergeben.");
     if (!emailOk(email)) problems.push("Bitte eine gültige E-Mail-Adresse eingeben.");
     var pwErr = B.checkPassword(pw, email, name);
     if (pwErr) problems.push("Passwort: " + pwErr);
     else if (pw !== pw2) problems.push("Die beiden Passwörter stimmen nicht überein.");
-    if (!g) problems.push("Bitte angeben, ob du ein Mann oder eine Frau bist.");
     if (!year) problems.push("Bitte dein Geburtsjahr wählen.");
     else if (age(year) < 16 && !$("#rg-parent").checked) problems.push("Unter 16 Jahren brauchst du das Einverständnis deiner Eltern.");
     if (!$("#rg-terms").checked) problems.push("Bitte den Datenschutzhinweisen und Regeln zustimmen.");
@@ -136,12 +161,12 @@
 
     busy(f, true);
     msg(f, "Konto wird erstellt …");
-    B.register({ name: name, email: email, password: pw, gender: g.value, birthYear: year, parentalConsent: age(year) < 16 }).then(function () {
+    B.register({ name: name, email: email, password: pw, gender: g, birthYear: year, parentalConsent: age(year) < 16 }).then(function () {
       busy(f, false);
       f.reset();
       $("#rg-meter").style.width = "0";
       $("#rg-parent-wrap").hidden = true;
-      nameHint("3–20 Zeichen: Buchstaben, Ziffern, _ . -. Jeden Namen gibt es nur einmal.");
+      showNameFields();
       authUser = B.currentUser() || authUser;
       show("verify");
       msg("verify", "Willkommen, " + name + "! Dein Konto ist angelegt.", "good");
