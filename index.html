@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fiqh-Kompass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700;800&family=Amiri:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+:root {
+  --ground: #eef2ef;
+  --surface: #ffffff;
+  --surface-2: #f6f8f6;
+  --ink: #16211d;
+  --muted: #56665f;
+  --line: #d6dfda;
+  --primary: #0e5a52;
+  --primary-ink: #ffffff;
+  --primary-soft: #dcebe7;
+  --accent: #a8751d;
+  --accent-soft: #f5ead3;
+  --good: #2c7a4b;
+  --good-soft: #e2f1e7;
+  --bad: #b0413a;
+  --bad-soft: #f8e4e1;
+  --shadow: 0 1px 2px rgba(14, 40, 34, .06), 0 8px 24px rgba(14, 40, 34, .06);
+  --display: "Alegreya", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --arabic: "Amiri", "Traditional Arabic", "Geeza Pro", serif;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #0c1412;
+    --surface: #141f1c;
+    --surface-2: #192622;
+    --ink: #e2ebe7;
+    --muted: #97a8a1;
+    --line: #293733;
+    --primary: #5cb8a9;
+    --primary-ink: #06201b;
+    --primary-soft: #183530;
+    --accent: #e3b65c;
+    --accent-soft: #34291a;
+    --good: #6ccb90;
+    --good-soft: #16301f;
+    --bad: #ef8a80;
+    --bad-soft: #3a1c1a;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #0c1412;
+  --surface: #141f1c;
+  --surface-2: #192622;
+  --ink: #e2ebe7;
+  --muted: #97a8a1;
+  --line: #293733;
+  --primary: #5cb8a9;
+  --primary-ink: #06201b;
+  --primary-soft: #183530;
+  --accent: #e3b65c;
+  --accent-soft: #34291a;
+  --good: #6ccb90;
+  --good-soft: #16301f;
+  --bad: #ef8a80;
+  --bad-soft: #3a1c1a;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 16px/1.6 var(--body);
+}
+[hidden] { display: none !important; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+@media (max-width: 480px) { .wrap { padding-inline: 16px; } }
+
+/* ---------- header ---------- */
+.masthead {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.masthead .wrap { display: flex; align-items: center; gap: 16px; padding-block: 10px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; margin-right: auto; text-decoration: none; color: inherit; }
+.brand svg { width: 34px; height: 34px; flex: none; }
+.brand-name { font: 800 1.35rem/1 var(--display); letter-spacing: .01em; }
+.brand-name span { color: var(--primary); }
+.tabs { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+.tab {
+  border: 0; background: transparent; padding: 7px 16px; border-radius: 999px; cursor: pointer;
+  font-weight: 600; color: var(--muted);
+}
+.tab[aria-selected="true"] { background: var(--primary); color: var(--primary-ink); }
+
+/* ---------- intro strip ---------- */
+.intro { padding-block: 28px 8px; }
+.intro h1 { font: 800 clamp(1.9rem, 4vw, 2.7rem)/1.1 var(--display); margin: 0 0 8px; text-wrap: balance; }
+.intro p { margin: 0; color: var(--muted); max-width: 64ch; }
+.stats { display: flex; gap: 22px; margin-top: 14px; flex-wrap: wrap; color: var(--muted); font-size: .92rem; }
+.stats b { color: var(--ink); font-variant-numeric: tabular-nums; font-size: 1.05rem; }
+
+/* ---------- lookup ---------- */
+.lookup { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 32px; padding-block: 20px 60px; align-items: start; }
+.side { position: sticky; top: 74px; display: grid; gap: 14px; max-height: calc(100vh - 90px); overflow: auto; padding-bottom: 8px; }
+.search { position: relative; }
+.search input {
+  width: 100%; padding: 11px 14px 11px 40px; border-radius: var(--radius);
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit;
+}
+.search svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--muted); }
+.topic-nav { display: grid; gap: 2px; }
+.topic-link {
+  display: grid; grid-template-columns: 1fr auto; grid-template-areas: "title ar" "meta ar";
+  text-align: left; border: 0; background: transparent; padding: 9px 12px; border-radius: 8px; cursor: pointer; column-gap: 10px;
+}
+.topic-link:hover { background: var(--surface); }
+.topic-link[aria-current="true"] { background: var(--surface); box-shadow: inset 3px 0 0 var(--primary); }
+.tl-title { grid-area: title; font-weight: 600; line-height: 1.3; }
+.tl-meta { grid-area: meta; font-size: .8rem; color: var(--muted); }
+.tl-ar { grid-area: ar; font: 400 1.05rem/1.2 var(--arabic); color: var(--primary); align-self: center; }
+
+.article { min-width: 0; }
+.article-head { padding-bottom: 10px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.eyebrow { margin: 0 0 4px; text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; font-weight: 700; color: var(--accent); }
+.article h2 { font: 800 clamp(1.7rem, 3.2vw, 2.3rem)/1.15 var(--display); margin: 0 0 8px; text-wrap: balance; }
+.h-ar { font: 700 .85em/1 var(--arabic); color: var(--primary); margin-inline-start: 8px; white-space: nowrap; }
+.lede { margin: 0 0 14px; color: var(--muted); max-width: 68ch; font-size: 1.05rem; }
+.article-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.toc { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.toc a {
+  font-size: .85rem; text-decoration: none; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); padding: 3px 10px; border-radius: 999px;
+}
+.toc a:hover { border-color: var(--primary); color: var(--primary); }
+.entry { padding-block: 18px 6px; border-bottom: 1px solid var(--line); scroll-margin-top: 80px; }
+.entry:last-child { border-bottom: 0; }
+.entry h3 { font: 700 1.3rem/1.25 var(--display); margin: 0 0 8px; text-wrap: balance; }
+.entry ul { margin: 0; padding-left: 1.1em; max-width: 72ch; }
+.entry li { margin-bottom: 7px; }
+.entry li::marker { color: var(--accent); }
+.entry strong { font-weight: 700; color: var(--ink); }
+mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-radius: 3px; }
+.hit-topic { margin: 0 0 2px; font-size: .85rem; color: var(--muted); }
+.linkish { border: 0; background: none; padding: 0; color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 860px) {
+  .lookup { grid-template-columns: 1fr; gap: 16px; }
+  .side { position: static; max-height: none; overflow: visible; }
+  .topic-nav { display: flex; overflow-x: auto; gap: 6px; padding-bottom: 6px; scroll-snap-type: x proximity; }
+  .topic-link { flex: none; background: var(--surface); border: 1px solid var(--line); scroll-snap-align: start; max-width: 230px; }
+  .topic-link[aria-current="true"] { box-shadow: inset 0 -3px 0 var(--primary); }
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  border: 1px solid var(--line); background: var(--surface); padding: 10px 18px; border-radius: var(--radius);
+  font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn:hover { border-color: var(--primary); }
+.btn-primary { background: var(--primary); border-color: var(--primary); color: var(--primary-ink); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn:disabled { opacity: .5; cursor: not-allowed; filter: none; }
+.btn-lg { padding: 13px 26px; font-size: 1.05rem; }
+
+/* ---------- quiz setup ---------- */
+.quiz { padding-block: 20px 60px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+.setup { display: grid; gap: 26px; padding: 26px; }
+@media (max-width: 480px) { .setup { padding: 18px; } }
+.setup h2 { font: 800 1.8rem/1.15 var(--display); margin: 0; }
+.step-label { margin: 0 0 10px; font-weight: 700; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .modes { grid-template-columns: 1fr; } }
+.mode {
+  text-align: left; border: 1.5px solid var(--line); background: var(--surface-2); border-radius: 12px; padding: 16px 18px;
+  cursor: pointer; display: grid; gap: 4px;
+}
+.mode strong { font: 700 1.2rem/1.2 var(--display); }
+.mode span { color: var(--muted); font-size: .93rem; }
+.mode[aria-pressed="true"] { border-color: var(--primary); background: var(--primary-soft); }
+.chips-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.chips-head .step-label { margin-right: auto; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--surface-2);
+  padding: 7px 12px; border-radius: 999px; cursor: pointer; font-weight: 600; font-size: .95rem;
+}
+.chip-check { width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid var(--muted); display: inline-block; flex: none; }
+.chip[aria-pressed="true"] { border-color: var(--primary); background: var(--primary-soft); }
+.chip[aria-pressed="true"] .chip-check { background: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 3px var(--primary-soft); }
+.chip-count { font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.note { margin: 0; color: var(--muted); max-width: 64ch; }
+.segmented { display: inline-flex; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.segmented button { border: 0; background: var(--surface-2); padding: 9px 20px; cursor: pointer; font-weight: 700; font-variant-numeric: tabular-nums; }
+.segmented button + button { border-left: 1px solid var(--line); }
+.segmented button[aria-pressed="true"] { background: var(--primary); color: var(--primary-ink); }
+.start-row { display: flex; align-items: center; gap: 16px 20px; flex-wrap: wrap; padding-top: 18px; border-top: 1px solid var(--line); }
+.start-meta { display: grid; gap: 2px; font-size: .92rem; color: var(--muted); }
+.start-meta #setup-summary { color: var(--ink); font-weight: 600; }
+.rules { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .88rem; color: var(--muted); margin: 0; padding: 0; list-style: none; }
+.rules li::before { content: "◆"; color: var(--accent); font-size: .65em; margin-right: 7px; vertical-align: .2em; }
+
+/* ---------- quiz play ---------- */
+.play { max-width: 760px; margin: 0 auto; display: grid; gap: 16px; }
+.hud { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.hud-progress { flex: 1 1 200px; display: grid; gap: 6px; }
+.hud-progress small { color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; }
+.bar { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--primary); border-radius: 99px; transition: width .35s ease; }
+.score-pill {
+  display: flex; align-items: baseline; gap: 6px; background: var(--accent-soft); color: var(--ink);
+  padding: 6px 14px; border-radius: 999px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.score-pill b { font: 800 1.3rem/1 var(--display); color: var(--accent); }
+.streak { background: var(--good-soft); color: var(--good); padding: 5px 12px; border-radius: 999px; font-weight: 700; font-size: .88rem; }
+.timer {
+  --p: 1; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; flex: none;
+  background: conic-gradient(var(--primary) calc(var(--p) * 360deg), var(--line) 0);
+}
+.timer.low { background: conic-gradient(var(--bad) calc(var(--p) * 360deg), var(--line) 0); }
+.timer span { width: 38px; height: 38px; border-radius: 50%; background: var(--ground); display: grid; place-items: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.qcard { padding: 26px; display: grid; gap: 18px; }
+@media (max-width: 480px) { .qcard { padding: 18px; } }
+.q-topic { justify-self: start; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--primary); background: var(--primary-soft); padding: 3px 10px; border-radius: 6px; }
+.q-text { font: 700 clamp(1.3rem, 2.6vw, 1.6rem)/1.3 var(--display); margin: 0; text-wrap: balance; }
+.options { display: grid; gap: 10px; }
+.option {
+  display: flex; align-items: flex-start; gap: 12px; text-align: left; padding: 13px 14px; border-radius: 10px;
+  border: 1.5px solid var(--line); background: var(--surface-2); cursor: pointer; line-height: 1.4;
+  transition: border-color .15s, background .15s, transform .1s;
+}
+.option:hover:not(:disabled) { border-color: var(--primary); transform: translateY(-1px); }
+.opt-key {
+  flex: none; width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center; font-weight: 700; font-size: .85rem;
+  background: var(--surface); border: 1px solid var(--line); color: var(--muted);
+}
+.opt-text { padding-top: 2px; }
+.option:disabled { cursor: default; }
+.option.struck { opacity: .35; text-decoration: line-through; }
+.option.is-correct { border-color: var(--good); background: var(--good-soft); }
+.option.is-correct .opt-key { background: var(--good); border-color: var(--good); color: var(--surface); }
+.option.is-wrong { border-color: var(--bad); background: var(--bad-soft); }
+.option.is-wrong .opt-key { background: var(--bad); border-color: var(--bad); color: var(--surface); }
+.q-tools { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.feedback { border-radius: 12px; padding: 16px 18px; display: grid; gap: 6px; border: 1px solid; }
+.feedback.good { background: var(--good-soft); border-color: color-mix(in srgb, var(--good) 40%, transparent); }
+.feedback.bad { background: var(--bad-soft); border-color: color-mix(in srgb, var(--bad) 40%, transparent); }
+.fb-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.fb-head strong { font: 800 1.25rem/1.2 var(--display); }
+.feedback.good .fb-head strong { color: var(--good); }
+.feedback.bad .fb-head strong { color: var(--bad); }
+.fb-points { font-weight: 700; font-variant-numeric: tabular-nums; font-size: .9rem; white-space: pre; }
+.feedback p { margin: 0; }
+.fb-source { font-size: .83rem; color: var(--muted); }
+.feedback .btn { justify-self: start; margin-top: 6px; }
+.kbd-hint { font-size: .8rem; color: var(--muted); text-align: center; margin: 0; }
+@media (hover: none) { .kbd-hint { display: none; } }
+
+/* ---------- result ---------- */
+.result { max-width: 760px; margin: 0 auto; display: grid; gap: 18px; }
+.result-card { padding: 30px 26px; display: grid; gap: 18px; justify-items: center; text-align: center; position: relative; overflow: hidden; }
+.result-card::before {
+  content: ""; position: absolute; inset: -40% -10% auto auto; width: 320px; height: 320px; opacity: .07;
+  background: var(--primary);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 2l13 19 22-6-6 22 19 13-19 13 6 22-22-6-13 19-13-19-22 6 6-22L2 50l19-13-6-22 22 6z'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 2l13 19 22-6-6 22 19 13-19 13 6 22-22-6-13 19-13-19-22 6 6-22L2 50l19-13-6-22 22 6z'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.stars { display: flex; gap: 10px; }
+.star { width: 44px; height: 44px; color: var(--line); }
+.star.on { color: var(--accent); }
+.star svg { width: 100%; height: 100%; display: block; }
+.big-score { font: 800 clamp(3rem, 9vw, 4.4rem)/1 var(--display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.big-sub { color: var(--muted); margin-top: -10px; }
+.rank { font: 700 1.35rem/1.25 var(--display); color: var(--primary); margin: 0; text-wrap: balance; }
+.rank-note { margin: 0; color: var(--muted); max-width: 52ch; }
+.new-best { background: var(--accent); color: var(--surface); font-weight: 800; padding: 4px 12px; border-radius: 999px; font-size: .85rem; letter-spacing: .04em; }
+.facts { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.fact { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 18px; min-width: 130px; }
+.fact b { display: block; font: 800 1.5rem/1.1 var(--display); font-variant-numeric: tabular-nums; }
+.fact span { font-size: .82rem; color: var(--muted); }
+.result-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.review-wrap { padding: 22px 24px; }
+.review-wrap h3 { font: 700 1.3rem/1.2 var(--display); margin: 0 0 6px; }
+.review { list-style: none; margin: 0; padding: 0; display: grid; }
+.review-item { padding-block: 14px; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.review-item p { margin: 0; }
+.rv-q { font-weight: 700; }
+.rv-label { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; padding: 1px 7px; border-radius: 5px; margin-right: 6px; }
+.rv-label.good { background: var(--good-soft); color: var(--good); }
+.rv-label.bad { background: var(--bad-soft); color: var(--bad); }
+.rv-e { color: var(--muted); font-size: .94rem; }
+.review-item .linkish { justify-self: start; font-size: .9rem; }
+
+.foot { border-top: 1px solid var(--line); padding-block: 20px 34px; color: var(--muted); font-size: .85rem; }
+.foot p { margin: 0; max-width: 80ch; }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="#nachschlagen" aria-label="Fiqh-Kompass">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M50 2l13 19 22-6-6 22 19 13-19 13 6 22-22-6-13 19-13-19-22 6 6-22L2 50l19-13-6-22 22 6z" fill="var(--primary)"/>
+        <circle cx="50" cy="50" r="19" fill="var(--ground)"/>
+        <path d="M50 34l5 16-5 16-5-16z" fill="var(--accent)"/>
+      </svg>
+      <span class="brand-name">Fiqh-<span>Kompass</span></span>
+    </a>
+    <nav class="tabs" role="tablist" aria-label="Bereich">
+      <button type="button" class="tab" role="tab" data-view="nachschlagen" aria-selected="true">Nachschlagen</button>
+      <button type="button" class="tab" role="tab" data-view="quiz" aria-selected="false">Quiz</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ================= NACHSCHLAGEN ================= -->
+  <section id="view-lookup" aria-label="Nachschlagen">
+    <div class="wrap intro">
+      <h1>Alle Fiqh-Themen zum Nachschlagen</h1>
+      <p>Zusammengefasst aus dem Fiqh-Unterricht, von den Quellen des Rechts bis zum Ramadan. Der Schwerpunkt liegt auf der hanafitischen Rechtsschule, Unterschiede zu den anderen Madhabs sind jeweils genannt.</p>
+      <div class="stats"><span><b id="stat-topics">11</b> Themengebiete</span><span><b id="stat-sections">0</b> Abschnitte</span><span><b id="stat-questions">0</b> Quizfragen</span></div>
+    </div>
+    <div class="wrap lookup">
+      <aside class="side">
+        <form class="search" id="search-form" role="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="search" type="search" aria-label="Themen durchsuchen" placeholder="Suchen, z. B. Mest, Qibla, Kaffāra" autocomplete="off">
+        </form>
+        <nav class="topic-nav" id="topic-nav" aria-label="Themengebiete"></nav>
+      </aside>
+      <article class="article" id="article" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section id="view-quiz" aria-label="Quiz" hidden>
+    <div class="wrap quiz">
+
+      <div id="quiz-setup" class="panel setup">
+        <div>
+          <p class="eyebrow">Fiqh-Quiz</p>
+          <h2>Teste dein Wissen</h2>
+        </div>
+
+        <div>
+          <p class="step-label">Modus</p>
+          <div class="modes">
+            <button type="button" class="mode" data-mode="topic" aria-pressed="true">
+              <strong>Themenquiz</strong>
+              <span>Du wählst ein oder mehrere Themengebiete, z. B. nur Wuḍūʾ oder Gebet und Fasten.</span>
+            </button>
+            <button type="button" class="mode" data-mode="mixed" aria-pressed="false">
+              <strong>Gemischt</strong>
+              <span>Fragen quer durch alle Themengebiete, gleichmäßig verteilt.</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="topic-picker">
+          <div class="chips-head">
+            <p class="step-label">Themengebiete</p>
+            <button type="button" class="linkish" id="select-all">Alle wählen</button>
+            <button type="button" class="linkish" id="select-none">Keine</button>
+          </div>
+          <div class="chips" id="topic-chips"></div>
+        </div>
+        <p class="note" id="mixed-note" hidden>Im gemischten Modus kommen die Fragen aus allen Themengebieten, von den Quellen des Fiqh bis zum Iʿtikāf.</p>
+
+        <div>
+          <p class="step-label">Anzahl Fragen</p>
+          <div class="segmented" role="group" aria-label="Anzahl Fragen">
+            <button type="button" data-count="5" aria-pressed="true">5</button>
+            <button type="button" data-count="10" aria-pressed="false">10</button>
+            <button type="button" data-count="15" aria-pressed="false">15</button>
+          </div>
+        </div>
+
+        <ul class="rules">
+          <li>100 Punkte pro richtiger Antwort</li>
+          <li>bis zu +50 Zeitbonus (30 Sekunden)</li>
+          <li>+20 pro Serie, bis +80</li>
+          <li>ein 50:50-Joker pro Runde</li>
+        </ul>
+
+        <div class="start-row">
+          <button type="button" class="btn btn-primary btn-lg" id="start-quiz">Quiz starten</button>
+          <div class="start-meta">
+            <span id="setup-summary"></span>
+            <span id="setup-best"></span>
+          </div>
+        </div>
+      </div>
+
+      <div id="quiz-play" class="play" hidden>
+        <div class="hud">
+          <div class="hud-progress">
+            <small id="q-progress-text">Frage 1 von 5</small>
+            <div class="bar"><span id="q-bar" style="width:0%"></span></div>
+          </div>
+          <span class="streak" id="q-streak" hidden></span>
+          <div class="score-pill"><b id="q-score">0</b> Punkte</div>
+          <div class="timer" id="q-timer" aria-label="Verbleibende Sekunden für den Zeitbonus"><span id="q-timer-text">30</span></div>
+        </div>
+
+        <div class="panel qcard">
+          <span class="q-topic" id="q-topic"></span>
+          <h2 class="q-text" id="q-text"></h2>
+          <div class="options" id="q-options"></div>
+
+          <div class="feedback" id="q-feedback" hidden aria-live="polite">
+            <div class="fb-head"><strong id="fb-title"></strong><span class="fb-points" id="fb-points"></span></div>
+            <p id="fb-text"></p>
+            <p class="fb-source" id="fb-source"></p>
+            <button type="button" class="btn btn-primary" id="next-q">Nächste Frage</button>
+          </div>
+
+          <div class="q-tools">
+            <button type="button" class="btn" id="joker">50:50-Joker</button>
+            <button type="button" class="btn" id="quit-quiz">Abbrechen</button>
+          </div>
+        </div>
+        <p class="kbd-hint">Tasten 1–4 zum Antworten, Enter für weiter</p>
+      </div>
+
+      <div id="quiz-result" class="result" hidden>
+        <div class="panel result-card">
+          <div class="stars" aria-hidden="true">
+            <span class="star"><svg viewBox="0 0 100 100"><path fill="currentColor" d="M50 2l13 19 22-6-6 22 19 13-19 13 6 22-22-6-13 19-13-19-22 6 6-22L2 50l19-13-6-22 22 6z"/></svg></span>
+            <span class="star"><svg viewBox="0 0 100 100"><path fill="currentColor" d="M50 2l13 19 22-6-6 22 19 13-19 13 6 22-22-6-13 19-13-19-22 6 6-22L2 50l19-13-6-22 22 6z"/></svg></span>
+            <span class="star"><svg viewBox="0 0 100 100"><path fill="currentColor" d="M50 2l13 19 22-6-6 22 19 13-19 13 6 22-22-6-13 19-13-19-22 6 6-22L2 50l19-13-6-22 22 6z"/></svg></span>
+          </div>
+          <span class="new-best" id="r-best" hidden>Neuer Bestwert</span>
+          <div class="big-score" id="r-score">0</div>
+          <div class="big-sub" id="r-max"></div>
+          <p class="rank" id="r-rank"></p>
+          <p class="rank-note" id="r-note"></p>
+          <div class="facts">
+            <div class="fact"><b id="r-correct">0 / 0</b><span>richtig</span></div>
+            <div class="fact"><b id="r-streak">0</b><span>längste Serie</span></div>
+          </div>
+          <div class="result-actions">
+            <button type="button" class="btn btn-primary" id="again">Nochmal mit neuen Fragen</button>
+            <button type="button" class="btn" id="to-setup">Anderes Thema wählen</button>
+          </div>
+        </div>
+        <div class="panel review-wrap">
+          <h3 id="review-title">Zum Nachlesen</h3>
+          <ul class="review" id="review"></ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Grundlage: die Folien „Fiqh Unterricht 1–16“. Die Seite ist eine Lernhilfe und ersetzt nicht den Unterricht. Bei konkreten Fragen wende dich an deine Lehrkraft oder eine Gelehrte bzw. einen Gelehrten.</p>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
