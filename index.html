@@ -131,7 +131,14 @@ button { font: inherit; color: inherit; }
 .topic-link[aria-current="true"] { background: var(--surface); box-shadow: inset 3px 0 0 var(--primary); }
 .tl-title { grid-area: title; font-weight: 600; line-height: 1.3; }
 .tl-meta { grid-area: meta; font-size: .8rem; color: var(--muted); }
-.tl-ar { grid-area: ar; font: 400 1.05rem/1.2 var(--arabic); color: var(--primary); align-self: center; }
+.tl-ar { grid-area: ar; font: 400 1.05rem/1.25 var(--arabic); color: var(--primary); align-self: center; max-width: 6.5em; text-align: end; }
+.nav-group { margin: 12px 0 2px; padding: 0 12px; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.nav-group:first-child { margin-top: 2px; }
+.src-badge {
+  display: inline-block; vertical-align: .2em; margin-inline-start: 8px; padding: 1px 8px; border-radius: 999px;
+  font: 600 .7rem/1.6 var(--body); letter-spacing: .02em; white-space: nowrap;
+  color: var(--accent); background: var(--accent-soft);
+}
 
 .article { min-width: 0; }
 .article-head { padding-bottom: 10px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
@@ -163,6 +170,8 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
   .topic-nav { display: flex; overflow-x: auto; gap: 6px; padding-bottom: 6px; scroll-snap-type: x proximity; }
   .topic-link { flex: none; background: var(--surface); border: 1px solid var(--line); scroll-snap-align: start; max-width: 230px; }
   .topic-link[aria-current="true"] { box-shadow: inset 0 -3px 0 var(--primary); }
+  .nav-group { flex: none; align-self: center; margin: 0; padding: 0 2px 0 8px; writing-mode: vertical-rl; transform: rotate(180deg); font-size: .62rem; letter-spacing: .08em; }
+  .nav-group:first-child { padding-left: 0; }
 }
 
 /* ---------- buttons ---------- */
@@ -203,6 +212,10 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
 .chip[aria-pressed="true"] { border-color: var(--primary); background: var(--primary-soft); }
 .chip[aria-pressed="true"] .chip-check { background: var(--primary); border-color: var(--primary); box-shadow: inset 0 0 0 3px var(--primary-soft); }
 .chip-count { font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+#topic-chips { display: grid; gap: 14px; }
+.chip-group { display: grid; gap: 6px; }
+.chip-group-head { display: flex; align-items: baseline; gap: 10px; font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.chip-group-head .linkish { font-size: .8rem; letter-spacing: 0; text-transform: none; font-weight: 600; }
 .note { margin: 0; color: var(--muted); max-width: 64ch; }
 .segmented { display: inline-flex; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
 .segmented button { border: 0; background: var(--surface-2); padding: 9px 20px; cursor: pointer; font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -333,8 +346,8 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
   <section id="view-lookup" aria-label="Nachschlagen">
     <div class="wrap intro">
       <h1>Alle Fiqh-Themen zum Nachschlagen</h1>
-      <p>Zusammengefasst aus dem Fiqh-Unterricht, von den Quellen des Rechts bis zum Ramadan. Der Schwerpunkt liegt auf der hanafitischen Rechtsschule, Unterschiede zu den anderen Madhabs sind jeweils genannt.</p>
-      <div class="stats"><span><b id="stat-topics">11</b> Themengebiete</span><span><b id="stat-sections">0</b> Abschnitte</span><span><b id="stat-questions">0</b> Quizfragen</span></div>
+      <p>Zusammengefasst aus dem Fiqh-Unterricht und vertieft mit dem „Delilleriyle İslâm İlmihali“ von Hamdi Döndüren: von den Quellen des Rechts und dem Īmān über Reinheit, Gebet und Fasten bis zu Zakāt, Ḥaǧǧ, Opfer, Familie und Handel. Der Schwerpunkt liegt auf der hanafitischen Rechtsschule, Unterschiede zu den anderen Madhabs sind jeweils genannt. Abschnitte aus dem Buch tragen die Seitenzahl als Marke.</p>
+      <div class="stats"><span><b id="stat-topics">25</b> Themengebiete</span><span><b id="stat-sections">0</b> Abschnitte</span><span><b id="stat-questions">0</b> Quizfragen</span></div>
     </div>
     <div class="wrap lookup">
       <aside class="side">
@@ -380,7 +393,7 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
           </div>
           <div class="chips" id="topic-chips"></div>
         </div>
-        <p class="note" id="mixed-note" hidden>Im gemischten Modus kommen die Fragen aus allen Themengebieten, von den Quellen des Fiqh bis zum Iʿtikāf.</p>
+        <p class="note" id="mixed-note" hidden>Im gemischten Modus kommen die Fragen aus allen Themengebieten, von den Quellen des Fiqh bis zu Handel und Ǧihād – gleichmäßig über die Themen verteilt.</p>
 
         <div>
           <p class="step-label">Anzahl Fragen</p>
@@ -471,11 +484,21 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
 
 <footer class="foot">
   <div class="wrap">
-    <p>Grundlage: die Folien „Fiqh Unterricht 1–16“. Die Seite ist eine Lernhilfe und ersetzt nicht den Unterricht. Bei konkreten Fragen wende dich an deine Lehrkraft oder eine Gelehrte bzw. einen Gelehrten.</p>
+    <p>Grundlage: die Folien „Fiqh Unterricht 1–16“ und Hamdi Döndüren, „Delilleriyle İslâm İlmihali“. Die Seite ist eine Lernhilfe und ersetzt nicht den Unterricht. Bei konkreten Fragen wende dich an deine Lehrkraft oder eine Gelehrte bzw. einen Gelehrten.</p>
   </div>
 </footer>
 
 <script src="data.js"></script>
+<script src="buch/01-grundlagen.js"></script>
+<script src="buch/02-iman.js"></script>
+<script src="buch/03-tahara-wudhu.js"></script>
+<script src="buch/04-ghusl-tayammum-frauen.js"></script>
+<script src="buch/05-gebet.js"></script>
+<script src="buch/06-gebet-2.js"></script>
+<script src="buch/07-fasten.js"></script>
+<script src="buch/08-zakat.js"></script>
+<script src="buch/09-hajj-qurban.js"></script>
+<script src="buch/10-alltag.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

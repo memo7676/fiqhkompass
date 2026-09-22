@@ -6,6 +6,37 @@
   var TOPIC_BY_ID = {};
   TOPICS.forEach(function (t) { TOPIC_BY_ID[t.id] = t; });
 
+  /* Topics are grouped into Sachgebiete; unknown ids fall into "Weitere". */
+  var GROUPS = [
+    { name: "Glaube & Grundlagen", ids: ["quellen", "madhabs", "ahkam", "iman"] },
+    { name: "Reinheit", ids: ["tahara", "wudhu", "ghusl", "tayammum", "frauen"] },
+    { name: "Gebet", ids: ["gebet", "ablauf", "adhan", "jamaa", "jumua", "nawafil", "sujud", "janaza"] },
+    { name: "Fasten", ids: ["fasten", "kaffara"] },
+    { name: "Zakāt & Ḥaǧǧ", ids: ["zakat", "hajj", "qurban"] },
+    { name: "Alltag & Gesellschaft", ids: ["familie", "wirtschaft", "alltag"] }
+  ];
+  (function () {
+    var placed = {};
+    GROUPS.forEach(function (g) {
+      g.topics = g.ids.map(function (id) { return TOPIC_BY_ID[id]; }).filter(Boolean);
+      g.topics.forEach(function (t) { placed[t.id] = true; });
+    });
+    var rest = TOPICS.filter(function (t) { return !placed[t.id]; });
+    if (rest.length) GROUPS.push({ name: "Weitere", topics: rest });
+    GROUPS = GROUPS.filter(function (g) { return g.topics.length; });
+    TOPICS = [];
+    GROUPS.forEach(function (g) { TOPICS = TOPICS.concat(g.topics); });
+  })();
+
+  var BOOK = "İlmihal (H. Döndüren)";
+  function hasBook(t) { return t.sections.some(function (s) { return s.src; }); }
+  function topicSource(t) {
+    return hasBook(t) && t.lessons.indexOf("İlmihal") === -1 ? t.lessons + " · ergänzt aus dem İlmihal" : t.lessons;
+  }
+  function srcBadge(s) {
+    return s.src ? ' <span class="src-badge" title="' + esc(BOOK) + '">' + esc(s.src) + "</span>" : "";
+  }
+
   var QUESTION_SECONDS = 30;
   var BASE_POINTS = 100;
   var MAX_TIME_BONUS = 50;
@@ -66,11 +97,13 @@
 
   function renderTopicNav() {
     var nav = $("#topic-nav");
-    nav.innerHTML = TOPICS.map(function (t) {
-      return '<button type="button" class="topic-link" data-topic="' + t.id + '">' +
-        '<span class="tl-ar" lang="ar" dir="rtl">' + esc(t.ar) + "</span>" +
-        '<span class="tl-title">' + esc(t.title) + "</span>" +
-        '<span class="tl-meta">' + esc(t.lessons) + "</span></button>";
+    nav.innerHTML = GROUPS.map(function (g) {
+      return '<p class="nav-group">' + esc(g.name) + "</p>" + g.topics.map(function (t) {
+        return '<button type="button" class="topic-link" data-topic="' + t.id + '">' +
+          '<span class="tl-ar" lang="ar" dir="rtl">' + esc(t.ar) + "</span>" +
+          '<span class="tl-title">' + esc(t.title) + "</span>" +
+          '<span class="tl-meta">' + esc(topicSource(t)) + "</span></button>";
+      }).join("");
     }).join("");
     $all(".topic-link", nav).forEach(function (b) {
       b.addEventListener("click", function () {
@@ -89,7 +122,7 @@
       b.setAttribute("aria-current", b.getAttribute("data-topic") === id ? "true" : "false");
     });
     var html = '<header class="article-head">' +
-      '<p class="eyebrow">' + esc(t.lessons) + "</p>" +
+      '<p class="eyebrow">' + esc(topicSource(t)) + "</p>" +
       '<h2>' + esc(t.title) + ' <span class="h-ar" lang="ar" dir="rtl">' + esc(t.ar) + "</span></h2>" +
       '<p class="lede">' + esc(t.intro) + "</p>" +
       '<div class="article-actions">' +
@@ -99,7 +132,7 @@
         return '<a href="#" data-jump="sec-' + t.id + "-" + i + '">' + esc(s.h) + "</a>";
       }).join("") + "</nav></header>";
     html += t.sections.map(function (s, i) {
-      return '<section class="entry" id="sec-' + t.id + "-" + i + '"><h3>' + esc(s.h) + "</h3><ul>" +
+      return '<section class="entry" id="sec-' + t.id + "-" + i + '"><h3>' + esc(s.h) + srcBadge(s) + "</h3><ul>" +
         s.li.map(function (li) { return "<li>" + fmt(li) + "</li>"; }).join("") + "</ul></section>";
     }).join("");
     var art = $("#article");
@@ -167,7 +200,7 @@
       '<p class="lede">' + (total ? total + " Treffer in " + hits.length + " Abschnitten" : "Keine Treffer. Versuche einen anderen Begriff, z. B. „Mest“, „Qibla“ oder „Kaffāra“.") + "</p></header>";
     html += hits.map(function (h) {
       return '<section class="entry"><p class="hit-topic"><button type="button" class="linkish" data-open-topic="' + h.t.id + '">' +
-        esc(h.t.title) + "</button> · " + esc(h.t.lessons) + "</p><h3>" + esc(h.s.h) + "</h3><ul>" +
+        esc(h.t.title) + "</button> · " + esc(h.s.src || h.t.lessons) + "</p><h3>" + esc(h.s.h) + "</h3><ul>" +
         h.items.map(function (li) { return "<li>" + highlight(li, rawTerms) + "</li>"; }).join("") + "</ul></section>";
     }).join("");
     art.innerHTML = html;
@@ -210,12 +243,29 @@
     $("#mixed-note").hidden = setup.mode !== "mixed";
 
     var chips = $("#topic-chips");
-    chips.innerHTML = TOPICS.map(function (t) {
-      var on = setup.topics.indexOf(t.id) !== -1;
-      return '<button type="button" class="chip" data-chip="' + t.id + '" aria-pressed="' + on + '">' +
-        '<span class="chip-check" aria-hidden="true"></span>' + esc(t.title) +
-        '<span class="chip-count">' + countFor(t.id) + "</span></button>";
+    chips.innerHTML = GROUPS.map(function (g, gi) {
+      var allOn = g.topics.every(function (t) { return setup.topics.indexOf(t.id) !== -1; });
+      return '<div class="chip-group"><div class="chip-group-head"><span>' + esc(g.name) + "</span>" +
+        '<button type="button" class="linkish" data-chip-group="' + gi + '">' + (allOn ? "abwählen" : "alle wählen") + "</button></div>" +
+        '<div class="chips">' + g.topics.map(function (t) {
+          var on = setup.topics.indexOf(t.id) !== -1;
+          return '<button type="button" class="chip" data-chip="' + t.id + '" aria-pressed="' + on + '">' +
+            '<span class="chip-check" aria-hidden="true"></span>' + esc(t.title) +
+            '<span class="chip-count">' + countFor(t.id) + "</span></button>";
+        }).join("") + "</div></div>";
     }).join("");
+    $all("[data-chip-group]", chips).forEach(function (b) {
+      b.addEventListener("click", function () {
+        var g = GROUPS[+b.getAttribute("data-chip-group")];
+        var allOn = g.topics.every(function (t) { return setup.topics.indexOf(t.id) !== -1; });
+        g.topics.forEach(function (t) {
+          var i = setup.topics.indexOf(t.id);
+          if (allOn && i !== -1) setup.topics.splice(i, 1);
+          if (!allOn && i === -1) setup.topics.push(t.id);
+        });
+        renderSetup();
+      });
+    });
     $all("[data-chip]", chips).forEach(function (b) {
       b.addEventListener("click", function () {
         var id = b.getAttribute("data-chip");
@@ -399,7 +449,7 @@
     $("#fb-title").textContent = ok ? "Richtig!" : "Leider falsch";
     $("#fb-points").textContent = ok ? parts.join("  ") : "Die richtige Antwort ist markiert.";
     $("#fb-text").textContent = item.src.e;
-    $("#fb-source").textContent = "Quelle: " + TOPIC_BY_ID[item.src.t].lessons + " – " + TOPIC_BY_ID[item.src.t].title;
+    $("#fb-source").textContent = "Quelle: " + (item.src.src === "buch" ? BOOK : TOPIC_BY_ID[item.src.t].lessons) + " – " + TOPIC_BY_ID[item.src.t].title;
     $("#next-q").textContent = game.i + 1 < game.qs.length ? "Nächste Frage" : "Ergebnis ansehen";
     $("#q-score").textContent = game.score;
     $("#q-streak").textContent = game.streak > 1 ? game.streak + "er-Serie" : "";

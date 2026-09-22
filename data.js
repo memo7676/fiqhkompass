@@ -898,3 +898,21 @@ window.FIQH_QUESTIONS = [
   { t: "fasten", q: "Wie lange dauert ein gelobter (Naḏr-)Iʿtikāf nach den Hanafiten mindestens?", a: ["24 Stunden – mit Fasten", "Eine Stunde", "Zehn Tage", "Drei Tage"], c: 0, e: "Ein kurzer Aufenthalt mit Absicht ist ein mecāzī Iʿtikāf – mit Lohn, ohne Mindestdauer." },
   { t: "fasten", q: "Darf man nach hanafitischer Ansicht die sechs Schawwāl-Tage fasten, obwohl man noch Qaḍāʾ-Tage offen hat?", a: ["Ja – danach das Qaḍāʾ möglichst bald nachholen", "Nein, erst das Qaḍāʾ", "Nur mit Kaffāra", "Nur Männer"], c: 0, e: "Die Schawwāl-Tage sind zeitgebunden und verstreichen sonst." }
 ];
+
+/* Helfer, mit denen die Dateien in buch/ Inhalte aus
+   „Delilleriyle İslam İlmihali“ (Prof. Dr. Hamdi Döndüren) ergänzen. */
+window.FIQH = {
+  topic: function (id) {
+    for (var i = 0; i < window.FIQH_TOPICS.length; i++) if (window.FIQH_TOPICS[i].id === id) return window.FIQH_TOPICS[i];
+    return null;
+  },
+  addSections: function (id, sections) {
+    var t = this.topic(id);
+    if (!t) throw new Error("Unbekanntes Thema: " + id);
+    sections.forEach(function (s) { t.sections.push(s); });
+  },
+  addTopic: function (topic) { window.FIQH_TOPICS.push(topic); },
+  addQuestions: function (qs) {
+    qs.forEach(function (q) { q.src = q.src || "buch"; window.FIQH_QUESTIONS.push(q); });
+  }
+};
