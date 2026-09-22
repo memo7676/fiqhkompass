@@ -1,0 +1,198 @@
+/* Buch: Zekât ve Fıtır Sadakası (S. 446–515) */
+FIQH.addTopic({
+  id: "zakat",
+  title: "Zakāt & Ṣadaqat al-Fiṭr",
+  ar: "الزكاة وصدقة الفطر",
+  lessons: "İlmihal S. 446–515",
+  group: "Zakāt & Ḥaǧǧ",
+  intro: "Was Zakāt ist und warum sie Pflicht wurde, die Bedingungen, Niyya und Übereignung, die Arten des Vermögens mit ihren Niṣāb-Grenzen (Gold, Geld, Handelsware, Bodenschätze, Ernte, Vieh), die acht Empfängergruppen und die Fitr-Abgabe.",
+  sections: [
+    { h: "Definition und Weisheit", src: "İlmihal S. 446–448", li: [
+      "Zakāt heißt sprachlich **Segen, Reinheit, Wachstum**; fachlich: einen **bestimmten Teil** bestimmter Vermögensarten bestimmten Muslimen **zu Eigentum** zu geben. Sie heißt auch **Ṣadaqa**, weil sie die Aufrichtigkeit des Gläubigen zeigt – Ṣadaqa ist aber weiter und umfasst auch Freiwilliges.",
+      "„Nimm von ihrem Vermögen Zakāt, um sie damit **zu reinigen**“ (9:103) – sie reinigt den Gebenden von Sünde und das Vermögen von „Schmutz“.",
+      "„In ihrem Vermögen ist ein **Recht für den Bittenden und den Mittellosen**“ (51:19). Ohne diese Pflicht fände kein Vermögen den Weg vom Reichen zum Armen; sie verhindert, dass Reichtum **nur unter den Reichen** kreist.",
+      "Weisheiten: sie nähert Reiche und Arme einander an und löscht Neid („**Schützt euer Vermögen durch Zakāt, heilt eure Kranken durch Ṣadaqa**“); sichert den Arbeitsunfähigen ein normales Leben; schützt vor **Geiz**; ist **Dank** für Allahs Gnade („Wenn ihr dankt, gebe Ich euch mehr“).",
+      "Wie das **Ausschneiden überflüssiger Triebe** am Weinstock: Ohne sie bleiben die Trauben schwach. Und kein Reichtum entsteht ohne die Gesellschaft – wäre er auf einem Berggipfel entstanden?"
+    ]},
+    { h: "Belege, Pflicht und Strafe", src: "İlmihal S. 448–450", li: [
+      "Pflicht geworden im **Šawwāl des 2. Jahres** der Hidschra, nach dem Ramaḍān-Fasten und der Fiṭra. Im Qurʾān steht sie **32-mal**, davon **28-mal zusammen mit dem Gebet**.",
+      "Belege: „Verrichtet das Gebet und gebt die Zakāt“; „Gebt am Tag der Ernte ihr Recht“ (6:141); „Der Islam ist auf fünf gebaut …“; an Muʿāḏ: „Nimm sie von ihren Reichen und gib sie ihren Armen.“ Wer ihre Pflicht **leugnet**, verlässt den Islam.",
+      "Jenseitige Strafe: Gold und Silber werden glühend gemacht und Stirn und Rücken damit gebrandmarkt (9:34–35); das Vermögen wird zu einer **kahlköpfigen Schlange** mit zwei schwarzen Punkten, die sich um den Hals legt: „Ich bin dein Vermögen, ich bin dein Schatz.“",
+      "Diesseitig: Der Staat **nimmt sie zwangsweise** und kann Taʿzīr verhängen. Eine Vermögensstrafe (halbe Herde) gibt es nach Abū Ḥanīfa, asch-Schāfiʿī und Mālik **nicht** – nur Zufar erlaubt bis zur Hälfte.",
+      "Abū Bakr kämpfte gegen die Verweigerer: „Bei Allah, ich bekämpfe jeden, der **Gebet und Zakāt trennt** – und verweigerten sie mir nur eine **Ziege** (einen Strick), die sie dem Propheten ﷺ gaben.“ ʿUmar: „Da erkannte ich, dass er im Recht war.“",
+      "Wer aus **Geiz oder Unwissen** nicht zahlt, verlässt den Islam nicht, ist aber Sünder."
+    ]},
+    { h: "Bedingungen der Pflicht", src: "İlmihal S. 450–458", li: [
+      "**Mukallaf**: Muslim, frei, verständig, reif. Abtrünnigkeit tilgt auch die früheren Schulden (Schafiiten: nicht). Hanafitisch keine Zakāt auf das Vermögen von **Kindern und Wahnsinnigen**; nach den drei Schulen doch – der Vormund zahlt („Handelt mit dem Vermögen der Waisen, damit die Zakāt es nicht aufzehrt“).",
+      "**Niṣāb** über Grundbedarf und Schulden hinaus: Gold **20 Miṯqāl**, Silber **200 Dirham**, Schafe/Ziegen **40**, Rinder **30**, Kamele **5**, Ernte **5 Wasq** (etwa eine Tonne). Šāh Walīyullāh: Das entsprach dem **Jahresbedarf einer Kernfamilie**.",
+      "**Grundbedarf** ist frei: Wohnhaus und Hausrat, Kleidung, Werkzeug, Reittier/**Auto**, Traktor, Maschinen, Bücher des Gelehrten, Unterhalt für einen Monat (nach sicherer Meinung ein Jahr). „Auf das Pferd und den Sklaven des Muslims gibt es keine Zakāt.“",
+      "**Wachsendes Vermögen (nāmī)**: tatsächlich (Handel, Nachwuchs, Ernte) oder dem Urteil nach (**Gold und Silber** – daher auch Schmuck oder gespartes Geld für Haus und Unterhalt). **Ḍimār**-Vermögen (verloren, im Meer versunken, geraubt, beschlagnahmt) ist frei.",
+      "**Volles Eigentum mit Besitz**: die nicht erhaltene Morgengabe, ein Pfand, Vermögen gegen Schulden – keine Zakāt. Gekauft, aber noch nicht übergeben: doch. Die Reise hindert nicht.",
+      "**Ein Mondjahr (ḥawl)**: „Keine Zakāt auf Vermögen, bevor ein Jahr darüber vergangen ist.“ Nicht bei **Ernte und Bodenschätzen** – sie werden beim Ertrag fällig (Ibn Qudāma: Sie wachsen nicht mehr, sondern verderben).",
+      "Der Niṣāb muss am **Anfang und Ende** des Jahres bestehen; Schwankungen dazwischen schaden nicht, und Zuwachs im Jahr zählt mit. Zufar: das ganze Jahr. Schafiiten: Geschenktes oder Geerbtes beginnt ein eigenes Jahr (außer Nachwuchs und Gewinn).",
+      "**Schulden**, die ein Mensch einfordern kann, werden abgezogen – nicht aber Gelübde, Kaffāra oder Ḥaǧǧ. ʿUṯmān: „Das ist der Monat eurer Zakāt – wer Schulden hat, zahle sie, dann gebt die Zakāt.“ Asch-Schāfiʿī (neue Lehre): Schulden hindern nicht."
+    ]},
+    { h: "Niyya, Übereignung und Zeitpunkt", src: "İlmihal S. 458–464", li: [
+      "Die **Niyya** unterscheidet sie von freiwilliger Ṣadaqa – beim Übergeben oder beim **Absondern** des Betrags. Man darf dem Armen sogar sagen, es sei ein Geschenk. Geht der abgesonderte Betrag verloren, bleibt die Pflicht.",
+      "Wer ohne Niyya gab, kann sie nachholen, solange die Sache **noch beim Armen** ist. Es zählt die Niyya des **Eigentümers**, nicht des Beauftragten (der auch Christ oder Jude sein darf). Frühere Spenden nachträglich zur Zakāt zu erklären geht nicht.",
+      "Wer **sein ganzes Vermögen** spendet, ohne an Zakāt zu denken, ist nach hanafitischer Istiḥsān befreit; die Mehrheit: nicht. Erlässt man einem **Armen** eine Forderung, entfällt nur die Zakāt dieser Forderung.",
+      "**Tamlīk** (Übereignung) ist Bedingung – „die Ṣadaqāt sind **für** die Armen …“ (das „li“ der Übereignung). Jemanden an den Tisch zu laden ist keine Zakāt. Kindern ohne Unterscheidungsvermögen und Wahnsinnigen gibt man sie über den Vormund.",
+      "**Sofort** nach Ablauf des Jahres zahlen; grundloses Aufschieben ist Sünde. Ernte zur Ernte, Honig und Bodenschätze beim Ertrag. Abū Ḥanīfa: fällig, wenn die Frucht vor Verderb sicher ist; Abū Yūsuf: bei Erntereife; Muḥammad: nach Ernte und Dreschen.",
+      "**Im Voraus** zahlen ist erlaubt (al-ʿAbbās fragte, der Prophet ﷺ erlaubte es), hanafitisch sogar für **mehrere Jahre**; Mālikiten und Ẓāhiriten: nicht; asch-Schāfiʿī: ein Jahr.",
+      "**Offene Vermögen (ẓāhira)**: Ernte, Vieh, Bodenschätze – vom Staat erhoben. **Verborgene (bāṭina)**: Gold, Silber, Geld, Handelsware. Seit **ʿUṯmān** zahlen die Eigentümer die verborgenen selbst als Vertreter des Staates; der Staat darf sie aber wieder einsammeln – das wäre nützlicher."
+    ]},
+    { h: "Gold, Silber und Geld", src: "İlmihal S. 464–472", li: [
+      "Satz: **ein Vierzigstel (2,5 %)** – bei 20 Miṯqāl ein halber, bei 200 Dirham fünf Dirham. „In Gold ist nichts bis zwanzig Dinar …“; „unter fünf Ūqiyya Silber keine Zakāt“.",
+      "**Šarʿī-Maß**: 1 Miṯqāl = 20 Qīrāṭ = **4 g** → Gold-Niṣāb **80 g**; 1 Dirham = **2,8 g** → Silber-Niṣāb **560 g**. Nach dem **osmanischen ʿUrf**-Dirham: 96 g Gold bzw. 640 g Silber. Sieben Miṯqāl entsprechen dem Gewicht von zehn Dirham (Festlegung unter ʿUmar).",
+      "Über dem Niṣāb: nach Abū Ḥanīfa erst je weitere **4 Miṯqāl / 40 Dirham** (239 Dirham → nur für 200); nach den beiden Schülern und der Mehrheit **anteilig** jeder Überschuss.",
+      "Für den Niṣāb von Gold und Silber zählt das **Gewicht**, nicht der Wert – eine Goldvase von 18 Miṯqāl ist frei, auch wenn sie 25 wert ist. Bei gleichartigen Riba-Gütern darf man nicht weniger von besserer Qualität geben (Zufar: doch).",
+      "**Schmuck** aus Gold und Silber: hanafitisch zakātpflichtig – die Frau mit den zwei **Goldarmreifen** ihrer Tochter: „Möchtest du, dass Allah sie dir als Feuerreifen anlegt?“ Edelsteine (Rubin, Perle, Diamant) sind frei, machen aber reich für Fiṭra und Opfer. Die drei Schulen: erlaubter, getragener Schmuck ist frei.",
+      "**Zusammenrechnen**: Gold, Silber, Geld und Handelsware ergänzen einander – nach Abū Ḥanīfa nach **Wert**, nach den beiden Schülern nach Anteilen. Asch-Schāfiʿī: Gold und Silber nicht.",
+      "**Papiergeld** ist heute der Kaufpreis (ṯaman) der Dinge und nach der Mehrheit zakātpflichtig. Viele nahmen den **Silber-Niṣāb** (besser für Arme); das Buch hält den **Gold-Niṣāb (80 g)** für angemessener, da Gold Grundlage des Geldwesens ist.",
+      "**Forderungen**: **starke** (Darlehen, Kaufpreis bei anerkannter Schuld) – bei Eingang für alle vergangenen Jahre, schon ab einem **Fünftel** des Niṣāb; **mittlere** (Miete, Verkauf von Gebrauchsgut) – ab vollem Niṣāb; **schwache** (Morgengabe, Erbe, Vermächtnis, Diya) – erst nach Erhalt und einem Jahr. Die beiden Schüler: alle außer Diya sind stark."
+    ]},
+    { h: "Bodenschätze, Schätze und Handelsware", src: "İlmihal S. 473–480", li: [
+      "Hanafitisch umfasst **Rikāz** Bodenschätze und vergrabene Schätze. „Im Rikāz ist ein **Fünftel**.“ Nur **schmelzbare** Metalle (Gold, Silber, Kupfer, Eisen, Blei, Quecksilber) – nicht Kalk, Gips, Diamant, Salz, nicht Wasser, Teer oder **Erdöl**.",
+      "Das Fünftel geht wie **Beute** (8:41); der Rest dem Grundeigentümer oder dem Finder. Mālikiten: Bodenschätze gehören dem Staat, 2,5 %; asch-Schāfiʿī: nur Gold und Silber, 2,5 %.",
+      "Das Buch: Erdöl, Diamant und Marmor sind nur von der **einmaligen Förderabgabe** frei – als Handelsware im Markt sind sie jährlich mit **2,5 %** zakātpflichtig.",
+      "**Schätze**: mit islamischen Zeichen (Basmala, Kalifensiegel) – wie **Fundsache**; aus vorislamischer Zeit (Kreuz, Götzenbild) – ein Fünftel an den Staat, der Rest dem Grundbesitzer oder Finder. Aus dem Meer (Perlen, Ambra) nach Abū Ḥanīfa und Muḥammad nichts; Abū Yūsuf: ein Fünftel.",
+      "**Handelsware** (ʿurūḍ): alles zum Verkauf mit Gewinn, auch Häuser, Läden, Grundstücke. Das eigene Wohnhaus, Werkstatt, Lager und Fabrikgebäude sind frei.",
+      "Bedingungen: Wert ≥ Niṣāb, **ein Jahr** (Wert zählt, nicht die Ware), **Handelsabsicht beim Kauf** – eine bloße spätere Absicht genügt nicht ohne Handlung (Anbieten, Inserat). Geerbtes wird nach Muḥammad durch bloße Absicht nicht zur Ware.",
+      "Ein Grundstück, das zum Lagern vermietet wird, ist nach **Ertrag** zakātpflichtig; wird es parzelliert und angeboten, nach **Wert** (2,5 %).",
+      "Belege: 2:267; Samura: „Er befahl uns Zakāt auf das, was wir für den Handel bereithielten.“ Ohne Zakāt auf Waren könnte man Geld in Ware verwandeln und so die Armen schädigen.",
+      "Berechnung: Jahresende, Grundbedarf, Jahresunterhalt und Schulden abziehen, den Rest mit 2,5 %. Hanafitisch darf man **in Ware selbst** zahlen (ein Lebensmittelhändler gibt ein Vierzigstel seiner Ware) – das hilft den Armen direkt. Die Mehrheit: in Wert."
+    ]},
+    { h: "Firmen, Aktien und Mudāraba", src: "İlmihal S. 480–483", li: [
+      "Jeder Teilhaber schuldet die Zakāt **seines Anteils**; für eine Zahlung durch die Firma braucht es ausdrückliche Vollmacht (die Niyya!).",
+      "Beispiel Lebensmittelfirma mit vier gleichen Teilhabern: 40 Mio. Lira bar, je 20 t Reis, Zucker, Bohnen → jeder schuldet **200.000 Lira und je 125 kg**.",
+      "**Industrie**: Gebäude, Maschinen, Lager, Dienstwagen sind frei; zakātpflichtig sind Bargeld, Devisen, Roh-, Halb- und Fertigwaren (z. B. 30 % des Vermögens).",
+      "**Aktien** spiegeln oft nur einen alten Nennwert – der Anteil muss nach dem **heutigen Firmenvermögen** neu bewertet werden; jeder Muslim hat das Recht, seinen Anteil am zakātpflichtigen Vermögen zu kennen.",
+      "**Anleihen**: festverzinsliche nach Wert; Gewinn/Verlust-Papiere nach Kapital plus Gewinn.",
+      "**Mudāraba** (Kapital und Arbeit – Grundlage islamischen Bankwesens): Den Verlust trägt ohne Schuld des Arbeitenden der Kapitalgeber. Zakāt: der Kapitalgeber auf Kapital und Gewinnanteil, der Arbeitende nur auf seinen Gewinnanteil."
+    ]},
+    { h: "Ernte und Boden (ʿUšr)", src: "İlmihal S. 483–492", li: [
+      "„Was Regen, Quellen oder von selbst bewässert: **ein Zehntel**; was mit Tieren oder Schöpfwerk bewässert wird: **ein Zwanzigstel**.“ Arbeitskosten, Saat und Dünger werden **nicht abgezogen** – dafür halbiert sich der Satz.",
+      "Keine Reife oder Verstand nötig – auch Kinder und Wahnsinnige zahlen; aber **Muslim**. Hanafitische Bedingungen: **ʿUšr-Boden** (kein Ḫarāǧ-Boden), tatsächlicher Ertrag, Anbau zum Nutzen (nicht Eichen, Kiefern, Pappeln – die erst beim Verkauf als Ware).",
+      "**Bodenarten**: **ʿUšr** (Land von Muslimen, die freiwillig kamen oder unter Muslime verteilt wurde – Arabische Halbinsel); **Ḫarāǧ** (friedlich oder gewaltsam erobert und Nichtmuslimen gelassen – Irak) mit einer Steuer, die **keine Zakāt** ist; **reines Eigentum** (vom Staat gekauft – wie ʿUšr); **Mīrī** (Staatsland, nur Nutzung gegen Pacht – kein ʿUšr).",
+      "**ʿUmar** verteilte den Irak **nicht** an die Kämpfer (al-Ḥašr 7: „damit es nicht nur unter den Reichen kreist“) – Muʿāḏ warnte, sonst sammle sich das Land bei Wenigen. Hanafitisch treffen **ʿUšr und Ḫarāǧ nie zusammen**; die drei Schulen: beides zugleich möglich.",
+      "Heute sind in der Türkei die meisten Böden **reines Eigentum** – also ʿUšr-pflichtig; erhebt der Staat ihn nicht, gibt der Bauer ihn selbst.",
+      "Abū Ḥanīfa: auf **alles**, was der Mensch anbaut, ohne Niṣāb und ohne Jahr (Getreide, Melonen, Gurken, Tomaten, Zuckerrohr …). Die beiden Schüler: ab **fünf Wasq (ca. 1 t)** und nur Haltbares – nicht Äpfel, Birnen, Pfirsiche, Tomaten, Paprika.",
+      "**Honig** von ʿUšr-Land: ein Zehntel („Gib seinen ʿUšr“); Schafiiten und Mālikiten: nichts. Oliven und Sesam: einmal, nicht noch vom Öl. Wer vor dem ʿUšr von der Ernte isst, ersetzt den Anteil.",
+      "Bei **Pachtland**: nach Abū Ḥanīfa zahlt der Verpächter, nach den beiden Schülern und der Mehrheit der **Pächter** – danach die spätere Fatwa.",
+      "Der **ʿĀmil** (Zakāt-Beamte) erhält Lohn – „wer für uns arbeitet: hat er kein Haus, nehme er eins; keine Frau, heirate er …“. ʿUmar: von Muslimen 1/40, von Ḏimmīs 1/20, von Ausländern mit Schutzbrief **1/10** (Gegenseitigkeit)."
+    ]},
+    { h: "Vieh", src: "İlmihal S. 492–499", li: [
+      "Zakātpflichtig: **Schaf, Ziege, Rind, Büffel, Kamel** (und nach Abū Ḥanīfa das Pferd – die Fatwa folgt den beiden Schülern: **Pferde nicht**; auch keine Maultiere, Esel, Hirsche). Bedingungen: Haustier, Niṣāb, ein Jahr, **Sāʾima** (mehr als ein halbes Jahr auf freier Weide).",
+      "**Schafe/Ziegen**: 40–120 → **1 Schaf**, 121–200 → 2, 201–399 → 3, 400 → 4, dann je 100 eines. Schaf und Ziege sind eine Gattung (30 Schafe + 10 Ziegen = 40).",
+      "Man darf nicht **zusammenlegen oder trennen**, um Zakāt zu mindern – bei Teilhabern wird zugunsten der Armen gerechnet. Keine alten oder fehlerhaften Tiere als Zakāt.",
+      "**Rinder/Büffel**: 30 → ein **Tabīʿ** (Kalb im 2. Jahr), 40 → eine **Musinna** (im 3. Jahr), 60 → zwei Kälber; dann je 30 ein Kalb, je 40 eine Musinna (110 → vier Kälber oder drei Musinna nach Wahl). Muʿāḏ im Jemen.",
+      "**Kamele**: 5 → **1 Schaf** (je 5 bis 20 ein weiteres), 25–35 → Bint Maḫāḍ (2. Jahr), 36–45 → Bint Labūn (3.), 46–60 → Ḥiqqa (4.), 61–75 → Ǧaḏaʿa (5.), 76–90 → zwei Bint Labūn, 91–120 → zwei Ḥiqqa.",
+      "Beim Vieh wird grundsätzlich ein **weibliches** Tier gegeben (Milch, Nachwuchs) – beim Rind laut Hadith auch männlich. Jungtiere allein (Abū Ḥanīfa, Muḥammad) sind frei, mit älteren zusammen zählen sie.",
+      "**Arbeitstiere** sind Grundbedarf und frei; **ʿAlūfa** (mehr als ein halbes Jahr im Stall gefüttert) auch – Milch, Käse, Fleisch und verkaufte Jungtiere aber als Geld/Ware. Das Buch sieht darin eine **Förderung der Viehzucht**.",
+      "**Mietshäuser, Fabriken, Busse, Flugzeuge, Geflügelfarmen**: nicht der Wert, sondern der **Ertrag** ist zakātpflichtig; zum Verkauf gedachte Wohnungen bleiben Handelsware, auch wenn sie vorübergehend vermietet sind."
+    ]},
+    { h: "Wie man die Zakāt zahlt", src: "İlmihal S. 499–502", li: [
+      "Hanafitisch darf man in der Sache **oder im Wert** zahlen (auch Fiṭra, ʿUšr, Gelübde, Kaffāra außer Sklavenbefreiung) – der Prophet ﷺ schwieg, als ein Beamter ein großes Kamel für zwei nahm. Maßgeblicher Tag: nach Abū Ḥanīfa der Fälligkeits-, nach den beiden Schülern der Zahlungstag. Schafiiten: aus der Sache selbst.",
+      "Man kann eine **Forderung nicht als Zakāt** für anderes Vermögen erlassen – sonst würden Händler ihre faulen Forderungen zur Zakāt erklären. Will man einem armen Schuldner helfen, gibt man ihm Zakāt, und er zahlt damit.",
+      "Einen gedeckten **Scheck oder Wechsel** kann man einem Armen als Zakāt übertragen – bezahlt ist sie, wenn der Betrag eingelöst wird.",
+      "Beispiel: Eine Frau mit **200 g** zakātpflichtigem Gold gibt einem Bedürftigen einen **30-g-Armreif** – damit hat sie die Zakāt von **sechs Jahren** im Voraus bezahlt.",
+      "Keine Zakāt ist: einen Sklaven damit freikaufen, jemandem den **Ḥaǧǧ** bezahlen, **Moschee, Straße, Brücke, Brunnen, Schule** bauen, Leichentücher kaufen, Schulden eines Toten zahlen, einen Armen **mietfrei wohnen** lassen – es fehlt das Tamlīk. Gibt der Arme es selbst dafür, erhalten beide Lohn."
+    ]},
+    { h: "Die acht Empfängergruppen", src: "İlmihal S. 502–507", li: [
+      "„Die Ṣadaqāt sind **nur** für die Armen, die Bedürftigen, die damit Beschäftigten, die, deren Herzen gewonnen werden sollen, für Sklaven, Verschuldete, auf dem Weg Allahs und den Reisenden“ (9:60).",
+      "1) **Fuqarāʾ**: ohne Niṣāb – auch mit Haus, Hausrat, oder Arbeit, die den Grundbedarf nicht deckt. 2) **Masākīn**: besitzen nichts und müssen betteln („der im Staub liegt“, 90:16).",
+      "3) **ʿĀmilūn**: die Zakāt-Beamten – auch reich, als Lohn, höchstens die **Hälfte** des Eingesammelten; auch Schätzer, Schreiber, Verteiler. Die Zakāt könnte so ohne Last für den Staatshaushalt arbeiten.",
+      "4) **Muʾallafat al-qulūb**: der Prophet ﷺ gab Abū Sufyān, Ṣafwān, ʿUyayna u. a. je hundert Kamele. ʿUmar strich den Anteil, weil der Islam sie **nicht mehr brauchte**; einige: bei Bedarf wieder. Hanafiten und Schafiiten: nie an Nichtmuslime.",
+      "5) **Sklaven** (Freikauf) – heute praktisch nicht vorhanden. 6) **Verschuldete**: ohne Niṣāb nach Schuldenabzug – besser als einem Armen ohne Schulden; wer für Versöhnung Schulden machte, auch reich. Große Industrieschulden mit Gegenwert machen **nicht arm**.",
+      "7) **Fī sabīlillāh**: bedürftige Kämpfer (Abū Ḥanīfa, Abū Yūsuf; asch-Schāfiʿī, Mālik: auch reiche); Hanbaliten und einige Hanafiten: auch der **Pflicht-Ḥaǧǧ**; al-Kāsānī: **alle gottnahen Werke** Bedürftiger; manche Hanafiten: **Wissen erwerben**.",
+      "8) **Ibn as-sabīl**: der Reisende, der ohne Hilfe nicht ankommt – auch wenn er zu Hause reich ist (ein Darlehen wäre besser). Was übrig bleibt, muss er später nicht zurückgeben.",
+      "Hanafitisch darf man an **eine** Gruppe oder **eine** Person geben. Schafiiten: auf alle vorhandenen Gruppen, mindestens je drei Personen. Heute gibt es praktisch vier: Arme, Bedürftige, Verschuldete, Reisende."
+    ]},
+    { h: "Wer Zakāt erhalten darf", src: "İlmihal S. 507–511", li: [
+      "**Arm**: Wer über dem Grundbedarf einen Niṣāb besitzt, ist reich. Hanafitisch darf auch ein **gesunder, arbeitsfähiger** Armer nehmen; Schafiiten: nicht („kein Anteil für den Reichen und den Erwerbsfähigen“).",
+      "Wer nach Prüfung einem scheinbar Bedürftigen gab, der sich als reich herausstellt, hat nach Abū Ḥanīfa und Muḥammad **erfüllt**; ohne Prüfung muss er erneut geben.",
+      "**Muslim**: Zakāt nicht an Nichtmuslime (Muʿāḏ); freiwillige Ṣadaqa an arme Ḏimmīs nach Abū Ḥanīfa und Muḥammad **erlaubt** (2:271, 76:8). Zufar: auch Zakāt; Abū Yūsuf und asch-Schāfiʿī: auch keine Ṣadaqa.",
+      "**Nicht von den Banū Hāšim**: „Diese Ṣadaqāt sind der **Schmutz der Menschen** und für Muḥammad und seine Familie nicht erlaubt“ – die Familien von ʿAbbās, ʿAlī, Ǧaʿfar, ʿAqīl und al-Ḥāriṯ. Erhalten sie ihren Anteil aus dem Bait al-Māl nicht, erlauben einige es; freiwillige Ṣadaqa ist ihnen erlaubt.",
+      "**Nicht, wen man unterhalten muss**: Ehefrau (auch in der ʿIdda), Eltern und Großeltern, Kinder und Enkel. Eine Frau darf nach Abū Ḥanīfa ihrem armen Mann nicht geben; nach den beiden Schülern, asch-Schāfiʿī und Mālik doch – „Dein Mann und dein Kind haben das meiste Recht“ (zu Zainab).",
+      "Am besten an **bedürftige Verwandte**: Geschwister, deren Kinder, Onkel und Tanten … – „die Ṣadaqa an den Verwandten ist zweifach: Ṣadaqa und Verwandtenpflege“.",
+      "Nicht an das **kleine Kind eines Reichen** (es gilt durch den Vater als reich); wohl an die armen erwachsenen Kinder, die Frau oder den Vater eines Reichen und an die Waise einer reichen Mutter.",
+      "Zakāt gehört den Armen **am Ort des Vermögens** (Muʿāḏ: „von den Reichen des Jemen für die Armen des Jemen“). Anderswohin zu schicken ist tanzīhan makrūh – außer an Verwandte oder Bedürftigere."
+    ]},
+    { h: "Ṣadaqat al-Fiṭr", src: "İlmihal S. 511–515", li: [
+      "Wadschib für jeden **freien Muslim**, der am Ende des Ramaḍān über dem Grundbedarf einen **Niṣāb** besitzt – ohne Jahresbedingung. Eingeführt im **2. Jahr**, im Jahr des Fastens, **vor** der Zakāt.",
+      "Zweck: „um die Fastenden von leerem und hässlichem Gerede zu reinigen und den Armen Speise zu geben. Wer sie **vor dem Gebet** gibt, dessen Zakāt ist angenommen; wer danach, eine gewöhnliche Ṣadaqa.“",
+      "Fällig am **Morgen des 1. Festtages** (die drei Schulen: mit Sonnenuntergang des letzten Ramaḍān-Tages); man darf sie Tage, Monate oder Jahre vorher geben. Wer vor dem Morgen stirbt oder arm wird, schuldet sie nicht; wer danach geboren wird, ebenfalls nicht.",
+      "Maß: **Gerste, Datteln, Rosinen: ein Ṣāʿ**; **Weizen, Weizenmehl: ein halber Ṣāʿ** (Ibn ʿAbbās: „zwei Mudd“). Šarʿī: 1 Ṣāʿ ≈ **2,9 kg**, ½ Ṣāʿ Weizen ≈ **1,46 kg**; nach ʿUrf 3,33 kg bzw. **1,66 kg** – mehr, also besser für die Armen. Die drei Schulen: auch Weizen ein Ṣāʿ.",
+      "Der **Wert** darf gegeben werden; brauchen die Armen die Lebensmittel selbst, ist die Sache besser. Die vier Lebensmittel sichern, dass der **Tagesbedarf** zu jeder Zeit gedeckt wird – ein fester Geldbetrag würde durch Preisschwankungen den Zweck verfehlen.",
+      "Man zahlt für sich, die armen kleinen Kinder, wahnsinnige Kinder und Bedienstete – **nicht** pflichtmäßig für Ehefrau und erwachsene Kinder (mit Erlaubnis oder im eigenen Haushalt geht es) und nicht für die Eltern. Auch wer aus Entschuldigung nicht fastete, zahlt.",
+      "Empfänger wie bei der Zakāt, mit Tamlīk; nicht an Ehepartner, Eltern, Kinder; nicht an Ḏimmīs (Fatwa: Abū Yūsuf, asch-Schāfiʿī). Man darf eine Fiṭra an mehrere oder mehrere an einen geben. Mustaḥabb: am Festmorgen **vor dem Gebet**, an Arme des eigenen Ortes."
+    ]},
+    { h: "Abgaben von Nichtmuslimen", src: "İlmihal S. 515", li: [
+      "Anstelle der Zakāt: Abū Ḥanīfa erhebt von der **Handelsware** der Ḏimmīs **1/20**, von Ausländern mit Schutzbrief **1/10** – nach dem Prinzip der **Gegenseitigkeit**. Nicht zu verwechseln mit dem ʿUšr auf Ernte.",
+      "Die drei Schulen: von allen nichtmuslimischen Händlern ein Zehntel, auch mehrmals im Jahr und ohne Niṣāb (Schafiiten: bei Ausländern nur, wenn vorher vereinbart).",
+      "Von den christlichen **Banū Taġlib** nahm ʿUmar die **doppelte Zakāt** – im Grunde eine Ǧizya, nur nach Zakāt-Regeln bemessen."
+    ]}
+  ]
+});
+
+FIQH.addQuestions([
+  { t: "zakat", q: "Was bedeutet Zakāt sprachlich?", a: ["Segen, Reinheit und Wachstum", "Steuer und Zoll", "Opfer", "Fasten"], c: 0, e: "Fachlich: einen bestimmten Teil bestimmter Vermögen bestimmten Muslimen zu Eigentum geben." },
+  { t: "zakat", q: "Wann wurde die Zakāt Pflicht?", a: ["Im Šawwāl des 2. Jahres der Hidschra", "In Mekka vor der Hidschra", "Im Jahr der Eroberung Mekkas", "Beim Abschiedspilgern"], c: 0, e: "Nach dem Ramaḍān-Fasten und der Fiṭra." },
+  { t: "zakat", q: "Wie oft wird die Zakāt im Qurʾān zusammen mit dem Gebet genannt?", a: ["28-mal (von 32 Stellen)", "5-mal", "100-mal", "Nur einmal"], c: 0, e: "Das zeigt die enge Verbindung von Gebet und Zakāt." },
+  { t: "zakat", q: "Was sagte Abū Bakr über die Zakāt-Verweigerer?", a: ["Er bekämpfe jeden, der Gebet und Zakāt trennt", "Man solle sie in Ruhe lassen", "Man solle ihnen die halbe Herde nehmen", "Nur die Leugner verlieren den Islam, sonst nichts"], c: 0, e: "„… und verweigerten sie mir nur eine Ziege, die sie dem Propheten ﷺ gaben.“" },
+  { t: "zakat", q: "Schulden Kinder hanafitisch Zakāt auf ihr Vermögen?", a: ["Nein", "Ja, der Vormund zahlt", "Nur auf Gold", "Nur auf Vieh"], c: 0, e: "Nach den drei Schulen doch – „Handelt mit dem Vermögen der Waisen …“. Den ʿUšr auf ihre Ernte schulden sie aber auch hanafitisch." },
+  { t: "zakat", q: "Wie viel ist der Gold-Niṣāb nach dem šarʿī-Maß?", a: ["80 g (20 Miṯqāl)", "96 g", "560 g", "200 g"], c: 0, e: "Nach dem osmanischen ʿUrf 96 g." },
+  { t: "zakat", q: "Wie viel ist der Silber-Niṣāb nach dem šarʿī-Maß?", a: ["560 g (200 Dirham)", "640 g", "80 g", "1000 g"], c: 0, e: "1 šarʿī-Dirham = 2,8 g." },
+  { t: "zakat", q: "Ist das eigene Auto zakātpflichtig?", a: ["Nein – es gehört zum Grundbedarf", "Ja, 2,5 % seines Wertes", "Nur wenn es neu ist", "Nur über 80 g Goldwert"], c: 0, e: "Wie früher das Reittier: „Auf das Pferd des Muslims gibt es keine Zakāt.“" },
+  { t: "zakat", q: "Was ist „Ḍimār“-Vermögen?", a: ["Vermögen, dessen Rückkehr man nicht erhofft (verloren, geraubt)", "Vermögen von Waisen", "Verborgenes Vermögen", "Stallvieh"], c: 0, e: "Darauf gibt es keine Zakāt." },
+  { t: "zakat", q: "Für welche Güter gilt die Bedingung des vollen Jahres (ḥawl) NICHT?", a: ["Ernte und Bodenschätze", "Gold und Silber", "Handelsware", "Weidevieh"], c: 0, e: "Sie werden beim Ertrag fällig." },
+  { t: "zakat", q: "Jemand hat zu Jahresbeginn 300 g Gold, im Jahr sinkt es auf 50 g, am Jahresende sind es 200 g. Was gilt hanafitisch?", a: ["Zakāt auf 200 g (5 g)", "Keine Zakāt", "Zakāt auf 300 g", "Zakāt auf 50 g"], c: 0, e: "Der Niṣāb muss am Anfang und Ende bestehen. Zufar: das ganze Jahr." },
+  { t: "zakat", q: "Welche Schulden hindern die Zakāt NICHT?", a: ["Gelübde, Kaffāra und Ḥaǧǧ", "Ein Darlehen von einem Freund", "Ein Ratenkauf", "Eine Bürgschaftsschuld"], c: 0, e: "Nur Schulden, die ein Mensch einfordern kann, werden abgezogen." },
+  { t: "zakat", q: "Darf man dem Armen sagen, die Zakāt sei ein Geschenk?", a: ["Ja – entscheidend ist die Niyya des Gebenden", "Nein, sonst gilt sie nicht", "Nur bei Verwandten", "Nur mit Zeugen"], c: 0, e: "Die Niyya im Herzen genügt." },
+  { t: "zakat", q: "Zählt es als Zakāt, einen Armen an den eigenen Tisch einzuladen?", a: ["Nein – es fehlt die Übereignung (Tamlīk)", "Ja", "Nur im Ramaḍān", "Nur bei Waisen"], c: 0, e: "Es ist freiwillige Ṣadaqa." },
+  { t: "zakat", q: "Darf man hanafitisch die Zakāt für mehrere Jahre im Voraus zahlen?", a: ["Ja, wenn man den Niṣāb besitzt", "Nein, nie", "Nur ein Jahr", "Nur mit Erlaubnis des Staates"], c: 0, e: "Mālikiten: gar nicht vor Jahresende; asch-Schāfiʿī: ein Jahr." },
+  { t: "zakat", q: "Seit wann zahlen Muslime die Zakāt der verborgenen Vermögen selbst?", a: ["Seit ʿUṯmān", "Seit Abū Bakr", "Seit den Umayyaden", "Seit den Osmanen"], c: 0, e: "Sie handeln als Vertreter des Staates, der sie aber wieder einsammeln darf." },
+  { t: "zakat", q: "Jemand hat 239 Dirham Silber. Worauf zahlt er nach Abū Ḥanīfa?", a: ["Nur auf 200 Dirham", "Auf alle 239", "Auf nichts", "Auf 240"], c: 0, e: "Der Überschuss zählt erst ab 40 Dirham. Die beiden Schüler: anteilig alles." },
+  { t: "zakat", q: "Zählt beim Gold-Niṣāb das Gewicht oder der Wert?", a: ["Das Gewicht", "Der Handwerkswert", "Der Marktwert", "Beides gleich"], c: 0, e: "Eine 18-Miṯqāl-Vase bleibt frei, auch wenn sie 25 wert ist." },
+  { t: "zakat", q: "Ist getragener Goldschmuck hanafitisch zakātpflichtig?", a: ["Ja", "Nein", "Nur für Männer", "Nur über 1 kg"], c: 0, e: "Hadith der Frau mit den zwei Armreifen ihrer Tochter. Die drei Schulen: erlaubter getragener Schmuck ist frei." },
+  { t: "zakat", q: "Welchen Niṣāb hält das Buch für Papiergeld für angemessener?", a: ["Den Gold-Niṣāb (80 g)", "Den Silber-Niṣāb (560 g)", "Den Kamel-Niṣāb", "Gar keinen"], c: 0, e: "Viele Gelehrte nahmen den Silber-Niṣāb, weil er für die Armen günstiger ist." },
+  { t: "zakat", q: "Wann wird die Zakāt einer „starken“ Forderung (Darlehen) fällig?", a: ["Bei Eingang – für alle vergangenen Jahre, schon ab einem Fünftel des Niṣāb", "Nie", "Nur für das laufende Jahr", "Nur wenn die ganze Summe kommt"], c: 0, e: "Mittlere und schwache Forderungen erst ab vollem Niṣāb." },
+  { t: "zakat", q: "Welche Bodenschätze tragen hanafitisch das Fünftel?", a: ["Schmelzbare Metalle wie Gold, Eisen, Kupfer", "Erdöl", "Salz und Kalk", "Diamanten"], c: 0, e: "Erdöl und Diamanten sind als Handelsware später mit 2,5 % zakātpflichtig." },
+  { t: "zakat", q: "Ein Schatz mit Kreuz- oder Götzenbild wird gefunden. Was gilt?", a: ["Ein Fünftel an den Staat, der Rest dem Grundbesitzer oder Finder", "Alles an den Staat", "Wie eine Fundsache", "Alles dem Finder ohne Abgabe"], c: 0, e: "Ein Schatz mit islamischen Zeichen wird wie eine Fundsache behandelt." },
+  { t: "zakat", q: "Wird eine Sache durch bloße spätere Absicht zur Handelsware?", a: ["Nein – es braucht eine Handlung wie Anbieten", "Ja, sofort", "Nur bei Gold", "Nur bei Tieren"], c: 0, e: "Die Handelsabsicht muss beim Kauf bestehen." },
+  { t: "zakat", q: "Darf ein Händler hanafitisch die Zakāt in seiner Ware geben?", a: ["Ja – ein Vierzigstel der Ware", "Nein, nur in Geld", "Nur bei Lebensmitteln verboten", "Nur mit Erlaubnis des Richters"], c: 0, e: "Das hilft den Armen direkt. Die Mehrheit: im Wert." },
+  { t: "zakat", q: "Was ist in einer Industriefirma zakātpflichtig?", a: ["Bargeld, Devisen, Roh-, Halb- und Fertigwaren", "Fabrikgebäude", "Maschinen", "Dienstwagen"], c: 0, e: "Das feste Anlagevermögen ist frei." },
+  { t: "zakat", q: "Wer trägt in der Mudāraba ohne Schuld des Arbeitenden den Verlust?", a: ["Der Kapitalgeber", "Der Arbeitende", "Beide zur Hälfte", "Der Staat"], c: 0, e: "Der Arbeitende verliert seine Arbeit." },
+  { t: "zakat", q: "Wie hoch ist der ʿUšr bei Regenbewässerung?", a: ["Ein Zehntel", "Ein Zwanzigstel", "Ein Vierzigstel", "Ein Fünftel"], c: 0, e: "Bei künstlicher Bewässerung ein Zwanzigstel." },
+  { t: "zakat", q: "Werden Saat- und Arbeitskosten vor dem ʿUšr abgezogen?", a: ["Nein – dafür halbiert sich der Satz bei Bewässerung", "Ja, alle Kosten", "Nur die Arbeitskosten", "Nur die Saat"], c: 0, e: "So werden die Bauern zu ertragsteigerndem Anbau ermutigt." },
+  { t: "zakat", q: "Warum verteilte ʿUmar das Land des Irak nicht an die Kämpfer?", a: ["Damit auch spätere Muslime Nutzen haben und es nicht nur unter Reichen kreist", "Weil es unfruchtbar war", "Weil die Kämpfer es ablehnten", "Weil es den Christen gehörte"], c: 0, e: "Er stützte sich auf al-Ḥašr 7; Muʿāḏ und ʿAlī unterstützten ihn." },
+  { t: "zakat", q: "Treffen hanafitisch ʿUšr und Ḫarāǧ auf demselben Land zusammen?", a: ["Nein, nie", "Ja, immer", "Nur bei Nichtmuslimen", "Nur bei Olivenhainen"], c: 0, e: "Die drei Schulen: Beides kann zusammen erhoben werden." },
+  { t: "zakat", q: "Auf welche Ernte erheben die beiden Schüler keinen ʿUšr?", a: ["Auf schnell verderbliches Obst und Gemüse wie Äpfel oder Tomaten", "Auf Weizen", "Auf Reis", "Auf Datteln"], c: 0, e: "Außerdem erst ab fünf Wasq (etwa eine Tonne). Abū Ḥanīfa: auf alles." },
+  { t: "zakat", q: "Wer zahlt den ʿUšr bei Pachtland nach der späteren hanafitischen Fatwa?", a: ["Der Pächter", "Der Verpächter", "Beide zur Hälfte", "Niemand"], c: 0, e: "Abū Ḥanīfa: der Verpächter." },
+  { t: "zakat", q: "Wie viele Schafe schuldet, wer 120 Schafe auf freier Weide hat?", a: ["Eines", "Zwei", "Drei", "Keines"], c: 0, e: "40–120: ein Schaf; 121–200: zwei." },
+  { t: "zakat", q: "Sind Pferde nach der hanafitischen Fatwa zakātpflichtig?", a: ["Nein (Meinung der beiden Schüler)", "Ja, ein Dinar pro Pferd", "Nur Stuten", "Nur Rennpferde"], c: 0, e: "Abū Ḥanīfa hielt sie für zakātpflichtig." },
+  { t: "zakat", q: "Was ist ab 30 Rindern auf freier Weide zu geben?", a: ["Ein Tabīʿ – ein Kalb im zweiten Jahr", "Ein Schaf", "Eine Musinna", "Nichts"], c: 0, e: "Ab 40 eine Musinna (im dritten Jahr)." },
+  { t: "zakat", q: "Was schuldet, wer fünf Kamele auf freier Weide hat?", a: ["Ein Schaf", "Ein Kamel", "Nichts", "Zwei Schafe"], c: 0, e: "Ab 25 Kamelen ein junges Kamel (Bint Maḫāḍ)." },
+  { t: "zakat", q: "Ist im Stall gefüttertes Vieh (ʿAlūfa) zakātpflichtig?", a: ["Die Tiere selbst nicht – Milch, Fleisch und verkaufte Jungtiere als Geld oder Ware", "Ja, wie Weidevieh", "Nur Rinder", "Nie, auch nicht die Erträge"], c: 0, e: "Das Buch sieht darin eine Förderung der Viehzucht." },
+  { t: "zakat", q: "Ist ein vermietetes Mietshaus nach seinem Wert zakātpflichtig?", a: ["Nein – nur der Mietertrag", "Ja, 2,5 % des Wertes", "Nur wenn es neu ist", "Gar nicht, auch nicht der Ertrag"], c: 0, e: "Ebenso Busse, Fabriken und Geflügelfarmen." },
+  { t: "zakat", q: "Darf man eine Forderung an einen Armen als Zakāt für anderes Vermögen erlassen?", a: ["Nein", "Ja", "Nur bei Verwandten", "Nur mit Zeugen"], c: 0, e: "Sonst könnten Händler faule Forderungen zur Zakāt erklären." },
+  { t: "zakat", q: "Eine Frau mit 200 g Gold gibt einer Bedürftigen einen Armreif von 30 g als Zakāt. Was hat sie erreicht?", a: ["Die Zakāt von sechs Jahren im Voraus", "Die Zakāt eines Jahres", "Nichts – Schmuck zählt nicht", "Nur freiwillige Ṣadaqa"], c: 0, e: "5 g jährlich × 6 = 30 g." },
+  { t: "zakat", q: "Darf man mit Zakāt eine Moschee bauen?", a: ["Nein – es fehlt die Übereignung", "Ja, das ist am besten", "Nur mit Erlaubnis des Imams", "Nur in armen Ländern"], c: 0, e: "Gibt ein Armer seine Zakāt selbst dafür, erhalten beide Lohn." },
+  { t: "zakat", q: "Wer sind die „Masākīn“?", a: ["Die nichts besitzen und betteln müssen", "Die Zakāt-Beamten", "Die Reisenden", "Die Verschuldeten"], c: 0, e: "„Der im Staub liegt“ (90:16)." },
+  { t: "zakat", q: "Warum strich ʿUmar den Anteil der „Muʾallafat al-qulūb“?", a: ["Weil der Islam sie nicht mehr brauchte", "Weil es verboten wurde", "Weil es sie nicht mehr gab", "Weil sie Abtrünnige waren"], c: 0, e: "Einige Gelehrte erlauben es bei Bedarf wieder." },
+  { t: "zakat", q: "Welche Gruppe erhält Zakāt auch, wenn sie reich ist?", a: ["Die Zakāt-Beamten", "Die Masākīn", "Die Fuqarāʾ", "Die Verwandten"], c: 0, e: "Ebenso der Reisende und wer für Versöhnung Schulden machte." },
+  { t: "zakat", q: "Was verstand al-Kāsānī unter „fī sabīlillāh“?", a: ["Alle gottnahen Werke Bedürftiger", "Nur den Krieg", "Nur den Ḥaǧǧ", "Nur den Moscheebau"], c: 0, e: "Einige Hanafiten verstanden darunter auch Wissenserwerb." },
+  { t: "zakat", q: "Darf man hanafitisch die ganze Zakāt einer einzigen Person geben?", a: ["Ja", "Nein, mindestens drei pro Gruppe", "Nur einem Verwandten", "Nur einem Beamten"], c: 0, e: "Die Schafiiten verlangen die Verteilung auf alle vorhandenen Gruppen." },
+  { t: "zakat", q: "Darf ein gesunder, arbeitsfähiger Armer hanafitisch Zakāt nehmen?", a: ["Ja, wenn er keinen Niṣāb besitzt", "Nein, nie", "Nur als Reisender", "Nur im Ramaḍān"], c: 0, e: "Die Schafiiten verneinen es." },
+  { t: "zakat", q: "Darf man freiwillige Ṣadaqa an arme Ḏimmīs geben (Abū Ḥanīfa, Muḥammad)?", a: ["Ja", "Nein", "Nur Zakāt, keine Ṣadaqa", "Nur mit Erlaubnis des Staates"], c: 0, e: "Zakāt aber nur an Muslime (Muʿāḏ)." },
+  { t: "zakat", q: "Warum dürfen die Banū Hāšim keine Zakāt erhalten?", a: ["Die Ṣadaqāt sind der „Schmutz der Menschen“ und für die Familie des Propheten ﷺ nicht erlaubt", "Weil sie alle reich waren", "Weil sie keine Muslime waren", "Weil sie Steuerbeamte waren"], c: 0, e: "Sie erhielten einen Anteil aus dem Fünftel der Beute." },
+  { t: "zakat", q: "Wem darf man seine Zakāt NICHT geben?", a: ["Den eigenen Eltern", "Dem armen Bruder", "Der armen Tante", "Dem armen Neffen"], c: 0, e: "Man muss sie ohnehin unterhalten. Geschwister und weitere Verwandte sind am besten." },
+  { t: "zakat", q: "Darf eine Frau ihrem armen Ehemann Zakāt geben (nach den beiden Schülern)?", a: ["Ja", "Nein", "Nur die Hälfte", "Nur als Darlehen"], c: 0, e: "„Dein Mann und dein Kind haben das meiste Recht.“ Abū Ḥanīfa verneint es." },
+  { t: "zakat", q: "Darf man dem kleinen Kind eines Reichen Zakāt geben?", a: ["Nein – es gilt durch den Vater als reich", "Ja", "Nur Kleidung", "Nur zum Fest"], c: 0, e: "Wohl aber der Waise einer reichen Mutter." },
+  { t: "zakat", q: "Wann wird die Ṣadaqat al-Fiṭr hanafitisch fällig?", a: ["Am Morgen des 1. Festtages", "Am Ende des Šaʿbān", "Nach dem Festgebet", "Am 27. Ramaḍān"], c: 0, e: "Man darf sie aber schon Tage, Monate oder Jahre vorher geben." },
+  { t: "zakat", q: "Wie viel Weizen beträgt die Fiṭra hanafitisch?", a: ["Ein halber Ṣāʿ (ca. 1,5–1,7 kg)", "Ein Ṣāʿ (ca. 3 kg)", "Zwei Ṣāʿ", "Ein Mudd"], c: 0, e: "Bei Gerste, Datteln und Rosinen ein Ṣāʿ. Die drei Schulen: auch Weizen ein Ṣāʿ." },
+  { t: "zakat", q: "Braucht die Fiṭra das volle Jahr über dem Niṣāb?", a: ["Nein", "Ja", "Nur bei Gold", "Nur für Männer"], c: 0, e: "Es genügt, am Festmorgen den Niṣāb über dem Grundbedarf zu besitzen." },
+  { t: "zakat", q: "Für wen muss ein Vater die Fiṭra NICHT pflichtmäßig zahlen?", a: ["Für seine Ehefrau und erwachsenen Kinder", "Für seine armen kleinen Kinder", "Für sein wahnsinniges Kind", "Für sich selbst"], c: 0, e: "Mit Erlaubnis oder im eigenen Haushalt kann er es aber tun." },
+  { t: "zakat", q: "Warum legt der Hadith die Fiṭra in Lebensmitteln statt in einem festen Geldbetrag fest?", a: ["Damit der Tagesbedarf der Armen trotz Preisschwankungen gedeckt wird", "Weil es damals kein Geld gab", "Weil Geld ḥarām ist", "Aus Zufall"], c: 0, e: "Der Wert darf dennoch gegeben werden." },
+  { t: "zakat", q: "Wie viel nahm ʿUmar von den christlichen Banū Taġlib?", a: ["Die doppelte Zakāt – im Grunde eine Ǧizya", "Gar nichts", "Die einfache Zakāt", "Ein Fünftel"], c: 0, e: "Bemessen wurde sie nach Zakāt-Regeln." }
+]);
