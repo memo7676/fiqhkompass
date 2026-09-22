@@ -16,17 +16,25 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - 5/10/15 Fragen
   - Punkte mit Zeit- und Serienbonus, 50:50-Joker
   - Bestwerte und Auswertung mit Links zum Nachlesen
-- **Wettbewerb & Freunde** (nur in der veröffentlichten Version auf claude.ai, denn dafür braucht es einen gemeinsamen Speicher):
+- **Konten** (Registrierung mit E-Mail und Passwort, E-Mail-Bestätigung, Passwort vergessen, Konto löschen):
+  - Spielername, den es nur einmal gibt. Groß- und Kleinschreibung zählt dabei nicht, Ali und ali sind also derselbe Name
+  - Geschlecht (Bruder/Schwester), Geburtsjahr; unter 16 Jahren nur mit Einverständnis der Eltern
+  - Zustimmung zu Datenschutz und Regeln ([`datenschutz.html`](datenschutz.html))
+  - eigenes Profilbild, das im Browser auf 128 × 128 px verkleinert wird
+- **Wettbewerb & Freunde**:
   - Wochenquiz mit 15 Fragen, für alle dieselben, ein Versuch pro Woche
-  - eine Saison dauert 4 Wochen (Start: Montag, 21.09.2026). Die Summe der vier Wochen entscheidet, wer gewinnt
-  - Saisonrangliste (alle oder nur Freunde) mit Abstand zum nächsten Platz
-  - Freunde über die Namenssuche oder mit + in der Rangliste hinzufügen, danach Gesamtpunkte aus allen Quizzen vergleichen
-  - Top 10 weltweit nach Wettbewerbspunkten, wahlweise für die laufende Saison oder für alle Saisons
-  - eigenes Profil: frei wählbarer Anzeigename (2–24 Zeichen) und Profilbild. Das Bild wird im Browser auf 128 × 128 px verkleinert und in `avatars/<id>` gespeichert
-  - `social.js` speichert in `players/<id>` (öffentliche Punktekarte, nur vom Besitzer beschreibbar) und `data/users/<id>/social` (private Freundesliste)
+  - eine Saison dauert 4 Wochen (Start: Montag, 21.09.2026). Die Summe der vier Wochen entscheidet
+  - Top 10 weltweit (diese Saison oder aller Zeiten, alle, nur Brüder oder nur Schwestern) und Saisonrangliste
+  - Freunde über den Spielernamen finden und Gesamtpunkte vergleichen
 
-Einfach `index.html` im Browser öffnen, ohne Build-Schritt.
+  Ranglisten sieht jeder, mitspielen können alle mit bestätigter E-Mail-Adresse.
+  Die Server-Regeln in [`firestore.rules`](firestore.rules) sichern das ab: eindeutige Namen, nur eigene Daten, Punkte können nicht sinken, kein zweiter Versuch pro Woche. Getestet wird das in `tests/`.
+
+Einrichtung von Firebase und GitHub Pages: [`SETUP.md`](SETUP.md). Ohne Firebase funktionieren Nachschlagen und Quiz trotzdem.
+
+Lokal: einfach `index.html` im Browser öffnen, ohne Build-Schritt.
 
 Wo die Inhalte stehen:
 - `data.js`: Inhalte aus dem Unterricht
 - `buch/*.js`: Ergänzungen aus dem İlmihal. Sie hängen sich über `FIQH.addSections`, `FIQH.addTopic` und `FIQH.addQuestions` an.
+- `backend.js`: Verbindung zu Firebase, `auth.js`: Anmelden und Registrieren, `social.js`: Wettbewerb und Ranglisten

@@ -1,0 +1,101 @@
+rules_version = '2';
+
+// Fiqh-Kompass: accounts, unique player names, rankings.
+// Deploy: Firebase console -> Firestore Database -> Rules -> paste this file -> Publish.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isOwner(uid) { return signedIn() && request.auth.uid == uid; }
+    function verified() { return request.auth.token.email_verified == true; }
+    function nameAfter(key) { return getAfter(/databases/$(database)/documents/usernames/$(key)); }
+
+    // Highest possible score of one round (15 questions, all bonuses).
+    function maxRound() { return 3250; }
+
+    // One document per player name. The id is the name in lower case, so
+    // "Ali" and "ali" cannot both exist.
+    match /usernames/{key} {
+      allow read: if true;
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid', 'name'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.name is string
+        && request.resource.data.name.lower() == key
+        && key.matches('^[a-z0-9äöüß_.-]{3,20}$');
+      // Only the spelling may change (same key), and only by the owner.
+      allow update: if signedIn()
+        && resource.data.uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['uid', 'name'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.name.lower() == key;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+    }
+
+    // Private profile: only the player sees it. It is never deleted: deleting
+    // the account replaces it with { deletedAt } (no personal data left), so a
+    // score card can not be deleted and recreated to replay a week.
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+      allow create: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(['birthYear', 'parentalConsent', 'termsAt', 'createdAt', 'friends'])
+        && request.resource.data.birthYear is int
+        && request.resource.data.birthYear >= 1920
+        && request.resource.data.birthYear <= request.time.year() - 6
+        && request.resource.data.parentalConsent is bool
+        && request.resource.data.friends is list
+        && request.resource.data.friends.size() == 0;
+      allow update: if isOwner(uid) && !('deletedAt' in resource.data) && (
+        (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['friends'])
+          && request.resource.data.friends is list
+          && request.resource.data.friends.size() <= 200)
+        || request.resource.data.keys().hasOnly(['deletedAt']));
+    }
+
+    // Public score card. Everyone reads it (rankings), only the owner writes it.
+    match /players/{uid} {
+      function validPlayer() {
+        let d = request.resource.data;
+        return d.keys().hasOnly(['nick', 'nickKey', 'g', 'total', 'games', 'comp', 'at'])
+          && d.g in ['m', 'f']
+          && d.total is int && d.games is int && d.comp is map
+          && d.nick is string && d.nickKey is string
+          && nameAfter(d.nickKey).data.uid == request.auth.uid
+          && nameAfter(d.nickKey).data.name == d.nick;
+      }
+      allow read: if true;
+      // Only together with the registration (the private profile is new).
+      allow create: if isOwner(uid) && validPlayer()
+        && !exists(/databases/$(database)/documents/users/$(uid))
+        && existsAfter(/databases/$(database)/documents/users/$(uid))
+        && request.resource.data.total == 0
+        && request.resource.data.games == 0
+        && request.resource.data.comp.size() == 0;
+      // Points only count with a confirmed e-mail address. Points only grow,
+      // by at most one round per write; competition weeks can not be removed
+      // (one attempt per week).
+      allow update: if isOwner(uid) && verified() && validPlayer()
+        && request.resource.data.g == resource.data.g
+        && request.resource.data.total >= resource.data.total
+        && request.resource.data.total - resource.data.total <= maxRound()
+        && request.resource.data.games >= resource.data.games
+        && request.resource.data.games - resource.data.games <= 1
+        && request.resource.data.comp.keys().hasAll(resource.data.comp.keys())
+        && request.resource.data.comp.size() - resource.data.comp.size() <= 1;
+      // Only when the whole account is deleted.
+      allow delete: if isOwner(uid)
+        && 'deletedAt' in getAfter(/databases/$(database)/documents/users/$(uid)).data;
+    }
+
+    // Public profile picture.
+    match /avatars/{uid} {
+      allow read: if true;
+      allow create, update: if isOwner(uid) && verified()
+        && request.resource.data.keys().hasOnly(['img'])
+        && request.resource.data.img is string
+        && request.resource.data.img.size() < 60000
+        && request.resource.data.img.matches('^data:image/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$');
+      allow delete: if isOwner(uid);
+    }
+  }
+}

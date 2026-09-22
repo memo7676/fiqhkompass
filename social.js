@@ -1,19 +1,15 @@
-/* Freunde & Wochenwettbewerb.
-   Needs the artifact runtime (claude.use("db") and claude.use("user")).
-   Opened as a plain file there is no shared state: the tab explains that
-   and the normal quiz keeps working.
+/* Wettbewerb, Ranglisten und Freunde.
+   Talks only to window.FIQH_BACKEND (backend.js, Firebase). Rankings are public,
+   playing and scoring need an account with a confirmed e-mail address.
 
-   Data (db):
-     players/<uid>                 public score card, written only by its owner
-       { total, games, comp: { "s1w2": { score, correct, answered, done, at } }, at }
-     avatars/<uid>                 public profile picture, written only by its owner
-       { img: "data:image/jpeg;base64,..." }  (128 x 128)
-     data/users/<uid>/social       private: { friends: [uid, ...] }
-   A player's own display name ("nick") lives in players/<uid>; without one
-   the organization profile name is shown.                                  */
+   Data (see backend.js / firestore.rules):
+     players/<uid>   public score card { nick, nickKey, g, total, games, comp: { "s1w2": {...} }, at }
+     avatars/<uid>   public profile picture { img }
+     users/<uid>     private { friends: [uid, ...], ... }                                 */
 (function () {
   "use strict";
   var APP = window.FIQH_APP;
+  var B = window.FIQH_BACKEND;
   if (!APP) return;
   var esc = APP.esc;
   function $(sel, root) { return (root || document).querySelector(sel); }
@@ -59,15 +55,16 @@
   }
 
   /* ---------- state ---------- */
-  var db = null, user = null, me = null;
+  var authUser = null;        // { uid, email, emailVerified } or null
+  var me = null;              // uid when signed in
   var mine = null;            // my own player doc (local truth)
-  var players = {};           // uid -> sanitized player doc
+  var players = {};           // uid -> sanitized player doc (everyone)
   var avatars = {};           // uid -> validated data: URL
-  var topFilter = APP.store("top") || "season";
   var friends = [];           // uids
+  var loaded = false;         // first players snapshot arrived
+  var topFilter = APP.store("top") || "season";
+  var genderFilter = APP.store("gender") || "all";
   var boardFilter = APP.store("board") || "all";
-  var pendingPoints = [];     // quiz results that finished before db was ready
-  var readOnly = false;
 
   function num(v) { v = Number(v); return isFinite(v) && v > 0 ? Math.round(v) : 0; }
   function cleanPlayer(d) {
@@ -80,16 +77,12 @@
         comp[k] = { score: num(e.score), correct: num(e.correct), answered: num(e.answered), done: !!e.done, at: String(e.at || "") };
       });
     }
-    var out = { total: num(d.total), games: num(d.games), comp: comp, at: String(d.at || "") };
-    var nick = cleanNick(d.nick);
-    if (nick) out.nick = nick;
-    return out;
-  }
-  /* Names and pictures are other people's input: trimmed, length-checked, rendered as text. */
-  function cleanNick(v) {
-    if (typeof v !== "string") return "";
-    v = v.replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u202a-\u202e\u2066-\u2069]/g, "").replace(/\s+/g, " ").trim();
-    return v.length >= 2 && v.length <= 24 ? v : "";
+    return {
+      nick: typeof d.nick === "string" ? d.nick.slice(0, 20) : "",
+      nickKey: typeof d.nickKey === "string" ? d.nickKey : "",
+      g: d.g === "f" ? "f" : d.g === "m" ? "m" : "",
+      total: num(d.total), games: num(d.games), comp: comp, at: String(d.at || "")
+    };
   }
   function cleanImg(v) {
     return typeof v === "string" && v.length < 60000 && /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(v) ? v : "";
@@ -105,33 +98,29 @@
     }
     return { sum: s, weeks: weeks };
   }
+  function canPlay() { return !!(mine && authUser && authUser.emailVerified); }
 
   /* ---------- writes: one at a time, my own doc only ---------- */
   var chain = Promise.resolve();
   var queued = false;
   function save() {
-    if (!db || !me || !mine || readOnly) return chain;
+    if (!canPlay()) return Promise.reject(new Error("not allowed"));
     if (queued) return chain;
     queued = true;
     chain = chain.then(function () {
       queued = false;
       mine.at = new Date().toISOString();
-      return db.doc("players/" + me).set(JSON.parse(JSON.stringify(mine)));
+      return B.doc("players/" + me).set(JSON.parse(JSON.stringify(mine)));
     }).catch(function (e) {
       queued = false;
-      showError(e && e.code === "invalid_argument"
-        ? "Du hast für diese Seite nur Leserechte. Deine Punkte können nicht gespeichert werden."
-        : "Speichern hat nicht geklappt. Prüfe die Verbindung.");
-      if (e && e.code === "invalid_argument") readOnly = true;
+      showError(B.message(e));
       throw e;
     });
     return chain;
   }
   function saveFriends() {
-    if (!db || !me) return;
-    db.doc("data/users/" + me + "/social").set({ friends: friends.slice(0, 200) }).catch(function () {
-      showError("Die Freundesliste konnte nicht gespeichert werden.");
-    });
+    if (!me) return;
+    B.doc("users/" + me).update({ friends: friends.slice(0, 200) }).catch(function (e) { showError(B.message(e)); });
   }
   function showError(msg) {
     var el = $("#comp-error");
@@ -141,7 +130,7 @@
 
   /* Every finished normal quiz adds to the all-time total. */
   APP.on("finish", function (r) {
-    if (!mine) { pendingPoints.push(r); return; }
+    if (!canPlay()) return;
     addGame(r.score);
     save().catch(function () {});
     render();
@@ -153,8 +142,10 @@
 
   /* ---------- weekly competition ---------- */
   function startCompetition() {
+    if (!authUser) { openAuth("register"); return; }
+    if (!canPlay()) { openAuth("verify"); return; }
     var cal = calendar(Date.now());
-    if (!mine || mine.comp[cal.key] || readOnly) return;
+    if (mine.comp[cal.key]) return;
     var btn = $("#comp-start");
     btn.disabled = true;
     $("#comp-error").hidden = true;
@@ -162,6 +153,7 @@
     mine.comp[cal.key] = entry;
     // The attempt is recorded before the first question: one try per week.
     save().then(function () {
+      btn.disabled = false;
       var counted = 0;
       APP.startQuiz({
         questions: weeklyQuestions(cal.key),
@@ -192,29 +184,59 @@
   }
   $("#comp-start").addEventListener("click", startCompetition);
 
-  /* ---------- rendering ---------- */
-  var renderToken = 0;
-  function render() {
-    if (!mine) return;
-    var token = ++renderToken;
-    var cal = calendar(Date.now());
-    var ids = Object.keys(players);
-    if (ids.indexOf(me) === -1) ids.push(me);
-    friends.forEach(function (f) { if (ids.indexOf(f) === -1) ids.push(f); });
-    var prev = cal.season > 1 ? leader(cal.season - 1) : null;
-    if (prev) ids.push(prev.id);
-    user.profiles(ids).then(function (ps) {
-      if (token !== renderToken) return;
-      renderComp(cal);
-      renderWinner(cal, prev, ps);
-      renderBoard(cal, ps);
-      renderFriends(cal, ps);
-      renderTop(cal, ps);
-      renderAccount(ps);
-    });
+  function openAuth(pane) {
+    if (window.FIQH_AUTH) window.FIQH_AUTH.open(pane);
   }
 
-  function playerFor(id) { return id === me ? mine : (players[id] || cleanPlayer({})); }
+  /* ---------- names & pictures ---------- */
+  function playerFor(id) { return id === me && mine ? mine : (players[id] || cleanPlayer({})); }
+  function baseName(id) { return playerFor(id).nick; }
+  function displayName(id) {
+    var n = baseName(id);
+    if (id === me) return n ? n + " (du)" : "Du";
+    return n || "Gelöschtes Konto";
+  }
+  function hue(id) { var h = 0; for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) % 360; return h; }
+  var initialsCache = {};
+  function avatarOf(id) {
+    if (avatars[id]) return avatars[id];
+    var ch = (baseName(id) || "?").charAt(0).toUpperCase();
+    var k = id + ch;
+    if (!initialsCache[k]) {
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="hsl(' + hue(id) + ',40%,40%)"/>' +
+        '<text x="32" y="42" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="700" fill="#fff" text-anchor="middle">' +
+        ch.replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</text></svg>";
+      initialsCache[k] = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    }
+    return initialsCache[k];
+  }
+  function allIds() {
+    var ids = Object.keys(players);
+    if (me && ids.indexOf(me) === -1 && mine) ids.push(me);
+    return ids;
+  }
+
+  /* ---------- rendering ---------- */
+  function render() {
+    if (!B.available) return;
+    var cal = calendar(Date.now());
+    var guest = !authUser;
+    $("#social-off").hidden = true;
+    $("#social-on").hidden = false;
+    $("#account").hidden = guest || !mine;
+    $("#guest-cta").hidden = !guest;
+    $("#verify-note").hidden = guest || authUser.emailVerified;
+    $("#friends-panel").hidden = guest;
+    $("#board-filter").hidden = guest;
+    if (guest && boardFilter === "friends") boardFilter = "all";
+    var prev = cal.season > 1 ? leader(cal.season - 1) : null;
+    renderComp(cal);
+    renderWinner(cal, prev);
+    renderTop(cal);
+    renderBoard(cal);
+    if (!guest) renderFriends(cal);
+    if (mine) renderAccount();
+  }
 
   function renderComp(cal) {
     $("#comp-eyebrow").textContent = "Wochenwettbewerb · Saison " + cal.season;
@@ -223,31 +245,41 @@
       day(cal.seasonEnd - 1) + " – jede Woche 15 neue Fragen, die Summe der vier Wochen entscheidet.";
     updateCountdown();
 
+    var comp = mine ? mine.comp : {};
     $("#comp-weeks").innerHTML = [1, 2, 3, 4].map(function (w) {
-      var e = mine.comp[weekKey(cal.season, w)];
+      var e = comp[weekKey(cal.season, w)];
       var start = cal.seasonStart + (w - 1) * WEEK;
       var cls = w === cal.week ? "now" : w > cal.week ? "future" : "";
       var val, note;
       if (e) { cls += " done"; val = pts(e.score); note = e.done ? e.correct + " / 15 richtig" : "abgebrochen"; }
-      else if (w < cal.week) { val = "–"; note = "verpasst"; }
+      else if (w < cal.week) { val = "–"; note = mine ? "verpasst" : "vorbei"; }
       else if (w === cal.week) { val = "offen"; note = "bis " + dayLong(cal.weekEnd - 1); }
       else { val = "–"; note = "ab " + day(start); }
       return '<li class="week ' + cls + '"><span>Woche ' + w + "</span><b>" + esc(val) + "</b><small>" + esc(note) + "</small></li>";
     }).join("");
 
-    var e = mine.comp[cal.key];
     var btn = $("#comp-start");
     var state = $("#comp-state");
+    if (!authUser) {
+      btn.hidden = false;
+      btn.textContent = "Registrieren und mitspielen";
+      state.textContent = "Mitspielen können alle mit einem kostenlosen Konto.";
+      return;
+    }
+    btn.textContent = "Wochenquiz starten";
+    if (!mine) { btn.hidden = true; state.textContent = "Dein Spielerprofil wird geladen …"; return; }
+    var e = mine.comp[cal.key];
     btn.hidden = !!e;
-    btn.disabled = readOnly;
-    if (!e) {
-      state.innerHTML = "Ein Versuch, 15 Fragen, dieselben wie bei allen anderen.";
+    if (!authUser.emailVerified) {
+      state.textContent = "Bestätige zuerst deine E-Mail-Adresse – dann kannst du mitspielen.";
+    } else if (!e) {
+      state.textContent = "Ein Versuch, 15 Fragen, dieselben wie bei allen anderen.";
     } else if (e.done) {
-      state.innerHTML = "Diese Woche erledigt: <b>" + pts(e.score) + " Punkte</b> (" + e.correct + " / 15 richtig). Nächstes Wochenquiz ab " + esc(dayLong(cal.weekEnd)) + "";
+      state.innerHTML = "Diese Woche erledigt: <b>" + pts(e.score) + " Punkte</b> (" + e.correct + " / 15 richtig). Nächstes Wochenquiz ab " + esc(dayLong(cal.weekEnd));
     } else if (APP.isPlaying()) {
-      state.innerHTML = "Dein Wochenquiz läuft gerade.";
+      state.textContent = "Dein Wochenquiz läuft gerade.";
     } else {
-      state.innerHTML = "Dein Versuch wurde abgebrochen und zählt mit <b>" + pts(e.score) + " Punkten</b>. Nächstes Wochenquiz ab " + esc(dayLong(cal.weekEnd)) + "";
+      state.innerHTML = "Dein Versuch wurde abgebrochen und zählt mit <b>" + pts(e.score) + " Punkten</b>. Nächstes Wochenquiz ab " + esc(dayLong(cal.weekEnd));
     }
   }
 
@@ -255,30 +287,26 @@
     var cal = calendar(Date.now());
     var left = cal.weekEnd - Date.now();
     var d = Math.floor(left / 864e5), h = Math.floor(left % 864e5 / 36e5), m = Math.floor(left % 36e5 / 6e4);
-    var el = $("#comp-countdown");
-    el.innerHTML = "<small>Woche endet in</small><b>" + (d ? d + " T " : "") + h + " Std " + (d ? "" : m + " Min") + "</b>" +
+    $("#comp-countdown").innerHTML = "<small>Woche endet in</small><b>" + (d ? d + " T " : "") + h + " Std " + (d ? "" : m + " Min") + "</b>" +
       "<small>Saisonende " + esc(day(cal.seasonEnd - 1)) + "</small>";
   }
 
   function leader(season) {
     var best = null;
-    var all = Object.keys(players).map(function (id) { return { id: id, p: playerFor(id) }; });
-    if (!players[me]) all.push({ id: me, p: mine });
-    all.forEach(function (x) {
-      var s = seasonSum(x.p, season);
-      if (s.weeks && s.sum > 0 && (!best || s.sum > best.sum)) best = { id: x.id, sum: s.sum };
+    allIds().forEach(function (id) {
+      var s = seasonSum(playerFor(id), season);
+      if (s.weeks && s.sum > 0 && (!best || s.sum > best.sum)) best = { id: id, sum: s.sum };
     });
     return best;
   }
 
-  function renderWinner(cal, prev, ps) {
+  function renderWinner(cal, prev) {
     var box = $("#last-winner");
     if (!prev) { box.hidden = true; return; }
-    var name = displayName(prev.id, ps);
     box.hidden = false;
-    box.innerHTML = '<img alt="" src="' + esc(avatarOf(prev.id, ps)) + '"><p><small class="eyebrow">Gewinner Saison ' + (cal.season - 1) +
+    box.innerHTML = '<img alt="" src="' + esc(avatarOf(prev.id)) + '"><p><small class="eyebrow">Gewinner Saison ' + (cal.season - 1) +
       "</small><br><strong></strong> mit " + pts(prev.sum) + " Punkten</p>";
-    $("strong", box).textContent = prev.id === me ? "Du hast gewonnen" : name;
+    $("strong", box).textContent = prev.id === me ? "Du hast gewonnen" : displayName(prev.id);
   }
 
   function row(opts) {
@@ -299,102 +327,28 @@
     }
     return li;
   }
-  function baseName(id, ps) { return playerFor(id).nick || (ps[id] && ps[id].name) || ""; }
-  function displayName(id, ps) {
-    var n = baseName(id, ps);
-    if (id === me) return n ? n + " (du)" : "Du";
-    return n || "Jemand";
+  function addAction(id) {
+    if (!me || id === me || friends.indexOf(id) !== -1) return null;
+    return { label: "+", title: "Als Freund hinzufügen", run: function () { addFriend(id); } };
   }
-  function avatarOf(id, ps) { return avatars[id] || (ps[id] && ps[id].avatarUrl) || ""; }
-
-  function renderBoard(cal, ps) {
-    $("#board-title").textContent = "Saison " + cal.season;
-    $all("[data-board]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-board") === boardFilter ? "true" : "false"); });
-    var ids = Object.keys(players);
-    if (ids.indexOf(me) === -1) ids.push(me);
-    if (boardFilter === "friends") ids = ids.filter(function (id) { return id === me || friends.indexOf(id) !== -1; })
-      .concat(friends.filter(function (f) { return !players[f]; }));
-    var rows = ids.map(function (id) {
-      var p = playerFor(id);
-      return { id: id, p: p, s: seasonSum(p, cal.season) };
-    }).filter(function (r) { return r.id === me || boardFilter === "friends" || r.s.weeks; });
-    rows.sort(function (a, b) { return b.s.sum - a.s.sum || (a.id === me ? -1 : b.id === me ? 1 : 0); });
-
-    var list = $("#board");
-    list.innerHTML = "";
-    var myPos = 0;
-    rows.forEach(function (r, i) {
-      var pos = i + 1;
-      if (i > 0 && rows[i - 1].s.sum === r.s.sum) pos = list.lastChild ? +list.lastChild.getAttribute("data-pos") : pos;
-      if (r.id === me) myPos = pos;
-      var weeks = [1, 2, 3, 4].map(function (w) {
-        var e = r.p.comp[weekKey(cal.season, w)];
-        return "W" + w + " " + (e ? pts(e.score) : "–");
-      }).join(" · ");
-      var isFriend = friends.indexOf(r.id) !== -1;
-      var li = row({
-        pos: pos, me: r.id === me, score: r.s.sum, unit: "Summe",
-        name: displayName(r.id, ps), avatar: avatarOf(r.id, ps), sub: weeks,
-        action: r.id === me || isFriend ? null : { label: "+", title: "Als Freund hinzufügen", run: function () { addFriend(r.id); } }
-      });
-      li.setAttribute("data-pos", pos);
-      list.appendChild(li);
-    });
-    if (rows.length < 2) {
-      var hint = document.createElement("li");
-      hint.className = "empty";
-      hint.textContent = boardFilter === "friends"
-        ? "Noch keine Freunde – füge rechts jemanden hinzu oder tippe in der Gesamtliste auf +."
-        : "Noch niemand sonst hat in dieser Saison gespielt. Teile den Link mit deinen Freunden!";
-      list.appendChild(hint);
-    }
-
-    var note = $("#board-note");
-    var mySum = seasonSum(mine, cal.season).sum;
-    var ahead = rows.filter(function (r) { return r.s.sum > mySum; });
-    if (!mySum && !mine.comp[cal.key]) note.innerHTML = "Spiel das Wochenquiz, um in die Wertung zu kommen.";
-    else if (!ahead.length && rows.length > 1) note.innerHTML = "<b>Du führst!</b> Halte den Vorsprung bis " + esc(day(cal.seasonEnd - 1)) + ".";
-    else if (ahead.length) {
-      var next = ahead[ahead.length - 1];
-      note.innerHTML = "Platz <b>" + myPos + "</b> – <b>" + pts(next.s.sum - mySum) + " Punkte</b> hinter <b></b>.";
-      $all("b", note)[2].textContent = displayName(next.id, ps);
-    } else note.innerHTML = "Platz <b>1</b> – noch ohne Konkurrenz.";
-  }
-
-  function renderFriends(cal, ps) {
-    var ids = [me].concat(friends);
-    var rows = ids.map(function (id) { return { id: id, p: playerFor(id) }; });
-    rows.sort(function (a, b) { return b.p.total - a.p.total; });
-    var list = $("#friend-board");
-    list.innerHTML = "";
-    rows.forEach(function (r, i) {
-      var e = r.p.comp[cal.key];
-      var sub = r.p.games + (r.p.games === 1 ? " Quiz" : " Quizze") + " · diese Woche " + (e ? pts(e.score) : "–");
-      list.appendChild(row({
-        pos: i + 1, me: r.id === me, score: r.p.total, unit: "Punkte",
-        name: displayName(r.id, ps), avatar: avatarOf(r.id, ps), sub: sub,
-        action: r.id === me ? null : { label: "×", title: "Aus Freunden entfernen", run: function () { removeFriend(r.id); } }
-      }));
-    });
-    if (!friends.length) {
-      var hint = document.createElement("li");
-      hint.className = "empty";
-      hint.textContent = "Noch keine Freunde. Such unten nach Namen oder tippe in der Saisonrangliste auf +.";
-      list.appendChild(hint);
-    }
+  function gSub(p) { return p.g === "f" ? "Schwester" : p.g === "m" ? "Bruder" : ""; }
+  function empty(list, text) {
+    var li = document.createElement("li");
+    li.className = "empty";
+    li.textContent = text;
+    list.appendChild(li);
   }
 
   /* ---------- top 10 worldwide ---------- */
-  function renderTop(cal, ps) {
+  function renderTop(cal) {
     $all("[data-top]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-top") === topFilter ? "true" : "false"); });
+    $all("[data-gender]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-gender") === genderFilter ? "true" : "false"); });
     $("#top-title").textContent = topFilter === "season" ? "Saison " + cal.season + " – die besten 10" : "Alle Wettbewerbspunkte seit Saison 1";
-    var ids = Object.keys(players);
-    if (ids.indexOf(me) === -1) ids.push(me);
-    var rows = ids.map(function (id) {
+    var rows = allIds().map(function (id) {
       var p = playerFor(id);
       var s = topFilter === "season" ? seasonSum(p, cal.season) : { sum: compTotal(p), weeks: Object.keys(p.comp).length };
       return { id: id, p: p, s: s };
-    }).filter(function (r) { return r.s.weeks > 0; });
+    }).filter(function (r) { return r.s.weeks > 0 && (genderFilter === "all" || r.p.g === genderFilter); });
     rows.sort(function (a, b) { return b.s.sum - a.s.sum; });
     var list = $("#top10");
     list.innerHTML = "";
@@ -405,48 +359,159 @@
       var isFriend = friends.indexOf(r.id) !== -1;
       list.appendChild(row({
         pos: i + 1, me: r.id === me, score: r.s.sum, unit: "Punkte",
-        name: displayName(r.id, ps), avatar: avatarOf(r.id, ps), sub: weeks + (isFriend ? " · Freund" : ""),
-        action: r.id === me || isFriend ? null : { label: "+", title: "Als Freund hinzufügen", run: function () { addFriend(r.id); } }
+        name: displayName(r.id), avatar: avatarOf(r.id), sub: [weeks, gSub(r.p), isFriend ? "Freund" : ""].filter(Boolean).join(" · "),
+        action: addAction(r.id)
       }));
     });
-    if (!rows.length) {
-      var hint = document.createElement("li");
-      hint.className = "empty";
-      hint.textContent = "Noch keine Wettbewerbspunkte. Wer diese Woche als Erstes spielt, steht ganz oben.";
-      list.appendChild(hint);
-    }
+    if (!rows.length) empty(list, loaded ? "Noch keine Wettbewerbspunkte. Wer diese Woche als Erstes spielt, steht ganz oben." : "Rangliste wird geladen …");
     var note = $("#top-me");
-    if (myRank > 10) note.innerHTML = "Dein Platz: <b>" + myRank + "</b> von " + rows.length + " – " + pts(rows[9].s.sum - rows[myRank - 1].s.sum) + " Punkte bis zu den Top 10.";
+    if (!me) note.textContent = rows.length ? "Registriere dich, um selbst in die Weltrangliste zu kommen." : "";
+    else if (myRank > 10) note.innerHTML = "Dein Platz: <b>" + myRank + "</b> von " + rows.length + " – " + pts(rows[9].s.sum - rows[myRank - 1].s.sum) + " Punkte bis zu den Top 10.";
     else if (myRank) note.innerHTML = "Du bist in den Top 10 – <b>Platz " + myRank + "</b>.";
     else note.textContent = "Spiel das Wochenquiz, um in die Weltrangliste zu kommen.";
   }
   $all("[data-top]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      topFilter = b.getAttribute("data-top");
-      APP.store("top", topFilter);
-      render();
-    });
+    b.addEventListener("click", function () { topFilter = b.getAttribute("data-top"); APP.store("top", topFilter); render(); });
+  });
+  $all("[data-gender]").forEach(function (b) {
+    b.addEventListener("click", function () { genderFilter = b.getAttribute("data-gender"); APP.store("gender", genderFilter); render(); });
   });
 
-  /* ---------- own account: display name and picture ---------- */
+  /* ---------- season ranking ---------- */
+  function renderBoard(cal) {
+    $("#board-title").textContent = "Saison " + cal.season;
+    $all("[data-board]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-board") === boardFilter ? "true" : "false"); });
+    var ids = allIds();
+    if (boardFilter === "friends") ids = ids.filter(function (id) { return id === me || friends.indexOf(id) !== -1; });
+    var rows = ids.map(function (id) {
+      var p = playerFor(id);
+      return { id: id, p: p, s: seasonSum(p, cal.season) };
+    }).filter(function (r) { return r.id === me || boardFilter === "friends" || r.s.weeks; });
+    rows.sort(function (a, b) { return b.s.sum - a.s.sum || (a.id === me ? -1 : b.id === me ? 1 : 0); });
+
+    var list = $("#board");
+    list.innerHTML = "";
+    var myPos = 0, lastPos = 0;
+    rows.forEach(function (r, i) {
+      var pos = i > 0 && rows[i - 1].s.sum === r.s.sum ? lastPos : i + 1;
+      lastPos = pos;
+      if (r.id === me) myPos = pos;
+      var weeks = [1, 2, 3, 4].map(function (w) {
+        var e = r.p.comp[weekKey(cal.season, w)];
+        return "W" + w + " " + (e ? pts(e.score) : "–");
+      }).join(" · ");
+      list.appendChild(row({
+        pos: pos, me: r.id === me, score: r.s.sum, unit: "Summe",
+        name: displayName(r.id), avatar: avatarOf(r.id), sub: weeks, action: addAction(r.id)
+      }));
+    });
+    if (rows.length < 2) {
+      empty(list, boardFilter === "friends"
+        ? "Noch keine Freunde – such rechts nach Spielernamen oder tippe in einer Rangliste auf +."
+        : rows.length ? "Noch niemand sonst hat in dieser Saison gespielt. Lade deine Freunde ein!" : "In dieser Saison hat noch niemand gespielt.");
+    }
+
+    var note = $("#board-note");
+    if (!mine) { note.textContent = ""; return; }
+    var mySum = seasonSum(mine, cal.season).sum;
+    var ahead = rows.filter(function (r) { return r.s.sum > mySum; });
+    if (!mySum && !mine.comp[cal.key]) note.textContent = "Spiel das Wochenquiz, um in die Wertung zu kommen.";
+    else if (!ahead.length && rows.length > 1) note.innerHTML = "<b>Du führst!</b> Halte den Vorsprung bis " + esc(day(cal.seasonEnd - 1)) + ".";
+    else if (ahead.length) {
+      var next = ahead[ahead.length - 1];
+      note.innerHTML = "Platz <b>" + myPos + "</b> – <b>" + pts(next.s.sum - mySum) + " Punkte</b> hinter <b></b>.";
+      $all("b", note)[2].textContent = displayName(next.id);
+    } else note.innerHTML = "Platz <b>1</b> – noch ohne Konkurrenz.";
+  }
+  $all("[data-board]").forEach(function (b) {
+    b.addEventListener("click", function () { boardFilter = b.getAttribute("data-board"); APP.store("board", boardFilter); render(); });
+  });
+
+  /* ---------- friends ---------- */
+  function renderFriends(cal) {
+    var ids = (mine ? [me] : []).concat(friends);
+    var rows = ids.map(function (id) { return { id: id, p: playerFor(id) }; });
+    rows.sort(function (a, b) { return b.p.total - a.p.total; });
+    var list = $("#friend-board");
+    list.innerHTML = "";
+    rows.forEach(function (r, i) {
+      var e = r.p.comp[cal.key];
+      var sub = r.p.games + (r.p.games === 1 ? " Quiz" : " Quizze") + " · diese Woche " + (e ? pts(e.score) : "–");
+      list.appendChild(row({
+        pos: i + 1, me: r.id === me, score: r.p.total, unit: "Punkte",
+        name: displayName(r.id), avatar: avatarOf(r.id), sub: sub,
+        action: r.id === me ? null : { label: "×", title: "Aus Freunden entfernen", run: function () { removeFriend(r.id); } }
+      }));
+    });
+    if (!friends.length) empty(list, "Noch keine Freunde. Such unten nach Spielernamen oder tippe in einer Rangliste auf +.");
+  }
+  function addFriend(id) {
+    if (!me || id === me || friends.indexOf(id) !== -1) return;
+    friends.push(id);
+    saveFriends();
+    render();
+    runSearch($("#friend-q").value.trim());
+  }
+  function removeFriend(id) {
+    friends = friends.filter(function (f) { return f !== id; });
+    saveFriends();
+    render();
+  }
+
+  /* Search by player name among everyone who has an account. */
+  function runSearch(q) {
+    var box = $("#friend-hits");
+    box.innerHTML = "";
+    if (!q || !me) return;
+    var lq = q.toLowerCase();
+    var hits = Object.keys(players).filter(function (id) {
+      return id !== me && players[id].nick && players[id].nick.toLowerCase().indexOf(lq) !== -1;
+    }).sort(function (a, b) {
+      return (players[a].nick.toLowerCase().indexOf(lq) === 0 ? 0 : 1) - (players[b].nick.toLowerCase().indexOf(lq) === 0 ? 0 : 1) ||
+        players[a].nick.localeCompare(players[b].nick);
+    }).slice(0, 8);
+    if (!hits.length) { box.innerHTML = '<li class="note">Kein Spieler mit diesem Namen gefunden.</li>'; return; }
+    hits.forEach(function (id) {
+      var li = document.createElement("li");
+      li.className = "hit";
+      li.innerHTML = '<img alt=""><span></span>';
+      $("img", li).src = avatarOf(id);
+      $("span", li).textContent = players[id].nick;
+      if (friends.indexOf(id) !== -1) {
+        var s = document.createElement("small");
+        s.className = "chip-count";
+        s.textContent = "Freund";
+        li.appendChild(s);
+      } else {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "linkish";
+        b.textContent = "Hinzufügen";
+        b.addEventListener("click", function () { addFriend(id); });
+        li.appendChild(b);
+      }
+      box.appendChild(li);
+    });
+  }
+  $("#friend-q").addEventListener("input", function (e) { runSearch(e.target.value.trim()); });
+
+  /* ---------- own profile: player name and picture ---------- */
   var draftImg = null;   // null = unchanged, "" = remove, data URL = new picture
-  var savingAvatar = Promise.resolve();
-  function renderAccount(ps) {
+  function renderAccount() {
     var editing = !$("#acc-form").hidden;
-    $("#acc-avatar").src = avatarOf(me, ps);
-    $("#acc-name").textContent = baseName(me, ps) || "Noch ohne Namen";
+    $("#acc-avatar").src = avatarOf(me);
+    $("#acc-name").textContent = mine.nick || "Spieler";
     $("#acc-stats").textContent = pts(mine.total) + " Punkte · " + mine.games + (mine.games === 1 ? " Quiz" : " Quizze") +
       " · " + pts(compTotal(mine)) + " im Wettbewerb";
-    if (!editing) $("#acc-preview").src = avatarOf(me, ps);
-    accountPs = ps;
+    if (!editing) $("#acc-preview").src = avatarOf(me);
   }
-  var accountPs = {};
   function accMsg(text, kind) {
     var m = $("#acc-msg");
     m.textContent = text;
     m.className = "acc-msg" + (kind ? " " + kind : "");
   }
   function openAccount(open) {
+    if (open && !canPlay()) { openAuth("verify"); return; }
     $("#acc-form").hidden = !open;
     $("#acc-edit").setAttribute("aria-expanded", open ? "true" : "false");
     $("#acc-edit").hidden = open;
@@ -454,7 +519,7 @@
     accMsg("");
     if (open) {
       $("#acc-nick").value = mine.nick || "";
-      $("#acc-preview").src = avatarOf(me, accountPs);
+      $("#acc-preview").src = avatarOf(me);
       $("#acc-nick").focus();
     }
   }
@@ -462,7 +527,10 @@
   $("#acc-cancel").addEventListener("click", function () { openAccount(false); });
   $("#acc-clear").addEventListener("click", function () {
     draftImg = "";
-    $("#acc-preview").src = (accountPs[me] && accountPs[me].avatarUrl) || "";
+    var keep = avatars[me];
+    delete avatars[me];
+    $("#acc-preview").src = avatarOf(me);
+    if (keep) avatars[me] = keep;
     accMsg("Bild wird beim Speichern entfernt.");
   });
   $("#acc-file").addEventListener("change", function (e) {
@@ -499,111 +567,51 @@
       img.src = url;
     });
   }
+  /* Live check of the new player name. */
+  var nameTimer = null;
+  $("#acc-nick").addEventListener("input", function (e) {
+    clearTimeout(nameTimer);
+    var v = e.target.value.trim();
+    if (!v || B.nameKey(v) === mine.nickKey) { accMsg(""); return; }
+    var err = B.checkName(v);
+    if (err) { accMsg(err, "bad"); return; }
+    nameTimer = setTimeout(function () {
+      B.nameAvailable(v).then(function (free) {
+        if ($("#acc-nick").value.trim() !== v) return;
+        accMsg(free ? "„" + v + "“ ist frei." : "„" + v + "“ ist schon vergeben.", free ? "good" : "bad");
+      }, function () {});
+    }, 350);
+  });
   $("#acc-form").addEventListener("submit", function (e) {
     e.preventDefault();
-    var raw = $("#acc-nick").value;
-    var nick = cleanNick(raw);
-    if (raw.trim() && !nick) { accMsg("Der Name muss 2–24 Zeichen lang sein.", "bad"); return; }
-    if (readOnly) { accMsg("Du hast nur Leserechte – Speichern ist nicht möglich.", "bad"); return; }
-    $("#acc-save").disabled = true;
-    accMsg("Speichere …");
+    var nick = $("#acc-nick").value.trim().normalize("NFC");
     var jobs = [];
-    if ((mine.nick || "") !== nick) {
-      if (nick) mine.nick = nick; else delete mine.nick;
-      jobs.push(save());
+    if (nick !== mine.nick) {
+      var err = B.checkName(nick);
+      if (err) { accMsg(err, "bad"); return; }
+      jobs.push(B.changeName(mine.nickKey, nick).then(function () { mine.nick = nick; mine.nickKey = B.nameKey(nick); }));
     }
     if (draftImg !== null) {
       var img = draftImg;
-      savingAvatar = savingAvatar.then(function () {
-        var ref = db.doc("avatars/" + me);
-        return img ? ref.set({ img: img }) : ref.delete();
-      });
-      jobs.push(savingAvatar.then(function () { if (img) avatars[me] = img; else delete avatars[me]; }));
+      var ref = B.doc("avatars/" + me);
+      jobs.push((img ? ref.set({ img: img }) : ref.delete()).then(function () { if (img) avatars[me] = img; else delete avatars[me]; }));
     }
+    if (!jobs.length) { openAccount(false); return; }
+    $("#acc-save").disabled = true;
+    accMsg("Speichere …");
     Promise.all(jobs).then(function () {
       $("#acc-save").disabled = false;
       openAccount(false);
-      accMsg("");
       render();
-    }, function () {
+    }, function (err) {
       $("#acc-save").disabled = false;
-      savingAvatar = Promise.resolve();
-      accMsg("Speichern hat nicht geklappt. Versuch es noch einmal.", "bad");
-    });
-  });
-
-  function addFriend(id) {
-    if (!id || id === me || friends.indexOf(id) !== -1) return;
-    friends.push(id);
-    saveFriends();
-    render();
-    runSearch($("#friend-q").value);
-  }
-  function removeFriend(id) {
-    friends = friends.filter(function (f) { return f !== id; });
-    saveFriends();
-    render();
-  }
-
-  $all("[data-board]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      boardFilter = b.getAttribute("data-board");
-      APP.store("board", boardFilter);
+      accMsg(B.message(err), "bad");
       render();
     });
   });
-
-  /* ---------- friend search (organization directory) ---------- */
-  function runSearch(q) {
-    if (!user) return;
-    user.search(q || "").then(function (hits) {
-      if (($("#friend-q").value.trim() || "") !== (q || "")) return;
-      var box = $("#friend-hits");
-      box.innerHTML = "";
-      // Players are also found by their own display name.
-      var seen = {};
-      hits = hits.filter(function (h) { return h.id !== me; }).map(function (h) {
-        seen[h.id] = 1;
-        return { id: h.id, name: players[h.id] && players[h.id].nick || h.name, avatarUrl: avatars[h.id] || h.avatarUrl };
-      });
-      if (q) {
-        var lq = q.toLowerCase();
-        Object.keys(players).forEach(function (id) {
-          var n = players[id].nick;
-          if (!seen[id] && id !== me && n && n.toLowerCase().indexOf(lq) !== -1 && hits.length < 10) {
-            hits.push({ id: id, name: n, avatarUrl: avatars[id] || (accountPs[id] && accountPs[id].avatarUrl) || "" });
-          }
-        });
-      }
-      if (!hits.length) {
-        if (q) { box.innerHTML = '<li class="note">Niemand gefunden. Mitspielende aus der Rangliste kannst du dort mit + hinzufügen.</li>'; }
-        return;
-      }
-      hits.forEach(function (h) {
-        var li = document.createElement("li");
-        li.className = "hit";
-        li.innerHTML = '<img alt=""><span></span>';
-        $("img", li).src = h.avatarUrl;
-        $("span", li).textContent = h.name || "Jemand";
-        if (friends.indexOf(h.id) !== -1) {
-          var s = document.createElement("small");
-          s.className = "chip-count";
-          s.textContent = "Freund";
-          li.appendChild(s);
-        } else {
-          var b = document.createElement("button");
-          b.type = "button";
-          b.className = "linkish";
-          b.textContent = "Hinzufügen";
-          b.addEventListener("click", function () { addFriend(h.id); });
-          li.appendChild(b);
-        }
-        box.appendChild(li);
-      });
-    });
-  }
-  $("#friend-q").addEventListener("input", function (e) { runSearch(e.target.value.trim()); });
-  $("#friend-q").addEventListener("focus", function (e) { runSearch(e.target.value.trim()); });
+  $("#guest-register").addEventListener("click", function () { openAuth("register"); });
+  $("#guest-login").addEventListener("click", function () { openAuth("login"); });
+  $("#verify-open").addEventListener("click", function () { openAuth("verify"); });
 
   /* ---------- boot ---------- */
   function off(title, text) {
@@ -613,56 +621,54 @@
     $("#social-on").hidden = true;
   }
 
-  function boot() {
-    if (!window.claude || typeof window.claude.use !== "function") {
-      off("Nur in der geteilten Version", "Rangliste, Freunde und der Wochenwettbewerb brauchen einen gemeinsamen Speicher. Den gibt es in der veröffentlichten Seite auf claude.ai – als lokale Datei funktionieren Nachschlagen und Quiz ganz normal.");
-      return;
-    }
-    Promise.all([window.claude.use("db"), window.claude.use("user")]).then(function (r) {
-      db = r[0]; user = r[1];
-      if (!db || !user) { off("Gerade nicht verfügbar", "Der gemeinsame Speicher ist in dieser Ansicht nicht erreichbar. Nachschlagen und Quiz funktionieren trotzdem."); return null; }
-      return user.id();
-    }).then(function (id) {
-      if (!db || !user) return;
-      if (!id) { off("Bitte anmelden", "Für Rangliste und Wettbewerb brauchst du ein Konto in der Organisation, damit deine Punkte dir zugeordnet werden."); return; }
-      me = id;
-      return Promise.all([db.doc("players/" + me).get(), db.doc("data/users/" + me + "/social").get(), db.doc("avatars/" + me).get()]);
-    }).then(function (snaps) {
-      if (!snaps) return;
-      mine = cleanPlayer(snaps[0].exists ? snaps[0].data() : {});
-      var f = snaps[1].exists ? snaps[1].data().friends : [];
-      friends = Array.isArray(f) ? f.filter(function (x) { return typeof x === "string" && x !== me; }) : [];
-      var a = snaps[2].exists ? cleanImg(snaps[2].data().img) : "";
-      if (a) avatars[me] = a;
-      if (pendingPoints.length) {
-        pendingPoints.forEach(function (p) { addGame(p.score); });
-        pendingPoints = [];
-        save().catch(function () {});
-      }
-      $("#social-off").hidden = true;
-      $("#social-on").hidden = false;
-      render();
-      db.collection("players").onSnapshot(function (snap) {
-        var next = {};
-        snap.docs.forEach(function (d) { if (d.exists && d.id !== me) next[d.id] = cleanPlayer(d.data()); });
-        players = next;
-        render();
-      }, function () { showError("Die Rangliste wird gerade nicht aktualisiert. Lade die Seite neu."); });
-      db.collection("avatars").onSnapshot(function (snap) {
-        var next = {};
-        snap.docs.forEach(function (d) { var img = d.exists && cleanImg((d.data() || {}).img); if (img) next[d.id] = img; });
-        avatars = next;
-        render();
-      }, function () {});
-      setInterval(function () {
-        var before = calendar(Date.now() - 30000).key;
-        if (before !== calendar(Date.now()).key) render(); else updateCountdown();
-      }, 30000);
-    }).catch(function () {
-      off("Gerade nicht verfügbar", "Die Rangliste konnte nicht geladen werden. Nachschlagen und Quiz funktionieren trotzdem.");
-    });
+  window.FIQH_SOCIAL = { mine: function () { return mine; }, render: render };
+
+  if (!B || !B.available) {
+    off("Online-Funktionen noch nicht eingerichtet",
+      B && B.reason === "sdk"
+        ? "Die Verbindung zum Server konnte nicht geladen werden. Prüfe deine Internetverbindung und lade die Seite neu. Nachschlagen und Quiz funktionieren trotzdem."
+        : "Konten, Ranglisten und der Wochenwettbewerb brauchen einen Server (Firebase). Die Anleitung steht in SETUP.md. Nachschlagen und Quiz funktionieren schon jetzt.");
+    return;
   }
 
-  APP.on("view", function (name) { if (name === "wettbewerb" && mine) render(); });
-  boot();
+  B.collection("players").onSnapshot(function (snap) {
+    var next = {};
+    snap.docs.forEach(function (d) { if (d.exists) next[d.id] = cleanPlayer(d.data()); });
+    players = next;
+    loaded = true;
+    render();
+  }, function () { showError("Die Rangliste wird gerade nicht aktualisiert. Lade die Seite neu."); });
+  B.collection("avatars").onSnapshot(function (snap) {
+    var next = {};
+    snap.docs.forEach(function (d) { var img = d.exists && cleanImg((d.data() || {}).img); if (img) next[d.id] = img; });
+    avatars = next;
+    render();
+  }, function () {});
+
+  var authToken = 0;
+  B.onAuth(function (u) {
+    var token = ++authToken;
+    var sameUser = u && me === u.uid;
+    authUser = u;
+    if (!u) { me = null; mine = null; friends = []; $("#acc-form").hidden = true; $("#acc-edit").hidden = false; render(); return; }
+    if (sameUser && mine) { render(); return; }   // e.g. e-mail just confirmed
+    me = u.uid;
+    mine = null;
+    render();
+    Promise.all([B.doc("players/" + me).get(), B.doc("users/" + me).get()]).then(function (snaps) {
+      if (token !== authToken) return;
+      mine = snaps[0].exists ? cleanPlayer(snaps[0].data()) : null;
+      var f = snaps[1].exists ? snaps[1].data().friends : [];
+      friends = Array.isArray(f) ? f.filter(function (x) { return typeof x === "string" && x !== me; }) : [];
+      if (!mine) showError("Zu deinem Konto gibt es kein Spielerprofil. Melde dich ab und registriere dich neu oder wende dich an die Betreiber.");
+      render();
+    }, function (e) { showError(B.message(e)); });
+  });
+
+  APP.on("view", function (name) { if (name === "wettbewerb") render(); });
+  setInterval(function () {
+    var before = calendar(Date.now() - 30000).key;
+    if (before !== calendar(Date.now()).key) render(); else updateCountdown();
+  }, 30000);
+  render();
 })();

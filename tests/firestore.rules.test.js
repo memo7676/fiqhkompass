@@ -1,0 +1,113 @@
+const { initializeTestEnvironment, assertFails, assertSucceeds } = require('@firebase/rules-unit-testing');
+const fs = require('fs');
+const firebase = require('firebase/compat/app'); require('firebase/compat/firestore');
+const TS = firebase.firestore.FieldValue.serverTimestamp;
+let pass = 0, fail = 0;
+async function t(name, p, ok) {
+  try { await (ok ? assertSucceeds(p) : assertFails(p)); pass++; console.log('  ok  ', name); }
+  catch (e) { fail++; console.log('  FAIL', name, '-', e.message.split('\n')[0]); }
+}
+function reg(db, uid, name, g = 'm', year = 1995) {
+  const key = name.toLowerCase(), b = db.batch();
+  b.set(db.doc('usernames/' + key), { uid, name });
+  b.set(db.doc('users/' + uid), { birthYear: year, parentalConsent: false, termsAt: TS(), createdAt: TS(), friends: [] });
+  b.set(db.doc('players/' + uid), { nick: name, nickKey: key, g, total: 0, games: 0, comp: {}, at: 'x' });
+  return b.commit();
+}
+(async () => {
+  const env = await initializeTestEnvironment({ projectId: 'fiqh-test', firestore: { rules: fs.readFileSync(__dirname + '/../firestore.rules', 'utf8'), host: '127.0.0.1', port: 8085 } });
+  const alice = () => env.authenticatedContext('alice', { email: 'a@x.de', email_verified: false }).firestore();
+  const aliceV = () => env.authenticatedContext('alice', { email: 'a@x.de', email_verified: true }).firestore();
+  const bob = () => env.authenticatedContext('bob', { email: 'b@x.de', email_verified: true }).firestore();
+  const guest = () => env.unauthenticatedContext().firestore();
+
+  console.log('Registrierung & eindeutige Namen');
+  await t('Alice registriert "Aisha_1" (unbestätigt)', reg(alice(), 'alice', 'Aisha_1'), true);
+  await t('Bob kann "Aisha_1" nicht nehmen', reg(bob(), 'bob', 'Aisha_1'), false);
+  await t('Bob kann "AISHA_1" nicht nehmen (Groß/klein egal)', (async () => { const db = bob(), b = db.batch(); b.set(db.doc('usernames/aisha_1'), { uid: 'bob', name: 'AISHA_1' }); return b.commit(); })(), false);
+  await t('Bob registriert "Bilal"', reg(bob(), 'bob', 'Bilal'), true);
+  await t('Name-Schlüssel muss zum Namen passen', bob().doc('usernames/zzz').set({ uid: 'bob', name: 'Admin' }), false);
+  await t('Unerlaubte Zeichen im Namen', bob().doc('usernames/a b<').set({ uid: 'bob', name: 'a b<' }), false);
+  await t('Fremden Namen übernehmen (update)', bob().doc('usernames/aisha_1').set({ uid: 'bob', name: 'Aisha_1' }), false);
+  await t('Fremden Namen löschen', bob().doc('usernames/aisha_1').delete(), false);
+  await t('Bob sammelt Punkte', bob().doc('players/bob').update({ total: 800, games: 1, 'comp.s1w1': { score: 800, correct: 5, answered: 15, done: true, at: 'x' } }), true);
+  await t('Punkte/Woche durch Neuanlegen zurücksetzen geht nicht', bob().doc('players/bob').set({ nick: 'Bilal', nickKey: 'bilal', g: 'm', total: 0, games: 0, comp: {}, at: 'x' }), false);
+  await t('Registrierung mit Geburtsjahr 2024 abgelehnt', (async () => {
+    const db = env.authenticatedContext('kid', { email_verified: false }).firestore();
+    return reg(db, 'kid', 'Kid123', 'm', 2024);
+  })(), false);
+  await t('Geschlecht muss m oder f sein', (async () => {
+    const db = env.authenticatedContext('x1', { email_verified: false }).firestore();
+    return reg(db, 'x1', 'Xaver', 'x');
+  })(), false);
+
+  console.log('Lesen');
+  await t('Gast liest Rangliste (players)', guest().collection('players').get(), true);
+  await t('Gast liest Profilbilder', guest().collection('avatars').get(), true);
+  await t('Gast prüft Namensverfügbarkeit', guest().doc('usernames/aisha_1').get(), true);
+  await t('Gast liest privates Profil nicht', guest().doc('users/alice').get(), false);
+  await t('Bob liest Alices privates Profil nicht', bob().doc('users/alice').get(), false);
+  await t('Alice liest eigenes privates Profil', alice().doc('users/alice').get(), true);
+
+  console.log('Punkte');
+  const upd = (db, uid, data) => db.doc('players/' + uid).update(data);
+  await t('Unbestätigt: keine Punkte', upd(alice(), 'alice', { total: 500, games: 1 }), false);
+  await t('Bestätigt: Punkte speichern', upd(aliceV(), 'alice', { total: 500, games: 1 }), true);
+  await t('Bob schreibt Alices Punkte nicht', upd(bob(), 'alice', { total: 9999 }), false);
+  await t('Punkte können nicht sinken', upd(aliceV(), 'alice', { total: 100 }), false);
+  await t('Mehr als eine Runde auf einmal (+3251)', upd(aliceV(), 'alice', { total: 500 + 3251, games: 2 }), false);
+  await t('Genau eine volle Runde (+3250)', upd(aliceV(), 'alice', { total: 3750, games: 2 }), true);
+  await t('Geschlecht nachträglich ändern', upd(aliceV(), 'alice', { g: 'f' }), false);
+  await t('Fremdes Feld einschleusen', upd(aliceV(), 'alice', { admin: true }), false);
+  await t('Fremden Namen als Anzeigename setzen', upd(aliceV(), 'alice', { nick: 'Bilal', nickKey: 'bilal' }), false);
+  await t('Wettbewerbswoche eintragen', upd(aliceV(), 'alice', { 'comp.s1w1': { score: 0, correct: 0, answered: 0, done: false, at: 'x' } }), true);
+  await t('Wettbewerbswoche fortschreiben', upd(aliceV(), 'alice', { 'comp.s1w1': { score: 900, correct: 6, answered: 15, done: true, at: 'x' } }), true);
+  await t('Wettbewerbswoche löschen (2. Versuch) geht nicht', upd(aliceV(), 'alice', { comp: {} }), false);
+  await t('Spielerprofil einzeln löschen geht nicht', aliceV().doc('players/alice').delete(), false);
+
+  console.log('Profilbild');
+  const img = 'data:image/jpeg;base64,' + 'A'.repeat(200);
+  await t('Unbestätigt: kein Profilbild', alice().doc('avatars/alice').set({ img }), false);
+  await t('Bestätigt: Profilbild speichern', aliceV().doc('avatars/alice').set({ img }), true);
+  await t('SVG/Script als Bild abgelehnt', aliceV().doc('avatars/alice').set({ img: 'data:image/svg+xml,<svg onload=alert(1)>' }), false);
+  await t('Zu großes Bild abgelehnt', aliceV().doc('avatars/alice').set({ img: 'data:image/jpeg;base64,' + 'A'.repeat(70000) }), false);
+  await t('Fremdes Profilbild setzen', bob().doc('avatars/alice').set({ img }), false);
+
+  console.log('Freunde');
+  await t('Freundesliste speichern', aliceV().doc('users/alice').update({ friends: ['bob'] }), true);
+  await t('Geburtsjahr nachträglich ändern', aliceV().doc('users/alice').update({ birthYear: 1980 }), false);
+
+  console.log('Namen ändern');
+  await t('Name ändern (alt frei, neu reserviert)', (async () => {
+    const db = aliceV(), b = db.batch();
+    b.delete(db.doc('usernames/aisha_1'));
+    b.set(db.doc('usernames/aisha'), { uid: 'alice', name: 'Aisha' });
+    b.update(db.doc('players/alice'), { nick: 'Aisha', nickKey: 'aisha' });
+    return b.commit();
+  })(), true);
+  await t('Nur Schreibweise ändern (aisha -> AISHA)', (async () => {
+    const db = aliceV(), b = db.batch();
+    b.set(db.doc('usernames/aisha'), { uid: 'alice', name: 'AISHA' });
+    b.update(db.doc('players/alice'), { nick: 'AISHA' });
+    return b.commit();
+  })(), true);
+  await t('Alter Name ist wieder frei', reg(env.authenticatedContext('carl', { email_verified: false }).firestore(), 'carl', 'Aisha_1'), true);
+
+  console.log('Konto löschen');
+  await t('Konto löschen (alles weg, Markierung bleibt)', (async () => {
+    const db = aliceV(), b = db.batch();
+    b.delete(db.doc('players/alice')); b.delete(db.doc('avatars/alice'));
+    b.set(db.doc('users/alice'), { deletedAt: TS() });
+    b.delete(db.doc('usernames/aisha'));
+    return b.commit();
+  })(), true);
+  await t('Nach dem Löschen kein neues Spielerprofil (kein 2. Versuch)', reg(aliceV(), 'alice', 'Aisha'), false);
+  await t('Markierung enthält keine persönlichen Daten mehr', (async () => {
+    const d = (await aliceV().doc('users/alice').get()).data();
+    if (Object.keys(d).join() !== 'deletedAt') throw new Error('Felder: ' + Object.keys(d));
+  })(), true);
+
+  await env.cleanup();
+  console.log(`\n${pass} bestanden, ${fail} fehlgeschlagen`);
+  process.exit(fail ? 1 : 0);
+})();
