@@ -52,10 +52,11 @@
     });
   }
   function fmt(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>"); }
-  function shuffle(arr) {
+  function shuffle(arr, rnd) {
     var a = arr.slice();
+    rnd = rnd || Math.random;
     for (var i = a.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
+      var j = Math.floor(rnd() * (i + 1));
       var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
     }
     return a;
@@ -75,7 +76,7 @@
   }
 
   /* ---------- views ---------- */
-  var views = { nachschlagen: $("#view-lookup"), quiz: $("#view-quiz") };
+  var views = { nachschlagen: $("#view-lookup"), quiz: $("#view-quiz"), wettbewerb: $("#view-social") };
   function showView(name, push) {
     if (!views[name]) name = "nachschlagen";
     Object.keys(views).forEach(function (k) { views[k].hidden = k !== name; });
@@ -85,6 +86,7 @@
     });
     if (push !== false) { try { history.replaceState(null, "", "#" + name); } catch (e) {} }
     store("view", name);
+    emit("view", name);
   }
   $all(".tab").forEach(function (b) {
     b.addEventListener("click", function () { showView(b.getAttribute("data-view")); window.scrollTo(0, 0); });
@@ -310,11 +312,12 @@
     return QUESTIONS.filter(function (q) { return setup.topics.indexOf(q.t) !== -1; });
   }
 
-  /* Pick questions spread across topics so a mixed round really is mixed. */
-  function pickQuestions(pool, n) {
+  /* Pick questions spread across topics so a mixed round really is mixed.
+     With a seeded rnd everyone gets the same set (weekly competition). */
+  function pickQuestions(pool, n, rnd) {
     var byTopic = {};
-    shuffle(pool).forEach(function (q) { (byTopic[q.t] = byTopic[q.t] || []).push(q); });
-    var order = shuffle(Object.keys(byTopic));
+    shuffle(pool, rnd).forEach(function (q) { (byTopic[q.t] = byTopic[q.t] || []).push(q); });
+    var order = shuffle(Object.keys(byTopic).sort(), rnd);
     var out = [];
     while (out.length < n) {
       var added = false;
@@ -324,27 +327,38 @@
       }
       if (!added) break;
     }
-    return shuffle(out);
+    return shuffle(out, rnd);
   }
 
   var game = null;
   var timerId = null;
 
-  function startQuiz() {
-    var pool = poolFor();
-    if (!pool.length) return;
-    var qs = pickQuestions(pool, Math.min(setup.count, pool.length)).map(function (q) {
-      var opts = q.a.map(function (text, i) { return { text: text, correct: i === q.c }; });
-      return { src: q, options: shuffle(opts) };
-    });
-    game = { qs: qs, i: 0, score: 0, correct: 0, streak: 0, bestStreak: 0, joker: true, answers: [], key: bestKey() };
+  function withOptions(q, rnd) {
+    var opts = q.a.map(function (text, i) { return { text: text, correct: i === q.c }; });
+    return { src: q, options: shuffle(opts, rnd) };
+  }
+
+  /* preset (optional): { questions, rnd, label, onProgress(p), onFinish(p), onLeave() }
+     is used by the weekly competition in social.js. */
+  function startQuiz(preset) {
+    var qs;
+    if (preset) {
+      qs = preset.questions.map(function (q) { return withOptions(q, preset.rnd); });
+    } else {
+      var pool = poolFor();
+      if (!pool.length) return;
+      qs = pickQuestions(pool, Math.min(setup.count, pool.length)).map(function (q) { return withOptions(q); });
+    }
+    game = { qs: qs, i: 0, score: 0, correct: 0, streak: 0, bestStreak: 0, joker: true, answers: [], key: preset ? null : bestKey(), preset: preset || null };
+    showView("quiz");
+    $("#quit-quiz").textContent = preset ? "Beenden (zählt so)" : "Abbrechen";
     $("#quiz-setup").hidden = true;
     $("#quiz-result").hidden = true;
     $("#quiz-play").hidden = false;
     renderQuestion();
     window.scrollTo(0, 0);
   }
-  $("#start-quiz").addEventListener("click", startQuiz);
+  $("#start-quiz").addEventListener("click", function () { startQuiz(); });
 
   function renderQuestion() {
     var item = game.qs[game.i];
@@ -353,7 +367,7 @@
     game.hidden = [];
     game.startedAt = Date.now();
 
-    $("#q-progress-text").textContent = "Frage " + (game.i + 1) + " von " + game.qs.length;
+    $("#q-progress-text").textContent = (game.preset ? game.preset.label + " · " : "") + "Frage " + (game.i + 1) + " von " + game.qs.length;
     $("#q-bar").style.width = (game.i / game.qs.length * 100) + "%";
     $("#q-topic").textContent = t.title;
     $("#q-score").textContent = game.score;
@@ -429,6 +443,7 @@
       game.streak = 0;
     }
     game.answers.push({ item: item, chosen: idx, ok: ok });
+    if (game.preset && game.preset.onProgress) game.preset.onProgress(progress(false));
 
     $all(".option").forEach(function (b) {
       var i = +b.getAttribute("data-opt");
@@ -464,7 +479,18 @@
     if (game.i + 1 < game.qs.length) { game.i += 1; renderQuestion(); }
     else showResult();
   });
-  $("#quit-quiz").addEventListener("click", function () { stopTimer(); game = null; renderSetup(); });
+  $("#quit-quiz").addEventListener("click", function () {
+    stopTimer();
+    var g = game;
+    game = null;
+    if (g && g.preset) { g.preset.onFinish(progressOf(g, true)); g.preset.onLeave(); }
+    else renderSetup();
+  });
+
+  function progressOf(g, done) {
+    return { score: g.score, correct: g.correct, answered: g.answers.length, total: g.qs.length, done: !!done };
+  }
+  function progress(done) { return progressOf(game, done); }
 
   function maxScore(n) {
     var s = 0;
@@ -488,9 +514,13 @@
     var rank = rankFor(ratio);
     var stars = ratio === 1 ? 3 : ratio >= 0.6 ? 2 : ratio > 0 ? 1 : 0;
 
-    var prev = store(game.key);
-    var isBest = !prev || game.score > prev.score;
+    var prev = game.key ? store(game.key) : null;
+    var isBest = !!game.key && (!prev || game.score > prev.score);
     if (isBest) store(game.key, { score: game.score, correct: game.correct, total: total });
+    if (game.preset) game.preset.onFinish(progress(true));
+    else emit("finish", { score: game.score, correct: game.correct, total: total, mode: setup.mode });
+    $("#again").hidden = !!game.preset;
+    $("#to-setup").textContent = game.preset ? "Zur Rangliste" : "Anderes Thema wählen";
 
     $("#r-score").textContent = game.score;
     $("#r-max").textContent = "von max. " + maxScore(total) + " Punkten";
@@ -523,8 +553,26 @@
     window.scrollTo(0, 0);
   }
 
-  $("#again").addEventListener("click", startQuiz);
-  $("#to-setup").addEventListener("click", function () { game = null; renderSetup(); window.scrollTo(0, 0); });
+  $("#again").addEventListener("click", function () { startQuiz(); });
+  $("#to-setup").addEventListener("click", function () {
+    var g = game;
+    game = null;
+    if (g && g.preset) { g.preset.onLeave(); return; }
+    renderSetup(); window.scrollTo(0, 0);
+  });
+
+  /* ---------- small API for social.js ---------- */
+  var listeners = {};
+  function emit(name, data) {
+    (listeners[name] || []).forEach(function (fn) { try { fn(data); } catch (e) { console.error(e); } });
+  }
+  window.FIQH_APP = {
+    TOPICS: TOPICS, QUESTIONS: QUESTIONS, TOPIC_BY_ID: TOPIC_BY_ID,
+    esc: esc, store: store, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
+    showView: showView, startQuiz: startQuiz, renderSetup: renderSetup,
+    isPlaying: function () { return !!game && !$("#quiz-play").hidden; },
+    on: function (name, fn) { (listeners[name] = listeners[name] || []).push(fn); }
+  };
 
   document.addEventListener("keydown", function (e) {
     if (views.quiz.hidden || !game || $("#quiz-play").hidden) return;

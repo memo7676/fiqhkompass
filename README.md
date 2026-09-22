@@ -16,6 +16,12 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - 5/10/15 Fragen
   - Punkte mit Zeit- und Serienbonus, 50:50-Joker
   - Bestwerte und Auswertung mit Links zum Nachlesen
+- **Wettbewerb & Freunde** (nur in der veröffentlichten Version auf claude.ai, denn dafür braucht es einen gemeinsamen Speicher):
+  - Wochenquiz mit 15 Fragen, für alle dieselben, ein Versuch pro Woche
+  - eine Saison dauert 4 Wochen (Start: Montag, 21.09.2026). Die Summe der vier Wochen entscheidet, wer gewinnt
+  - Saisonrangliste (alle oder nur Freunde) mit Abstand zum nächsten Platz
+  - Freunde über die Namenssuche oder mit + in der Rangliste hinzufügen, danach Gesamtpunkte aus allen Quizzen vergleichen
+  - `social.js` speichert in `players/<id>` (öffentliche Punktekarte, nur vom Besitzer beschreibbar) und `data/users/<id>/social` (private Freundesliste)
 
 Einfach `index.html` im Browser öffnen, ohne Build-Schritt.
 
