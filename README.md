@@ -21,6 +21,8 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - eine Saison dauert 4 Wochen (Start: Montag, 21.09.2026). Die Summe der vier Wochen entscheidet, wer gewinnt
   - Saisonrangliste (alle oder nur Freunde) mit Abstand zum nächsten Platz
   - Freunde über die Namenssuche oder mit + in der Rangliste hinzufügen, danach Gesamtpunkte aus allen Quizzen vergleichen
+  - Top 10 weltweit nach Wettbewerbspunkten, wahlweise für die laufende Saison oder für alle Saisons
+  - eigenes Profil: frei wählbarer Anzeigename (2–24 Zeichen) und Profilbild. Das Bild wird im Browser auf 128 × 128 px verkleinert und in `avatars/<id>` gespeichert
   - `social.js` speichert in `players/<id>` (öffentliche Punktekarte, nur vom Besitzer beschreibbar) und `data/users/<id>/social` (private Freundesliste)
 
 Einfach `index.html` im Browser öffnen, ohne Build-Schritt.

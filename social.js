@@ -6,7 +6,11 @@
    Data (db):
      players/<uid>                 public score card, written only by its owner
        { total, games, comp: { "s1w2": { score, correct, answered, done, at } }, at }
-     data/users/<uid>/social       private: { friends: [uid, ...] }            */
+     avatars/<uid>                 public profile picture, written only by its owner
+       { img: "data:image/jpeg;base64,..." }  (128 x 128)
+     data/users/<uid>/social       private: { friends: [uid, ...] }
+   A player's own display name ("nick") lives in players/<uid>; without one
+   the organization profile name is shown.                                  */
 (function () {
   "use strict";
   var APP = window.FIQH_APP;
@@ -58,6 +62,8 @@
   var db = null, user = null, me = null;
   var mine = null;            // my own player doc (local truth)
   var players = {};           // uid -> sanitized player doc
+  var avatars = {};           // uid -> validated data: URL
+  var topFilter = APP.store("top") || "season";
   var friends = [];           // uids
   var boardFilter = APP.store("board") || "all";
   var pendingPoints = [];     // quiz results that finished before db was ready
@@ -74,7 +80,22 @@
         comp[k] = { score: num(e.score), correct: num(e.correct), answered: num(e.answered), done: !!e.done, at: String(e.at || "") };
       });
     }
-    return { total: num(d.total), games: num(d.games), comp: comp, at: String(d.at || "") };
+    var out = { total: num(d.total), games: num(d.games), comp: comp, at: String(d.at || "") };
+    var nick = cleanNick(d.nick);
+    if (nick) out.nick = nick;
+    return out;
+  }
+  /* Names and pictures are other people's input: trimmed, length-checked, rendered as text. */
+  function cleanNick(v) {
+    if (typeof v !== "string") return "";
+    v = v.replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u202a-\u202e\u2066-\u2069]/g, "").replace(/\s+/g, " ").trim();
+    return v.length >= 2 && v.length <= 24 ? v : "";
+  }
+  function cleanImg(v) {
+    return typeof v === "string" && v.length < 60000 && /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(v) ? v : "";
+  }
+  function compTotal(p) {
+    return Object.keys(p.comp).reduce(function (n, k) { return n + p.comp[k].score; }, 0);
   }
   function seasonSum(p, season) {
     var s = 0, weeks = 0;
@@ -188,6 +209,8 @@
       renderWinner(cal, prev, ps);
       renderBoard(cal, ps);
       renderFriends(cal, ps);
+      renderTop(cal, ps);
+      renderAccount(ps);
     });
   }
 
@@ -251,10 +274,9 @@
   function renderWinner(cal, prev, ps) {
     var box = $("#last-winner");
     if (!prev) { box.hidden = true; return; }
-    var p = ps[prev.id] || {};
-    var name = prev.id === me ? "Du" : (p.name || "Jemand");
+    var name = displayName(prev.id, ps);
     box.hidden = false;
-    box.innerHTML = '<img alt="" src="' + esc(p.avatarUrl || "") + '"><p><small class="eyebrow">Gewinner Saison ' + (cal.season - 1) +
+    box.innerHTML = '<img alt="" src="' + esc(avatarOf(prev.id, ps)) + '"><p><small class="eyebrow">Gewinner Saison ' + (cal.season - 1) +
       "</small><br><strong></strong> mit " + pts(prev.sum) + " Punkten</p>";
     $("strong", box).textContent = prev.id === me ? "Du hast gewonnen" : name;
   }
@@ -277,7 +299,13 @@
     }
     return li;
   }
-  function displayName(id, ps) { return id === me ? "Du" : ((ps[id] && ps[id].name) || "Jemand"); }
+  function baseName(id, ps) { return playerFor(id).nick || (ps[id] && ps[id].name) || ""; }
+  function displayName(id, ps) {
+    var n = baseName(id, ps);
+    if (id === me) return n ? n + " (du)" : "Du";
+    return n || "Jemand";
+  }
+  function avatarOf(id, ps) { return avatars[id] || (ps[id] && ps[id].avatarUrl) || ""; }
 
   function renderBoard(cal, ps) {
     $("#board-title").textContent = "Saison " + cal.season;
@@ -306,7 +334,7 @@
       var isFriend = friends.indexOf(r.id) !== -1;
       var li = row({
         pos: pos, me: r.id === me, score: r.s.sum, unit: "Summe",
-        name: displayName(r.id, ps), avatar: (ps[r.id] || {}).avatarUrl || "", sub: weeks,
+        name: displayName(r.id, ps), avatar: avatarOf(r.id, ps), sub: weeks,
         action: r.id === me || isFriend ? null : { label: "+", title: "Als Freund hinzufügen", run: function () { addFriend(r.id); } }
       });
       li.setAttribute("data-pos", pos);
@@ -344,7 +372,7 @@
       var sub = r.p.games + (r.p.games === 1 ? " Quiz" : " Quizze") + " · diese Woche " + (e ? pts(e.score) : "–");
       list.appendChild(row({
         pos: i + 1, me: r.id === me, score: r.p.total, unit: "Punkte",
-        name: displayName(r.id, ps), avatar: (ps[r.id] || {}).avatarUrl || "", sub: sub,
+        name: displayName(r.id, ps), avatar: avatarOf(r.id, ps), sub: sub,
         action: r.id === me ? null : { label: "×", title: "Aus Freunden entfernen", run: function () { removeFriend(r.id); } }
       }));
     });
@@ -355,6 +383,154 @@
       list.appendChild(hint);
     }
   }
+
+  /* ---------- top 10 worldwide ---------- */
+  function renderTop(cal, ps) {
+    $all("[data-top]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-top") === topFilter ? "true" : "false"); });
+    $("#top-title").textContent = topFilter === "season" ? "Saison " + cal.season + " – die besten 10" : "Alle Wettbewerbspunkte seit Saison 1";
+    var ids = Object.keys(players);
+    if (ids.indexOf(me) === -1) ids.push(me);
+    var rows = ids.map(function (id) {
+      var p = playerFor(id);
+      var s = topFilter === "season" ? seasonSum(p, cal.season) : { sum: compTotal(p), weeks: Object.keys(p.comp).length };
+      return { id: id, p: p, s: s };
+    }).filter(function (r) { return r.s.weeks > 0; });
+    rows.sort(function (a, b) { return b.s.sum - a.s.sum; });
+    var list = $("#top10");
+    list.innerHTML = "";
+    var myRank = 0;
+    rows.forEach(function (r, i) { if (r.id === me) myRank = i + 1; });
+    rows.slice(0, 10).forEach(function (r, i) {
+      var weeks = r.s.weeks + (r.s.weeks === 1 ? " Woche" : " Wochen") + " gespielt";
+      var isFriend = friends.indexOf(r.id) !== -1;
+      list.appendChild(row({
+        pos: i + 1, me: r.id === me, score: r.s.sum, unit: "Punkte",
+        name: displayName(r.id, ps), avatar: avatarOf(r.id, ps), sub: weeks + (isFriend ? " · Freund" : ""),
+        action: r.id === me || isFriend ? null : { label: "+", title: "Als Freund hinzufügen", run: function () { addFriend(r.id); } }
+      }));
+    });
+    if (!rows.length) {
+      var hint = document.createElement("li");
+      hint.className = "empty";
+      hint.textContent = "Noch keine Wettbewerbspunkte. Wer diese Woche als Erstes spielt, steht ganz oben.";
+      list.appendChild(hint);
+    }
+    var note = $("#top-me");
+    if (myRank > 10) note.innerHTML = "Dein Platz: <b>" + myRank + "</b> von " + rows.length + " – " + pts(rows[9].s.sum - rows[myRank - 1].s.sum) + " Punkte bis zu den Top 10.";
+    else if (myRank) note.innerHTML = "Du bist in den Top 10 – <b>Platz " + myRank + "</b>.";
+    else note.textContent = "Spiel das Wochenquiz, um in die Weltrangliste zu kommen.";
+  }
+  $all("[data-top]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      topFilter = b.getAttribute("data-top");
+      APP.store("top", topFilter);
+      render();
+    });
+  });
+
+  /* ---------- own account: display name and picture ---------- */
+  var draftImg = null;   // null = unchanged, "" = remove, data URL = new picture
+  var savingAvatar = Promise.resolve();
+  function renderAccount(ps) {
+    var editing = !$("#acc-form").hidden;
+    $("#acc-avatar").src = avatarOf(me, ps);
+    $("#acc-name").textContent = baseName(me, ps) || "Noch ohne Namen";
+    $("#acc-stats").textContent = pts(mine.total) + " Punkte · " + mine.games + (mine.games === 1 ? " Quiz" : " Quizze") +
+      " · " + pts(compTotal(mine)) + " im Wettbewerb";
+    if (!editing) $("#acc-preview").src = avatarOf(me, ps);
+    accountPs = ps;
+  }
+  var accountPs = {};
+  function accMsg(text, kind) {
+    var m = $("#acc-msg");
+    m.textContent = text;
+    m.className = "acc-msg" + (kind ? " " + kind : "");
+  }
+  function openAccount(open) {
+    $("#acc-form").hidden = !open;
+    $("#acc-edit").setAttribute("aria-expanded", open ? "true" : "false");
+    $("#acc-edit").hidden = open;
+    draftImg = null;
+    accMsg("");
+    if (open) {
+      $("#acc-nick").value = mine.nick || "";
+      $("#acc-preview").src = avatarOf(me, accountPs);
+      $("#acc-nick").focus();
+    }
+  }
+  $("#acc-edit").addEventListener("click", function () { openAccount(true); });
+  $("#acc-cancel").addEventListener("click", function () { openAccount(false); });
+  $("#acc-clear").addEventListener("click", function () {
+    draftImg = "";
+    $("#acc-preview").src = (accountPs[me] && accountPs[me].avatarUrl) || "";
+    accMsg("Bild wird beim Speichern entfernt.");
+  });
+  $("#acc-file").addEventListener("change", function (e) {
+    var file = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!/^image\//.test(file.type)) { accMsg("Bitte eine Bilddatei wählen.", "bad"); return; }
+    if (file.size > 15 * 1024 * 1024) { accMsg("Das Bild ist zu groß (max. 15 MB).", "bad"); return; }
+    accMsg("Bild wird vorbereitet …");
+    shrink(file).then(function (url) {
+      draftImg = url;
+      $("#acc-preview").src = url;
+      accMsg("Vorschau – mit „Speichern“ übernehmen.");
+    }, function () { accMsg("Das Bild konnte nicht gelesen werden.", "bad"); });
+  });
+  /* Square center crop, 128 x 128 JPEG: a few KB, fits easily in one document. */
+  function shrink(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () {
+        var size = 128, side = Math.min(img.naturalWidth, img.naturalHeight);
+        var c = document.createElement("canvas");
+        c.width = c.height = size;
+        var ctx = c.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, size, size);
+        ctx.drawImage(img, (img.naturalWidth - side) / 2, (img.naturalHeight - side) / 2, side, side, 0, 0, size, size);
+        URL.revokeObjectURL(url);
+        var out = c.toDataURL("image/jpeg", 0.82);
+        cleanImg(out) ? resolve(out) : reject(new Error("bad image"));
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("load")); };
+      img.src = url;
+    });
+  }
+  $("#acc-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var raw = $("#acc-nick").value;
+    var nick = cleanNick(raw);
+    if (raw.trim() && !nick) { accMsg("Der Name muss 2–24 Zeichen lang sein.", "bad"); return; }
+    if (readOnly) { accMsg("Du hast nur Leserechte – Speichern ist nicht möglich.", "bad"); return; }
+    $("#acc-save").disabled = true;
+    accMsg("Speichere …");
+    var jobs = [];
+    if ((mine.nick || "") !== nick) {
+      if (nick) mine.nick = nick; else delete mine.nick;
+      jobs.push(save());
+    }
+    if (draftImg !== null) {
+      var img = draftImg;
+      savingAvatar = savingAvatar.then(function () {
+        var ref = db.doc("avatars/" + me);
+        return img ? ref.set({ img: img }) : ref.delete();
+      });
+      jobs.push(savingAvatar.then(function () { if (img) avatars[me] = img; else delete avatars[me]; }));
+    }
+    Promise.all(jobs).then(function () {
+      $("#acc-save").disabled = false;
+      openAccount(false);
+      accMsg("");
+      render();
+    }, function () {
+      $("#acc-save").disabled = false;
+      savingAvatar = Promise.resolve();
+      accMsg("Speichern hat nicht geklappt. Versuch es noch einmal.", "bad");
+    });
+  });
 
   function addFriend(id) {
     if (!id || id === me || friends.indexOf(id) !== -1) return;
@@ -381,10 +557,24 @@
   function runSearch(q) {
     if (!user) return;
     user.search(q || "").then(function (hits) {
-      if (($("#friend-q").value || "") !== (q || "")) return;
+      if (($("#friend-q").value.trim() || "") !== (q || "")) return;
       var box = $("#friend-hits");
       box.innerHTML = "";
-      hits = hits.filter(function (h) { return h.id !== me; });
+      // Players are also found by their own display name.
+      var seen = {};
+      hits = hits.filter(function (h) { return h.id !== me; }).map(function (h) {
+        seen[h.id] = 1;
+        return { id: h.id, name: players[h.id] && players[h.id].nick || h.name, avatarUrl: avatars[h.id] || h.avatarUrl };
+      });
+      if (q) {
+        var lq = q.toLowerCase();
+        Object.keys(players).forEach(function (id) {
+          var n = players[id].nick;
+          if (!seen[id] && id !== me && n && n.toLowerCase().indexOf(lq) !== -1 && hits.length < 10) {
+            hits.push({ id: id, name: n, avatarUrl: avatars[id] || (accountPs[id] && accountPs[id].avatarUrl) || "" });
+          }
+        });
+      }
       if (!hits.length) {
         if (q) { box.innerHTML = '<li class="note">Niemand gefunden. Mitspielende aus der Rangliste kannst du dort mit + hinzufügen.</li>'; }
         return;
@@ -436,12 +626,14 @@
       if (!db || !user) return;
       if (!id) { off("Bitte anmelden", "Für Rangliste und Wettbewerb brauchst du ein Konto in der Organisation, damit deine Punkte dir zugeordnet werden."); return; }
       me = id;
-      return Promise.all([db.doc("players/" + me).get(), db.doc("data/users/" + me + "/social").get()]);
+      return Promise.all([db.doc("players/" + me).get(), db.doc("data/users/" + me + "/social").get(), db.doc("avatars/" + me).get()]);
     }).then(function (snaps) {
       if (!snaps) return;
       mine = cleanPlayer(snaps[0].exists ? snaps[0].data() : {});
       var f = snaps[1].exists ? snaps[1].data().friends : [];
       friends = Array.isArray(f) ? f.filter(function (x) { return typeof x === "string" && x !== me; }) : [];
+      var a = snaps[2].exists ? cleanImg(snaps[2].data().img) : "";
+      if (a) avatars[me] = a;
       if (pendingPoints.length) {
         pendingPoints.forEach(function (p) { addGame(p.score); });
         pendingPoints = [];
@@ -456,6 +648,12 @@
         players = next;
         render();
       }, function () { showError("Die Rangliste wird gerade nicht aktualisiert. Lade die Seite neu."); });
+      db.collection("avatars").onSnapshot(function (snap) {
+        var next = {};
+        snap.docs.forEach(function (d) { var img = d.exists && cleanImg((d.data() || {}).img); if (img) next[d.id] = img; });
+        avatars = next;
+        render();
+      }, function () {});
       setInterval(function () {
         var before = calendar(Date.now() - 30000).key;
         if (before !== calendar(Date.now()).key) render(); else updateCountdown();
