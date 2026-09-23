@@ -84,6 +84,7 @@
     "auth/requires-recent-login": "Bitte gib zur Sicherheit dein Passwort erneut ein.",
     "auth/user-disabled": "Dieses Konto wurde gesperrt.",
     "name-taken": "Dieser Spielername ist schon vergeben.",
+    "name-rejected": "Der Server hat diesen Namen nicht angenommen, obwohl er frei ist. Wahrscheinlich sind die Server-Regeln nicht aktuell (firestore.rules in Firebase neu veröffentlichen).",
     "permission-denied": "Das ist nicht erlaubt. Ist deine E-Mail-Adresse bestätigt?"
   };
   function message(e) {
@@ -165,12 +166,16 @@
           registering = false;
           notify();
           return cred.user.sendEmailVerification().catch(function () {});
-        }, function () {
-          // Someone took the name a moment earlier: undo the fresh login account.
+        }, function (e) {
+          // Undo the fresh login account, then say why: taken a moment earlier, or refused by the rules.
           return cred.user.delete().catch(function () {}).then(function () {
             registering = false;
             notify();
-            throw { code: "name-taken" };
+            return api.nameAvailable(name).catch(function () { return true; });
+          }).then(function (free) {
+            if (!free) throw { code: "name-taken" };
+            console.error("Registrierung abgelehnt:", e);
+            throw { code: "name-rejected" };
           });
         });
       }, function (e) {
@@ -214,7 +219,14 @@
         if (oldKey && oldKey !== key) b.delete(fs.doc("usernames/" + oldKey));
         b.set(fs.doc("usernames/" + key), { uid: uid, name: name });   // same key = only the spelling changes
         b.update(fs.doc("players/" + uid), { nick: name, nickKey: key, at: new Date().toISOString() });
-        return b.commit().catch(function (e) { throw e && e.code === "permission-denied" && key !== oldKey ? { code: "name-taken" } : e; });
+        return b.commit().catch(function (e) {
+          if (!(e && e.code === "permission-denied" && key !== oldKey)) throw e;
+          return api.nameAvailable(name).catch(function () { return true; }).then(function (free) {
+            if (!free) throw { code: "name-taken" };
+            console.error("Namensänderung abgelehnt:", e);
+            throw { code: "name-rejected" };
+          });
+        });
       });
     },
 
