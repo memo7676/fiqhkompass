@@ -266,13 +266,17 @@
     };
   }
 
-  /* n different sentences for one seed; a sentence is used only once per seed */
-  function make(seed, n, skip) {
+  /* n different sentences for one seed; a sentence is used only once per seed.
+     balanced: the patterns take turns in a seeded order, so every set has the same
+     mix of easy and harder sentence types (used by the Arabisch-Liga). */
+  function make(seed, n, skip, balanced) {
     var r = rng("irab:" + seed), out = [], seen = {}, used = {}, tries = 0;
     skip = skip || {};
+    var order = PATTERNS.map(function (p, i) { return i; });
+    if (balanced) for (var i = order.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), x = order[i]; order[i] = order[j]; order[j] = x; }
     while (out.length < n && tries < n * 60) {
       tries++;
-      var s = PATTERNS[Math.floor(r() * PATTERNS.length)](r);
+      var s = PATTERNS[balanced ? order[out.length % order.length] : Math.floor(r() * PATTERNS.length)](r);
       var sentence = s.w.join(" ");
       if (used[sentence]) continue;
       var role = s.roles[Math.floor(r() * s.roles.length)];
