@@ -18,7 +18,9 @@
     });
     TOPICS.forEach(function (t) {
       var x = EN.topics[t.id];
-      if (x) { t.title = x[0]; t.intro = x[1]; t.lessons = x[2]; }
+      if (!x) return;
+      t.title = x[0]; t.intro = x[1]; t.lessons = x[2];
+      if (x[3] && x[3].length === t.sections.length) t.sections.forEach(function (s, i) { s.h = x[3][i]; });
     });
   }
 
@@ -49,8 +51,24 @@
   function topicSource(t) {
     return hasBook(t) && t.lessons.indexOf("İlmihal") === -1 ? t.lessons + " · " + T("ergänzt aus dem İlmihal") : t.lessons;
   }
+  /* "İlmihal S. 126–132" → "S. 126–132" (English: "pp. 126–132"). */
+  function pages(src) {
+    var p = String(src).replace(/^İlmihal S\. /, "");
+    return window.I18N && I18N.lang === "en" && p.indexOf("–") !== -1 ? "pp. " + p : T("S. {p}", { p: p });
+  }
+  function lessonNo(s) { return (s.u || "").replace(/^Unterricht /, ""); }
   function srcBadge(s) {
-    return s.src ? ' <span class="src-badge" title="' + esc(BOOK) + '">' + esc(s.src) + "</span>" : "";
+    if (s.src) return ' <span class="src-badge" title="' + esc(BOOK) + '">İlmihal ' + esc(pages(s.src)) + "</span>";
+    return s.u ? ' <span class="src-badge">' + esc(T("Unterricht {n}", { n: lessonNo(s) })) + "</span>" : "";
+  }
+  /* Where a quiz question comes from: lesson or book pages, topic and section. */
+  function sourceLine(q) {
+    var t = TOPIC_BY_ID[q.t];
+    if (!t) return T(q.srcText || "");
+    var s = t.sections[q.s];
+    if (!s) return T("Quelle:") + " " + (q.src === "buch" ? BOOK : t.lessons) + " – " + t.title;
+    var where = s.src ? BOOK + ", " + pages(s.src) : T("Fiqh-Unterricht {n}", { n: lessonNo(s) });
+    return T("Quelle:") + " " + where + " · " + t.title + " › " + s.h;
   }
 
   var QUESTION_SECONDS = 30;
@@ -560,8 +578,7 @@
     $("#fb-title").textContent = ok ? T("Richtig!") : T("Leider falsch");
     $("#fb-points").textContent = learnNote || (ok ? parts.join("  ") : T("Die richtige Antwort ist markiert."));
     setText($("#fb-text"), item.src.e);
-    var st = TOPIC_BY_ID[item.src.t];
-    $("#fb-source").textContent = st ? T("Quelle:") + " " + (item.src.src === "buch" ? BOOK : st.lessons) + " – " + st.title : T(item.src.srcText || "");
+    $("#fb-source").textContent = sourceLine(item.src);
     $("#next-q").textContent = game.i + 1 < game.qs.length ? T("Nächste Frage") : (game.preset && game.preset.learn ? T("Runde abschließen") : T("Ergebnis ansehen"));
     $("#q-score").textContent = game.score;
     $("#q-streak").textContent = game.streak > 1 ? T("{n}er-Serie", { n: game.streak }) : "";
@@ -662,14 +679,20 @@
         '<p class="rv-a"><span class="rv-label bad">' + T("Deine Antwort") + "</span> " + esc(a.item.options[a.chosen].text) + "</p>" +
         '<p class="rv-a"><span class="rv-label good">' + T("Richtig") + "</span> " + esc(right) + "</p>" +
         '<p class="rv-e">' + esc(a.item.src.e) + "</p>" +
-        (t ? '<button type="button" class="linkish" data-review-topic="' + t.id + '">' + T("Im Nachschlagen öffnen:") + " " + esc(t.title) + "</button>" : "") + "</li>";
+        '<p class="fb-source">' + esc(sourceLine(a.item.src)) + "</p>" +
+        (t ? '<button type="button" class="linkish" data-review-topic="' + t.id + '"' +
+          (t.sections[a.item.src.s] ? ' data-review-sec="' + a.item.src.s + '"' : "") + ">" + T("Im Nachschlagen öffnen:") + " " +
+          esc(t.title + (t.sections[a.item.src.s] ? " › " + t.sections[a.item.src.s].h : "")) + "</button>" : "") + "</li>";
     }).join("");
     $all("[data-review-topic]").forEach(function (b) {
       b.addEventListener("click", function () {
         showView("nachschlagen");
         $("#search").value = "";
-        openTopic(b.getAttribute("data-review-topic"));
+        var id = b.getAttribute("data-review-topic"), sec = b.getAttribute("data-review-sec");
+        openTopic(id);
         window.scrollTo(0, 0);
+        var el = sec !== null && document.getElementById("sec-" + id + "-" + sec);
+        if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 80);
       });
     });
     window.scrollTo(0, 0);
@@ -696,7 +719,7 @@
   }
   window.FIQH_APP = {
     TOPICS: TOPICS, QUESTIONS: QUESTIONS, TOPIC_BY_ID: TOPIC_BY_ID, GROUPS: GROUPS,
-    esc: esc, store: store, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
+    esc: esc, store: store, sourceLine: sourceLine, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
     showView: showView, tabOf: TAB_OF, startQuiz: startQuiz, renderSetup: renderSetup, openTopic: openTopic,
     isPlaying: function () { return !!game && !$("#quiz-play").hidden; },
     on: function (name, fn) { (listeners[name] = listeners[name] || []).push(fn); }
