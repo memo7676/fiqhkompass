@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="g" cx="75%" cy="10%" r="95%"><stop offset="0" stop-color="#14564b"/><stop offset=".6" stop-color="#0c3a33"/><stop offset="1" stop-color="#0a302a"/></radialGradient>
+    <pattern id="p" width="64" height="64" patternUnits="userSpaceOnUse"><g fill="none" stroke="#f4efe3" stroke-width="1"><path d="M32 5l7.8 19.2L59 32l-19.2 7.8L32 59l-7.8-19.2L5 32l19.2-7.8z"/><circle cx="32" cy="32" r="5"/></g></pattern>
+  </defs>
+  <rect width="512" height="512" fill="url(#g)"/>
+  <rect width="512" height="512" fill="url(#p)" opacity=".07"/>
+  <g transform="translate(256 256) scale(3.6) translate(-50 -50)">
+    <path d="M50 3l12.2 17.6 20.7-5.5-5.5 20.7L95 48l-17.6 12.2 5.5 20.7-20.7-5.5L50 93 37.8 75.4l-20.7 5.5 5.5-20.7L5 48l17.6-12.2-5.5-20.7 20.7 5.5z" fill="none" stroke="#c9a45c" stroke-width="3"/>
+    <path d="M50 17l9 13 15-4-4 15 13 9-13 9 4 15-15-4-9 13-9-13-15 4 4-15-13-9 13-9-4-15 15 4z" fill="#f4efe3"/>
+    <path d="M50 30l5.5 18L50 66l-5.5-18z" fill="#b8914a"/>
+    <circle cx="50" cy="48" r="3" fill="#0c3a33"/>
+  </g>
+</svg>

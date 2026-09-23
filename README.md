@@ -35,6 +35,8 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   Ranglisten sieht jeder, mitspielen und chatten können alle mit bestätigter E-Mail-Adresse.
   Die Server-Regeln in [`firestore.rules`](firestore.rules) sichern das ab: eindeutige Namen, Kunya für Schwestern, nur eigene Daten, Punkte können nicht sinken, kein zweiter Versuch pro Woche, Chat nur unter Brüdern bzw. Schwestern. Getestet wird das in `tests/` (86 Fälle).
 
+- **Als App installierbar** (Progressive Web App): eigenes Symbol auf dem Home-Bildschirm, Vollbild ohne Browserleiste, Nachschlagen und Quiz auch offline (`manifest.webmanifest`, `sw.js`, `install.js`, `icons/`).
+
 Einrichtung von Firebase und GitHub Pages: [`SETUP.md`](SETUP.md). Ohne Firebase funktionieren Nachschlagen und Quiz trotzdem.
 
 Lokal: einfach `index.html` im Browser öffnen, ohne Build-Schritt.
