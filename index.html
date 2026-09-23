@@ -1051,6 +1051,51 @@ dialog.auth { border-radius: 20px; }
 .subject.is-soon::before { background: var(--line); }
 .subject.is-soon h2 { color: var(--muted); }
 .subject.is-soon .subject-ar { color: var(--muted); opacity: .8; }
+/* ---------- Sarf ---------- */
+.sarf-card { padding: 22px 24px; display: grid; gap: 16px; max-width: 760px; width: 100%; justify-self: center; }
+.sarf-card h2 { margin: 0; font: 600 1.7rem/1.3 var(--display); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.sarf-card h2 small { font: 600 1rem/1.2 var(--body); color: var(--muted); }
+.sarf-verb { font: 400 1.8rem/1.4 var(--arabic); color: var(--primary); }
+.sarf-form { margin: 4px 0 0; }
+.sarf-form [lang="ar"], .sarf-bab { font-family: var(--arabic); font-size: 1.1em; }
+.sarf-help { margin: 6px 0 0; color: var(--muted); font-size: .9rem; }
+.sarf-grid { display: grid; gap: 4px; }
+.sarf-row { display: grid; grid-template-columns: minmax(7.5em, 10em) minmax(0, 1fr); gap: 10px; align-items: center; }
+.sarf-p { display: grid; line-height: 1.2; }
+.sarf-p [lang="ar"] { font: 400 1.25rem/1.3 var(--arabic); }
+.sarf-p small { color: var(--muted); font-size: .75rem; }
+.sarf-slot { min-height: 40px; border-radius: 10px; border: 1.5px dashed var(--line); background: var(--surface-2); font: 400 1.35rem/1.3 var(--arabic); color: var(--ink); cursor: pointer; padding: 4px 12px; text-align: right; display: flex; gap: 10px; align-items: center; justify-content: flex-start; }
+.sarf-slot.is-sel { border-color: var(--primary); border-style: solid; background: var(--primary-soft); }
+.sarf-slot.is-ok { border: 1.5px solid var(--good); background: var(--good-soft); }
+.sarf-slot.is-bad { border: 1.5px solid var(--bad); background: var(--bad-soft); text-decoration: line-through; text-decoration-thickness: 1px; }
+.sarf-right { text-decoration: none; display: inline-block; font-size: .95em; color: var(--good); font-weight: 700; margin-inline-start: auto; }
+.sarf-slot:disabled { cursor: default; opacity: 1; }
+.sarf-pool { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; direction: rtl; position: sticky; bottom: 10px; z-index: 5; padding: 10px; margin: 0 -10px; border-radius: 14px; background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 -4px 16px rgba(0,0,0,.08); }
+.sarf-pool:empty { display: none; }
+.sarf-chip { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 6px 12px; font: 400 1.3rem/1.3 var(--arabic); color: var(--ink); cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.sarf-chip:hover { border-color: var(--primary); }
+.sarf-chip:disabled { opacity: .25; cursor: default; box-shadow: none; }
+.sarf-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.sarf-num { width: auto; min-width: 58px; padding: 0 8px; font: 400 1.15rem/1 var(--arabic); }
+.sarf-verb-head { padding: 18px 20px; display: grid; gap: 12px; }
+.sarf-verb-head h3 { margin: 0; font: 600 1.4rem/1.3 var(--display); }
+.sarf-verb-head p { margin: 0; color: var(--muted); }
+.sarf-table th small { display: block; text-transform: none; letter-spacing: 0; font-weight: 500; }
+.sarf-table th [lang="ar"] { font: 400 1rem/1.3 var(--arabic); text-transform: none; letter-spacing: 0; color: var(--ink); }
+.sarf-table td { font: 400 1.15rem/1.4 var(--arabic); white-space: nowrap; text-align: right; }
+.sarf-table tbody th { background: none; white-space: nowrap; }
+.sarf-pane { display: grid; gap: 14px; }
+@media (max-width: 760px) { .sarf-pool { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); } }
+@media (max-width: 560px) { .sarf-chip { font-size: 1.15rem; padding: 4px 9px; } .sarf-row { grid-template-columns: 6.5em minmax(0, 1fr); } .sarf-card { padding: 16px; } .ar-tab { padding: 9px 4px; font-size: .88rem; } }
+
+.ar-gen-note { margin: 8px 0 0 !important; font-size: .9rem; font-weight: 600; color: var(--accent) !important; }
+.ar-gen-note.is-new, .ar-gen-note.is-done { color: var(--good) !important; }
+
+.league-tabs { margin: 0 0 14px; justify-self: start; }
+.league-tabs button[aria-pressed="true"] { background: var(--surface); color: var(--primary); box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 0 0 1px var(--line); }
+.league-tabs [lang="ar"] { font-family: var(--arabic); }
+@media (max-width: 560px) { .league-tabs { width: 100%; } .league-tabs button { flex: 1; } }
+
 /* ---------- Fehlerordner ---------- */
 .btn-ghost { background: transparent; }
 .setup-folder { margin: 6px 0 0; color: var(--muted); font-size: .9rem; }
@@ -1220,6 +1265,22 @@ dialog.auth { border-radius: 20px; }
     </div>
   </section>
 
+  <!-- ================= SARF-TABELLEN (Lernen und Arabisch-Liga) ================= -->
+  <section id="view-sarf" aria-label="Sarf" hidden>
+    <div class="wrap learn sarf-play">
+      <div class="panel sarf-card">
+        <div id="sarf-head"></div>
+        <div class="sarf-grid" id="sarf-grid"></div>
+        <div class="sarf-pool" id="sarf-pool"></div>
+        <div class="feedback" id="sarf-result" hidden></div>
+        <div class="sarf-actions">
+          <button type="button" class="btn btn-primary btn-lg" id="sarf-check" disabled>Prüfen</button>
+          <button type="button" class="btn" id="sarf-quit">Beenden</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= ARABISCH ================= -->
   <section id="view-arabic" aria-label="Arabisch" hidden>
     <nav class="subject-bar" aria-label="Fach Arabisch"><div class="wrap">
@@ -1255,6 +1316,7 @@ dialog.auth { border-radius: 20px; }
         <button type="button" class="ar-tab" role="tab" data-ar-tab="lektionen" aria-selected="true">Lektionen</button>
         <button type="button" class="ar-tab" role="tab" data-ar-tab="vokabeln" aria-selected="false">Vokabeln</button>
         <button type="button" class="ar-tab" role="tab" data-ar-tab="irab" aria-selected="false">Iʿrāb</button>
+        <button type="button" class="ar-tab" role="tab" data-ar-tab="sarf" aria-selected="false">Sarf</button>
       </div>
       <div id="ar-body" aria-live="polite"></div>
       <div class="learn-foot">
@@ -1454,6 +1516,10 @@ dialog.auth { border-radius: 20px; }
           </form>
         </div>
 
+        <div class="sb-tabs league-tabs" role="group" aria-label="Liga">
+          <button type="button" data-league="fiqh" aria-pressed="true">Fiqh-Liga</button>
+          <button type="button" data-league="arabisch" aria-pressed="false">Arabisch-Liga <span lang="ar" dir="rtl">عربي</span></button>
+        </div>
         <div class="panel comp-card">
           <div class="comp-head">
             <div>
@@ -1796,6 +1862,8 @@ dialog.auth { border-radius: 20px; }
 <script src="arabisch/madina1-a.js"></script>
 <script src="arabisch/madina1-b.js"></script>
 <script src="arabisch/madina1-c.js"></script>
+<script src="irabgen.js"></script>
+<script src="sarf.js"></script>
 <script src="arabic.js"></script>
 <script src="mistakes.js"></script>
 <script src="home.js"></script>

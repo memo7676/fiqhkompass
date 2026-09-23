@@ -77,8 +77,8 @@
 
   /* ---------- views ---------- */
   /* "start" is the page with all subjects (Fächer); a subject's views belong to that tab */
-  var views = { start: $("#view-home"), nachschlagen: $("#view-lookup"), lernen: $("#view-learn"), arabisch: $("#view-arabic"), fehler: $("#view-mistakes"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
-  var TAB_OF = { nachschlagen: "start", lernen: "start", arabisch: "start", fehler: "start" };
+  var views = { start: $("#view-home"), nachschlagen: $("#view-lookup"), lernen: $("#view-learn"), arabisch: $("#view-arabic"), fehler: $("#view-mistakes"), sarf: $("#view-sarf"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
+  var TAB_OF = { nachschlagen: "start", lernen: "start", arabisch: "start", fehler: "start", sarf: "start" };
   function showView(name, push) {
     if (!views[name]) name = "start";
     Object.keys(views).forEach(function (k) { views[k].hidden = k !== name; });
@@ -622,7 +622,7 @@
     if (game.preset) game.preset.onFinish(progress(true));
     else emit("finish", { score: game.score, correct: game.correct, total: total, mode: setup.mode });
     $("#again").hidden = !!game.preset;
-    $("#to-setup").textContent = game.preset ? "Zur Rangliste" : "Anderes Thema wählen";
+    $("#to-setup").textContent = game.preset ? game.preset.nextLabel || "Zur Rangliste" : "Anderes Thema wählen";
 
     $("#r-score").textContent = game.score;
     $("#r-max").textContent = "von max. " + maxScore(total) + " Punkten";
@@ -636,7 +636,7 @@
     var wrong = game.answers.filter(function (a) { return !a.ok; });
     resultWrong = { qs: wrong.map(function (a) { return a.item.src; }), back: game.preset ? "wettbewerb" : "quiz" };
     var rm = $("#r-mistakes");
-    rm.hidden = !(window.FIQH_MISTAKES && wrong.length);
+    rm.hidden = !(window.FIQH_MISTAKES && wrong.length) || !!(game.preset && game.preset.nextLabel);
     rm.textContent = "Fehler wiederholen (" + wrong.length + ")";
     $("#review-title").textContent = wrong.length ? "Zum Nachlesen (" + wrong.length + ")" : "Alle Antworten richtig";
     $("#review").innerHTML = wrong.map(function (a) {
@@ -681,7 +681,7 @@
   window.FIQH_APP = {
     TOPICS: TOPICS, QUESTIONS: QUESTIONS, TOPIC_BY_ID: TOPIC_BY_ID, GROUPS: GROUPS,
     esc: esc, store: store, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
-    showView: showView, startQuiz: startQuiz, renderSetup: renderSetup, openTopic: openTopic,
+    showView: showView, tabOf: TAB_OF, startQuiz: startQuiz, renderSetup: renderSetup, openTopic: openTopic,
     isPlaying: function () { return !!game && !$("#quiz-play").hidden; },
     on: function (name, fn) { (listeners[name] = listeners[name] || []).push(fn); }
   };

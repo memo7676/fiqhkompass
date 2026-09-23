@@ -5,7 +5,7 @@
      ar-g-… grammar question · ar-i-… iʿrāb of a marked word */
 (function () {
   "use strict";
-  var APP = window.FIQH_APP, L = window.FIQH_LEARN, M = window.MADINA;
+  var APP = window.FIQH_APP, L = window.FIQH_LEARN, M = window.MADINA, S = window.FIQH_SARF;
   if (!APP || !L || !M || !document.getElementById("view-arabic")) return;
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -103,6 +103,63 @@
   var ALL_IRAB = [];
   LESSONS.forEach(function (l) { ALL_IRAB = ALL_IRAB.concat(SETS[l.id].irab); });
 
+  /* ---------- new Iʿrāb sentences (irabgen.js) ----------
+     When every Iʿrāb sentence is learned, 10 new ones are unlocked after GEN_WAIT.
+     Batch k is always the same 10 sentences, so the progress ids stay valid on every device;
+     the number of batches is remembered here and found again from the synced progress. */
+  var GEN = window.FIQH_IRABGEN, GEN_SIZE = 10, GEN_WAIT = 24 * 36e5;
+  var gen = { n: 0, doneAt: 0, fresh: 0 };
+  try { var g0 = JSON.parse(localStorage.getItem("fiqh:irabgen") || "null"); if (g0) { gen.n = +g0.n || 0; gen.doneAt = +g0.doneAt || 0; } } catch (e) {}
+  function saveGen() { try { localStorage.setItem("fiqh:irabgen", JSON.stringify({ n: gen.n, doneAt: gen.doneAt })); } catch (e) {} }
+  var genSkip = {}, genBatches = [];
+  ALL_IRAB.forEach(function (q) { genSkip[q.ar + "|" + q.arMark] = 1; genSkip[q.ar.replace(/\.$/, "") + ".|" + q.arMark] = 1; });
+  function genBatch(k) {
+    while (genBatches.length < k) {
+      var list = GEN.make("batch" + (genBatches.length + 1), GEN_SIZE, genSkip).map(function (x) {
+        genSkip[x.key] = 1;
+        return { t: "arabisch", tt: "Arabisch · Iʿrāb (neue Sätze)", srcText: "Neue Sätze aus dem Wortschatz von Madina-Buch 1",
+          c: 0, lesson: "gen", _lid: "ar-x-" + hash(x.key), q: x.q, ar: x.ar, arMark: x.arMark, a: x.a, e: x.e };
+      });
+      genBatches.push(list);
+    }
+    return genBatches[k - 1];
+  }
+  function genTouched(k) { return genBatch(k).some(function (q) { return L.levelOf(q._lid) !== 0; }); }
+  function genAdd(upTo) {
+    if (!GEN) return;
+    while (gen.n < upTo) {
+      gen.n++;
+      genBatch(gen.n).forEach(function (q) { if (!seenIds[q._lid]) { seenIds[q._lid] = 1; ALL_IRAB.push(q); QS.push(q); } });
+    }
+  }
+  function genLoaded() {
+    var have = 0;
+    ALL_IRAB.forEach(function (q) { if (q.lesson === "gen") have++; });
+    return have / GEN_SIZE;
+  }
+  /* catch up with batches unlocked on another device (they show up in the synced progress) */
+  function genSync() {
+    if (!GEN) return;
+    var n = gen.n;
+    while (n < 200 && genTouched(n + 1)) n++;
+    if (n > gen.n || genLoaded() < gen.n) { var want = Math.max(n, gen.n); gen.n = genLoaded(); genAdd(want); saveGen(); }
+  }
+  function genCheck() {
+    if (!GEN) return;
+    var all = ALL_IRAB.every(function (q) { return L.levelOf(q._lid) === 2; });
+    if (!all) { if (gen.doneAt) { gen.doneAt = 0; saveGen(); } return; }
+    if (!gen.doneAt) { gen.doneAt = Date.now(); saveGen(); }
+    if (Date.now() - gen.doneAt >= GEN_WAIT) { genAdd(gen.n + 1); gen.doneAt = 0; gen.fresh = GEN_SIZE; saveGen(); }
+  }
+  function genNote() {
+    if (!GEN) return "";
+    if (gen.fresh) return '<p class="ar-gen-note is-new">✦ ' + gen.fresh + " neue Sätze sind da – sie stehen im Iʿrāb-Training ganz vorne.</p>";
+    if (!gen.doneAt) return gen.n ? '<p class="ar-gen-note">Darunter ' + gen.n * GEN_SIZE + " neue Sätze, die nach dem Meistern freigeschaltet wurden.</p>" : "";
+    var left = Math.max(0, GEN_WAIT - (Date.now() - gen.doneAt)), h = Math.ceil(left / 36e5);
+    return '<p class="ar-gen-note is-done">Mā schāʾ Allāh – alle Sätze sitzen! Neue Sätze kommen in ' + (h <= 1 ? "weniger als einer Stunde" : h + " Stunden") + ".</p>";
+  }
+  genSync();
+
   /* ---------- progress (shared store of learn.js) ---------- */
   function lv(q) { return L.levelOf(q._lid); }
   function stats(list) {
@@ -186,6 +243,7 @@
     var body = $("#ar-body");
     if (state.tab === "vokabeln") body.innerHTML = vocabPane();
     else if (state.tab === "irab") body.innerHTML = irabPane();
+    else if (state.tab === "sarf" && S) { body.innerHTML = S.pane(); S.wire(body, render); return; }
     else body.innerHTML = state.lesson ? lessonPane(BY_ID[state.lesson]) : listPane();
     wire(body);
   }
@@ -277,12 +335,13 @@
       vocabTable(hit.slice(0, 400), true) + "</div>";
   }
   function irabPane() {
+    genCheck();
     var is = stats(ALL_IRAB);
     var models = [];
     LESSONS.forEach(function (l) { l.model.forEach(function (m) { models.push([l, m]); }); });
     return '<div class="ar-irab-pane">' +
       '<div class="panel ar-irab-cta"><div><p class="eyebrow">Ziel des Kurses</p><h3>Einen Satz vollständig analysieren</h3>' +
-      "<p>" + ALL_IRAB.length + " Iʿrāb-Aufgaben aus allen Lektionen: Du siehst einen Satz mit einem markierten Wort und wählst die richtige Analyse.</p></div>" +
+      "<p>" + ALL_IRAB.length + " Iʿrāb-Aufgaben aus allen Lektionen: Du siehst einen Satz mit einem markierten Wort und wählst die richtige Analyse. Wenn alle sitzen, kommen nach einem Tag neue Sätze dazu.</p>" + genNote() + "</div>" +
       '<div class="ar-irab-actions"><button type="button" class="btn btn-primary" data-ar-irab-train>Iʿrāb-Training · ' + is.pct + " %</button>" +
       '<button type="button" class="btn" data-ar-irab-exam>Prüfung: 20 gemischte Sätze</button></div></div>' +
       '<section class="ar-block"><h3>Einführung</h3>' + M.irabIntro.map(function (sec, i) {
@@ -324,7 +383,11 @@
       start(QS.filter(function (q) { return /^ar-[vdp]-/.test(q._lid); }), "Vokabeltrainer", {});
     });
     var it = $("[data-ar-irab-train]", body);
-    if (it) it.addEventListener("click", function () { start(ALL_IRAB, "Iʿrāb-Training", {}); });
+    if (it) it.addEventListener("click", function () {
+      var fresh = gen.fresh ? genBatch(gen.n) : null;
+      gen.fresh = 0;
+      start(fresh && fresh.some(function (q) { return lv(q) !== 2; }) ? fresh : ALL_IRAB, fresh ? "Neue Iʿrāb-Sätze" : "Iʿrāb-Training", {});
+    });
     var ex = $("[data-ar-irab-exam]", body);
     if (ex) ex.addEventListener("click", function () {
       var qs = APP.shuffle(ALL_IRAB.slice()).slice(0, 20), correct = 0;
@@ -365,11 +428,13 @@
   });
 
   APP.on("view", function (name) { if (name === "arabisch") render(); });
-  L.onChange(function () { if (!$("#view-arabic").hidden) render(); });
+  L.onChange(function () { genSync(); if (!$("#view-arabic").hidden) render(); });
   $("#ar-count-lessons").textContent = LESSONS.length;
   $("#ar-count-vocab").textContent = LESSONS.reduce(function (n, l) { return n + l.vocab.length; }, 0);
   $("#ar-count-q").textContent = QS.length;
   render();
 
+  /* sarf.js comes back here after a round of tables */
+  window.FIQH_ARABIC_RENDER = function (tab) { if (tab) { state.tab = tab; remember(); } render(); };
   window.FIQH_ARABIC = { questions: QS, lessons: LESSONS, stats: function () { return stats(QS); } };
 })();

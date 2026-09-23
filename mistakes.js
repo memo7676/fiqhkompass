@@ -28,16 +28,20 @@
       });
     });
     SUBJECTS.push({ id: "fiqh", name: "Fiqh", back: "lernen", folders: fiqh });
-    if (AR) {
+    /* Arabic questions grow (new Iʿrāb sentences), so its folders are built when needed */
+    if (AR) SUBJECTS.push({ id: "arabisch", name: "Arabisch", back: "arabisch", make: function () {
       var byLesson = {};
       AR.questions.forEach(function (q) { (byLesson[q.lesson] = byLesson[q.lesson] || []).push(q); });
-      SUBJECTS.push({ id: "arabisch", name: "Arabisch", back: "arabisch", folders: AR.lessons.filter(function (l) { return byLesson[l.id]; }).map(function (l) {
+      var out = AR.lessons.filter(function (l) { return byLesson[l.id]; }).map(function (l) {
         return { key: "a-" + l.id, title: "Lektion " + l.n + " · " + l.title, ar: l.ar, qs: byLesson[l.id] };
-      }) });
-    }
+      });
+      if (byLesson.gen) out.push({ key: "a-gen", title: "Iʿrāb · neue Sätze", ar: "إِعْرَابٌ", qs: byLesson.gen });
+      return out;
+    } });
   })();
+  function foldersOf(subject) { return subject.make ? subject.make() : subject.folders; }
   function openIn(folder) { return folder.qs.filter(isOpen); }
-  function openOf(subject) { return subject.folders.reduce(function (a, f) { return a.concat(openIn(f)); }, []); }
+  function openOf(subject) { return foldersOf(subject).reduce(function (a, f) { return a.concat(openIn(f)); }, []); }
   function allOpen() { return SUBJECTS.reduce(function (a, s) { return a.concat(openOf(s)); }, []); }
   function count() { return allOpen().length; }
 
@@ -144,7 +148,7 @@
         var n = openOf(s).length;
         if (!n) return state.filter === s.id ? '<div class="panel mf-empty"><p>In ' + esc(s.name) + " gibt es keine offenen Fehler.</p></div>" : "";
         return '<section class="lg"><h3 class="lg-head"><span>' + esc(s.name) + "</span><small>" + n + (n === 1 ? " Frage" : " Fragen") + "</small></h3>" +
-          '<div class="mf-list">' + s.folders.map(function (f) {
+          '<div class="mf-list">' + foldersOf(s).map(function (f) {
             var qs = openIn(f);
             if (!qs.length) return "";
             return '<details class="mf"' + (state.opened[f.key] ? " open" : "") + ' data-mf-key="' + f.key + '">' +
@@ -162,8 +166,9 @@
   }
 
   function folderByKey(key) {
-    for (var i = 0; i < SUBJECTS.length; i++) for (var j = 0; j < SUBJECTS[i].folders.length; j++) {
-      if (SUBJECTS[i].folders[j].key === key) return { folder: SUBJECTS[i].folders[j], subject: SUBJECTS[i] };
+    for (var i = 0; i < SUBJECTS.length; i++) {
+      var fs = foldersOf(SUBJECTS[i]);
+      for (var j = 0; j < fs.length; j++) if (fs[j].key === key) return { folder: fs[j], subject: SUBJECTS[i] };
     }
     return null;
   }
