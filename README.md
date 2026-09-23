@@ -84,3 +84,7 @@ Ab Woche 2 der ersten Saison (`AR_BALANCED_FROM` in `social.js`) gilt:
 - **Sarf**: drei Verben aus drei verschiedenen Abwāb.
 
 Woche 1 behält die alten Regeln, weil sie schon gespielt wurde.
+
+## Belege (Dalīl) zu den Antworten
+
+`fiqh-belege.js` ordnet Fiqh-Fragen (Schlüssel: deutsche Frage) ihre Belege zu: `[Art, Stelle, Text de, Text en, İlmihal-Seite, Fußnote, Stelle en]`. Arten: Q Qurʾān (Sure Vers), H Hadith (Sammlung und Kitāb, Überlieferer), A Wort eines Gefährten, I Idschmāʿ, K Qiyās, S Istiḥsān, R Rechtsgrundsatz, J Begründung der Gelehrten (kein direkter Text), L Sprache. Seite und Fußnote verweisen auf das gedruckte İlmihal (die Fußnotentexte fehlen im PDF). Seite 0 heißt: Beleg nicht aus dem Buch, sondern ergänzt. Angezeigt werden die Belege nach der Antwort, in der Auswertung und im Fehlerordner. Bisher erfasst: Wuḍūʾ (34 Fragen).

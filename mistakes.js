@@ -95,7 +95,8 @@
       '<span dir="auto">' + esc(q.q) + "</span></p>" + arLine(q) +
       '<p class="rv-a"><span class="rv-label good">' + T("Richtig") + '</span> <span dir="auto">' + esc(q.a[q.c]) + "</span></p>" +
       (q.e ? '<p class="rv-e" dir="auto">' + esc(q.e) + "</p>" : "") +
-      (q.s !== undefined && APP.sourceLine ? '<p class="fb-source">' + esc(APP.sourceLine(q)) + "</p>" : "") + "</li>";
+      (q.s !== undefined && APP.sourceLine ? '<p class="fb-source">' + esc(APP.sourceLine(q)) + "</p>" : "") +
+      (APP.dalilHtml && APP.dalilHtml(q) ? '<ul class="fb-dalil">' + APP.dalilHtml(q) + "</ul>" : "") + "</li>";
   }
 
   function renderRound() {

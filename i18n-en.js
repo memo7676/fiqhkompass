@@ -711,5 +711,15 @@ window.I18N_EN = {
  "S. {p}": "p. {p}",
  "Unterricht {n}": "Lesson {n}",
  "Fiqh-Unterricht {n}": "Fiqh lesson {n}",
- "{k} kürzlich gestellt (2 Std. Pause)": "{k} asked recently (2 h pause)"
+ "{k} kürzlich gestellt (2 Std. Pause)": "{k} asked recently (2 h pause)",
+ "Wort eines Gefährten": "Statement of a Companion",
+ "Rechtsgrundsatz": "Legal maxim",
+ "Begründung der Gelehrten": "Reasoning of the scholars",
+ "İlmihal S. {p}": "İlmihal p. {p}",
+ "Fn. {n}": "n. {n}",
+ "Qurʾān": "Qurʾān",
+ "Hadith": "Hadith",
+ "Idschmāʿ": "Ijmāʿ",
+ "Qiyās": "Qiyās",
+ "Istiḥsān": "Istiḥsān"
 };
