@@ -806,7 +806,7 @@ h1, h2, h3, .setup h2, .article h2, .entry h3, .social h2, .social h3, .ov-head,
   .acc-btn { order: 0; max-width: 150px; font-size: .9rem; }
   .masthead .tabs {
     order: 0; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; width: auto;
-    display: grid; grid-template-columns: repeat(6, 1fr); gap: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
     background: color-mix(in srgb, var(--surface) 92%, transparent);
     backdrop-filter: saturate(1.4) blur(16px); -webkit-backdrop-filter: saturate(1.4) blur(16px);
@@ -928,9 +928,6 @@ dialog.auth { border-radius: 20px; }
 .auth-head h2 { font: 600 1.8rem/1.1 var(--display); }
 
 /* ---------- Arabisch ---------- */
-.tl-short { display: none; }
-@media (max-width: 760px) { .tl-long { display: none; } .tl-short { display: inline; } .masthead .tabs { padding-left: 4px; padding-right: 4px; } }
-@media (min-width: 761px) and (max-width: 1100px) { .tab { padding: 0 9px; font-size: .9rem; } .tab::after { left: 9px; right: 9px; } }
 [lang="ar"], .ar-in, .opt-ar, .q-text.is-ar { font-family: var(--arabic); }
 .ar-in { font-size: 1.12em; line-height: 1.5; unicode-bidi: isolate; }
 .q-text.is-ar { font-size: clamp(1.6rem, 4vw, 2rem); line-height: 1.6; }
@@ -1016,13 +1013,52 @@ dialog.auth { border-radius: 20px; }
 .btn-sm { padding: 6px 12px; font-size: .88rem; }
 @media (max-width: 420px) { .req { grid-template-columns: 34px minmax(0, 1fr); } .req-actions { grid-column: 1 / -1; justify-content: stretch; } .req-actions .btn { flex: 1; } }
 .friend-hint { margin: 0; color: var(--muted); font-size: .85rem; }
+
+/* ---------- Fächer: Startseite und Leiste je Fach ---------- */
+.subject-bar { background: var(--surface); border-bottom: 1px solid var(--line); }
+.subject-bar .wrap { display: flex; align-items: center; gap: 14px; min-height: 52px; flex-wrap: wrap; padding-block: 6px; }
+.sb-back { border: 0; background: none; color: var(--muted); font: 600 .9rem/1 var(--body); cursor: pointer; padding: 8px 10px 8px 0; }
+.sb-back:hover { color: var(--primary); }
+.sb-title { font: 600 1.3rem/1 var(--display); display: inline-flex; align-items: baseline; gap: 8px; padding-left: 14px; border-left: 1px solid var(--line); }
+.sb-title [lang="ar"] { font: 400 1.05rem/1 var(--arabic); color: var(--accent); }
+.sb-tabs { margin-left: auto; display: flex; gap: 2px; padding: 3px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); }
+.sb-tabs button { border: 0; background: none; padding: 7px 14px; border-radius: 9px; font: 600 .9rem/1.2 var(--body); color: var(--muted); cursor: pointer; }
+.sb-tabs button[aria-current="page"] { background: var(--surface); color: var(--primary); box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 0 0 1px var(--line); }
+@media (max-width: 560px) {
+  .subject-bar .wrap { gap: 8px 10px; }
+  .sb-title { font-size: 1.15rem; }
+  .sb-tabs { margin-left: 0; width: 100%; }
+  .sb-tabs button { flex: 1; }
+}
+.hero-home .intro p small { font-size: .85em; opacity: .8; }
+.home { padding-block: 0 60px; }
+.subjects { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: -28px; position: relative; }
+.subject {
+  position: relative; display: grid; gap: 10px; align-content: start; padding: 20px 22px 18px; border-radius: 16px;
+  border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow);
+}
+.subject::before { content: ""; position: absolute; left: 22px; top: 0; width: 32px; height: 3px; background: var(--gold); border-radius: 0 0 3px 3px; }
+.subject-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.subject h2 { margin: 0; font: 600 1.7rem/1.1 var(--display); }
+.subject-ar { font: 400 1.35rem/1.2 var(--arabic); color: var(--primary); white-space: nowrap; }
+.subject p { margin: 0; color: var(--muted); font-size: .93rem; line-height: 1.5; }
+.subject-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .8rem; font-weight: 600; color: var(--muted); }
+.subject-meta b { color: var(--ink); }
+.subject-progress { display: grid; gap: 5px; }
+.subject-progress small { font-size: .78rem; font-weight: 600; color: var(--accent); }
+.subject-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.subject.is-soon { box-shadow: none; background: var(--surface-2); border-style: dashed; }
+.subject.is-soon::before { background: var(--line); }
+.subject.is-soon h2 { color: var(--muted); }
+.subject.is-soon .subject-ar { color: var(--muted); opacity: .8; }
+.soon-badge { justify-self: start; font: 700 .7rem/1 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 9px; }
 </style>
 </head>
 <body>
 
 <header class="masthead">
   <div class="wrap">
-    <a class="brand" href="#nachschlagen" aria-label="Ṭālibu l-ʿIlm">
+    <a class="brand" href="#start" aria-label="Ṭālibu l-ʿIlm">
       <svg viewBox="0 0 100 100" aria-hidden="true">
         <path d="M50 3l12.2 17.6 20.7-5.5-5.5 20.7L95 48l-17.6 12.2 5.5 20.7-20.7-5.5L50 93 37.8 75.4l-20.7 5.5 5.5-20.7L5 48l17.6-12.2-5.5-20.7 20.7 5.5z" fill="none" stroke="var(--gold)" stroke-width="3.2"/>
         <path d="M50 17l9 13 15-4-4 15 13 9-13 9 4 15-15-4-9 13-9-13-15 4 4-15-13-9 13-9-4-15 15 4z" fill="var(--primary)"/>
@@ -1032,16 +1068,12 @@ dialog.auth { border-radius: 20px; }
       <span class="brand-text"><span class="brand-name">Ṭālibu l-ʿIlm</span><span class="brand-ar" lang="ar" dir="rtl">طَالِبُ الْعِلْمِ</span></span>
     </a>
     <nav class="tabs" role="tablist" aria-label="Bereich">
-      <button type="button" class="tab" role="tab" data-view="nachschlagen" aria-selected="true">
-        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5zM12 6.5v13"/></svg><span class="tab-label"><span class="tl-long">Nachschlagen</span><span class="tl-short">Themen</span></span></button>
-      <button type="button" class="tab" role="tab" data-view="lernen" aria-selected="false">
-        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5L12 5l9 4.5-9 4.5z"/><path d="M7 11.5v4c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4M21 9.5v5"/></svg><span class="tab-label">Lernen</span></button>
-      <button type="button" class="tab" role="tab" data-view="arabisch" aria-selected="false">
-        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><text x="12" y="17.5" text-anchor="middle" font-size="17" font-family="Amiri, serif" fill="currentColor" stroke="none">ع</text></svg><span class="tab-label">Arabisch</span></button>
+      <button type="button" class="tab" role="tab" data-view="start" aria-selected="true">
+        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5zM12 6.5v13"/></svg><span class="tab-label">Fächer</span></button>
       <button type="button" class="tab" role="tab" data-view="quiz" aria-selected="false">
         <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.7 9.6a2.4 2.4 0 1 1 3.3 2.2c-.7.3-1 .8-1 1.5v.4M12 16.6v.2"/></svg><span class="tab-label">Quiz</span></button>
       <button type="button" class="tab" role="tab" data-view="wettbewerb" aria-selected="false">
-        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5h8v4.5a4 4 0 0 1-8 0zM8 6.5H5.5a2.5 2.5 0 0 0 2.6 3.6M16 6.5h2.5a2.5 2.5 0 0 1-2.6 3.6M12 13v3.5M8.5 19.5h7M10 16.5h4v3h-4z"/></svg><span class="tab-label"><span class="tl-long">Wettbewerb</span><span class="tl-short">Liga</span></span><span class="tab-badge" id="friend-badge" hidden></span></button>
+        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5h8v4.5a4 4 0 0 1-8 0zM8 6.5H5.5a2.5 2.5 0 0 0 2.6 3.6M16 6.5h2.5a2.5 2.5 0 0 1-2.6 3.6M12 13v3.5M8.5 19.5h7M10 16.5h4v3h-4z"/></svg><span class="tab-label">Wettbewerb</span><span class="tab-badge" id="friend-badge" hidden></span></button>
       <button type="button" class="tab" role="tab" data-view="chat" aria-selected="false">
         <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 17h-8.5L6 20.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/></svg><span class="tab-label">Chat</span><span class="tab-badge" id="chat-badge" hidden></span></button>
     </nav>
@@ -1051,7 +1083,26 @@ dialog.auth { border-radius: 20px; }
 
 <main>
   <!-- ================= NACHSCHLAGEN ================= -->
-  <section id="view-lookup" aria-label="Nachschlagen">
+  <!-- ================= FÄCHER (Start) ================= -->
+  <section id="view-home" aria-label="Fächer">
+    <div class="hero hero-home">
+      <div class="wrap intro">
+        <p class="hero-eyebrow">Deine Fächer <span lang="ar" dir="rtl">·&nbsp;العُلُوم</span></p>
+        <h1>Wissen suchen&nbsp;– Fach für Fach</h1>
+        <p>„Wer einen Weg beschreitet, auf dem er Wissen sucht, dem erleichtert Allah dadurch einen Weg ins Paradies.“ <small>(Muslim)</small><br>Wähle ein Fach: nachschlagen, lernen bis alles sitzt und dein Wissen im Quiz testen.</p>
+      </div>
+    </div>
+    <div class="wrap home">
+      <div class="subjects" id="subjects"></div>
+    </div>
+  </section>
+
+  <section id="view-lookup" aria-label="Fiqh – Nachschlagen" hidden>
+    <nav class="subject-bar" aria-label="Fach Fiqh"><div class="wrap">
+      <button type="button" class="sb-back" data-go="start"><span aria-hidden="true">←</span> Fächer</button>
+      <span class="sb-title">Fiqh <span lang="ar" dir="rtl">الفقه</span></span>
+      <div class="sb-tabs"><button type="button" data-go="nachschlagen" aria-current="page">Nachschlagen</button><button type="button" data-go="lernen">Lernen</button></div>
+    </div></nav>
     <div class="hero">
       <div class="wrap intro">
         <p class="hero-eyebrow">Nachschlagewerk <span lang="ar" dir="rtl">·&nbsp;مرجع</span></p>
@@ -1073,7 +1124,12 @@ dialog.auth { border-radius: 20px; }
   </section>
 
   <!-- ================= LERNEN ================= -->
-  <section id="view-learn" aria-label="Lernen" hidden>
+  <section id="view-learn" aria-label="Fiqh – Lernen" hidden>
+    <nav class="subject-bar" aria-label="Fach Fiqh"><div class="wrap">
+      <button type="button" class="sb-back" data-go="start"><span aria-hidden="true">←</span> Fächer</button>
+      <span class="sb-title">Fiqh <span lang="ar" dir="rtl">الفقه</span></span>
+      <div class="sb-tabs"><button type="button" data-go="nachschlagen">Nachschlagen</button><button type="button" data-go="lernen" aria-current="page">Lernen</button></div>
+    </div></nav>
     <div class="wrap learn">
       <div class="panel learn-round" id="learn-round" hidden aria-live="polite"></div>
       <div class="panel learn-head">
@@ -1110,6 +1166,11 @@ dialog.auth { border-radius: 20px; }
 
   <!-- ================= ARABISCH ================= -->
   <section id="view-arabic" aria-label="Arabisch" hidden>
+    <nav class="subject-bar" aria-label="Fach Arabisch"><div class="wrap">
+      <button type="button" class="sb-back" data-go="start"><span aria-hidden="true">←</span> Fächer</button>
+      <span class="sb-title">Arabisch <span lang="ar" dir="rtl">اللُّغَةُ الْعَرَبِيَّةُ</span></span>
+      
+    </div></nav>
     <div class="hero hero-ar">
       <div class="wrap intro">
         <p class="hero-eyebrow">Arabisch <span lang="ar" dir="rtl">·&nbsp;دُرُوسُ اللُّغَةِ الْعَرَبِيَّةِ</span></p>
@@ -1677,6 +1738,7 @@ dialog.auth { border-radius: 20px; }
 <script src="arabisch/madina1-b.js"></script>
 <script src="arabisch/madina1-c.js"></script>
 <script src="arabic.js"></script>
+<script src="home.js"></script>
 <script src="install.js"></script>
 </body>
 </html>

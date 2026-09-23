@@ -2,7 +2,8 @@
 
 Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht 1–16“ (Google-Drive-Ordner „Fiqh“), vertieft und erweitert mit Hamdi Döndüren, „Delilleriyle İslâm İlmihali“.
 
-- **Nachschlagen**: zuerst eine Übersicht aller Themen; der Text eines Themas öffnet sich erst mit einem Klick. Dazu Volltextsuche. 25 Themengebiete in sechs Sachgebieten:
+- **Fächer** (Startseite): eine Karte pro Fach mit Fortschritt – Fiqh und Arabisch, bald ʿAqīda, Tazkiya und Propheten. Die Leiste hat nur noch Fächer · Quiz · Wettbewerb · Chat; innerhalb eines Fachs führt eine eigene Leiste zurück zu allen Fächern und zwischen den Teilen (bei Fiqh: Nachschlagen | Lernen). Ein neues Fach bekommt einen Eintrag in `home.js` und eine eigene Ansicht.
+- **Fiqh – Nachschlagen**: zuerst eine Übersicht aller Themen; der Text eines Themas öffnet sich erst mit einem Klick. Dazu Volltextsuche. 25 Themengebiete in sechs Sachgebieten:
   - Glaube & Grundlagen
   - Reinheit
   - Gebet (mit Adhān, Gemeinschaft, Freitag/Fest, Nawāfil, Sahw/Tilāwa, Totengebet)
@@ -11,7 +12,7 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - Alltag & Gesellschaft (Ehe, Handel/Riba, Speisen, Ǧihād)
 
   Abschnitte aus dem Buch tragen die Seitenzahl als Marke.
-- **Lernen** (wie eine Fahrschul-App): jedes Thema Frage für Frage durcharbeiten, bis es zu 100 % sitzt.
+- **Fiqh – Lernen** (wie eine Fahrschul-App): jedes Thema Frage für Frage durcharbeiten, bis es zu 100 % sitzt.
   - eine Frage ist gelernt, wenn sie gleich richtig beantwortet wird, nach einem Fehler erst nach zwei richtigen Antworten hintereinander
   - Runden mit 10 Fragen: zuerst die falschen, dann die fast gelernten, dann neue; „Fehler wiederholen“ über alle Themen
   - Fortschritt je Thema, Sachgebiet und gesamt (auch in der Themenübersicht), gespeichert auf dem Gerät und, angemeldet, in `progress/<id>`

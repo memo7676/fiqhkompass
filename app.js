@@ -76,12 +76,15 @@
   }
 
   /* ---------- views ---------- */
-  var views = { nachschlagen: $("#view-lookup"), lernen: $("#view-learn"), arabisch: $("#view-arabic"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
+  /* "start" is the page with all subjects (Fächer); a subject's views belong to that tab */
+  var views = { start: $("#view-home"), nachschlagen: $("#view-lookup"), lernen: $("#view-learn"), arabisch: $("#view-arabic"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
+  var TAB_OF = { nachschlagen: "start", lernen: "start", arabisch: "start" };
   function showView(name, push) {
-    if (!views[name]) name = "nachschlagen";
+    if (!views[name]) name = "start";
     Object.keys(views).forEach(function (k) { views[k].hidden = k !== name; });
+    var tab = TAB_OF[name] || name;
     $all(".tab").forEach(function (b) {
-      var on = b.getAttribute("data-view") === name;
+      var on = b.getAttribute("data-view") === tab;
       b.setAttribute("aria-selected", on ? "true" : "false");
     });
     if (push !== false) { try { history.replaceState(null, "", "#" + name); } catch (e) {} }
@@ -91,11 +94,21 @@
   $all(".tab").forEach(function (b) {
     b.addEventListener("click", function () {
       var v = b.getAttribute("data-view");
-      if (v === "nachschlagen" && views.nachschlagen && !views.nachschlagen.hidden && currentTopic) { $("#search").value = ""; showOverview(); }
       showView(v);
       window.scrollTo(0, 0);
     });
   });
+  /* subject bar: back to all subjects, or between a subject's parts */
+  $all(".subject-bar [data-go]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var v = b.getAttribute("data-go");
+      if (v === "nachschlagen" && !views.nachschlagen.hidden && currentTopic) { $("#search").value = ""; showOverview(); }
+      showView(v);
+      window.scrollTo(0, 0);
+    });
+  });
+  var brand = $(".brand");
+  if (brand) brand.addEventListener("click", function (e) { e.preventDefault(); showView("start"); window.scrollTo(0, 0); });
 
   /* =====================================================
      NACHSCHLAGEN
@@ -667,5 +680,9 @@
   showOverview();
   renderSetup();
   var hash = (location.hash || "").replace("#", "");
-  showView(views[hash] ? hash : (store("view") || "nachschlagen"), false);
+  showView(views[hash] ? hash : (store("view") || "start"), false);
+  window.addEventListener("hashchange", function () {
+    var h = (location.hash || "").replace("#", "");
+    if (views[h] && views[h].hidden) { showView(h, false); window.scrollTo(0, 0); }
+  });
 })();
