@@ -311,6 +311,11 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
 .fb-points { font-weight: 700; font-variant-numeric: tabular-nums; font-size: .9rem; white-space: pre; }
 .feedback p { margin: 0; }
 .fb-source { font-size: .83rem; color: var(--muted); }
+.fb-dalil { list-style: none; margin: .5rem 0 0; padding: 0; font-size: .86rem; line-height: 1.45; }
+.fb-dalil li { margin: .35rem 0 0; padding-left: .6rem; border-left: 3px solid var(--line, #d9d4c7); }
+.fb-dalil .dl-kind { font-weight: 700; }
+.fb-dalil .dl-ref { color: var(--muted); }
+.fb-dalil .dl-bk { display: block; font-size: .78rem; color: var(--muted); }
 .feedback .btn { justify-self: start; margin-top: 6px; }
 .kbd-hint { font-size: .8rem; color: var(--muted); text-align: center; margin: 0; }
 @media (hover: none) { .kbd-hint { display: none; } }
@@ -1418,6 +1423,7 @@ dialog.auth { border-radius: 20px; }
             <div class="fb-head"><strong id="fb-title"></strong><span class="fb-points" id="fb-points"></span></div>
             <p id="fb-text"></p>
             <p class="fb-source" id="fb-source"></p>
+            <ul class="fb-dalil" id="fb-dalil" hidden></ul>
             <button type="button" class="btn btn-primary" id="next-q">Nächste Frage</button>
           </div>
 
@@ -1863,6 +1869,7 @@ dialog.auth { border-radius: 20px; }
 <script src="buch/09-hajj-qurban.js"></script>
 <script src="buch/10-alltag.js"></script>
 <script src="fiqh-en.js"></script>
+<script src="fiqh-belege.js"></script>
 <script src="app.js"></script>
 <script src="social.js"></script>
 <script src="chat.js"></script>

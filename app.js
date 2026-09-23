@@ -61,6 +61,21 @@
     if (s.src) return ' <span class="src-badge" title="' + esc(BOOK) + '">İlmihal ' + esc(pages(s.src)) + "</span>";
     return s.u ? ' <span class="src-badge">' + esc(T("Unterricht {n}", { n: lessonNo(s) })) + "</span>" : "";
   }
+  /* Evidence (fiqh-belege.js): Qurʾān verse, hadith, qiyās … with the place in the İlmihal. */
+  var DALIL = window.FIQH_DALIL || {};
+  var DALIL_KIND = { Q: "Qurʾān", H: "Hadith", A: "Wort eines Gefährten", I: "Idschmāʿ", K: "Qiyās", S: "Istiḥsān",
+    R: "Rechtsgrundsatz", J: "Begründung der Gelehrten", L: "Sprache" };
+  function dalilHtml(q) {
+    var list = DALIL[q.q_de || q.q];
+    if (!list || !list.length) return "";
+    var en = window.I18N && I18N.lang === "en";
+    return list.map(function (d) {
+      var bk = d[4] ? T("İlmihal S. {p}", { p: d[4] }) + (d[5] ? ", " + T("Fn. {n}", { n: d[5] }) : "") : "";
+      return "<li><span class=\"dl-kind\">" + esc(T(DALIL_KIND[d[0]] || "")) + "</span>" +
+        (d[1] ? ' <span class="dl-ref">· ' + esc(en && d[6] ? d[6] : d[1]) + "</span>" : "") + " – " + esc(en ? d[3] : d[2]) +
+        (bk ? '<span class="dl-bk">' + esc(bk) + "</span>" : "") + "</li>";
+    }).join("");
+  }
   /* Where a quiz question comes from: lesson or book pages, topic and section. */
   function sourceLine(q) {
     var t = TOPIC_BY_ID[q.t];
@@ -610,6 +625,9 @@
     $("#fb-points").textContent = learnNote || (ok ? parts.join("  ") : T("Die richtige Antwort ist markiert."));
     setText($("#fb-text"), item.src.e);
     $("#fb-source").textContent = sourceLine(item.src);
+    var dl = dalilHtml(item.src);
+    $("#fb-dalil").innerHTML = dl;
+    $("#fb-dalil").hidden = !dl;
     $("#next-q").textContent = game.i + 1 < game.qs.length ? T("Nächste Frage") : (game.preset && game.preset.learn ? T("Runde abschließen") : T("Ergebnis ansehen"));
     $("#q-score").textContent = game.score;
     $("#q-streak").textContent = game.streak > 1 ? T("{n}er-Serie", { n: game.streak }) : "";
@@ -711,6 +729,7 @@
         '<p class="rv-a"><span class="rv-label good">' + T("Richtig") + "</span> " + esc(right) + "</p>" +
         '<p class="rv-e">' + esc(a.item.src.e) + "</p>" +
         '<p class="fb-source">' + esc(sourceLine(a.item.src)) + "</p>" +
+        (dalilHtml(a.item.src) ? '<ul class="fb-dalil">' + dalilHtml(a.item.src) + "</ul>" : "") +
         (t ? '<button type="button" class="linkish" data-review-topic="' + t.id + '"' +
           (t.sections[a.item.src.s] ? ' data-review-sec="' + a.item.src.s + '"' : "") + ">" + T("Im Nachschlagen öffnen:") + " " +
           esc(t.title + (t.sections[a.item.src.s] ? " › " + t.sections[a.item.src.s].h : "")) + "</button>" : "") + "</li>";
@@ -750,7 +769,7 @@
   }
   window.FIQH_APP = {
     TOPICS: TOPICS, QUESTIONS: QUESTIONS, TOPIC_BY_ID: TOPIC_BY_ID, GROUPS: GROUPS,
-    esc: esc, store: store, sourceLine: sourceLine, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
+    esc: esc, store: store, sourceLine: sourceLine, dalilHtml: dalilHtml, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
     showView: showView, tabOf: TAB_OF, startQuiz: startQuiz, renderSetup: renderSetup, openTopic: openTopic,
     isPlaying: function () { return !!game && !$("#quiz-play").hidden; },
     on: function (name, fn) { (listeners[name] = listeners[name] || []).push(fn); }
