@@ -705,5 +705,6 @@ window.I18N_EN = {
  "Plural m.": "Plural m.",
  "Singular f.": "Singular f.",
  "Dual f.": "Dual f.",
- "Plural f.": "Plural f."
+ "Plural f.": "Plural f.",
+ "„{t}“": "“{t}”"
 };

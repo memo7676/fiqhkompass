@@ -21,7 +21,7 @@
   }
   var byTopic = {};
   APP.QUESTIONS.forEach(function (q) {
-    q._lid = q.t + "-" + hash(q.q);
+    q._lid = q.t + "-" + hash(q.q_de || q.q);
     (byTopic[q.t] = byTopic[q.t] || []).push(q);
   });
 
