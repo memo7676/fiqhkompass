@@ -251,7 +251,7 @@
     $("#comp-theme").textContent = cal.theme.name;
     $("#comp-theme-topics").textContent = cal.theme.topics.map(function (t) { return t.title; }).join(" · ");
     $("#comp-sub").textContent = "Saison " + cal.season + " läuft vom " + day(cal.seasonStart) + " bis " +
-      day(cal.seasonEnd - 1) + ". Jede Woche ein anderes Sachgebiet, 15 Fragen – die Summe der vier Wochen entscheidet.";
+      day(cal.seasonEnd - 1) + " – jede Woche ein anderes Sachgebiet, 15 Fragen, die Summe der vier Wochen entscheidet.";
     updateCountdown();
 
     var comp = mine ? mine.comp : {};
