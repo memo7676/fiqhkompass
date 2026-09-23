@@ -105,7 +105,7 @@
       onAnswer: function (q, ok) { if (ok) correct++; return record(q, ok); },
       onFinish: function (p) {
         var after = kind === "topic" ? topicStats(topicId) : stats(allQuestions());
-        lastRound = { kind: kind, topicId: topicId, answered: p.answered, correct: correct, before: before, after: after };
+        lastRound = { kind: kind, topicId: topicId, answered: p.answered, correct: correct, before: before, after: after, wrong: p.wrong || [] };
         pushCloud();
       },
       onLeave: function () {
@@ -197,12 +197,15 @@
       '<div class="lr-actions">' +
       (r.kind === "topic" && r.after.pct < 100 ? '<button type="button" class="btn btn-primary" data-round-again>Nächste Runde</button>' : "") +
       (r.kind === "mistakes" && r.after.wrong + r.after.almost ? '<button type="button" class="btn btn-primary" data-round-mistakes>Weiter Fehler wiederholen</button>' : "") +
+      (r.wrong.length && window.FIQH_MISTAKES ? '<button type="button" class="btn" data-round-wrong>Fehler dieser Runde wiederholen (' + r.wrong.length + ")</button>" : "") +
       (r.topicId ? '<button type="button" class="btn" data-round-read>Im Nachschlagen lesen</button>' : "") +
       '<button type="button" class="linkish" data-round-close>Schließen</button></div>';
     var again = $("[data-round-again]", box);
     if (again) again.addEventListener("click", function () { start("topic", r.topicId); });
     var mis = $("[data-round-mistakes]", box);
     if (mis) mis.addEventListener("click", function () { start("mistakes"); });
+    var wrongBtn = $("[data-round-wrong]", box);
+    if (wrongBtn) wrongBtn.addEventListener("click", function () { window.FIQH_MISTAKES.practice(r.wrong, "Fehler dieser Runde", "lernen"); });
     var read = $("[data-round-read]", box);
     if (read) read.addEventListener("click", function () { APP.showView("nachschlagen"); APP.openTopic(r.topicId); window.scrollTo(0, 0); });
     $("[data-round-close]", box).addEventListener("click", function () { lastRound = null; renderRound(); });
