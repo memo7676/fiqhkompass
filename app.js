@@ -76,7 +76,7 @@
   }
 
   /* ---------- views ---------- */
-  var views = { nachschlagen: $("#view-lookup"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
+  var views = { nachschlagen: $("#view-lookup"), lernen: $("#view-learn"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
   function showView(name, push) {
     if (!views[name]) name = "nachschlagen";
     Object.keys(views).forEach(function (k) { views[k].hidden = k !== name; });
@@ -115,12 +115,14 @@
             '<span class="tc-ar" lang="ar" dir="rtl">' + esc(t.ar) + "</span>" +
             '<strong class="tc-title">' + esc(t.title) + "</strong>" +
             '<span class="tc-intro">' + esc(t.intro) + "</span>" +
-            '<span class="tc-meta">' + t.sections.length + " Abschnitte · " + countFor(t.id) + " Quizfragen</span></button>";
+            '<span class="tc-meta">' + t.sections.length + " Abschnitte · " + countFor(t.id) + " Quizfragen</span>" +
+            '<span class="tc-learn" data-learn-card="' + t.id + '"></span></button>';
         }).join("") + "</div></section>";
     }).join("");
     var art = $("#article");
     art.innerHTML = html;
     wireArticle(art);
+    emit("overview");
   }
 
   function renderTopicNav() {
@@ -156,7 +158,8 @@
       '<h2>' + esc(t.title) + ' <span class="h-ar" lang="ar" dir="rtl">' + esc(t.ar) + "</span></h2>" +
       '<p class="lede">' + esc(t.intro) + "</p>" +
       '<div class="article-actions">' +
-      '<button type="button" class="btn btn-primary" data-quiz-topic="' + t.id + '">Quiz zu diesem Thema · ' + countFor(t.id) + ' Fragen</button>' +
+      '<span class="learn-slot" data-learn-slot="' + t.id + '"></span>' +
+      '<button type="button" class="btn" data-quiz-topic="' + t.id + '">Quiz zu diesem Thema · ' + countFor(t.id) + ' Fragen</button>' +
       "</div>" +
       '<nav class="toc" aria-label="Abschnitte">' + t.sections.map(function (s, i) {
         return '<a href="#" data-jump="sec-' + t.id + "-" + i + '">' + esc(s.h) + "</a>";
@@ -168,6 +171,7 @@
     var art = $("#article");
     art.innerHTML = html;
     wireArticle(art);
+    emit("topic", id);
     if (!keepScroll) {
       var top = art.getBoundingClientRect().top + window.scrollY - 90;
       if (window.scrollY > top) window.scrollTo(0, Math.max(0, top));
@@ -373,7 +377,10 @@
   }
 
   /* preset (optional): { questions, rnd, label, onProgress(p), onFinish(p), onLeave() }
-     is used by the weekly competition in social.js. */
+     is used by the weekly competition in social.js.
+     With learn: true (learn.js) there is no timer, no points and no joker; instead
+     onAnswer(question, ok) returns the line shown under "Richtig!/Falsch" and
+     the round ends straight in onFinish/onLeave without the result screen. */
   function startQuiz(preset) {
     var qs;
     if (preset) {
@@ -385,7 +392,9 @@
     }
     game = { qs: qs, i: 0, score: 0, correct: 0, streak: 0, bestStreak: 0, joker: true, answers: [], key: preset ? null : bestKey(), preset: preset || null };
     showView("quiz");
-    $("#quit-quiz").textContent = preset ? "Beenden (zählt so)" : "Abbrechen";
+    var learn = !!(preset && preset.learn);
+    $("#quiz-play").classList.toggle("is-learn", learn);
+    $("#quit-quiz").textContent = learn ? "Pause" : preset ? "Beenden (zählt so)" : "Abbrechen";
     $("#quiz-setup").hidden = true;
     $("#quiz-result").hidden = true;
     $("#quiz-play").hidden = false;
@@ -421,7 +430,7 @@
     $all(".option", box).forEach(function (b) {
       b.addEventListener("click", function () { answer(+b.getAttribute("data-opt")); });
     });
-    startTimer();
+    if (game.preset && game.preset.learn) stopTimer(); else startTimer();
     var first = $(".option", box);
     if (first && document.activeElement && document.activeElement.classList.contains("option")) first.focus();
   }
@@ -478,6 +487,7 @@
     }
     game.answers.push({ item: item, chosen: idx, ok: ok });
     if (game.preset && game.preset.onProgress) game.preset.onProgress(progress(false));
+    var learnNote = game.preset && game.preset.onAnswer ? game.preset.onAnswer(item.src, ok) : "";
 
     $all(".option").forEach(function (b) {
       var i = +b.getAttribute("data-opt");
@@ -496,10 +506,10 @@
       if (streakBonus) parts.push("+" + streakBonus + " Serie");
     }
     $("#fb-title").textContent = ok ? "Richtig!" : "Leider falsch";
-    $("#fb-points").textContent = ok ? parts.join("  ") : "Die richtige Antwort ist markiert.";
+    $("#fb-points").textContent = learnNote || (ok ? parts.join("  ") : "Die richtige Antwort ist markiert.");
     $("#fb-text").textContent = item.src.e;
     $("#fb-source").textContent = "Quelle: " + (item.src.src === "buch" ? BOOK : TOPIC_BY_ID[item.src.t].lessons) + " – " + TOPIC_BY_ID[item.src.t].title;
-    $("#next-q").textContent = game.i + 1 < game.qs.length ? "Nächste Frage" : "Ergebnis ansehen";
+    $("#next-q").textContent = game.i + 1 < game.qs.length ? "Nächste Frage" : (game.preset && game.preset.learn ? "Runde abschließen" : "Ergebnis ansehen");
     $("#q-score").textContent = game.score;
     $("#q-streak").textContent = game.streak > 1 ? game.streak + "er-Serie" : "";
     $("#q-streak").hidden = game.streak < 2;
@@ -541,6 +551,14 @@
 
   function showResult() {
     stopTimer();
+    if (game.preset && game.preset.learn) {
+      var g = game;
+      game = null;
+      $("#quiz-play").hidden = true;
+      g.preset.onFinish(progressOf(g, true));
+      g.preset.onLeave();
+      return;
+    }
     $("#quiz-play").hidden = true;
     $("#quiz-result").hidden = false;
     var total = game.qs.length;
@@ -603,7 +621,7 @@
   window.FIQH_APP = {
     TOPICS: TOPICS, QUESTIONS: QUESTIONS, TOPIC_BY_ID: TOPIC_BY_ID, GROUPS: GROUPS,
     esc: esc, store: store, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
-    showView: showView, startQuiz: startQuiz, renderSetup: renderSetup,
+    showView: showView, startQuiz: startQuiz, renderSetup: renderSetup, openTopic: openTopic,
     isPlaying: function () { return !!game && !$("#quiz-play").hidden; },
     on: function (name, fn) { (listeners[name] = listeners[name] || []).push(fn); }
   };

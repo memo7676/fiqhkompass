@@ -156,10 +156,18 @@ function reg(db, uid, name, g = 'm', year = 1995) {
   await t('Meldungen kann niemand lesen', aliceV().collection('reports').get(), false);
   await t('Blockierung aufheben', bob().doc('users/bob').update({ blocked: [] }), true);
 
+  console.log('Lernfortschritt');
+  await t('Eigenen Lernstand speichern', aliceV().doc('progress/alice').set({ q: { 'wudhu-abc': [2, 1] }, at: 1 }), true);
+  await t('Unbestätigt: kein Lernstand', ctx('carl').doc('progress/carl').set({ q: {}, at: 1 }), false);
+  await t('Fremden Lernstand lesen', bob().doc('progress/alice').get(), false);
+  await t('Fremden Lernstand schreiben', bob().doc('progress/alice').set({ q: {}, at: 2 }), false);
+  await t('Zusätzliche Felder abgelehnt', aliceV().doc('progress/alice').set({ q: {}, at: 2, total: 99999 }), false);
+  await t('Eigenen Lernstand lesen', aliceV().doc('progress/alice').get(), true);
+
   console.log('Konto löschen');
   await t('Konto löschen (alles weg, Markierung bleibt)', (async () => {
     const db = aliceV(), b = db.batch();
-    b.delete(db.doc('players/alice')); b.delete(db.doc('avatars/alice'));
+    b.delete(db.doc('players/alice')); b.delete(db.doc('avatars/alice')); b.delete(db.doc('progress/alice'));
     b.set(db.doc('users/alice'), { deletedAt: TS() });
     b.delete(db.doc('usernames/aisha'));
     return b.commit();

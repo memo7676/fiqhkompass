@@ -154,6 +154,16 @@ service cloud.firestore {
         && request.resource.data.at == request.time;
     }
 
+    // Learning progress: private, only the player reads and writes it.
+    match /progress/{uid} {
+      allow read, delete: if isOwner(uid);
+      allow create, update: if isOwner(uid) && verified()
+        && request.resource.data.keys().hasOnly(['q', 'at'])
+        && request.resource.data.q is map
+        && request.resource.data.q.size() <= 5000
+        && request.resource.data.at is int;
+    }
+
     // Public profile picture.
     match /avatars/{uid} {
       allow read: if true;

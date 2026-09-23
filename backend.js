@@ -287,6 +287,7 @@
         var b = fs.batch();
         b.delete(fs.doc("players/" + uid));
         b.delete(fs.doc("avatars/" + uid));
+        b.delete(fs.doc("progress/" + uid));
         b.set(fs.doc("users/" + uid), { deletedAt: FieldValue.serverTimestamp() });   // tombstone, see firestore.rules
         if (nickKey) b.delete(fs.doc("usernames/" + nickKey));
         return b.commit();

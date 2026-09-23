@@ -661,6 +661,85 @@ body { -webkit-font-smoothing: antialiased; font-variant-numeric: lining-nums; }
 /* (the font shorthand resets it, hence !important) */
 h1, h2, h3, .brand-name, .tc-title, .ov-head, .q-text, .rank, .mode strong, .winner strong, .kunya-title, .comp-theme strong, .acct-who strong, .auth-head h2 { font-variant-numeric: lining-nums !important; }
 .hero .stats b, .rank-pts, .rank-pos, .big-score, .week b, .countdown b, .fact b, .score-pill b, .fb-points { font-variant-numeric: lining-nums tabular-nums !important; }
+/* ---------- Lernen ---------- */
+.learn { padding-block: 24px 60px; display: grid; gap: 18px; }
+.learn-head { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 28px; align-items: center; padding: 28px; }
+@media (max-width: 640px) { .learn-head { grid-template-columns: 1fr; justify-items: start; padding: 20px; gap: 16px; } }
+.learn-intro h2 { font: 600 2.2rem/1.1 var(--display); margin: 0 0 8px; }
+.learn-intro > p { margin: 0; color: var(--muted); max-width: 64ch; }
+.learn-intro b { color: var(--ink); }
+.learn-ring { position: relative; width: 150px; height: 150px; }
+@media (max-width: 640px) {
+  .learn-ring { width: 96px; height: 96px; }
+  .ring-num b { font-size: 2rem; }
+  .learn-intro h2 { font-size: 1.9rem; }
+}
+.learn-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring-bg { fill: none; stroke: var(--line); stroke-width: 9; }
+.ring-fg { fill: none; stroke: var(--primary); stroke-width: 9; stroke-linecap: round; transition: stroke-dashoffset .6s ease; }
+.ring-num { position: absolute; inset: 0; display: grid; place-content: center; grid-auto-flow: column; align-items: baseline; }
+.ring-num b { font: 600 2.6rem/1 var(--display); font-variant-numeric: lining-nums; }
+.ring-num small { font: 600 1.1rem/1 var(--display); color: var(--muted); margin-left: 2px; }
+.learn-stats { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 14px 0 16px; font-size: .9rem; color: var(--muted); }
+.learn-stats b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.learn-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.learn-alldone { margin: 12px 0 0 !important; color: var(--good) !important; font-weight: 600; }
+
+.learn-round { padding: 20px 24px; display: grid; gap: 6px; border-left: 3px solid var(--primary); }
+.learn-round h3 { margin: 0; font: 600 1.5rem/1.2 var(--display); }
+.learn-round p { margin: 0; color: var(--muted); }
+.learn-round p b { color: var(--ink); }
+.learn-round.is-mastered { border-left-color: var(--gold); background: linear-gradient(135deg, var(--accent-soft), var(--surface) 70%); }
+.lr-badge { display: inline-block; justify-self: start; color: #1b1405 !important; background: var(--gold); font-weight: 800; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; }
+.lr-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+
+.learn-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .8rem; color: var(--muted); }
+.learn-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.lbar { display: flex; height: 7px; border-radius: 99px; overflow: hidden; background: var(--line); }
+.lbar span { display: block; height: 100%; }
+.lb-ok { background: var(--good); }
+.lb-mid { background: var(--gold); }
+.lb-bad { background: var(--bad); }
+.lb-new { background: var(--line); }
+
+.lg { display: grid; gap: 8px; }
+.lg + .lg { margin-top: 10px; }
+.lg-head { display: flex; justify-content: space-between; align-items: baseline; margin: 6px 0 0; font: 600 1.55rem/1.2 var(--display); }
+.lg-head small { font: 700 .8rem/1 var(--body); color: var(--accent); letter-spacing: .06em; }
+.lt-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.lt { display: grid; grid-template-columns: 30px minmax(0, 1fr) 3.4em auto; gap: 14px; align-items: center; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.lt-icon { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-weight: 800; font-size: .85rem; }
+.lt-busy .lt-icon { border-color: var(--primary); border-right-color: var(--line); border-bottom-color: var(--line); transform: rotate(45deg); }
+.lt-done .lt-icon { background: var(--gold); border-color: var(--gold); color: #1b1405; }
+.lt-done { border-color: color-mix(in srgb, var(--gold) 45%, var(--line)); }
+.lt-main { display: grid; gap: 6px; min-width: 0; }
+.lt-title { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.lt-title strong { font-size: 1rem; }
+.lt-ar { font: 400 1.05rem/1 var(--arabic); color: var(--primary); white-space: nowrap; }
+.lt-meta { color: var(--muted); font-size: .8rem; }
+.lt-pct { font: 600 1.35rem/1 var(--display); text-align: right; font-variant-numeric: lining-nums tabular-nums; }
+.lt-done .lt-pct { color: var(--accent); }
+.lt .btn { padding: 8px 14px; }
+@media (max-width: 560px) {
+  .lt { grid-template-columns: 26px minmax(0, 1fr) auto; gap: 10px; padding: 12px; }
+  .lt-pct { display: none; }
+  .lt-ar { display: none; }
+}
+.learn-foot { display: grid; gap: 8px; justify-items: start; color: var(--muted); font-size: .88rem; margin-top: 8px; }
+.learn-foot p { margin: 0; }
+.learn-reset { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+/* in the topic cards and the topic view */
+.tc-learn:empty { display: none; }
+.tc-learn { display: grid; gap: 5px; margin-top: 8px; }
+.tc-learn small { font-size: .75rem; font-weight: 600; color: var(--muted); }
+.tc-learn.is-done small { color: var(--accent); }
+.learn-slot { display: contents; }
+
+/* learning rounds: no timer, points or joker */
+.play.is-learn .timer, .play.is-learn .score-pill, .play.is-learn .streak, .play.is-learn #joker { display: none !important; }
+.play.is-learn .fb-points { white-space: normal; }
+
 /* ---------- App-Hinweis ---------- */
 .install {
   position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 40; max-width: 560px; margin: 0 auto;
@@ -727,14 +806,15 @@ h1, h2, h3, .setup h2, .article h2, .entry h3, .social h2, .social h3, .ov-head,
   .acc-btn { order: 0; max-width: 150px; font-size: .9rem; }
   .masthead .tabs {
     order: 0; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; width: auto;
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
     background: color-mix(in srgb, var(--surface) 92%, transparent);
     backdrop-filter: saturate(1.4) blur(16px); -webkit-backdrop-filter: saturate(1.4) blur(16px);
     border-top: 1px solid var(--line);
     box-shadow: 0 -8px 24px -18px rgba(12, 58, 51, .35);
   }
-  .tab { flex-direction: column; justify-content: center; gap: 3px; padding: 6px 2px 4px; font-size: .7rem; letter-spacing: .02em; border-radius: 12px; flex: none; }
+  .tab { flex-direction: column; justify-content: center; gap: 3px; padding: 6px 0 4px; font-size: .64rem; letter-spacing: 0; border-radius: 12px; flex: none; min-width: 0; }
+  .tab-label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .tab-ic { display: block; width: 23px; height: 23px; }
   .tab[aria-selected="true"] { background: var(--primary-soft); }
   .tab::after { top: 0; bottom: auto; left: 32%; right: 32%; }
@@ -864,6 +944,8 @@ dialog.auth { border-radius: 20px; }
     <nav class="tabs" role="tablist" aria-label="Bereich">
       <button type="button" class="tab" role="tab" data-view="nachschlagen" aria-selected="true">
         <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5zM12 6.5v13"/></svg><span class="tab-label">Nachschlagen</span></button>
+      <button type="button" class="tab" role="tab" data-view="lernen" aria-selected="false">
+        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5L12 5l9 4.5-9 4.5z"/><path d="M7 11.5v4c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4M21 9.5v5"/></svg><span class="tab-label">Lernen</span></button>
       <button type="button" class="tab" role="tab" data-view="quiz" aria-selected="false">
         <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.7 9.6a2.4 2.4 0 1 1 3.3 2.2c-.7.3-1 .8-1 1.5v.4M12 16.6v.2"/></svg><span class="tab-label">Quiz</span></button>
       <button type="button" class="tab" role="tab" data-view="wettbewerb" aria-selected="false">
@@ -895,6 +977,42 @@ dialog.auth { border-radius: 20px; }
         <nav class="topic-nav" id="topic-nav" aria-label="Themengebiete"></nav>
       </aside>
       <article class="article" id="article" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <!-- ================= LERNEN ================= -->
+  <section id="view-learn" aria-label="Lernen" hidden>
+    <div class="wrap learn">
+      <div class="panel learn-round" id="learn-round" hidden aria-live="polite"></div>
+      <div class="panel learn-head">
+        <div class="learn-ring" id="learn-ring"></div>
+        <div class="learn-intro">
+          <p class="eyebrow">Lernmodus</p>
+          <h2>Themen durcharbeiten</h2>
+          <p>Wie in der Fahrschul-App: Du arbeitest jedes Thema Frage für Frage durch. Falsche Antworten kommen wieder, bis sie sitzen. Eine Frage gilt als <b>gelernt</b>, wenn du sie gleich richtig beantwortest – nach einem Fehler erst, wenn sie zweimal hintereinander richtig war. Ziel: <b>100 % in jedem Thema</b>.</p>
+          <div class="learn-stats" id="learn-stats"></div>
+          <div class="learn-actions">
+            <button type="button" class="btn btn-primary btn-lg" id="learn-next">Loslegen</button>
+            <button type="button" class="btn" id="learn-mistakes" hidden>Fehler wiederholen</button>
+          </div>
+          <p class="learn-alldone" id="learn-alldone" hidden>Mā schāʾ Allāh – du hast alle Themen zu 100 % gelernt! Mit „Wiederholen“ hältst du das Wissen frisch.</p>
+        </div>
+      </div>
+
+      <div class="learn-legend" aria-hidden="true">
+        <span><i class="lb-ok"></i>gelernt</span><span><i class="lb-mid"></i>fast (1× richtig nach Fehler)</span><span><i class="lb-bad"></i>falsch</span><span><i class="lb-new"></i>noch offen</span>
+      </div>
+      <div id="learn-groups"></div>
+
+      <div class="learn-foot">
+        <p>Dein Lernstand wird auf diesem Gerät gespeichert – und wenn du angemeldet bist, auch in deinem Konto.</p>
+        <button type="button" class="linkish" id="learn-reset">Lernstand zurücksetzen</button>
+        <div class="learn-reset" id="learn-reset-confirm" hidden>
+          <span>Wirklich alles auf 0 % setzen?</span>
+          <button type="button" class="btn btn-danger" id="learn-reset-yes">Ja, zurücksetzen</button>
+          <button type="button" class="btn" id="learn-reset-no">Abbrechen</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1416,6 +1534,7 @@ dialog.auth { border-radius: 20px; }
 <script src="social.js"></script>
 <script src="chat.js"></script>
 <script src="auth.js"></script>
+<script src="learn.js"></script>
 <script src="install.js"></script>
 </body>
 </html>

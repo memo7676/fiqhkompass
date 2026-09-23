@@ -1,10 +1,10 @@
 /* Service worker: makes Fiqh-Kompass installable and usable offline.
    Own files: network first (always the newest version when online), cache as fallback.
    Fonts and the Firebase SDK: cache first. Firebase data itself is never cached here. */
-var CACHE = "fiqh-kompass-v1";
+var CACHE = "fiqh-kompass-v2";
 var CORE = [
   "./", "index.html", "datenschutz.html", "manifest.webmanifest",
-  "data.js", "app.js", "social.js", "chat.js", "auth.js", "backend.js", "firebase-config.js",
+  "data.js", "app.js", "learn.js", "social.js", "chat.js", "install.js", "auth.js", "backend.js", "firebase-config.js",
   "buch/01-grundlagen.js", "buch/02-iman.js", "buch/03-tahara-wudhu.js", "buch/04-ghusl-tayammum-frauen.js",
   "buch/05-gebet.js", "buch/06-gebet-2.js", "buch/07-fasten.js", "buch/08-zakat.js", "buch/09-hajj-qurban.js", "buch/10-alltag.js",
   "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png", "icons/favicon-32.png"

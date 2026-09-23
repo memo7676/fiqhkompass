@@ -11,6 +11,10 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - Alltag & Gesellschaft (Ehe, Handel/Riba, Speisen, Ǧihād)
 
   Abschnitte aus dem Buch tragen die Seitenzahl als Marke.
+- **Lernen** (wie eine Fahrschul-App): jedes Thema Frage für Frage durcharbeiten, bis es zu 100 % sitzt.
+  - eine Frage ist gelernt, wenn sie gleich richtig beantwortet wird, nach einem Fehler erst nach zwei richtigen Antworten hintereinander
+  - Runden mit 10 Fragen: zuerst die falschen, dann die fast gelernten, dann neue; „Fehler wiederholen“ über alle Themen
+  - Fortschritt je Thema, Sachgebiet und gesamt (auch in der Themenübersicht), gespeichert auf dem Gerät und, angemeldet, in `progress/<id>`
 - **Quiz**:
   - Themenquiz (einzelne Gebiete oder ganze Sachgebiete) oder gemischter Modus
   - 5/10/15 Fragen
