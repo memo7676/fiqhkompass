@@ -64,7 +64,7 @@
   /* Evidence (fiqh-belege.js): Qurʾān verse, hadith, qiyās … with the place in the İlmihal. */
   var DALIL = window.FIQH_DALIL || {};
   var DALIL_KIND = { Q: "Qurʾān", H: "Hadith", A: "Wort eines Gefährten", I: "Idschmāʿ", K: "Qiyās", S: "Istiḥsān",
-    R: "Rechtsgrundsatz", J: "Begründung der Gelehrten", L: "Sprache" };
+    R: "Rechtsgrundsatz", J: "Begründung der Gelehrten", L: "Sprache", D: "Begriff", G: "Geschichte" };
   function dalilHtml(q) {
     var list = DALIL[q.q_de || q.q];
     if (!list || !list.length) return "";

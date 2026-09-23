@@ -721,5 +721,7 @@ window.I18N_EN = {
  "Hadith": "Hadith",
  "Idschmāʿ": "Ijmāʿ",
  "Qiyās": "Qiyās",
- "Istiḥsān": "Istiḥsān"
+ "Istiḥsān": "Istiḥsān",
+ "Begriff": "Term",
+ "Geschichte": "History"
 };
