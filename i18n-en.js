@@ -706,5 +706,8 @@ window.I18N_EN = {
  "Singular f.": "Singular f.",
  "Dual f.": "Dual f.",
  "Plural f.": "Plural f.",
- "„{t}“": "“{t}”"
+ "„{t}“": "“{t}”",
+ "S. {p}": "p. {p}",
+ "Unterricht {n}": "Lesson {n}",
+ "Fiqh-Unterricht {n}": "Fiqh lesson {n}"
 };

@@ -94,7 +94,8 @@
       '<p class="rv-q">' + (l === -1 ? '<span class="rv-label bad">' + T("falsch") + "</span>" : '<span class="rv-label mid">' + T("fast · noch 1× richtig") + "</span>") +
       '<span dir="auto">' + esc(q.q) + "</span></p>" + arLine(q) +
       '<p class="rv-a"><span class="rv-label good">' + T("Richtig") + '</span> <span dir="auto">' + esc(q.a[q.c]) + "</span></p>" +
-      (q.e ? '<p class="rv-e" dir="auto">' + esc(q.e) + "</p>" : "") + "</li>";
+      (q.e ? '<p class="rv-e" dir="auto">' + esc(q.e) + "</p>" : "") +
+      (q.s !== undefined && APP.sourceLine ? '<p class="fb-source">' + esc(APP.sourceLine(q)) + "</p>" : "") + "</li>";
   }
 
   function renderRound() {

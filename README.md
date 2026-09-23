@@ -2,7 +2,7 @@
 
 Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht 1–16“ (Google-Drive-Ordner „Fiqh“), vertieft und erweitert mit Hamdi Döndüren, „Delilleriyle İslâm İlmihali“.
 
-- **Sprachen** (`i18n.js`, Umschalter oben rechts): Deutsch (Original) und Englisch (`i18n-en.js`), Türkisch folgt. Die Wahl steht in `localStorage` („fiqh:lang“); ohne Wahl gilt Englisch für englischsprachige Browser, sonst Deutsch. Texte in den Skripten laufen über `T("deutscher Text", { platzhalter })`, die festen Texte in `index.html` werden beim Laden anhand desselben Wörterbuchs ersetzt; fehlt eine Übersetzung, bleibt der deutsche Text stehen. Kennungen für Lernstand und Wettbewerb hängen nicht von der Sprache ab. Die 698 Fiqh-Quizfragen und die Themennamen stehen englisch in `fiqh-en.js` (Schlüssel ist die deutsche Frage; `app.js` tauscht sie beim Laden aus, `q_de` bleibt für die Lernstand-Kennung). Noch nicht übersetzt: die Fiqh-Nachschlagetexte, die Erklärungen zum Madina-Buch und die Datenschutzseite.
+- **Sprachen** (`i18n.js`, Umschalter oben rechts): Deutsch (Original) und Englisch (`i18n-en.js`), Türkisch folgt. Die Wahl steht in `localStorage` („fiqh:lang“); ohne Wahl gilt Englisch für englischsprachige Browser, sonst Deutsch. Texte in den Skripten laufen über `T("deutscher Text", { platzhalter })`, die festen Texte in `index.html` werden beim Laden anhand desselben Wörterbuchs ersetzt; fehlt eine Übersetzung, bleibt der deutsche Text stehen. Kennungen für Lernstand und Wettbewerb hängen nicht von der Sprache ab. Die 698 Fiqh-Quizfragen und die Themennamen stehen englisch in `fiqh-en.js` (Schlüssel ist die deutsche Frage; `app.js` tauscht sie beim Laden aus, `q_de` bleibt für die Lernstand-Kennung). Die Abschnittsüberschriften stehen dort ebenfalls englisch. Noch nicht übersetzt: die Fiqh-Nachschlagetexte, die Erklärungen zum Madina-Buch und die Datenschutzseite.
 - **Fächer** (Startseite): eine Karte pro Fach mit Fortschritt – Fiqh und Arabisch, bald ʿAqīda, Tazkiya und Propheten. Die Leiste hat nur noch Fächer · Quiz · Wettbewerb · Chat; innerhalb eines Fachs führt eine eigene Leiste zurück zu allen Fächern und zwischen den Teilen (bei Fiqh: Nachschlagen | Lernen). Ein neues Fach bekommt einen Eintrag in `home.js` und eine eigene Ansicht.
 - **Fiqh – Nachschlagen**: zuerst eine Übersicht aller Themen; der Text eines Themas öffnet sich erst mit einem Klick. Dazu Volltextsuche. 25 Themengebiete in sechs Sachgebieten:
   - Glaube & Grundlagen
@@ -66,3 +66,7 @@ Wo die Inhalte stehen:
 - `data.js`: Inhalte aus dem Unterricht
 - `buch/*.js`: Ergänzungen aus dem İlmihal. Sie hängen sich über `FIQH.addSections`, `FIQH.addTopic` und `FIQH.addQuestions` an.
 - `backend.js`: Verbindung zu Firebase, `auth.js`: Anmelden und Registrieren, `social.js`: Wettbewerb und Ranglisten, `chat.js`: Chat
+
+## Quellenangaben im Quiz
+
+Jede Fiqh-Frage verweist mit `s` auf den Abschnitt ihres Themas (Index in `sections`). Abschnitte aus dem Unterricht tragen `u: "Unterricht N"`, Abschnitte aus dem İlmihal `src: "İlmihal S. …"`. Nach der Antwort, in der Auswertung und im Fehlerordner steht deshalb z. B. „Quelle: İlmihal (H. Döndüren), S. 143–150 · Wuḍūʾ – Gebetswaschung › Vertiefung: Mest, Socken und Verband“. Der Knopf in der Auswertung springt direkt zu diesem Abschnitt. Neue Fragen brauchen ebenfalls ein `s`.

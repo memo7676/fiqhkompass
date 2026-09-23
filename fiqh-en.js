@@ -6986,127 +6986,419 @@ window.FIQH_EN = {
 "quellen": [
 "Fiqh & its sources",
 "What fiqh means, who a mujtahid is and where the rulings come from: Qurʾān, sunnah, ijmāʿ and qiyās – plus the eras of Islamic law.",
-"Lessons 1–6"
+"Lessons 1–6",
+[
+"What is fiqh?",
+"Mujtahid, ijtihād and taqlīd",
+"Terms of textual interpretation",
+"Source 1: the Qurʾān",
+"Source 2: the sunnah",
+"Structure and kinds of hadith",
+"Source 3: ijmāʿ",
+"Source 4: qiyās (analogy)",
+"The eras of fiqh",
+"In depth: the four main sources at a glance",
+"In depth: secondary sources (farʿī)"
+]
 ],
 "madhabs": [
 "The schools of law",
 "What a madhhab is, how the early splits in ʿaqīda differ from the fiqh schools, and the biographies of the four imams.",
-"Lesson 7"
+"Lesson 7",
+[
+"Madhhab and ʿaqīda",
+"Imām Abū Ḥanīfa – the Ḥanafī school",
+"Imām Mālik – the Mālikī school",
+"Imām al-Shāfiʿī – the Shāfiʿī school",
+"Imām Aḥmad ibn Ḥanbal – the Ḥanbalī school",
+"In depth: fiqh, sharīʿa, mufti",
+"In depth: the imams and their students",
+"In depth: the two ʿaqīda schools"
+]
 ],
 "ahkam": [
 "The legal categories",
 "Who a mukallaf is and the eight categories of his actions: from farḍ to mufsid – plus ʿazīma and rukhṣa.",
-"Lesson 8"
+"Lesson 8",
+[
+"Mukallaf and afʿāl al-mukallafīn",
+"Farḍ",
+"Wājib (Ḥanafī)",
+"Sunnah and mustaḥabb",
+"Mubāḥ",
+"Ḥarām and makrūh",
+"Mufsid",
+"ʿAzīma and rukhṣa",
+"In depth: classification and terms",
+"Ṣaḥīḥ, fāsid and bāṭil",
+"The four kinds of rukhṣa"
+]
 ],
 "tahara": [
 "Ṭahāra – purity",
 "ʿIbāda and purity, the kinds of water, pure and impure things, ways of cleaning, istiḥāla (transformation), and istinjāʾ and istibrāʾ.",
-"Lesson 9"
+"Lesson 9",
+[
+"ʿIbāda and ṭahāra",
+"Kinds of water",
+"Pure and impure things",
+"Ways of cleaning",
+"Istiḥāla – purification by transformation",
+"Istinjāʾ, istibrāʾ and using the toilet",
+"In depth: levels and conditions of purity",
+"In depth: further ways of cleaning",
+"In depth: the contaminated well",
+"In depth: pure or impure?",
+"In depth: istinjāʾ and toilet adab"
+]
 ],
 "wudhu": [
 "Wuḍūʾ – ablution",
 "Obligatory parts, disliked acts, what breaks wuḍūʾ and what does not, what is forbidden without wuḍūʾ, the maʿdhūr (excused person) and wiping over the khuffs.",
-"Lessons 10–11"
+"Lessons 10–11",
+[
+"Obligatory parts (farāʾiḍ) – al-Māʾida 6",
+"Disliked acts (makrūh)",
+"What invalidates wuḍūʾ",
+"What does not break wuḍūʾ",
+"Forbidden without wuḍūʾ",
+"The maʿdhūr (excused person)",
+"Masḥ over the khuffs",
+"In depth: sunnah acts of wuḍūʾ",
+"In depth: adab, duʿāʾ and kinds of wuḍūʾ",
+"In depth: further individual questions",
+"In depth: khuffs, socks and bandages",
+"In depth: the maʿdhūr"
+]
 ],
 "ghusl": [
 "Ghusl & the mosque",
 "When the full-body wash is obligatory, its obligatory parts, the sunnah way of doing it, what is forbidden in the state of janāba, and the rules of the mosque.",
-"Lesson 12"
+"Lesson 12",
+[
+"When is ghusl obligatory?",
+"Obligatory parts (Ḥanafī)",
+"The sunnah way of doing it",
+"In the state of janāba",
+"Rules of the mosque",
+"In depth: janāba in detail",
+"In depth: details of the wash",
+"In depth: further rules for the junub"
+]
 ],
 "tayammum": [
 "Tayammum",
 "Legal purification with pure earth: origin, reasons, obligations, how it is done and what invalidates it.",
-"Lesson 13"
+"Lesson 13",
+[
+"Basics",
+"Reasons for tayammum",
+"Obligations and material",
+"How it is done",
+"Timing and validity",
+"In depth: tayammum in the İlmihal"
+]
 ],
 "frauen": [
 "Ḥayḍ, nifās & istiḥāḍa",
 "The three states specific to women: menstruation, postnatal bleeding and irregular bleeding – duration and rules.",
-"Lesson 14"
+"Lesson 14",
+[
+"The three states",
+"Duration",
+"Rules during ḥayḍ and nifās",
+"Istiḥāḍa",
+"In depth: ḥayḍ in the İlmihal",
+"In depth: nifās and its rules",
+"In depth: istiḥāḍa"
+]
 ],
 "gebet": [
 "Ṣalāh – basics",
 "Meaning and obligation of prayer, making up prayers, kinds of prayer, conditions, ʿawra, prayer times, disliked times, qibla and niyya.",
-"Lesson 15 (part 1)"
+"Lesson 15 (part 1)",
+[
+"Meaning and obligation",
+"Adāʾ, iʿāda, qaḍāʾ",
+"Kinds of prayer",
+"Conditions (sharṭ) of prayer",
+"The ʿawra",
+"The prayer times",
+"Disliked times",
+"The qibla",
+"The niyya (intention)",
+"In depth: meaning and benefit of prayer",
+"In depth: whoever abandons prayer",
+"In depth: the times in detail",
+"Polar regions, jamʿ and preferred times",
+"In depth: disliked times",
+"Kinds of prayer and their rakʿas",
+"In depth: purity, ʿawra and qibla",
+"In depth: niyya and taḥrīma",
+"Qaḍāʾ – making up missed prayers",
+"Isqāṭ al-ṣalāh – the prayer fidya"
+]
 ],
 "ablauf": [
 "Ṣalāh – sequence & special cases",
 "The rukn and wājib parts of prayer, recitation, rukūʿ and sujūd, salām – plus travel, combining, voluntary prayers and praying in a vehicle.",
-"Lesson 15 (part 2)"
+"Lesson 15 (part 2)",
+[
+"The six rukn",
+"Qiyām and the prayer of the sick",
+"Qirāʾa – the recitation",
+"Rukūʿ and sujūd",
+"Sitting, tashahhud and salām",
+"Wājib parts and taʿdīl al-arkān",
+"Prayer while travelling",
+"Combining two prayers (jamʿ)",
+"Voluntary prayers and prayer in a vehicle",
+"In depth: qiyām and qirāʾa",
+"In depth: rukūʿ, sujūd and the last sitting",
+"The wājib parts in detail",
+"The sunnah parts in detail",
+"What is makrūh in prayer",
+"What invalidates prayer",
+"Mistakes in recitation (zallat al-qāriʾ)",
+"The prayer step by step",
+"The witr prayer",
+"After the prayer: duʿāʾ and dhikr",
+"The prayer of the sick and in fear",
+"In depth: the traveller's prayer"
+]
 ],
 "fasten": [
 "Ṣawm – fasting & Ramaḍān",
 "Definition, kinds and intention of fasting, sunnah acts, what breaks the fast and what does not, exemptions, Laylat al-Qadr, tarāwīḥ and iʿtikāf.",
-"Lesson 16"
+"Lesson 16",
+[
+"Meaning and definition",
+"Kinds of fasting",
+"Obligation, validity and intention",
+"Sunnah acts",
+"What breaks the fast",
+"What does not break the fast",
+"Who does not have to fast",
+"Laylat al-Qadr",
+"Tarāwīḥ and iʿtikāf",
+"In depth: meaning and benefit",
+"In depth: kinds of fasting",
+"The new moon (hilāl)",
+"In depth: conditions and niyya",
+"Mustaḥabb and makrūh for the fasting person",
+"In depth: excuses",
+"Only qaḍāʾ – when it applies",
+"Qaḍāʾ and kaffāra",
+"What does not break the fast",
+"In depth: qaḍāʾ, kaffāra and fidya",
+"In depth: iʿtikāf"
+]
 ],
 "iman": [
 "Īmān – foundations of faith",
 "Religion and the human being, the features of Islam, what īmān is, how it relates to islām and deeds, the 32 obligations and the six pillars of faith: Allah, angels, books, prophets, the hereafter and qadar.",
-"İlmihal pp. 8–113"
+"İlmihal pp. 8–113",
+[
+"Religion, the human being and fiṭra",
+"Features of Islam",
+"What is īmān?",
+"Īmān and deeds",
+"Conditions and levels of faith",
+"The 32 obligations (farāʾiḍ)",
+"Belief in Allah",
+"Angels, jinn and Satan",
+"The books",
+"The prophets",
+"The hereafter",
+"Qadar and qaḍāʾ"
+]
 ],
 "adhan": [
 "Adhān & iqāma",
 "How the call to prayer began, its words, conditions and adab, how to answer the muʾadhdhin, the duʿāʾ al-wasīla, the iqāma and the adhān outside prayer.",
-"İlmihal pp. 193–200"
+"İlmihal pp. 193–200",
+[
+"Origin and rank",
+"The words",
+"Conditions and adab",
+"Answering and the duʿāʾ al-wasīla",
+"The iqāma",
+"Adhān outside prayer"
+]
 ],
 "jamaa": [
 "Congregational prayer & imamate",
 "Rank and ruling of congregational prayer, women and the mosque, valid excuses, repeating the congregation, the conditions for the imam, who is most worthy, who should not lead and how to follow the imam.",
-"İlmihal pp. 267–286"
+"İlmihal pp. 267–286",
+[
+"Rank and ruling",
+"Women and the mosque",
+"Excuses for staying away",
+"Repeating the congregation",
+"Conditions for the imam",
+"Who is most worthy – and who should not lead",
+"How to follow the imam",
+"Mudrik, lāḥiq and masbūq"
+]
 ],
 "jumua": [
 "Friday & ʿīd prayer",
 "History and evidence of the Friday prayer, who owes it, the conditions of validity (town, state permission, number, time, khuṭba), sunnah prayers and ẓuhr-i ākhir, the ʿīd prayer and the takbīrs of tashrīq.",
-"İlmihal pp. 298–317"
+"İlmihal pp. 298–317",
+[
+"History and evidence",
+"Who owes the Friday prayer",
+"Conditions of validity",
+"The khuṭba and its adab",
+"Sunnah prayers and ẓuhr-i ākhir",
+"The ʿīd prayer",
+"The takbīrs of tashrīq"
+]
 ],
 "nawafil": [
 "Sunnah & voluntary prayers",
 "The emphasised sunnah prayers, tarāwīḥ, the non-emphasised sunnah prayers, awwābīn and the stand-alone voluntary prayers: taḥiyyat al-masjid, wuḍūʾ prayer, ḍuḥā, tahajjud, istikhāra, tasbīḥ, ḥāja, travel, rain and eclipse prayers, and the blessed nights.",
-"İlmihal pp. 317–332"
+"İlmihal pp. 317–332",
+[
+"The emphasised sunnah prayers",
+"Tarāwīḥ",
+"Non-emphasised sunnah and awwābīn",
+"Taḥiyyat al-masjid, wuḍūʾ prayer, ḍuḥā",
+"Tahajjud and the night",
+"Istikhāra, tasbīḥ and ḥāja",
+"Travel, rain and eclipse prayers",
+"The blessed nights"
+]
 ],
 "sujud": [
 "Sahw, tilāwa & shukr",
 "The three special prostrations: the prostration of forgetfulness for mistakes in prayer, the prostration of recitation at the 14 verses of prostration, and the prostration of thanks.",
-"İlmihal pp. 339–350"
+"İlmihal pp. 339–350",
+[
+"The prostration of forgetfulness (sahw)",
+"When sahw is needed",
+"The prostration of recitation (tilāwa)",
+"The 14 verses and the prostration of thanks"
+]
 ],
 "janaza": [
 "Death, funeral prayer & martyrs",
 "What is mustaḥabb before and at death, washing the deceased, the shroud, the funeral prayer, carrying and burial, condolence and mourning, and the rank and rulings of martyrs.",
-"İlmihal pp. 371–384"
+"İlmihal pp. 371–384",
+[
+"Before death and when dying",
+"Washing the deceased",
+"The shroud (kafan)",
+"The funeral prayer",
+"Carrying, burial and mourning",
+"The martyr (shahīd)"
+]
 ],
 "kaffara": [
 "Kaffāra, oaths & vows",
 "The five kinds of expiation in Islam, the kinds of oath and their consequences, and the vow (nadhr): its conditions, conditional and unconditional vows and what is not permitted.",
-"İlmihal pp. 428–440"
+"İlmihal pp. 428–440",
+[
+"The five kinds of kaffāra",
+"Kinds of oath",
+"The vow (nadhr)",
+"Kinds of vow"
+]
 ],
 "zakat": [
 "Zakāt & ṣadaqat al-fiṭr",
 "What zakāt is and why it became obligatory, the conditions, niyya and transfer of ownership, the kinds of wealth with their niṣāb limits (gold, money, trade goods, minerals, harvest, livestock), the eight groups of recipients and the fiṭr charity.",
-"İlmihal pp. 446–515"
+"İlmihal pp. 446–515",
+[
+"Definition and wisdom",
+"Evidence, obligation and punishment",
+"Conditions of the obligation",
+"Niyya, transfer of ownership and timing",
+"Gold, silver and money",
+"Minerals, treasure and trade goods",
+"Companies, shares and muḍāraba",
+"Harvest and land (ʿushr)",
+"Livestock",
+"How to pay zakāt",
+"The eight groups of recipients",
+"Who may receive zakāt",
+"Ṣadaqat al-fiṭr",
+"Levies on non-Muslims"
+]
 ],
 "hajj": [
 "Ḥajj & ʿumra",
 "Nature and rank of the ḥajj, the sacred precincts, obligation and conditions, obstacles, the mīqāt points and iḥrām, the three kinds of ḥajj, rukn, wājib and sunnah, proxy, prohibitions in iḥrām and their expiations, the sequence and the ʿumra.",
-"İlmihal pp. 516–551"
+"İlmihal pp. 516–551",
+[
+"Nature, Ḥaram and rank",
+"Obligation, timing and conditions",
+"Conditions of performance and obstacles",
+"Mīqāt and iḥrām",
+"Ifrād, tamattuʿ and qirān",
+"The rukn of the ḥajj",
+"The wājib parts",
+"The sunnah parts",
+"Proxy (niyāba)",
+"What is forbidden in iḥrām",
+"Expiations for prohibitions",
+"The sequence in practice",
+"The ʿumra",
+"The hady sacrifice"
+]
 ],
 "qurban": [
 "Sacrifice, ʿaqīqa & the newborn",
 "Nature, evidence and ruling of the sacrifice (uḍḥiya), who owes it, time and manner of slaughter, suitable and defective animals, meat and hide, the ʿaqīqa and what is sunnah at a child's birth.",
-"İlmihal pp. 551–566"
+"İlmihal pp. 551–566",
+[
+"Nature and evidence",
+"Ruling and who must sacrifice",
+"Time and manner of slaughter",
+"Suitable animals and defects",
+"Meat and hide",
+"The ʿaqīqa",
+"The newborn"
+]
 ],
 "familie": [
 "Marriage & family",
 "Practical questions from family life: marriage contract and witnesses, forbidden relatives, dowry and bride price, gifts, divorce, mutʿa, civil marriage, ḥulla, triple divorce, adoption, artificial insemination and clothing.",
-"İlmihal pp. 566–578"
+"İlmihal pp. 566–578",
+[
+"The framework of Islamic rulings",
+"Marriage contract, witnesses and prohibitions",
+"Dowry, bride price and gifts",
+"Getting to know each other and the woman's right to divorce",
+"Mutʿa, civil marriage and leaving the faith",
+"Ḥulla and triple divorce",
+"Adoption, artificial insemination and clothing"
+]
 ],
 "wirtschaft": [
 "Trade, ribā & money",
 "The rank of trade, the kinds of ribā, requirements for goods, hoarding and price fixing, sale before taking possession, middlemen, profit and excessive prices, instalment surcharges, bill discounting, salam, guarantees, credit and partnership, shares, key money, foreign currency and paper money.",
-"İlmihal pp. 579–595"
+"İlmihal pp. 579–595",
+[
+"Trade as ʿibāda",
+"Ribā and its kinds",
+"Goods, hoarding and price fixing",
+"Sale before possession, middlemen and profit",
+"Instalment sales, bills and salam",
+"Guarantees, credit, shares and key money",
+"Foreign currency and paper money"
+]
 ],
 "alltag": [
 "Food, tobacco & jihād",
 "Miscellaneous questions: which land and sea animals are permitted, trade in alcohol, smoking, organ transplants, what taṣawwuf is, and what jihād means and its kinds.",
-"İlmihal pp. 596–603"
+"İlmihal pp. 596–603",
+[
+"Permitted and forbidden land animals",
+"Sea animals, alcohol and tobacco",
+"Organ transplants and taṣawwuf",
+"Jihād"
+]
 ]
 }
 };
