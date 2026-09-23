@@ -1,10 +1,10 @@
 /* Service worker: makes Ṭālibu l-ʿIlm installable and usable offline.
    Own files: network first (always the newest version when online), cache as fallback.
    Fonts and the Firebase SDK: cache first. Firebase data itself is never cached here. */
-var CACHE = "fiqh-kompass-v8";
+var CACHE = "fiqh-kompass-v9";
 var CORE = [
   "./", "index.html", "datenschutz.html", "manifest.webmanifest", "i18n-en.js", "i18n.js",
-  "data.js", "app.js", "learn.js", "irabgen.js", "sarf.js", "arabic.js", "mistakes.js", "home.js", "arabisch/madina1-a.js", "arabisch/madina1-b.js", "arabisch/madina1-c.js", "social.js", "chat.js", "install.js", "auth.js", "backend.js", "firebase-config.js",
+  "data.js", "fiqh-en.js", "app.js", "learn.js", "irabgen.js", "sarf.js", "arabic.js", "mistakes.js", "home.js", "arabisch/madina1-a.js", "arabisch/madina1-b.js", "arabisch/madina1-c.js", "social.js", "chat.js", "install.js", "auth.js", "backend.js", "firebase-config.js",
   "buch/01-grundlagen.js", "buch/02-iman.js", "buch/03-tahara-wudhu.js", "buch/04-ghusl-tayammum-frauen.js",
   "buch/05-gebet.js", "buch/06-gebet-2.js", "buch/07-fasten.js", "buch/08-zakat.js", "buch/09-hajj-qurban.js", "buch/10-alltag.js",
   "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png", "icons/favicon-32.png"

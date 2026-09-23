@@ -7,6 +7,21 @@
   var TOPIC_BY_ID = {};
   TOPICS.forEach(function (t) { TOPIC_BY_ID[t.id] = t; });
 
+  /* English: swap in translated questions and topic names. q_de keeps the
+     German text so progress ids (learn.js) stay the same in every language. */
+  var EN = window.I18N && I18N.lang === "en" && window.FIQH_EN;
+  if (EN) {
+    QUESTIONS.forEach(function (q) {
+      var x = EN.q[q.q];
+      if (!x) return;
+      q.q_de = q.q; q.q = x[0]; q.a = x[1].slice(); q.e = x[2];
+    });
+    TOPICS.forEach(function (t) {
+      var x = EN.topics[t.id];
+      if (x) { t.title = x[0]; t.intro = x[1]; t.lessons = x[2]; }
+    });
+  }
+
   /* Topics are grouped into Sachgebiete; unknown ids fall into "Weitere". */
   var GROUPS = [
     { name: "Glaube & Grundlagen", ids: ["quellen", "madhabs", "ahkam", "iman"] },
@@ -341,7 +356,7 @@
     $("#setup-summary").textContent = ok
       ? T("{n} Fragen aus {from} · {p} im Pool", { n: n, p: pool.length,
           from: setup.mode === "mixed" ? T("allen {n} Themengebieten", { n: TOPICS.length }) :
-            setup.topics.length === 1 ? "„" + TOPIC_BY_ID[setup.topics[0]].title + "“" : T("{n} Themengebieten", { n: setup.topics.length }) })
+            setup.topics.length === 1 ? T("„{t}“", { t: TOPIC_BY_ID[setup.topics[0]].title }) : T("{n} Themengebieten", { n: setup.topics.length }) })
       : T("Wähle mindestens ein Themengebiet.");
 
     var best = store(bestKey());
