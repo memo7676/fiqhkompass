@@ -77,8 +77,8 @@
 
   /* ---------- views ---------- */
   /* "start" is the page with all subjects (Fächer); a subject's views belong to that tab */
-  var views = { start: $("#view-home"), nachschlagen: $("#view-lookup"), lernen: $("#view-learn"), arabisch: $("#view-arabic"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
-  var TAB_OF = { nachschlagen: "start", lernen: "start", arabisch: "start" };
+  var views = { start: $("#view-home"), nachschlagen: $("#view-lookup"), lernen: $("#view-learn"), arabisch: $("#view-arabic"), fehler: $("#view-mistakes"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
+  var TAB_OF = { nachschlagen: "start", lernen: "start", arabisch: "start", fehler: "start" };
   function showView(name, push) {
     if (!views[name]) name = "start";
     Object.keys(views).forEach(function (k) { views[k].hidden = k !== name; });
@@ -521,6 +521,7 @@
       game.streak = 0;
     }
     game.answers.push({ item: item, chosen: idx, ok: ok });
+    if (!(game.preset && game.preset.learn)) noteForFolder(item.src, ok);
     if (game.preset && game.preset.onProgress) game.preset.onProgress(progress(false));
     var learnNote = game.preset && game.preset.onAnswer ? game.preset.onAnswer(item.src, ok) : "";
 
@@ -554,6 +555,16 @@
     fb.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 
+  /* Quiz and Wettbewerb feed the Fehlerordner (mistakes.js): a wrong answer puts the question in,
+     a right one only counts for questions that are already in it, so the quiz never marks
+     new questions as "gelernt". */
+  function noteForFolder(q, ok) {
+    var L = window.FIQH_LEARN;
+    if (!L || !q._lid) return;
+    var l = L.levelOf(q._lid);
+    if (!ok || l === -1 || l === 1) L.recordId(q._lid, ok);
+  }
+
   $("#next-q").addEventListener("click", function () {
     if (!game) return;
     if (game.i + 1 < game.qs.length) { game.i += 1; renderQuestion(); }
@@ -568,7 +579,10 @@
   });
 
   function progressOf(g, done) {
-    return { score: g.score, correct: g.correct, answered: g.answers.length, total: g.qs.length, done: !!done };
+    return {
+      score: g.score, correct: g.correct, answered: g.answers.length, total: g.qs.length, done: !!done,
+      wrong: g.answers.filter(function (a) { return !a.ok; }).map(function (a) { return a.item.src; })
+    };
   }
   function progress(done) { return progressOf(game, done); }
 
@@ -620,6 +634,10 @@
     $all(".star").forEach(function (s, i) { s.classList.toggle("on", i < stars); });
 
     var wrong = game.answers.filter(function (a) { return !a.ok; });
+    resultWrong = { qs: wrong.map(function (a) { return a.item.src; }), back: game.preset ? "wettbewerb" : "quiz" };
+    var rm = $("#r-mistakes");
+    rm.hidden = !(window.FIQH_MISTAKES && wrong.length);
+    rm.textContent = "Fehler wiederholen (" + wrong.length + ")";
     $("#review-title").textContent = wrong.length ? "Zum Nachlesen (" + wrong.length + ")" : "Alle Antworten richtig";
     $("#review").innerHTML = wrong.map(function (a) {
       var right = a.item.options.filter(function (o) { return o.correct; })[0].text;
@@ -641,6 +659,12 @@
     window.scrollTo(0, 0);
   }
 
+  var resultWrong = null;
+  $("#r-mistakes").addEventListener("click", function () {
+    if (!resultWrong || !window.FIQH_MISTAKES) return;
+    game = null;
+    window.FIQH_MISTAKES.practice(resultWrong.qs, "Fehler aus dem Quiz", resultWrong.back);
+  });
   $("#again").addEventListener("click", function () { startQuiz(); });
   $("#to-setup").addEventListener("click", function () {
     var g = game;

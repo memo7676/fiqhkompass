@@ -138,7 +138,7 @@
       label: r.review ? label + " (Wiederholung)" : label,
       onAnswer: function (q, ok) { if (ok) correct++; return L.recordId(q._lid, ok); },
       onFinish: function (p) {
-        lastRound = { label: label, info: info, answered: p.answered, correct: correct, before: before, after: stats(list), list: list, size: size };
+        lastRound = { label: label, info: info, answered: p.answered, correct: correct, before: before, after: stats(list), list: list, size: size, wrong: p.wrong || [] };
         L.sync();
       },
       onLeave: function () { APP.showView("arabisch"); render(); window.scrollTo(0, 0); }
@@ -202,9 +202,12 @@
       "<p>" + esc(r.label) + ": <b>" + r.before.pct + " % → " + r.after.pct + " %</b>" +
       (gain > 0 ? " · " + gain + (gain === 1 ? " Frage" : " Fragen") + " neu gelernt" : "") + "</p>" +
       '<div class="lr-actions">' + (r.after.pct < 100 ? '<button type="button" class="btn btn-primary" data-ar-again>Nächste Runde</button>' : "") +
+      (r.wrong.length && window.FIQH_MISTAKES ? '<button type="button" class="btn" data-ar-wrong>Fehler dieser Runde wiederholen (' + r.wrong.length + ")</button>" : "") +
       '<button type="button" class="linkish" data-ar-close>Schließen</button></div>';
     var again = $("[data-ar-again]", box);
     if (again) again.addEventListener("click", function () { start(r.list, r.label, r.info, r.size); });
+    var wrongBtn = $("[data-ar-wrong]", box);
+    if (wrongBtn) wrongBtn.addEventListener("click", function () { window.FIQH_MISTAKES.practice(r.wrong, "Fehler dieser Runde", "arabisch"); });
     $("[data-ar-close]", box).addEventListener("click", function () { lastRound = null; renderRound(); });
   }
 
@@ -330,7 +333,7 @@
         onAnswer: function (q, ok) { if (ok) correct++; return L.recordId(q._lid, ok); },
         onFinish: function (p) {
           var s = stats(ALL_IRAB);
-          lastRound = { label: "Iʿrāb-Prüfung", info: {}, answered: p.answered, correct: correct, before: s, after: s, list: ALL_IRAB };
+          lastRound = { label: "Iʿrāb-Prüfung", info: {}, answered: p.answered, correct: correct, before: s, after: s, list: ALL_IRAB, wrong: p.wrong || [] };
           L.sync();
         },
         onLeave: function () { APP.showView("arabisch"); render(); window.scrollTo(0, 0); }

@@ -1051,6 +1051,39 @@ dialog.auth { border-radius: 20px; }
 .subject.is-soon::before { background: var(--line); }
 .subject.is-soon h2 { color: var(--muted); }
 .subject.is-soon .subject-ar { color: var(--muted); opacity: .8; }
+/* ---------- Fehlerordner ---------- */
+.btn-ghost { background: transparent; }
+.setup-folder { margin: 6px 0 0; color: var(--muted); font-size: .9rem; }
+.rv-label.mid { background: var(--accent-soft); color: var(--accent); }
+.mf-head { padding: 26px 28px; }
+.mf-head h2 { font: 600 2.2rem/1.1 var(--display); margin: 0 0 8px; }
+.mf-head > p:not(.eyebrow) { margin: 0; color: var(--muted); max-width: 64ch; }
+.mf-head b { color: var(--ink); }
+.mf-filter { margin-left: 0; justify-self: start; }
+.mf-filter small { font-weight: 700; opacity: .7; margin-left: 2px; }
+.mf-filter button[aria-current="true"] { background: var(--surface); color: var(--primary); box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 0 0 1px var(--line); }
+.mf-list { display: grid; gap: 8px; }
+.mf { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.mf summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 16px; }
+.mf summary::-webkit-details-marker { display: none; }
+.mf-icon { width: 22px; height: 16px; border-radius: 3px 3px 4px 4px; background: var(--accent); position: relative; opacity: .85; }
+.mf-icon::before { content: ""; position: absolute; left: 0; top: -4px; width: 10px; height: 5px; border-radius: 3px 3px 0 0; background: var(--accent); }
+.mf[open] .mf-icon { opacity: 1; }
+.mf-title { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; min-width: 0; }
+.mf-count { min-width: 28px; text-align: center; font: 700 .85rem/1 var(--body); color: var(--bad); background: var(--bad-soft); border-radius: 999px; padding: 5px 9px; }
+.mf-inner { padding: 0 16px 8px; }
+.mf-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding-bottom: 6px; }
+.mf .rv-q { display: flex; gap: 2px; flex-wrap: wrap; align-items: baseline; }
+.mf-ar { margin: 0; font: 400 1.4rem/1.6 var(--arabic); }
+.mf-ar mark { background: var(--accent-soft); color: inherit; border-radius: 4px; padding: 0 3px; }
+.mf-empty { padding: 20px 24px; color: var(--muted); }
+.mf-empty p { margin: 0; }
+.mf-empty p + p { margin-top: 6px; }
+.mf-empty b { color: var(--ink); }
+.home-folder { grid-column: 1 / -1; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 16px 20px; }
+.home-folder .mf-icon { flex: none; }
+.home-folder p { margin: 0; flex: 1; min-width: 12em; color: var(--muted); }
+.home-folder b { color: var(--ink); }
 .soon-badge { justify-self: start; font: 700 .7rem/1 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 9px; }
 </style>
 </head>
@@ -1142,6 +1175,7 @@ dialog.auth { border-radius: 20px; }
           <div class="learn-actions">
             <button type="button" class="btn btn-primary btn-lg" id="learn-next">Loslegen</button>
             <button type="button" class="btn" id="learn-mistakes" hidden>Fehler wiederholen</button>
+            <button type="button" class="btn btn-ghost" data-open-mistakes>📁 Fehlerordner<span data-mistakes-count></span></button>
           </div>
           <p class="learn-alldone" id="learn-alldone" hidden>Mā schāʾ Allāh – du hast alle Themen zu 100 % gelernt! Mit „Wiederholen“ hältst du das Wissen frisch.</p>
         </div>
@@ -1161,6 +1195,28 @@ dialog.auth { border-radius: 20px; }
           <button type="button" class="btn" id="learn-reset-no">Abbrechen</button>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ================= FEHLERORDNER ================= -->
+  <section id="view-mistakes" aria-label="Fehlerordner" hidden>
+    <nav class="subject-bar" aria-label="Fehlerordner"><div class="wrap">
+      <button type="button" class="sb-back" data-go="start"><span aria-hidden="true">←</span> Fächer</button>
+      <span class="sb-title">Fehlerordner <span lang="ar" dir="rtl">الأخطاء</span></span>
+    </div></nav>
+    <div class="wrap learn">
+      <div class="panel learn-round" id="mf-round" hidden aria-live="polite"></div>
+      <div class="panel mf-head">
+        <p class="eyebrow">Fehlerordner</p>
+        <h2>Deine Fehler wiederholen</h2>
+        <p>Jede falsch beantwortete Frage – im Quiz, im Wettbewerb, beim Lernen und in Arabisch – kommt hierher, sortiert nach Fach und Thema. Sie bleibt im Ordner, bis du sie <b>zweimal hintereinander richtig</b> beantwortest.</p>
+        <div class="learn-stats" id="mf-stats"></div>
+        <div class="learn-actions">
+          <button type="button" class="btn btn-primary btn-lg" id="mf-all" hidden>Alle wiederholen</button>
+        </div>
+      </div>
+      <div class="sb-tabs mf-filter" id="mf-filter" hidden></div>
+      <div id="mf-body"></div>
     </div>
   </section>
 
@@ -1191,6 +1247,7 @@ dialog.auth { border-radius: 20px; }
           <div class="learn-actions">
             <button type="button" class="btn btn-primary btn-lg" id="ar-next">Loslegen</button>
             <button type="button" class="btn" id="ar-mistakes" hidden>Fehler wiederholen</button>
+            <button type="button" class="btn btn-ghost" data-open-mistakes>📁 Fehlerordner<span data-mistakes-count></span></button>
           </div>
         </div>
       </div>
@@ -1220,6 +1277,7 @@ dialog.auth { border-radius: 20px; }
         <div>
           <p class="eyebrow">Fiqh-Quiz</p>
           <h2>Teste dein Wissen</h2>
+          <p class="setup-folder">Falsch beantwortete Fragen landen im <button type="button" class="linkish" data-open-mistakes>Fehlerordner<span data-mistakes-count></span></button>.</p>
         </div>
 
         <div>
@@ -1320,7 +1378,8 @@ dialog.auth { border-radius: 20px; }
             <div class="fact"><b id="r-streak">0</b><span>längste Serie</span></div>
           </div>
           <div class="result-actions">
-            <button type="button" class="btn btn-primary" id="again">Nochmal mit neuen Fragen</button>
+            <button type="button" class="btn btn-primary" id="r-mistakes" hidden>Fehler wiederholen</button>
+            <button type="button" class="btn" id="again">Nochmal mit neuen Fragen</button>
             <button type="button" class="btn" id="to-setup">Anderes Thema wählen</button>
           </div>
         </div>
@@ -1738,6 +1797,7 @@ dialog.auth { border-radius: 20px; }
 <script src="arabisch/madina1-b.js"></script>
 <script src="arabisch/madina1-c.js"></script>
 <script src="arabic.js"></script>
+<script src="mistakes.js"></script>
 <script src="home.js"></script>
 <script src="install.js"></script>
 </body>

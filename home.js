@@ -36,11 +36,24 @@
     return '<span class="lbar" role="img" aria-label="' + s.learned + " von " + s.total + ' gelernt">' + seg(s.learned, "ok") + seg(s.almost, "mid") + seg(s.wrong, "bad") + "</span>";
   }
 
+  /* the Fehlerordner sits right after the subjects you can already learn */
+  function folderHtml() {
+    var MF = window.FIQH_MISTAKES;
+    if (!MF) return "";
+    var n = MF.count();
+    return '<div class="panel home-folder"><span class="mf-icon" aria-hidden="true"></span><p><b>Fehlerordner</b> · ' +
+      (n ? n + (n === 1 ? " Frage wartet" : " Fragen warten") + " aufs Wiederholen" : "keine offenen Fehler") + "</p>" +
+      '<button type="button" class="btn' + (n ? " btn-primary" : "") + '" data-open="fehler">' + (n ? "Fehler wiederholen" : "Öffnen") + "</button></div>";
+  }
+
   function render() {
+    var folderDone = false;
     box.innerHTML = SUBJECTS.map(function (sub) {
       var head = '<div class="subject-head"><h2>' + esc(sub.name) + '</h2><span class="subject-ar" lang="ar" dir="rtl">' + esc(sub.ar) + "</span></div>";
       if (sub.soon) {
-        return '<article class="subject is-soon">' + head + "<p>" + esc(sub.text) + '</p><span class="soon-badge">Kommt bald</span></article>';
+        var pre = folderDone ? "" : folderHtml();
+        folderDone = true;
+        return pre + '<article class="subject is-soon">' + head + "<p>" + esc(sub.text) + '</p><span class="soon-badge">Kommt bald</span></article>';
       }
       var s = sub.stats && sub.stats();
       var started = s && s.learned + s.almost + s.wrong > 0;
@@ -52,7 +65,7 @@
           var label = a.label + (a.progress && started ? " · " + s.pct + " %" : "");
           return '<button type="button" class="btn' + (a.primary ? " btn-primary" : "") + '" data-open="' + a.view + '">' + esc(label) + "</button>";
         }).join("") + "</div></article>";
-    }).join("");
+    }).join("") + (folderDone ? "" : folderHtml());
     Array.prototype.forEach.call(box.querySelectorAll("[data-open]"), function (b) {
       b.addEventListener("click", function () { APP.showView(b.getAttribute("data-open")); window.scrollTo(0, 0); });
     });
