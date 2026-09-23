@@ -80,7 +80,7 @@ window.I18N_EN = {
  "Themengebiete": "Topics",
  "Alle wählen": "Select all",
  "Keine": "None",
- "Im gemischten Modus kommen die Fragen aus allen Themengebieten, von den Quellen des Fiqh bis zu Handel und Ǧihād – gleichmäßig über die Themen verteilt.": "In mixed mode the questions come from all topics, from the sources of Fiqh to trade and jihād – evenly spread across the topics.",
+ "Im gemischten Modus kommen die Fragen aus allen Themengebieten, von den Quellen des Fiqh bis zu Handel und Ǧihād – gleichmäßig über die Themen verteilt. Fragen, die du hier in den letzten zwei Stunden schon hattest, pausieren so lange.": "In mixed mode the questions come from all topics, from the sources of Fiqh to trade and jihād – evenly spread across the topics. Questions you have had here in the last two hours are paused until then.",
  "Anzahl Fragen": "Number of questions",
  "100 Punkte pro richtiger Antwort": "100 points per correct answer",
  "bis zu +50 Zeitbonus (30 Sekunden)": "up to +50 time bonus (30 seconds)",
@@ -709,5 +709,6 @@ window.I18N_EN = {
  "„{t}“": "“{t}”",
  "S. {p}": "p. {p}",
  "Unterricht {n}": "Lesson {n}",
- "Fiqh-Unterricht {n}": "Fiqh lesson {n}"
+ "Fiqh-Unterricht {n}": "Fiqh lesson {n}",
+ "{k} kürzlich gestellt (2 Std. Pause)": "{k} asked recently (2 h pause)"
 };
