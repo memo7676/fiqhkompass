@@ -56,9 +56,11 @@
   }
   /* ---------- the two leagues ----------
      Fiqh-Liga: 15 questions from the Sachgebiet of the week (key "s1w2").
-     Arabisch-Liga (key "s1w2a"): 10 Vokabeln and 10 Grammatik from the lessons of the week,
-     10 new Iʿrāb sentences (irabgen.js, new every week) and the Sarf of three verbs, past and
-     present (sarf.js). Its points count only in the Arabic rankings, not in the quiz total. */
+     Arabisch-Liga (key "s1w2a"): 10 Vokabeln from the lessons of the week (5 Arabic → German,
+     5 German → Arabic), 10 Grammatik from the whole book (one from each tenth, easy to hard),
+     10 new Iʿrāb sentences (irabgen.js, patterns in turn) and the Sarf of three verbs from three
+     different abwāb, past and present (sarf.js). Every week is thus about equally hard.
+     Its points count only in the Arabic rankings, not in the quiz total. */
   var AR_Q = 10, AR_VERBS = 3;
   var AR_CELLS = AR_VERBS * 2 * 14, AR_TOTAL = 3 * AR_Q + AR_CELLS;
   var SARF_CELL = 10, SARF_PERFECT = 50;
@@ -66,19 +68,72 @@
   function arTheme(weekIndex) {
     var A = window.FIQH_ARABIC, ls = A ? A.lessons : [], per = Math.ceil(ls.length / WEEKS_PER_SEASON) || 1;
     var b = weekIndex % WEEKS_PER_SEASON, part = ls.slice(b * per, b * per + per);
-    return { name: part.length ? T("Lektionen {a}–{b}", { a: part[0].n, b: part[part.length - 1].n }) : T("Arabisch"), lessons: part, topics: [] };
+    var label = weekIndex >= AR_BALANCED_FROM ? "Vokabeln aus Lektion {a}–{b}" : "Lektionen {a}–{b}";
+    return { name: part.length ? T(label, { a: part[0].n, b: part[part.length - 1].n }) : T("Arabisch"), lessons: part, topics: [] };
   }
   var LEAGUES = {
     fiqh: { sfx: "", total: COMP_QUESTIONS, name: T("Fiqh-Liga"), theme: themeFor, what: T("jede Woche ein anderes Sachgebiet, 15 Fragen") },
     arabisch: { sfx: "a", total: AR_TOTAL, name: T("Arabisch-Liga"), theme: arTheme,
-      what: T("jede Woche andere Lektionen: 10 Vokabeln, 10 Grammatikfragen, 10 neue Iʿrāb-Sätze und der Sarf von 3 Verben") }
+      what: T("10 Vokabeln aus den Lektionen der Woche, 10 Grammatikfragen aus dem ganzen Buch, 10 neue Iʿrāb-Sätze und der Sarf von 3 Verben – jede Woche gleich schwer") }
   };
   function LG() { return LEAGUES[league]; }
   function lkey(cal) { return cal.key + LG().sfx; }
+  /* Week 1 of season 1 was already played with the first rules; it keeps them. */
+  var AR_BALANCED_FROM = 1;
+  function arVocab(pool, rnd) {
+    var keys = [], seen = {};
+    APP.shuffle(pool.filter(function (q) { return /^ar-v-/.test(q._lid); }), rnd).forEach(function (q) {
+      var k = q._lid.slice(5); if (!seen[k]) { seen[k] = 1; keys.push(k); }
+    });
+    var byId = {};
+    pool.forEach(function (q) { byId[q._lid] = q; });
+    var half = AR_Q / 2, out = [];
+    keys.forEach(function (k, i) {
+      var q = i < half ? byId["ar-v-" + k] : i < AR_Q ? byId["ar-d-" + k] : null;
+      if (q) out.push(q);
+    });
+    return out;
+  }
+  /* Grammar in book order, cut into AR_Q bands (easy → hard); each week takes one question
+     per band, walking through a fixed shuffle of the band, so weeks repeat only after a band is used up. */
+  function arGrammar(A, weekIndex) {
+    var order = {};
+    A.lessons.forEach(function (l, i) { order[l.id] = i; });
+    var all = A.questions.filter(function (q) { return /^ar-g-/.test(q._lid); })
+      .map(function (q, i) { return { q: q, i: i }; })
+      .sort(function (a, b) { return order[a.q.lesson] - order[b.q.lesson] || a.i - b.i; })
+      .map(function (x) { return x.q; });
+    var out = [];
+    for (var b = 0; b < AR_Q; b++) {
+      var band = all.slice(Math.floor(b * all.length / AR_Q), Math.floor((b + 1) * all.length / AR_Q));
+      if (!band.length) continue;
+      band = APP.shuffle(band, seeded("arabisch-liga:gram:" + b));
+      out.push(band[weekIndex % band.length]);
+    }
+    return out;
+  }
+  function arVerbs(S, rnd) {
+    var out = [], babs = {};
+    APP.shuffle(S.VERBS, rnd).forEach(function (v) {
+      var b = v.bab.p + "/" + v.bab.m;
+      if (out.length < AR_VERBS && !babs[b]) { babs[b] = 1; out.push(v); }
+    });
+    return out;
+  }
   function arWeek(cal) {
     var A = window.FIQH_ARABIC, S = window.FIQH_SARF, G = window.FIQH_IRABGEN;
     var theme = arTheme(cal.index), ids = theme.lessons.map(function (l) { return l.id; });
     var rnd = seeded("arabisch-liga:" + cal.key);
+    if (cal.index >= AR_BALANCED_FROM) {
+      var lessonPool = A.questions.filter(function (q) { return ids.indexOf(q.lesson) !== -1; });
+      var list = arVocab(lessonPool, rnd).concat(arGrammar(A, cal.index));
+      if (G) list = list.concat(G.make("liga-" + cal.key, AR_Q, null, true).map(function (x) {
+        return { t: "arabisch", tt: T("Arabisch-Liga") + " · Iʿrāb", srcText: T("Neuer Satz dieser Woche"), c: 0, q: x.q, ar: x.ar, arMark: x.arMark, a: x.a, e: x.e };
+      }));
+      var tabs = [];
+      if (S) arVerbs(S, rnd).forEach(function (v) { tabs.push(S.table(v.id, "madi"), S.table(v.id, "mudari")); });
+      return { theme: theme, questions: list, tables: tabs };
+    }
     var pool = A.questions.filter(function (q) { return ids.indexOf(q.lesson) !== -1; });
     function take(re) { return APP.shuffle(pool.filter(function (q) { return re.test(q._lid); }), rnd).slice(0, AR_Q); }
     var qs = take(/^ar-[vd]-/).concat(take(/^ar-g-/));
@@ -829,6 +884,7 @@
 
   window.FIQH_SOCIAL = {
     mine: function () { return mine; },
+    arWeek: function (i) { return arWeek(calendar(ANCHOR + i * WEEK + 1)); },
     me: function () { return me; },
     canPlay: canPlay,
     canChat: canChat,
