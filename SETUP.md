@@ -56,7 +56,17 @@ Für eine öffentliche Seite in Deutschland sind Impressum und Datenschutzhinwei
   **Firestore → `players` / `avatars` / `usernames`**. Konten sperren geht unter **Authentication → Nutzer**.
   Gemeldete Chats stehen unter **Firestore → `reports`**, mit Begründung, den letzten Nachrichten und der Chat-ID.
   Schau dort regelmäßig nach.
-- **Neue Regeln:** Wenn sich `firestore.rules` ändert (zuletzt für arabische Namen), den Inhalt erneut unter **Firestore → Regeln** einfügen und veröffentlichen.
+- **Neue Regeln automatisch veröffentlichen:** Die GitHub Action `.github/workflows/firestore-rules.yml` testet
+  `firestore.rules` bei jeder Änderung im Emulator und veröffentlicht sie danach selbst in Firebase.
+  Dafür braucht sie einmalig den Schlüssel eines Dienstkontos als GitHub-Secret:
+  1. Firebase → Zahnrad → **Projekteinstellungen → Dienstkonten** → **Neuen privaten Schlüssel generieren**.
+     Es wird eine `.json`-Datei heruntergeladen.
+  2. GitHub → Repository → **Settings → Secrets and variables → Actions → New repository secret**.
+     Name: `FIREBASE_SERVICE_ACCOUNT`. Bei „Secret“ den **gesamten Inhalt** der `.json`-Datei einfügen → **Add secret**.
+  3. Die heruntergeladene Datei danach löschen. Den Schlüssel nie in einen Chat, eine Mail oder ins Repository kopieren:
+     Er erlaubt vollen Zugriff auf das Firebase-Projekt. In den GitHub-Secrets ist er verschlüsselt, und niemand kann ihn dort wieder ansehen.
+
+  Ohne Secret laufen nur die Tests. Dann die Regeln wie oben von Hand einfügen: Firestore → Regeln → Veröffentlichen.
 - **Chat-Index:** Der Chat braucht keinen eigenen Index. Falls Firebase im Browser trotzdem „requires an index“ meldet, führt der Link in der Fehlermeldung direkt zum Anlegen.
 - **Regeln testen:** `cd tests && npm install && npm test` startet den Firestore-Emulator (Java nötig) und prüft 86 Fälle,
   z. B. doppelte Namen, Kunya-Pflicht, fremde Punkte, einen zweiten Versuch pro Woche, Chat zwischen Bruder und Schwester,
