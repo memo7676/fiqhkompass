@@ -10,7 +10,7 @@
   if (!APP) return;
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
-  var esc = APP.esc;
+  var esc = APP.esc, T = window.T || function (x) { return x; };
   var ROUND = 10;
 
   /* ---------- question ids (stable as long as topic and question text stay) ---------- */
@@ -63,10 +63,10 @@
     var l = levelOf(id), next, note;
     if (!ok) {
       next = -1;
-      note = l === 2 ? "Schon gelernt, aber vergessen – kommt wieder." : "Kommt wieder – die richtige Antwort ist markiert.";
-    } else if (l === 0) { next = 2; note = "✓ Gelernt"; }
-    else if (l === -1) { next = 1; note = "Gut! Noch einmal richtig, dann ist sie gelernt."; }
-    else { next = 2; note = l === 1 ? "✓ Jetzt gelernt" : "✓ Sitzt"; }
+      note = l === 2 ? T("Schon gelernt, aber vergessen – kommt wieder.") : T("Kommt wieder – die richtige Antwort ist markiert.");
+    } else if (l === 0) { next = 2; note = T("✓ Gelernt"); }
+    else if (l === -1) { next = 1; note = T("Gut! Noch einmal richtig, dann ist sie gelernt."); }
+    else { next = 2; note = l === 1 ? T("✓ Jetzt gelernt") : T("✓ Sitzt"); }
     prog[id] = [next, Date.now()];
     persist();
     return note;
@@ -89,10 +89,10 @@
   var lastRound = null;
   function start(kind, topicId) {
     var list, label, t = topicId && APP.TOPIC_BY_ID[topicId];
-    if (kind === "topic") { list = byTopic[topicId] || []; label = "Lernen · " + t.title; }
+    if (kind === "topic") { list = byTopic[topicId] || []; label = T("Lernen") + " · " + t.title; }
     else if (kind === "mistakes") {
       list = allQuestions().filter(function (q) { var l = level(q); return l === -1 || l === 1; });
-      label = "Fehler wiederholen";
+      label = T("Fehler wiederholen");
     } else return;
     var r = roundFor(list);
     if (!r.qs.length) return;
@@ -101,7 +101,7 @@
     APP.startQuiz({
       learn: true,
       questions: r.qs,
-      label: r.review ? label + " (Wiederholung)" : label,
+      label: r.review ? label + " " + T("(Wiederholung)") : label,
       onAnswer: function (q, ok) { if (ok) correct++; return record(q, ok); },
       onFinish: function (p) {
         var after = kind === "topic" ? topicStats(topicId) : stats(allQuestions());
@@ -126,7 +126,7 @@
   /* ---------- rendering ---------- */
   function bar(s) {
     function seg(n, cls) { return n ? '<span class="lb-' + cls + '" style="width:' + (n / s.total * 100) + '%"></span>' : ""; }
-    return '<span class="lbar" role="img" aria-label="' + s.learned + ' von ' + s.total + ' gelernt">' +
+    return '<span class="lbar" role="img" aria-label="' + T("{n} von {m} gelernt", { n: s.learned, m: s.total }) + '">' +
       seg(s.learned, "ok") + seg(s.almost, "mid") + seg(s.wrong, "bad") + "</span>";
   }
   function ring(pct) {
@@ -144,33 +144,33 @@
     APP.GROUPS.forEach(function (g) { g.topics.forEach(function (t) { topicsTotal++; if (topicStats(t.id).pct === 100) topicsDone++; }); });
     $("#learn-ring").innerHTML = ring(all.pct);
     $("#learn-stats").innerHTML =
-      "<span><b>" + all.learned + "</b> von " + all.total + " Fragen gelernt</span>" +
-      "<span><b>" + topicsDone + "</b> von " + topicsTotal + " Themen bei 100 %</span>" +
-      (all.wrong + all.almost ? "<span><b>" + (all.wrong + all.almost) + "</b> Fehlerfragen offen</span>" : "");
+      "<span>" + T("<b>{n}</b> von {m} Fragen gelernt", { n: all.learned, m: all.total }) + "</span>" +
+      "<span>" + T("<b>{n}</b> von {m} Themen bei 100 %", { n: topicsDone, m: topicsTotal }) + "</span>" +
+      (all.wrong + all.almost ? "<span>" + T("<b>{n}</b> Fehlerfragen offen", { n: all.wrong + all.almost }) + "</span>" : "");
     var nt = nextTopic();
     var go = $("#learn-next");
     go.hidden = !nt;
-    if (nt) go.textContent = (all.learned ? "Weiter lernen: " : "Loslegen: ") + APP.TOPIC_BY_ID[nt].title;
+    if (nt) go.textContent = (all.learned ? T("Weiter lernen:") : T("Loslegen:")) + " " + APP.TOPIC_BY_ID[nt].title;
     var mis = $("#learn-mistakes");
     mis.hidden = !(all.wrong + all.almost);
-    mis.textContent = "Fehler wiederholen (" + (all.wrong + all.almost) + ")";
+    mis.textContent = T("Fehler wiederholen ({n})", { n: all.wrong + all.almost });
     $("#learn-alldone").hidden = !!nt;
 
     renderRound();
 
     $("#learn-groups").innerHTML = APP.GROUPS.map(function (g) {
       var gs = stats(g.topics.reduce(function (a, t) { return a.concat(byTopic[t.id] || []); }, []));
-      return '<section class="lg"><h3 class="lg-head"><span>' + esc(g.name) + '</span><small>' + gs.pct + ' %</small></h3><ol class="lt-list">' +
+      return '<section class="lg"><h3 class="lg-head"><span>' + esc(T(g.name)) + '</span><small>' + gs.pct + ' %</small></h3><ol class="lt-list">' +
         g.topics.map(function (t) {
           var s = topicStats(t.id);
           var state = s.pct === 100 ? "done" : s.learned + s.almost + s.wrong ? "busy" : "new";
-          var btn = state === "done" ? "Wiederholen" : state === "busy" ? "Weiter" : "Starten";
+          var btn = state === "done" ? T("Wiederholen") : state === "busy" ? T("Weiter") : T("Starten");
           return '<li class="lt lt-' + state + '">' +
             '<span class="lt-icon" aria-hidden="true">' + (state === "done" ? "✓" : "") + "</span>" +
             '<span class="lt-main"><span class="lt-title"><strong>' + esc(t.title) + '</strong><span class="lt-ar" lang="ar" dir="rtl">' + esc(t.ar) + "</span></span>" +
             bar(s) +
-            '<small class="lt-meta">' + (state === "done" ? "Gemeistert · alle " + s.total + " Fragen gelernt"
-              : s.learned + " von " + s.total + " gelernt" + (s.wrong ? " · " + s.wrong + " falsch" : "") + (s.almost ? " · " + s.almost + " fast" : "")) + "</small></span>" +
+            '<small class="lt-meta">' + (state === "done" ? T("Gemeistert · alle {n} Fragen gelernt", { n: s.total })
+              : T("{n} von {m} gelernt", { n: s.learned, m: s.total }) + (s.wrong ? " · " + T("{n} falsch", { n: s.wrong }) : "") + (s.almost ? " · " + T("{n} fast", { n: s.almost }) : "")) + "</small></span>" +
             '<span class="lt-pct">' + s.pct + " %</span>" +
             '<button type="button" class="btn' + (state === "busy" ? " btn-primary" : "") + '" data-learn="' + t.id + '">' + btn + "</button></li>";
         }).join("") + "</ol></section>";
@@ -190,22 +190,22 @@
     box.className = "panel learn-round" + (mastered ? " is-mastered" : "");
     var gain = r.after.learned - r.before.learned;
     box.innerHTML =
-      (mastered ? '<p class="lr-badge">✓ Gemeistert</p><h3>Mā schāʾ Allāh – „' + esc(t.title) + '“ sitzt zu 100 %!</h3>'
-        : "<h3>Runde geschafft: " + r.correct + " von " + r.answered + " richtig</h3>") +
-      "<p>" + (r.kind === "topic" ? esc(t.title) + ": <b>" + r.before.pct + " % → " + r.after.pct + " %</b>" : "Gesamt: <b>" + r.after.pct + " %</b>") +
-      (gain > 0 ? " · " + gain + (gain === 1 ? " Frage" : " Fragen") + " neu gelernt" : "") + "</p>" +
+      (mastered ? '<p class="lr-badge">' + T("✓ Gemeistert") + "</p><h3>" + T("Mā schāʾ Allāh – „{t}“ sitzt zu 100 %!", { t: esc(t.title) }) + "</h3>"
+        : "<h3>" + T("Runde geschafft: {n} von {m} richtig", { n: r.correct, m: r.answered }) + "</h3>") +
+      "<p>" + (r.kind === "topic" ? esc(t.title) + ": <b>" + r.before.pct + " % → " + r.after.pct + " %</b>" : T("Gesamt:") + " <b>" + r.after.pct + " %</b>") +
+      (gain > 0 ? " · " + T(gain === 1 ? "{n} Frage neu gelernt" : "{n} Fragen neu gelernt", { n: gain }) : "") + "</p>" +
       '<div class="lr-actions">' +
-      (r.kind === "topic" && r.after.pct < 100 ? '<button type="button" class="btn btn-primary" data-round-again>Nächste Runde</button>' : "") +
-      (r.kind === "mistakes" && r.after.wrong + r.after.almost ? '<button type="button" class="btn btn-primary" data-round-mistakes>Weiter Fehler wiederholen</button>' : "") +
-      (r.wrong.length && window.FIQH_MISTAKES ? '<button type="button" class="btn" data-round-wrong>Fehler dieser Runde wiederholen (' + r.wrong.length + ")</button>" : "") +
-      (r.topicId ? '<button type="button" class="btn" data-round-read>Im Nachschlagen lesen</button>' : "") +
-      '<button type="button" class="linkish" data-round-close>Schließen</button></div>';
+      (r.kind === "topic" && r.after.pct < 100 ? '<button type="button" class="btn btn-primary" data-round-again>' + T("Nächste Runde") + "</button>" : "") +
+      (r.kind === "mistakes" && r.after.wrong + r.after.almost ? '<button type="button" class="btn btn-primary" data-round-mistakes>' + T("Weiter Fehler wiederholen") + "</button>" : "") +
+      (r.wrong.length && window.FIQH_MISTAKES ? '<button type="button" class="btn" data-round-wrong>' + T("Fehler dieser Runde wiederholen ({n})", { n: r.wrong.length }) + "</button>" : "") +
+      (r.topicId ? '<button type="button" class="btn" data-round-read>' + T("Im Nachschlagen lesen") + "</button>" : "") +
+      '<button type="button" class="linkish" data-round-close>' + T("Schließen") + "</button></div>";
     var again = $("[data-round-again]", box);
     if (again) again.addEventListener("click", function () { start("topic", r.topicId); });
     var mis = $("[data-round-mistakes]", box);
     if (mis) mis.addEventListener("click", function () { start("mistakes"); });
     var wrongBtn = $("[data-round-wrong]", box);
-    if (wrongBtn) wrongBtn.addEventListener("click", function () { window.FIQH_MISTAKES.practice(r.wrong, "Fehler dieser Runde", "lernen"); });
+    if (wrongBtn) wrongBtn.addEventListener("click", function () { window.FIQH_MISTAKES.practice(r.wrong, T("Fehler dieser Runde"), "lernen"); });
     var read = $("[data-round-read]", box);
     if (read) read.addEventListener("click", function () { APP.showView("nachschlagen"); APP.openTopic(r.topicId); window.scrollTo(0, 0); });
     $("[data-round-close]", box).addEventListener("click", function () { lastRound = null; renderRound(); });
@@ -216,12 +216,12 @@
     $all("[data-learn-card]").forEach(function (el) {
       var s = topicStats(el.getAttribute("data-learn-card"));
       if (!(s.learned + s.almost + s.wrong)) { el.innerHTML = ""; return; }
-      el.innerHTML = bar(s) + '<small>' + (s.pct === 100 ? "✓ gemeistert" : s.pct + " % gelernt") + "</small>";
+      el.innerHTML = bar(s) + '<small>' + (s.pct === 100 ? T("✓ gemeistert") : T("{n} % gelernt", { n: s.pct })) + "</small>";
       el.classList.toggle("is-done", s.pct === 100);
     });
     $all("[data-learn-slot]").forEach(function (el) {
       var id = el.getAttribute("data-learn-slot"), s = topicStats(id);
-      el.innerHTML = '<button type="button" class="btn btn-primary">' + (s.pct === 100 ? "✓ Thema wiederholen" : "Thema lernen · " + s.pct + " %") + "</button>";
+      el.innerHTML = '<button type="button" class="btn btn-primary">' + (s.pct === 100 ? T("✓ Thema wiederholen") : T("Thema lernen · {n} %", { n: s.pct })) + "</button>";
       $("button", el).addEventListener("click", function () { start("topic", id); });
     });
   }

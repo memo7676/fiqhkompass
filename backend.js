@@ -14,6 +14,8 @@
 (function () {
   "use strict";
   if (window.FIQH_BACKEND) return;
+  /* i18n.js is loaded first; messages are translated when they are shown */
+  function tr(x) { return window.T ? window.T(x) : x; }
 
   /* Letters incl. German umlauts, Turkish ç ş ğ ı and the Arabic alphabet (with the
      Persian/Urdu letters پ چ ژ ک گ ی), digits (also ٠-٩), _ . - and single spaces.
@@ -40,25 +42,25 @@
   /* gender: "m", "f" or empty (then only the general rules are checked). */
   function checkName(name, gender) {
     name = String(name || "").normalize("NFC").trim();
-    if (name.length < 3 || name.length > 24) return "Der Spielername muss 3–24 Zeichen lang sein.";
-    if (TASHKIL_RE.test(name)) return "Bitte den arabischen Namen ohne Vokalzeichen (Taschkīl) und ohne Streckstrich schreiben, z. B. محمد statt مُحَمَّد.";
-    if (!NAME_RE.test(name)) return "Erlaubt sind lateinische und arabische Buchstaben (auch ä, ö, ü, ß, ç, ş, ğ), Ziffern, _ . - und einzelne Leerzeichen.";
-    if (!LETTER_RE.test(name)) return "Der Spielername braucht mindestens einen Buchstaben.";
-    if (RESERVED.indexOf(nameKey(name)) !== -1) return "Dieser Name ist reserviert.";
-    if (gender === "f" && !isKunya(name)) return "Schwestern spielen mit einer Kunya, z. B. „Umm Yusuf“, „Bint Ömer“ oder „أم يوسف“.";
-    if (gender === "m" && isKunya(name)) return "Namen mit Umm, Bint, أم, بنت, Mutter von oder Tochter von sind Schwestern vorbehalten.";
+    if (name.length < 3 || name.length > 24) return tr("Der Spielername muss 3–24 Zeichen lang sein.");
+    if (TASHKIL_RE.test(name)) return tr("Bitte den arabischen Namen ohne Vokalzeichen (Taschkīl) und ohne Streckstrich schreiben, z. B. محمد statt مُحَمَّد.");
+    if (!NAME_RE.test(name)) return tr("Erlaubt sind lateinische und arabische Buchstaben (auch ä, ö, ü, ß, ç, ş, ğ), Ziffern, _ . - und einzelne Leerzeichen.");
+    if (!LETTER_RE.test(name)) return tr("Der Spielername braucht mindestens einen Buchstaben.");
+    if (RESERVED.indexOf(nameKey(name)) !== -1) return tr("Dieser Name ist reserviert.");
+    if (gender === "f" && !isKunya(name)) return tr("Schwestern spielen mit einer Kunya, z. B. „Umm Yusuf“, „Bint Ömer“ oder „أم يوسف“.");
+    if (gender === "m" && isKunya(name)) return tr("Namen mit Umm, Bint, أم, بنت, Mutter von oder Tochter von sind Schwestern vorbehalten.");
     return "";
   }
   function checkPassword(pw, email, name) {
     pw = String(pw || "");
-    if (pw.length < 8) return "Mindestens 8 Zeichen.";
-    if (pw.length > 128) return "Höchstens 128 Zeichen.";
-    if (!/[A-Za-zÄÖÜäöüß]/.test(pw) || !/\d/.test(pw)) return "Mindestens ein Buchstabe und eine Ziffer.";
+    if (pw.length < 8) return tr("Mindestens 8 Zeichen.");
+    if (pw.length > 128) return tr("Höchstens 128 Zeichen.");
+    if (!/[A-Za-zÄÖÜäöüß]/.test(pw) || !/\d/.test(pw)) return tr("Mindestens ein Buchstabe und eine Ziffer.");
     var low = pw.toLowerCase();
-    if (name && low.indexOf(nameKey(name)) !== -1) return "Das Passwort darf den Spielernamen nicht enthalten.";
+    if (name && low.indexOf(nameKey(name)) !== -1) return tr("Das Passwort darf den Spielernamen nicht enthalten.");
     var local = String(email || "").split("@")[0].toLowerCase();
-    if (local.length >= 4 && low.indexOf(local) !== -1) return "Das Passwort darf die E-Mail-Adresse nicht enthalten.";
-    if (/^(.)\1+$/.test(pw) || /^(12345678|password|passwort|qwertz12|qwerty12)/.test(low)) return "Dieses Passwort ist zu leicht zu erraten.";
+    if (local.length >= 4 && low.indexOf(local) !== -1) return tr("Das Passwort darf die E-Mail-Adresse nicht enthalten.");
+    if (/^(.)\1+$/.test(pw) || /^(12345678|password|passwort|qwertz12|qwerty12)/.test(low)) return tr("Dieses Passwort ist zu leicht zu erraten.");
     return "";
   }
   /* 0..4 for the strength meter */
@@ -90,7 +92,7 @@
   };
   function message(e) {
     var code = e && (e.code || e.message);
-    return MESSAGES[code] || (e && e.userMessage) || "Das hat nicht geklappt. Versuch es bitte noch einmal.";
+    return tr(MESSAGES[code] || (e && e.userMessage) || "Das hat nicht geklappt. Versuch es bitte noch einmal.");
   }
 
   var helpers = { KUNYA_PREFIXES: KUNYA_PREFIXES, isKunya: isKunya, hasArabic: hasArabic, checkName: checkName, checkPassword: checkPassword, passwordStrength: passwordStrength, nameKey: nameKey, message: message };

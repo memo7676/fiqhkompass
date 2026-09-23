@@ -1,7 +1,9 @@
 /* Iʿrāb-Satzgenerator: new sentences for the Iʿrāb training and the Arabisch-Liga.
    Sentences are built from words of Madina-Buch 1 with a few patterns of the book's grammar
    (Nominalsatz, Genitivverbindung, Präposition, Verbalsatz, Adjektiv, Demonstrativ), so every
-   case ending follows from the pattern. Each sentence comes with a German translation.
+   case ending follows from the pattern. Each sentence comes with a German and an English translation;
+   the explanation is given in the language of the page (i18n.js). English never changes the random
+   choices, so the same seed gives the same sentences in every language.
 
    FIQH_IRABGEN.make(seed, n, skip) -> n questions { q, ar, arMark, a: [right, 3 wrong], e, key }
      the same seed always gives the same sentences (everyone gets the same weekly league);
@@ -17,6 +19,14 @@
      nouns: [Arabic without ending, Arabic gender, German gender, German, weak form (acc/dat), genitive, kinds]
      kinds: t thing · o can be open/closed · p person · l text (lesson, letter) · w washable
             i place you are in · s surface you put things on */
+  var NOUN_EN = {
+    "كِتَاب": "book", "قَلَم": "pen", "بَاب": "door", "مَكْتَب": "desk", "سَرِير": "bed", "كُرْسِيّ": "chair", "قَمِيص": "shirt",
+    "بَيْت": "house", "مِفْتَاح": "key", "دَفْتَر": "notebook", "سَيَّارَة": "car", "سَاعَة": "watch", "حَقِيبَة": "bag",
+    "نَافِذَة": "window", "غُرْفَة": "room", "مَسْجِد": "mosque", "مَدْرَسَة": "school", "مِنْدِيل": "handkerchief", "مِلْعَقَة": "spoon",
+    "فَصْل": "classroom", "مَطْبَخ": "kitchen", "جَامِعَة": "university", "دَرْس": "lesson", "رِسَالَة": "letter",
+    "طَالِب": "student", "طَالِبَة": "student", "مُدَرِّس": "teacher", "مُدَرِّسَة": "teacher", "وَلَد": "boy", "بِنْت": "girl",
+    "رَجُل": "man", "طَبِيب": "doctor", "تَاجِر": "merchant", "إِمَام": "imam"
+  };
   var NOUNS = [
     ["كِتَاب", "m", "n", "Buch", "", "", "to"], ["قَلَم", "m", "m", "Stift", "", "", "t"],
     ["بَاب", "m", "f", "Tür", "", "", "to"], ["مَكْتَب", "m", "m", "Schreibtisch", "", "", "ts"],
@@ -35,7 +45,7 @@
     ["وَلَد", "m", "m", "Junge", "Jungen", "Jungen", "p"], ["بِنْت", "f", "n", "Mädchen", "", "Mädchens", "p"],
     ["رَجُل", "m", "m", "Mann", "", "Mannes", "p"], ["طَبِيب", "m", "m", "Arzt", "", "Arztes", "p"],
     ["تَاجِر", "m", "m", "Händler", "", "Händlers", "p"], ["إِمَام", "m", "m", "Imam", "", "Imams", "p"]
-  ].map(function (x) { return { ar: x[0], g: x[1], dg: x[2], de: x[3], weak: x[4] || x[3], gen: x[5] || x[3], k: x[6] }; });
+  ].map(function (x) { return { ar: x[0], g: x[1], dg: x[2], de: x[3], weak: x[4] || x[3], gen: x[5] || x[3], k: x[6], en: NOUN_EN[x[0]] }; });
   /* things you can carry around (not doors, windows, cars, furniture or rooms) */
   var FIXED = ["بَاب", "نَافِذَة", "سَيَّارَة"];
   function movable() { return NOUNS.filter(function (x) { return /t/.test(x.k) && !/[si]/.test(x.k) && FIXED.indexOf(x.ar) === -1; }); }
@@ -46,30 +56,30 @@
 
   /* adjectives: [Arabic (m.), German, kinds of nouns it fits] */
   var ADJ = [
-    ["جَدِيد", "neu", "tl"], ["قَدِيم", "alt", "t"], ["كَبِير", "groß", "t"], ["صَغِير", "klein", "t"],
-    ["جَمِيل", "schön", "t"], ["نَظِيف", "sauber", "tw"], ["مَفْتُوح", "offen", "o"], ["مُغْلَق", "geschlossen", "o"],
-    ["مَرِيض", "krank", "p"], ["مَشْغُول", "beschäftigt", "p"], ["طَوِيل", "groß", "p"], ["قَصِير", "klein", "p"],
-    ["جَدِيد", "neu", "p"], ["طَوِيل", "lang", "l"], ["قَصِير", "kurz", "l"]
-  ].map(function (x) { return { ar: x[0], de: x[1], k: x[2] }; });
+    ["جَدِيد", "neu", "tl", "new"], ["قَدِيم", "alt", "t", "old"], ["كَبِير", "groß", "t", "big"], ["صَغِير", "klein", "t", "small"],
+    ["جَمِيل", "schön", "t", "beautiful"], ["نَظِيف", "sauber", "tw", "clean"], ["مَفْتُوح", "offen", "o", "open"], ["مُغْلَق", "geschlossen", "o", "closed"],
+    ["مَرِيض", "krank", "p", "ill"], ["مَشْغُول", "beschäftigt", "p", "busy"], ["طَوِيل", "groß", "p", "tall"], ["قَصِير", "klein", "p", "short"],
+    ["جَدِيد", "neu", "p", "new"], ["طَوِيل", "lang", "l", "long"], ["قَصِير", "kurz", "l", "short"]
+  ].map(function (x) { return { ar: x[0], de: x[1], k: x[2], en: x[3] }; });
   function adjFor(n) {
     return ADJ.filter(function (a) { return a.k.split("").some(function (k) { return n.k.indexOf(k) !== -1 && (k !== "t" || n.k.indexOf("p") === -1); }); });
   }
 
   /* transitive verbs with the objects that make sense */
   var TVERBS = [
-    ["فَتَحَ", "öffnete", ["بَاب", "نَافِذَة", "كِتَاب", "حَقِيبَة", "دَفْتَر"]],
-    ["أَغْلَقَ", "schloss", ["بَاب", "نَافِذَة", "حَقِيبَة"]],
-    ["أَخَذَ", "nahm", ["قَلَم", "كِتَاب", "مِفْتَاح", "حَقِيبَة", "دَفْتَر", "سَاعَة"]],
-    ["غَسَلَ", "wusch", ["قَمِيص", "مِنْدِيل", "مِلْعَقَة", "سَيَّارَة"]],
-    ["حَمَلَ", "trug", ["حَقِيبَة", "كِتَاب", "كُرْسِيّ"]],
-    ["قَرَأَ", "las", ["كِتَاب", "دَرْس", "رِسَالَة"]],
-    ["كَتَبَ", "schrieb", ["دَرْس", "رِسَالَة"]],
-    ["فَهِمَ", "verstand", ["دَرْس"]]
+    ["فَتَحَ", "öffnete", ["بَاب", "نَافِذَة", "كِتَاب", "حَقِيبَة", "دَفْتَر"], "opened"],
+    ["أَغْلَقَ", "schloss", ["بَاب", "نَافِذَة", "حَقِيبَة"], "closed"],
+    ["أَخَذَ", "nahm", ["قَلَم", "كِتَاب", "مِفْتَاح", "حَقِيبَة", "دَفْتَر", "سَاعَة"], "took"],
+    ["غَسَلَ", "wusch", ["قَمِيص", "مِنْدِيل", "مِلْعَقَة", "سَيَّارَة"], "washed"],
+    ["حَمَلَ", "trug", ["حَقِيبَة", "كِتَاب", "كُرْسِيّ"], "carried"],
+    ["قَرَأَ", "las", ["كِتَاب", "دَرْس", "رِسَالَة"], "read"],
+    ["كَتَبَ", "schrieb", ["دَرْس", "رِسَالَة"], "wrote"],
+    ["فَهِمَ", "verstand", ["دَرْس"], "understood"]
   ];
   /* verbs of motion with a preposition: [verb, German, preposition, German preposition, German end] */
   var MVERBS = [
-    ["ذَهَبَ", "ging", "إِلَى", "zu", ""], ["خَرَجَ", "ging", "مِنْ", "aus", " hinaus"],
-    ["رَجَعَ", "kehrte", "مِنْ", "aus", " zurück"], ["رَجَعَ", "kehrte", "إِلَى", "zu", " zurück"]
+    ["ذَهَبَ", "ging", "إِلَى", "zu", "", "went to"], ["خَرَجَ", "ging", "مِنْ", "aus", " hinaus", "went out of"],
+    ["رَجَعَ", "kehrte", "مِنْ", "aus", " zurück", "came back from"], ["رَجَعَ", "kehrte", "إِلَى", "zu", " zurück", "went back to"]
   ];
 
   /* ---------- Arabic forms ---------- */
@@ -101,6 +111,9 @@
     return head + " " + (adj ? adj.de + "en " : "") + nounDe(n, "d");
   }
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  /* English: "the (new) book", "a new book" / "an old book" */
+  function the(n, adj) { return "the " + (adj ? adj.en + " " : "") + n.en; }
+  function indef(word) { return (/^[aeiou]/i.test(word) ? "an " : "a ") + word; }
 
   /* ---------- analyses ---------- */
   var LAB = {
@@ -144,6 +157,21 @@
     isharaK: "ist ein Demonstrativpronomen: unveränderlich (mabnī auf Kasra), an der Stelle eines Nominativs – Mubtadaʾ."
   };
 
+  var EXPLAIN_EN = {
+    mubtada: "is the subject of the nominal sentence (mubtadaʾ) and is in the nominative, marked by the ḍamma.",
+    mubtadaMudaf: "is the subject (mubtadaʾ) and at the same time the first part of a genitive construction (muḍāf) – so it has no article and no tanwīn; nominative with ḍamma.",
+    khabar: "is the predicate (khabar) of the nominal sentence and, like the subject, is in the nominative (ḍamma).",
+    fail: "does the action: the subject of the verbal sentence (fāʿil), nominative with ḍamma.",
+    maful: "is the object (mafʿūl bihi) that receives the action and is in the accusative with fatḥa.",
+    mudafIlayh: "is the second part of the genitive construction (muḍāf ilaihi) and is in the genitive with kasra.",
+    natN: "is an adjective (naʿt) and follows the word it describes – here nominative (ḍamma).",
+    natA: "is an adjective (naʿt) describing the object and, like it, is in the accusative (fatḥa).",
+    natG: "is an adjective (naʿt) describing a word in the genitive, so it is in the genitive too (kasra).",
+    majrur: "comes after a preposition and is therefore in the genitive (kasra).",
+    ishara: "is a demonstrative pronoun: indeclinable (mabnī on sukūn), in the position of a nominative – mubtadaʾ.",
+    isharaK: "is a demonstrative pronoun: indeclinable (mabnī on kasra), in the position of a nominative – mubtadaʾ."
+  };
+
   /* ---------- random ---------- */
   function rng(str) {
     var h = 2166136261;
@@ -168,6 +196,7 @@
     function nominal(r) {                       // الْكِتَابُ جَدِيدٌ
       var n = pick(r, NOUNS.filter(function (x) { return adjFor(x).length; })), a = pick(r, adjFor(n));
       return { w: [withCase(n.ar, "n"), withCase(fem(a.ar, n.g), "n", false)], de: cap(np(n, "n")) + " ist " + a.de + ".",
+        en: cap(the(n)) + " is " + a.en + ".",
         roles: [[0, "mubtada"], [1, "khabar"]] };
     },
     function place(r) {                         // الْكِتَابُ عَلَى الْمَكْتَبِ / الطَّالِبُ فِي الْفَصْلِ
@@ -175,45 +204,52 @@
       var n = on ? pick(r, movable()) : inside(r);
       var prep = on ? "عَلَى" : "فِي";
       return { w: [withCase(n.ar, "n"), prep, withCase(p.ar, "g")], de: cap(np(n, "n")) + " ist " + pp(on ? "auf" : "in", p) + ".",
+        en: cap(the(n)) + " is " + (on ? "on " : "in ") + the(p) + ".",
         roles: [[0, "mubtada"], [2, "majrur", prep]] };
     },
     function idafa(r) {                         // كِتَابُ الطَّالِبِ جَدِيدٌ
       var n = pick(r, nouns("t").filter(function (x) { return !/i/.test(x.k); })), o = pick(r, nouns("p")), a = pick(r, adjFor(n));
       return { w: [n.ar + DA, withCase(o.ar, "g"), withCase(fem(a.ar, n.g), "n", false)],
         de: cap(np(n, "n")) + " " + np(o, "g") + " ist " + a.de + ".",
+        en: "The " + o.en + "'s " + n.en + " is " + a.en + ".",
         roles: [[0, "mubtadaMudaf"], [1, "mudafIlayh"], [2, "khabar"]] };
     },
     function verbal(r) {                        // فَتَحَ الْوَلَدُ الْبَابَ
       var v = pick(r, TVERBS), s = pick(r, nouns("p")), o = byAr(pick(r, v[2]));
       return { w: [verbAr(v[0], s.g), withCase(s.ar, "n"), withCase(o.ar, "a")], de: cap(np(s, "n")) + " " + v[1] + " " + np(o, "a") + ".",
+        en: cap(the(s)) + " " + v[3] + " " + the(o) + ".",
         roles: [[1, "fail"], [2, "maful"]] };
     },
     function motion(r) {                        // ذَهَبَ الطَّالِبُ إِلَى الْمَسْجِدِ
       var v = pick(r, MVERBS), s = pick(r, nouns("p")), p = pick(r, nouns("i"));
       return { w: [verbAr(v[0], s.g), withCase(s.ar, "n"), prepAr(v[2]), withCase(p.ar, "g")],
-        de: cap(np(s, "n")) + " " + v[1] + " " + pp(v[3], p) + v[4] + ".", roles: [[1, "fail"], [3, "majrur", v[2]]] };
+        de: cap(np(s, "n")) + " " + v[1] + " " + pp(v[3], p) + v[4] + ".", en: cap(the(s)) + " " + v[5] + " " + the(p) + ".",
+        roles: [[1, "fail"], [3, "majrur", v[2]]] };
     },
     function naatSubject(r) {                   // الطَّالِبُ الْجَدِيدُ فِي الْفَصْلِ
       var p = pick(r, nouns("i")), n = inside(r);
       var a = pick(r, adjFor(n));
       return { w: [withCase(n.ar, "n"), withCase(fem(a.ar, n.g), "n"), "فِي", withCase(p.ar, "g")],
-        de: cap(np(n, "n", a)) + " ist " + pp("in", p) + ".", roles: [[1, "natN"], [3, "majrur", "فِي"], [0, "mubtada"]] };
+        de: cap(np(n, "n", a)) + " ist " + pp("in", p) + ".", en: cap(the(n, a)) + " is in " + the(p) + ".",
+        roles: [[1, "natN"], [3, "majrur", "فِي"], [0, "mubtada"]] };
     },
     function naatObject(r) {                    // فَتَحَ الْوَلَدُ الْبَابَ الْكَبِيرَ
       var v = pick(r, TVERBS), s = pick(r, nouns("p")), o = byAr(pick(r, v[2])), a = pick(r, adjFor(o));
       return { w: [verbAr(v[0], s.g), withCase(s.ar, "n"), withCase(o.ar, "a"), withCase(fem(a.ar, o.g), "a")],
-        de: cap(np(s, "n")) + " " + v[1] + " " + np(o, "a", a) + ".", roles: [[3, "natA"], [2, "maful"], [1, "fail"]] };
+        de: cap(np(s, "n")) + " " + v[1] + " " + np(o, "a", a) + ".", en: cap(the(s)) + " " + v[3] + " " + the(o, a) + ".",
+        roles: [[3, "natA"], [2, "maful"], [1, "fail"]] };
     },
     function naatGen(r) {                       // الْكِتَابُ عَلَى الْمَكْتَبِ الْجَدِيدِ
       var p = pick(r, nouns("s")), n = pick(r, movable()), a = pick(r, adjFor(p));
       return { w: [withCase(n.ar, "n"), "عَلَى", withCase(p.ar, "g"), withCase(fem(a.ar, p.g), "g")],
-        de: cap(np(n, "n")) + " ist " + pp("auf", p, a) + ".", roles: [[3, "natG"], [2, "majrur", "عَلَى"]] };
+        de: cap(np(n, "n")) + " ist " + pp("auf", p, a) + ".", en: cap(the(n)) + " is on " + the(p, a) + ".",
+        roles: [[3, "natG"], [2, "majrur", "عَلَى"]] };
     },
     function demonstrative(r) {                 // هَذَا كِتَابٌ جَدِيدٌ
       var n = pick(r, NOUNS.filter(function (x) { return adjFor(x).length; })), a = pick(r, adjFor(n));
       var ind = { m: "ein", f: "eine", n: "ein" }[n.dg], end = n.dg === "m" ? "er" : n.dg === "n" ? "es" : "e";
       return { w: [n.g === "f" ? "هَذِهِ" : "هَذَا", withCase(n.ar, "n", false), withCase(fem(a.ar, n.g), "n", false)],
-        de: "Das ist " + ind + " " + a.de + end + " " + n.de + ".",
+        de: "Das ist " + ind + " " + a.de + end + " " + n.de + ".", en: "This is " + indef(a.en) + " " + n.en + ".",
         roles: [[0, n.g === "f" ? "isharaK" : "ishara"], [1, "khabar"], [2, "natN"]] };
     }
   ];
@@ -222,10 +258,11 @@
     var idx = role[0], kind = role[1], right = kind === "majrur" ? majrur(role[2]) : LAB[kind];
     var wrong = shuffle(r, WRONG[kind]).map(function (k) { return k === "majrur" ? majrur(role[2] === "فِي" ? "عَلَى" : "فِي") : LAB[k]; })
       .filter(function (x, i, all) { return x !== right && all.indexOf(x) === i; }).slice(0, 3);
-    var sentence = s.w.join(" ") + ".";
+    var sentence = s.w.join(" ") + ".", en = window.I18N && window.I18N.lang === "en";
     return {
-      q: "Iʿrāb des markierten Wortes:", ar: sentence, arMark: idx, a: [right].concat(wrong),
-      e: "„" + s.de + "“ – " + s.w[idx] + " " + EXPLAIN[kind], key: sentence + "|" + idx
+      q: en ? "Iʿrāb of the marked word:" : "Iʿrāb des markierten Wortes:", ar: sentence, arMark: idx, a: [right].concat(wrong),
+      e: en ? "“" + s.en + "” – " + s.w[idx] + " " + EXPLAIN_EN[kind] : "„" + s.de + "“ – " + s.w[idx] + " " + EXPLAIN[kind],
+      key: sentence + "|" + idx
     };
   }
 

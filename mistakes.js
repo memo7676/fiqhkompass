@@ -10,7 +10,7 @@
   if (!APP || !L || !view) return;
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
-  var esc = APP.esc;
+  var esc = APP.esc, T = window.T || function (x) { return x; };
   var ROUND = 10;
 
   function lv(q) { return L.levelOf(q._lid); }
@@ -27,15 +27,15 @@
         if (byTopic[t.id]) fiqh.push({ key: "f-" + t.id, title: t.title, ar: t.ar, topic: t.id, qs: byTopic[t.id] });
       });
     });
-    SUBJECTS.push({ id: "fiqh", name: "Fiqh", back: "lernen", folders: fiqh });
+    SUBJECTS.push({ id: "fiqh", name: T("Fiqh"), back: "lernen", folders: fiqh });
     /* Arabic questions grow (new Iʿrāb sentences), so its folders are built when needed */
-    if (AR) SUBJECTS.push({ id: "arabisch", name: "Arabisch", back: "arabisch", make: function () {
+    if (AR) SUBJECTS.push({ id: "arabisch", name: T("Arabisch"), back: "arabisch", make: function () {
       var byLesson = {};
       AR.questions.forEach(function (q) { (byLesson[q.lesson] = byLesson[q.lesson] || []).push(q); });
       var out = AR.lessons.filter(function (l) { return byLesson[l.id]; }).map(function (l) {
-        return { key: "a-" + l.id, title: "Lektion " + l.n + " · " + l.title, ar: l.ar, qs: byLesson[l.id] };
+        return { key: "a-" + l.id, title: T("Lektion") + " " + l.n + " · " + l.title, ar: l.ar, qs: byLesson[l.id] };
       });
-      if (byLesson.gen) out.push({ key: "a-gen", title: "Iʿrāb · neue Sätze", ar: "إِعْرَابٌ", qs: byLesson.gen });
+      if (byLesson.gen) out.push({ key: "a-gen", title: T("Iʿrāb · neue Sätze"), ar: "إِعْرَابٌ", qs: byLesson.gen });
       return out;
     } });
   })();
@@ -48,7 +48,7 @@
   /* ---------- practising ---------- */
   var state = { filter: "alle", opened: {} };
   var last = null;
-  var BACK = { quiz: "Zurück zum Quiz", wettbewerb: "Zurück zum Wettbewerb", lernen: "Zurück zu Fiqh – Lernen", arabisch: "Zurück zu Arabisch" };
+  var BACK = { quiz: T("Zurück zum Quiz"), wettbewerb: T("Zurück zum Wettbewerb"), lernen: T("Zurück zu Fiqh – Lernen"), arabisch: T("Zurück zu Arabisch") };
 
   /* wrong ones first, then "fast"; size limits the round (folder rounds), none = all given */
   function practice(list, label, back, size) {
@@ -91,9 +91,9 @@
   function item(q) {
     var l = lv(q);
     return '<li class="review-item">' +
-      '<p class="rv-q">' + (l === -1 ? '<span class="rv-label bad">falsch</span>' : '<span class="rv-label mid">fast · noch 1× richtig</span>') +
+      '<p class="rv-q">' + (l === -1 ? '<span class="rv-label bad">' + T("falsch") + "</span>" : '<span class="rv-label mid">' + T("fast · noch 1× richtig") + "</span>") +
       '<span dir="auto">' + esc(q.q) + "</span></p>" + arLine(q) +
-      '<p class="rv-a"><span class="rv-label good">Richtig</span> <span dir="auto">' + esc(q.a[q.c]) + "</span></p>" +
+      '<p class="rv-a"><span class="rv-label good">' + T("Richtig") + '</span> <span dir="auto">' + esc(q.a[q.c]) + "</span></p>" +
       (q.e ? '<p class="rv-e" dir="auto">' + esc(q.e) + "</p>" : "") + "</li>";
   }
 
@@ -104,16 +104,16 @@
     box.hidden = false;
     box.className = "panel learn-round" + (r.after === 0 ? " is-mastered" : "");
     box.innerHTML =
-      (r.after === 0 ? '<p class="lr-badge">✓ Ordner leer</p>' : "") +
-      "<h3>" + esc(r.label) + ": " + r.correct + " von " + r.answered + " richtig</h3>" +
-      "<p>Im Fehlerordner: <b>" + r.before + " → " + r.after + "</b>" +
-      (cleared > 0 ? " · " + cleared + (cleared === 1 ? " Frage sitzt" : " Fragen sitzen") + " wieder" : "") + "</p>" +
+      (r.after === 0 ? '<p class="lr-badge">' + T("✓ Ordner leer") + "</p>" : "") +
+      "<h3>" + esc(r.label) + ": " + T("{n} von {m} richtig", { n: r.correct, m: r.answered }) + "</h3>" +
+      "<p>" + T("Im Fehlerordner:") + " <b>" + r.before + " → " + r.after + "</b>" +
+      (cleared > 0 ? " · " + T(cleared === 1 ? "{n} Frage sitzt wieder" : "{n} Fragen sitzen wieder", { n: cleared }) : "") + "</p>" +
       '<div class="lr-actions">' +
-      (r.wrong.length ? '<button type="button" class="btn btn-primary" data-mf-again>Diese Fehler nochmal (' + r.wrong.length + ")</button>" : "") +
+      (r.wrong.length ? '<button type="button" class="btn btn-primary" data-mf-again>' + T("Diese Fehler nochmal ({n})", { n: r.wrong.length }) + "</button>" : "") +
       (r.back && BACK[r.back] ? '<button type="button" class="btn" data-mf-back>' + esc(BACK[r.back]) + "</button>" : "") +
-      '<button type="button" class="linkish" data-mf-close>Schließen</button></div>';
+      '<button type="button" class="linkish" data-mf-close>' + T("Schließen") + "</button></div>";
     var again = $("[data-mf-again]", box);
-    if (again) again.addEventListener("click", function () { practice(r.wrong, "Fehler wiederholen", r.back); });
+    if (again) again.addEventListener("click", function () { practice(r.wrong, T("Fehler wiederholen"), r.back); });
     var back = $("[data-mf-back]", box);
     if (back) back.addEventListener("click", function () { last = null; goBack(r.back); });
     $("[data-mf-close]", box).addEventListener("click", function () { last = null; renderRound(); });
@@ -124,30 +124,30 @@
     var all = allOpen();
     var wrong = all.filter(function (q) { return lv(q) === -1; }).length;
     $("#mf-stats").innerHTML = all.length
-      ? "<span><b>" + all.length + "</b> " + (all.length === 1 ? "Frage" : "Fragen") + " im Ordner</span>" +
-        (wrong ? "<span><b>" + wrong + "</b> falsch</span>" : "") +
-        (all.length - wrong ? "<span><b>" + (all.length - wrong) + "</b> fast gelernt</span>" : "")
-      : "<span>Keine offenen Fehler – mā schāʾ Allāh!</span>";
+      ? "<span>" + T(all.length === 1 ? "<b>{n}</b> Frage im Ordner" : "<b>{n}</b> Fragen im Ordner", { n: all.length }) + "</span>" +
+        (wrong ? "<span>" + T("<b>{n}</b> falsch", { n: wrong }) + "</span>" : "") +
+        (all.length - wrong ? "<span>" + T("<b>{n}</b> fast gelernt", { n: all.length - wrong }) + "</span>" : "")
+      : "<span>" + T("Keine offenen Fehler – mā schāʾ Allāh!") + "</span>";
     var go = $("#mf-all");
     go.hidden = !all.length;
-    go.textContent = all.length > ROUND ? "Wiederholen: " + ROUND + " von " + all.length : "Alle wiederholen (" + all.length + ")";
+    go.textContent = all.length > ROUND ? T("Wiederholen: {n} von {m}", { n: ROUND, m: all.length }) : T("Alle wiederholen ({n})", { n: all.length });
 
     var shown = SUBJECTS.filter(function (s) { return state.filter === "alle" || state.filter === s.id; });
     var filters = $("#mf-filter");
     filters.hidden = SUBJECTS.length < 2 || !all.length;
-    filters.innerHTML = [{ id: "alle", name: "Alle", n: all.length }].concat(SUBJECTS.map(function (s) { return { id: s.id, name: s.name, n: openOf(s).length }; }))
+    filters.innerHTML = [{ id: "alle", name: T("Alle"), n: all.length }].concat(SUBJECTS.map(function (s) { return { id: s.id, name: s.name, n: openOf(s).length }; }))
       .map(function (f) {
         return '<button type="button" data-mf-filter="' + f.id + '" aria-current="' + (state.filter === f.id ? "true" : "false") + '">' + esc(f.name) + " <small>" + f.n + "</small></button>";
       }).join("");
 
     var body = $("#mf-body");
     if (!all.length) {
-      body.innerHTML = '<div class="panel mf-empty"><p><b>Dein Fehlerordner ist leer.</b></p><p>Jede Frage, die du im Quiz, im Wettbewerb, beim Lernen oder in Arabisch falsch beantwortest, landet hier – bis du sie zweimal hintereinander richtig hast.</p></div>';
+      body.innerHTML = '<div class="panel mf-empty"><p><b>' + T("Dein Fehlerordner ist leer.") + "</b></p><p>" + T("Jede Frage, die du im Quiz, im Wettbewerb, beim Lernen oder in Arabisch falsch beantwortest, landet hier – bis du sie zweimal hintereinander richtig hast.") + "</p></div>";
     } else {
       body.innerHTML = shown.map(function (s) {
         var n = openOf(s).length;
-        if (!n) return state.filter === s.id ? '<div class="panel mf-empty"><p>In ' + esc(s.name) + " gibt es keine offenen Fehler.</p></div>" : "";
-        return '<section class="lg"><h3 class="lg-head"><span>' + esc(s.name) + "</span><small>" + n + (n === 1 ? " Frage" : " Fragen") + "</small></h3>" +
+        if (!n) return state.filter === s.id ? '<div class="panel mf-empty"><p>' + T("In {s} gibt es keine offenen Fehler.", { s: esc(s.name) }) + "</p></div>" : "";
+        return '<section class="lg"><h3 class="lg-head"><span>' + esc(s.name) + "</span><small>" + T(n === 1 ? "{n} Frage" : "{n} Fragen", { n: n }) + "</small></h3>" +
           '<div class="mf-list">' + foldersOf(s).map(function (f) {
             var qs = openIn(f);
             if (!qs.length) return "";
@@ -156,8 +156,8 @@
               (f.ar ? '<span class="lt-ar" lang="ar" dir="rtl">' + esc(f.ar) + "</span>" : "") + "</span>" +
               '<span class="mf-count">' + qs.length + "</span></summary>" +
               '<div class="mf-inner"><div class="mf-actions">' +
-              '<button type="button" class="btn btn-primary btn-sm" data-mf-practice="' + f.key + '">' + (qs.length === 1 ? "Diese Frage wiederholen" : "Diese " + qs.length + " wiederholen") + "</button>" +
-              (f.topic ? '<button type="button" class="linkish" data-mf-read="' + f.topic + '">Im Nachschlagen lesen</button>' : "") +
+              '<button type="button" class="btn btn-primary btn-sm" data-mf-practice="' + f.key + '">' + (qs.length === 1 ? T("Diese Frage wiederholen") : T("Diese {n} wiederholen", { n: qs.length })) + "</button>" +
+              (f.topic ? '<button type="button" class="linkish" data-mf-read="' + f.topic + '">' + T("Im Nachschlagen lesen") + "</button>" : "") +
               '</div><ul class="review">' + qs.map(item).join("") + "</ul></div></details>";
           }).join("") + "</div></section>";
       }).join("");
@@ -182,7 +182,7 @@
     $all("[data-mf-practice]", view).forEach(function (b) {
       b.addEventListener("click", function () {
         var hit = folderByKey(b.getAttribute("data-mf-practice"));
-        if (hit) practice(openIn(hit.folder), "Fehler · " + hit.folder.title, null);
+        if (hit) practice(openIn(hit.folder), T("Fehler") + " · " + hit.folder.title, null);
       });
     });
     $all("[data-mf-read]", view).forEach(function (b) {
@@ -192,7 +192,7 @@
 
   $("#mf-all").addEventListener("click", function () {
     var list = state.filter === "alle" ? allOpen() : openOf(SUBJECTS.filter(function (s) { return s.id === state.filter; })[0]);
-    practice(list.length ? list : allOpen(), "Fehlerordner", null, ROUND);
+    practice(list.length ? list : allOpen(), T("Fehlerordner"), null, ROUND);
   });
   /* "Fehlerordner" buttons anywhere on the page */
   $all("[data-open-mistakes]").forEach(function (b) {

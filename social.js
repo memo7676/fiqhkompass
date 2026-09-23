@@ -12,7 +12,8 @@
   var APP = window.FIQH_APP;
   var B = window.FIQH_BACKEND;
   if (!APP) return;
-  var esc = APP.esc;
+  var esc = APP.esc, T = window.T || function (x) { return x; };
+  var LOC = window.I18N ? window.I18N.locale : "de-DE";
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
 
@@ -37,9 +38,9 @@
   function weekKey(season, week) { return "s" + season + "w" + week; }
   /* Every week has its own Sachgebiet, in turn: Glaube, Reinheit, Gebet, Fasten, Zakāt & Ḥaǧǧ, Alltag, … */
   function themeFor(weekIndex) { var G = APP.GROUPS; return G[weekIndex % G.length]; }
-  function day(ms) { return new Date(ms).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }); }
-  function dayLong(ms) { return new Date(ms).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" }); }
-  function pts(n) { return Number(n || 0).toLocaleString("de-DE"); }
+  function day(ms) { return new Date(ms).toLocaleDateString(LOC, { day: "2-digit", month: "2-digit" }); }
+  function dayLong(ms) { return new Date(ms).toLocaleDateString(LOC, { weekday: "short", day: "2-digit", month: "2-digit" }); }
+  function pts(n) { return Number(n || 0).toLocaleString(LOC); }
 
   /* Same 15 questions for everyone in a given week: a seeded pick. */
   function seeded(str) {
@@ -65,12 +66,12 @@
   function arTheme(weekIndex) {
     var A = window.FIQH_ARABIC, ls = A ? A.lessons : [], per = Math.ceil(ls.length / WEEKS_PER_SEASON) || 1;
     var b = weekIndex % WEEKS_PER_SEASON, part = ls.slice(b * per, b * per + per);
-    return { name: part.length ? "Lektionen " + part[0].n + "–" + part[part.length - 1].n : "Arabisch", lessons: part, topics: [] };
+    return { name: part.length ? T("Lektionen {a}–{b}", { a: part[0].n, b: part[part.length - 1].n }) : T("Arabisch"), lessons: part, topics: [] };
   }
   var LEAGUES = {
-    fiqh: { sfx: "", total: COMP_QUESTIONS, name: "Fiqh-Liga", theme: themeFor, what: "jede Woche ein anderes Sachgebiet, 15 Fragen" },
-    arabisch: { sfx: "a", total: AR_TOTAL, name: "Arabisch-Liga", theme: arTheme,
-      what: "jede Woche andere Lektionen: 10 Vokabeln, 10 Grammatikfragen, 10 neue Iʿrāb-Sätze und der Sarf von 3 Verben" }
+    fiqh: { sfx: "", total: COMP_QUESTIONS, name: T("Fiqh-Liga"), theme: themeFor, what: T("jede Woche ein anderes Sachgebiet, 15 Fragen") },
+    arabisch: { sfx: "a", total: AR_TOTAL, name: T("Arabisch-Liga"), theme: arTheme,
+      what: T("jede Woche andere Lektionen: 10 Vokabeln, 10 Grammatikfragen, 10 neue Iʿrāb-Sätze und der Sarf von 3 Verben") }
   };
   function LG() { return LEAGUES[league]; }
   function lkey(cal) { return cal.key + LG().sfx; }
@@ -82,7 +83,7 @@
     function take(re) { return APP.shuffle(pool.filter(function (q) { return re.test(q._lid); }), rnd).slice(0, AR_Q); }
     var qs = take(/^ar-[vd]-/).concat(take(/^ar-g-/));
     if (G) qs = qs.concat(G.make("liga-" + cal.key, AR_Q).map(function (x) {
-      return { t: "arabisch", tt: "Arabisch-Liga · Iʿrāb", srcText: "Neuer Satz dieser Woche", c: 0, q: x.q, ar: x.ar, arMark: x.arMark, a: x.a, e: x.e };
+      return { t: "arabisch", tt: T("Arabisch-Liga") + " · Iʿrāb", srcText: T("Neuer Satz dieser Woche"), c: 0, q: x.q, ar: x.ar, arMark: x.arMark, a: x.a, e: x.e };
     }));
     var verbs = S ? APP.shuffle(S.VERBS, rnd).slice(0, AR_VERBS) : [];
     var tables = [];
@@ -204,7 +205,7 @@
       APP.startQuiz({
         questions: weeklyQuestions(cal),
         rnd: seeded("fiqh-kompass:options:" + cal.key),
-        label: "Wettbewerb · " + cal.theme.name,
+        label: T("Wettbewerb") + " · " + T(cal.theme.name),
         onProgress: function (p) {
           entry.score = p.score; entry.correct = p.correct; entry.answered = p.answered;
           save().catch(function () {});
@@ -252,8 +253,8 @@
       APP.startQuiz({
         questions: week.questions,
         rnd: seeded("arabisch-liga:options:" + cal.key),
-        label: "Arabisch-Liga · " + week.theme.name,
-        nextLabel: week.tables.length ? "Weiter zum Sarf" : "Zur Rangliste",
+        label: T("Arabisch-Liga") + " · " + week.theme.name,
+        nextLabel: week.tables.length ? T("Weiter zum Sarf") : T("Zur Rangliste"),
         onProgress: function (p) { quiz.score = p.score; quiz.correct = p.correct; quiz.answered = p.answered; sync(); },
         onFinish: function (p) {
           quiz.score = p.score; quiz.correct = p.correct; quiz.answered = p.answered;
@@ -265,12 +266,12 @@
         onLeave: function () {
           if (!finished || !week.tables.length) { APP.renderSetup(); APP.showView("wettbewerb"); window.scrollTo(0, 0); return; }
           window.FIQH_SARF.play({
-            tables: week.tables, label: "Arabisch-Liga · Sarf", tab: "wettbewerb",
+            tables: week.tables, label: T("Arabisch-Liga") + " · Sarf", tab: "wettbewerb",
             onTable: function (res) {
               var perfect = res.correct === res.total, got = res.correct * SARF_CELL + (perfect ? SARF_PERFECT : 0);
               sarf.score += got; sarf.correct += res.correct; sarf.answered += res.total;
               sync();
-              return "+" + got + " Punkte" + (perfect ? " (mit " + SARF_PERFECT + " Bonus)" : "");
+              return perfect ? T("+{n} Punkte (mit {b} Bonus)", { n: got, b: SARF_PERFECT }) : T("+{n} Punkte", { n: got });
             },
             onFinish: function () { entry.done = true; sync(); render(); },
             onLeave: function () { APP.renderSetup(); APP.showView("wettbewerb"); window.scrollTo(0, 0); }
@@ -297,8 +298,8 @@
   function displayName(id) {
     var n = baseName(id);
     // U+2068/U+2069 isolate the name, so "(du)" stays behind an Arabic name too.
-    if (id === me) return n ? "\u2068" + n + "\u2069 (du)" : "Du";
-    return n || "Gelöschtes Konto";
+    if (id === me) return n ? "\u2068" + n + "\u2069 " + T("(du)") : T("Du");
+    return n || T("Gelöschtes Konto");
   }
   function hue(id) { var h = 0; for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) % 360; return h; }
   var initialsCache = {};
@@ -346,52 +347,52 @@
   function renderComp(cal) {
     var lg = LG(), theme = lg.theme(cal.index);
     $all("[data-league]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-league") === league ? "true" : "false"); });
-    $("#comp-eyebrow").textContent = lg.name + " · Saison " + cal.season;
-    $("#comp-title").textContent = "Woche " + cal.week + " von " + WEEKS_PER_SEASON;
-    $("#comp-theme").textContent = theme.name;
+    $("#comp-eyebrow").textContent = lg.name + " · " + T("Saison {n}", { n: cal.season });
+    $("#comp-title").textContent = T("Woche {n} von {m}", { n: cal.week, m: WEEKS_PER_SEASON });
+    $("#comp-theme").textContent = T(theme.name);
     $("#comp-theme-topics").textContent = league === "fiqh" ? theme.topics.map(function (t) { return t.title; }).join(" · ")
       : theme.lessons.map(function (l) { return l.title; }).join(" · ");
-    $("#comp-sub").textContent = "Saison " + cal.season + " läuft vom " + day(cal.seasonStart) + " bis " +
-      day(cal.seasonEnd - 1) + " – " + lg.what + ". Die Summe der vier Wochen entscheidet.";
+    $("#comp-sub").textContent = T("Saison {n} läuft vom {a} bis {b}", { n: cal.season, a: day(cal.seasonStart), b: day(cal.seasonEnd - 1) }) +
+      " – " + lg.what + ". " + T("Die Summe der vier Wochen entscheidet.");
     updateCountdown();
 
     var comp = mine ? mine.comp : {};
     $("#comp-weeks").innerHTML = [1, 2, 3, 4].map(function (w) {
       var e = comp[weekKey(cal.season, w) + lg.sfx];
       var start = cal.seasonStart + (w - 1) * WEEK;
-      var theme = lg.theme(cal.index - cal.week + w).name;
+      var theme = T(lg.theme(cal.index - cal.week + w).name);
       var cls = w === cal.week ? "now" : w > cal.week ? "future" : "";
       var val, note;
-      if (e) { cls += " done"; val = pts(e.score); note = e.done ? e.correct + " / " + lg.total + " richtig" : "abgebrochen"; }
-      else if (w < cal.week) { val = "–"; note = mine ? "verpasst" : "vorbei"; }
-      else if (w === cal.week) { val = "offen"; note = "bis " + dayLong(cal.weekEnd - 1); }
-      else { val = "–"; note = "ab " + day(start); }
-      return '<li class="week ' + cls + '"><span>Woche ' + w + '</span><em>' + esc(theme) + "</em><b>" + esc(val) + "</b><small>" + esc(note) + "</small></li>";
+      if (e) { cls += " done"; val = pts(e.score); note = e.done ? T("{n} / {m} richtig", { n: e.correct, m: lg.total }) : T("abgebrochen"); }
+      else if (w < cal.week) { val = "–"; note = mine ? T("verpasst") : T("vorbei"); }
+      else if (w === cal.week) { val = T("offen"); note = T("bis {d}", { d: dayLong(cal.weekEnd - 1) }); }
+      else { val = "–"; note = T("ab {d}", { d: day(start) }); }
+      return '<li class="week ' + cls + '"><span>' + T("Woche {n}", { n: w }) + "</span>" + '<em>' + esc(theme) + "</em><b>" + esc(val) + "</b><small>" + esc(note) + "</small></li>";
     }).join("");
 
     var btn = $("#comp-start");
     var state = $("#comp-state");
     if (!authUser) {
       btn.hidden = false;
-      btn.textContent = "Registrieren und mitspielen";
-      state.textContent = "Mitspielen können alle mit einem kostenlosen Konto.";
+      btn.textContent = T("Registrieren und mitspielen");
+      state.textContent = T("Mitspielen können alle mit einem kostenlosen Konto.");
       return;
     }
-    btn.textContent = league === "fiqh" ? "Wochenquiz starten" : "Arabisch-Liga starten";
-    if (!mine) { btn.hidden = true; state.textContent = "Dein Spielerprofil wird geladen …"; return; }
+    btn.textContent = league === "fiqh" ? T("Wochenquiz starten") : T("Arabisch-Liga starten");
+    if (!mine) { btn.hidden = true; state.textContent = T("Dein Spielerprofil wird geladen …"); return; }
     var e = mine.comp[lkey(cal)];
     btn.hidden = !!e;
     if (!authUser.emailVerified) {
-      state.textContent = "Bestätige zuerst deine E-Mail-Adresse – dann kannst du mitspielen.";
+      state.textContent = T("Bestätige zuerst deine E-Mail-Adresse – dann kannst du mitspielen.");
     } else if (!e) {
-      state.textContent = league === "fiqh" ? "Ein Versuch, 15 Fragen, dieselben wie bei allen anderen."
-        : "Ein Versuch: 30 Fragen, dann 6 Sarf-Tabellen (3 Verben, Vergangenheit und Gegenwart) – für alle dieselben.";
+      state.textContent = league === "fiqh" ? T("Ein Versuch, 15 Fragen, dieselben wie bei allen anderen.")
+        : T("Ein Versuch: 30 Fragen, dann 6 Sarf-Tabellen (3 Verben, Vergangenheit und Gegenwart) – für alle dieselben.");
     } else if (e.done) {
-      state.innerHTML = "Diese Woche erledigt: <b>" + pts(e.score) + " Punkte</b> (" + e.correct + " / " + lg.total + " richtig). Nächste Runde ab " + esc(dayLong(cal.weekEnd));
+      state.innerHTML = T("Diese Woche erledigt: <b>{p} Punkte</b> ({n} / {m} richtig). Nächste Runde ab {d}", { p: pts(e.score), n: e.correct, m: lg.total, d: esc(dayLong(cal.weekEnd)) });
     } else if (APP.isPlaying()) {
-      state.textContent = "Deine Runde läuft gerade.";
+      state.textContent = T("Deine Runde läuft gerade.");
     } else {
-      state.innerHTML = "Dein Versuch wurde abgebrochen und zählt mit <b>" + pts(e.score) + " Punkten</b>. Nächste Runde ab " + esc(dayLong(cal.weekEnd));
+      state.innerHTML = T("Dein Versuch wurde abgebrochen und zählt mit <b>{p} Punkten</b>. Nächste Runde ab {d}", { p: pts(e.score), d: esc(dayLong(cal.weekEnd)) });
     }
   }
 
@@ -399,8 +400,8 @@
     var cal = calendar(Date.now());
     var left = cal.weekEnd - Date.now();
     var d = Math.floor(left / 864e5), h = Math.floor(left % 864e5 / 36e5), m = Math.floor(left % 36e5 / 6e4);
-    $("#comp-countdown").innerHTML = "<small>Woche endet in</small><b>" + (d ? d + " T " : "") + h + " Std " + (d ? "" : m + " Min") + "</b>" +
-      "<small>Saisonende " + esc(day(cal.seasonEnd - 1)) + "</small>";
+    $("#comp-countdown").innerHTML = "<small>" + T("Woche endet in") + "</small><b>" + (d ? d + " " + T("T") + " " : "") + h + " " + T("Std") + " " + (d ? "" : m + " " + T("Min")) + "</b>" +
+      "<small>" + T("Saisonende {d}", { d: esc(day(cal.seasonEnd - 1)) }) + "</small>";
   }
 
   function leader(season) {
@@ -416,9 +417,9 @@
     var box = $("#last-winner");
     if (!prev) { box.hidden = true; return; }
     box.hidden = false;
-    box.innerHTML = '<img alt="" src="' + esc(avatarOf(prev.id)) + '"><p><small class="eyebrow">' + esc(LG().name) + " · Gewinner Saison " + (cal.season - 1) +
+    box.innerHTML = '<img alt="" src="' + esc(avatarOf(prev.id)) + '"><p><small class="eyebrow">' + esc(LG().name) + " · " + T("Gewinner Saison {n}", { n: cal.season - 1 }) +
       "</small><br><strong></strong> mit " + pts(prev.sum) + " Punkten</p>";
-    $("strong", box).textContent = prev.id === me ? "Du hast gewonnen" : displayName(prev.id);
+    $("strong", box).textContent = prev.id === me ? T("Du hast gewonnen") : displayName(prev.id);
   }
 
   function row(opts) {
@@ -452,10 +453,10 @@
   function canBefriend(id) { return canChat(id) && friends.indexOf(id) === -1 && blocked.indexOf(id) === -1; }
   function addAction(id) {
     if (!me || !canBefriend(id) || hasOutgoing(id)) return null;
-    if (hasIncoming(id)) return { label: "✓", title: "Freundschaftsanfrage annehmen", run: function () { acceptFriend(id); } };
-    return { label: "+", title: "Freundschaftsanfrage senden", run: function () { requestFriend(id); } };
+    if (hasIncoming(id)) return { label: "✓", title: T("Freundschaftsanfrage annehmen"), run: function () { acceptFriend(id); } };
+    return { label: "+", title: T("Freundschaftsanfrage senden"), run: function () { requestFriend(id); } };
   }
-  function gSub(p) { return p.g === "f" ? "Schwester" : p.g === "m" ? "Bruder" : ""; }
+  function gSub(p) { return p.g === "f" ? T("Schwester") : p.g === "m" ? T("Bruder") : ""; }
   function empty(list, text) {
     var li = document.createElement("li");
     li.className = "empty";
@@ -467,7 +468,7 @@
   function renderTop(cal) {
     $all("[data-top]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-top") === topFilter ? "true" : "false"); });
     $all("[data-gender]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-gender") === genderFilter ? "true" : "false"); });
-    $("#top-title").textContent = LG().name + " · " + (topFilter === "season" ? "Saison " + cal.season + " – die besten 10" : "alle Punkte seit Saison 1");
+    $("#top-title").textContent = LG().name + " · " + (topFilter === "season" ? T("Saison {n} – die besten 10", { n: cal.season }) : T("alle Punkte seit Saison 1"));
     var rows = allIds().map(function (id) {
       var p = playerFor(id);
       var s = topFilter === "season" ? seasonSum(p, cal.season) : { sum: compTotal(p, LG().sfx), weeks: compKeys(p, LG().sfx).length };
@@ -479,20 +480,20 @@
     var myRank = 0;
     rows.forEach(function (r, i) { if (r.id === me) myRank = i + 1; });
     rows.slice(0, 10).forEach(function (r, i) {
-      var weeks = r.s.weeks + (r.s.weeks === 1 ? " Woche" : " Wochen") + " gespielt";
+      var weeks = T(r.s.weeks === 1 ? "{n} Woche gespielt" : "{n} Wochen gespielt", { n: r.s.weeks });
       var isFriend = friends.indexOf(r.id) !== -1;
       list.appendChild(row({
-        pos: i + 1, me: r.id === me, score: r.s.sum, unit: "Punkte",
-        name: displayName(r.id), avatar: avatarOf(r.id), sub: [weeks, gSub(r.p), isFriend ? "Freund" : ""].filter(Boolean).join(" · "),
+        pos: i + 1, me: r.id === me, score: r.s.sum, unit: T("Punkte"),
+        name: displayName(r.id), avatar: avatarOf(r.id), sub: [weeks, gSub(r.p), isFriend ? T("Freund") : ""].filter(Boolean).join(" · "),
         action: addAction(r.id)
       }));
     });
-    if (!rows.length) empty(list, loaded ? "Noch keine Wettbewerbspunkte. Wer diese Woche als Erstes spielt, steht ganz oben." : "Rangliste wird geladen …");
+    if (!rows.length) empty(list, loaded ? T("Noch keine Wettbewerbspunkte. Wer diese Woche als Erstes spielt, steht ganz oben.") : T("Rangliste wird geladen …"));
     var note = $("#top-me");
-    if (!me) note.textContent = rows.length ? "Registriere dich, um selbst in die Weltrangliste zu kommen." : "";
-    else if (myRank > 10) note.innerHTML = "Dein Platz: <b>" + myRank + "</b> von " + rows.length + " – " + pts(rows[9].s.sum - rows[myRank - 1].s.sum) + " Punkte bis zu den Top 10.";
-    else if (myRank) note.innerHTML = "Du bist in den Top 10 – <b>Platz " + myRank + "</b>.";
-    else note.textContent = "Spiel das Wochenquiz, um in die Weltrangliste zu kommen.";
+    if (!me) note.textContent = rows.length ? T("Registriere dich, um selbst in die Weltrangliste zu kommen.") : "";
+    else if (myRank > 10) note.innerHTML = T("Dein Platz: <b>{r}</b> von {n} – {p} Punkte bis zu den Top 10.", { r: myRank, n: rows.length, p: pts(rows[9].s.sum - rows[myRank - 1].s.sum) });
+    else if (myRank) note.innerHTML = T("Du bist in den Top 10 – <b>Platz {r}</b>.", { r: myRank });
+    else note.textContent = T("Spiel das Wochenquiz, um in die Weltrangliste zu kommen.");
   }
   $all("[data-top]").forEach(function (b) {
     b.addEventListener("click", function () { topFilter = b.getAttribute("data-top"); APP.store("top", topFilter); render(); });
@@ -503,7 +504,7 @@
 
   /* ---------- season ranking ---------- */
   function renderBoard(cal) {
-    $("#board-title").textContent = LG().name + " · Saison " + cal.season;
+    $("#board-title").textContent = LG().name + " · " + T("Saison {n}", { n: cal.season });
     $all("[data-board]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-board") === boardFilter ? "true" : "false"); });
     var ids = allIds();
     if (boardFilter === "friends") ids = ids.filter(function (id) { return id === me || friends.indexOf(id) !== -1; });
@@ -522,30 +523,30 @@
       if (r.id === me) myPos = pos;
       var weeks = [1, 2, 3, 4].map(function (w) {
         var e = r.p.comp[weekKey(cal.season, w) + LG().sfx];
-        return "W" + w + " " + (e ? pts(e.score) : "–");
+        return T("W") + w + " " + (e ? pts(e.score) : "–");
       }).join(" · ");
       list.appendChild(row({
-        pos: pos, me: r.id === me, score: r.s.sum, unit: "Summe",
+        pos: pos, me: r.id === me, score: r.s.sum, unit: T("Summe"),
         name: displayName(r.id), avatar: avatarOf(r.id), sub: weeks, action: addAction(r.id)
       }));
     });
     if (rows.length < 2) {
       empty(list, boardFilter === "friends"
-        ? "Noch keine Freunde – such rechts nach Spielernamen oder tippe in einer Rangliste auf +."
-        : rows.length ? "Noch niemand sonst hat in dieser Saison gespielt. Lade deine Freunde ein!" : "In dieser Saison hat noch niemand gespielt.");
+        ? T("Noch keine Freunde – such rechts nach Spielernamen oder tippe in einer Rangliste auf +.")
+        : rows.length ? T("Noch niemand sonst hat in dieser Saison gespielt. Lade deine Freunde ein!") : T("In dieser Saison hat noch niemand gespielt."));
     }
 
     var note = $("#board-note");
     if (!mine) { note.textContent = ""; return; }
     var mySum = seasonSum(mine, cal.season).sum;
     var ahead = rows.filter(function (r) { return r.s.sum > mySum; });
-    if (!mySum && !mine.comp[lkey(cal)]) note.textContent = "Spiel die Runde dieser Woche, um in die Wertung zu kommen.";
-    else if (!ahead.length && rows.length > 1) note.innerHTML = "<b>Du führst!</b> Halte den Vorsprung bis " + esc(day(cal.seasonEnd - 1)) + ".";
+    if (!mySum && !mine.comp[lkey(cal)]) note.textContent = T("Spiel die Runde dieser Woche, um in die Wertung zu kommen.");
+    else if (!ahead.length && rows.length > 1) note.innerHTML = T("<b>Du führst!</b> Halte den Vorsprung bis {d}.", { d: esc(day(cal.seasonEnd - 1)) });
     else if (ahead.length) {
       var next = ahead[ahead.length - 1];
-      note.innerHTML = "Platz <b>" + myPos + "</b> – <b>" + pts(next.s.sum - mySum) + " Punkte</b> hinter <b></b>.";
+      note.innerHTML = T("Platz <b>{r}</b> – <b>{p} Punkte</b> hinter <b></b>.", { r: myPos, p: pts(next.s.sum - mySum) });
       $all("b", note)[2].textContent = displayName(next.id);
-    } else note.innerHTML = "Platz <b>1</b> – noch ohne Konkurrenz.";
+    } else note.innerHTML = T("Platz <b>1</b> – noch ohne Konkurrenz.");
   }
   $all("[data-board]").forEach(function (b) {
     b.addEventListener("click", function () { boardFilter = b.getAttribute("data-board"); APP.store("board", boardFilter); render(); });
@@ -560,17 +561,17 @@
     list.innerHTML = "";
     rows.forEach(function (r, i) {
       var e = r.p.comp[cal.key];
-      var sub = r.p.games + (r.p.games === 1 ? " Quiz" : " Quizze") + " · diese Woche " + (e ? pts(e.score) : "–");
+      var sub = T(r.p.games === 1 ? "{n} Quiz" : "{n} Quizze", { n: r.p.games }) + " · " + T("diese Woche") + " " + (e ? pts(e.score) : "–");
       list.appendChild(row({
-        pos: i + 1, me: r.id === me, score: r.p.total, unit: "Punkte",
+        pos: i + 1, me: r.id === me, score: r.p.total, unit: T("Punkte"),
         name: displayName(r.id), avatar: avatarOf(r.id), sub: sub,
         actions: r.id === me ? [] : [
-          canChat(r.id) ? { label: "✉", title: "Nachricht schreiben", run: function () { if (window.FIQH_CHAT) window.FIQH_CHAT.openWith(r.id); } } : null,
-          { label: "×", title: "Freundschaft beenden", run: function () { removeFriend(r.id); } }
+          canChat(r.id) ? { label: "✉", title: T("Nachricht schreiben"), run: function () { if (window.FIQH_CHAT) window.FIQH_CHAT.openWith(r.id); } } : null,
+          { label: "×", title: T("Freundschaft beenden"), run: function () { removeFriend(r.id); } }
         ]
       }));
     });
-    if (!friends.length) empty(list, "Noch keine Freunde. Such unten nach Spielernamen und schick eine Freundschaftsanfrage.");
+    if (!friends.length) empty(list, T("Noch keine Freunde. Such unten nach Spielernamen und schick eine Freundschaftsanfrage."));
     renderRequests();
   }
 
@@ -607,14 +608,14 @@
       box.appendChild(h);
       box.appendChild(ul);
     }
-    list("Freundschaftsanfragen (" + incoming.length + ")", incoming.map(function (r) {
-      return item(r.from, "möchte mit dir befreundet sein", [
-        { label: "Annehmen", primary: true, run: function () { acceptFriend(r.from); } },
-        { label: "Ablehnen", run: function () { declineFriend(r.from); } }
+    list(T("Freundschaftsanfragen ({n})", { n: incoming.length }), incoming.map(function (r) {
+      return item(r.from, T("möchte mit dir befreundet sein"), [
+        { label: T("Annehmen"), primary: true, run: function () { acceptFriend(r.from); } },
+        { label: T("Ablehnen"), run: function () { declineFriend(r.from); } }
       ]);
     }));
-    list("Gesendet – wartet auf Antwort", outgoing.map(function (r) {
-      return item(r.to, "Anfrage gesendet", [{ label: "Zurückziehen", run: function () { cancelFriend(r.to); } }]);
+    list(T("Gesendet – wartet auf Antwort"), outgoing.map(function (r) {
+      return item(r.to, T("Anfrage gesendet"), [{ label: T("Zurückziehen"), run: function () { cancelFriend(r.to); } }]);
     }));
   }
   function updateBadge() {
@@ -622,14 +623,14 @@
     if (!badge) return;
     badge.hidden = !incoming.length;
     badge.textContent = incoming.length > 9 ? "9+" : String(incoming.length);
-    badge.setAttribute("aria-label", incoming.length + " Freundschaftsanfragen");
+    badge.setAttribute("aria-label", T("{n} Freundschaftsanfragen", { n: incoming.length }));
   }
   function friendOp(p, done) {
     return p.then(function () { if (done) done(); }, function (e) { showError(B.message(e)); render(); });
   }
   function afterChange() { render(); runSearch($("#friend-q").value.trim()); }
   function requestFriend(id) {
-    if (!canPlay()) { showError("Bestätige zuerst deine E-Mail-Adresse – dann kannst du Freundschaftsanfragen senden."); return; }
+    if (!canPlay()) { showError(T("Bestätige zuerst deine E-Mail-Adresse – dann kannst du Freundschaftsanfragen senden.")); return; }
     if (hasIncoming(id)) { acceptFriend(id); return; }
     if (!canBefriend(id) || hasOutgoing(id)) return;
     outgoing.push({ to: id, at: Date.now() });   // shown at once, the snapshot confirms it
@@ -637,7 +638,7 @@
     friendOp(B.sendFriendRequest(id));
   }
   function acceptFriend(id) {
-    if (!canPlay()) { showError("Bestätige zuerst deine E-Mail-Adresse – dann kannst du Anfragen annehmen."); return; }
+    if (!canPlay()) { showError(T("Bestätige zuerst deine E-Mail-Adresse – dann kannst du Anfragen annehmen.")); return; }
     var alsoMine = hasOutgoing(id);
     incoming = incoming.filter(function (r) { return r.from !== id; });
     outgoing = outgoing.filter(function (r) { return r.to !== id; });
@@ -674,7 +675,7 @@
       return (B.nameKey(players[a].nick).indexOf(lq) === 0 ? 0 : 1) - (B.nameKey(players[b].nick).indexOf(lq) === 0 ? 0 : 1) ||
         players[a].nick.localeCompare(players[b].nick);
     }).slice(0, 8);
-    if (!hits.length) { box.innerHTML = '<li class="note">Kein Spieler mit diesem Namen gefunden.</li>'; return; }
+    if (!hits.length) { box.innerHTML = '<li class="note">' + T("Kein Spieler mit diesem Namen gefunden.") + "</li>"; return; }
     hits.forEach(function (id) {
       var li = document.createElement("li");
       li.className = "hit";
@@ -682,11 +683,11 @@
       $("img", li).src = avatarOf(id);
       $("span", li).textContent = players[id].nick;
       var label = null, run = null;
-      if (friends.indexOf(id) !== -1) label = "Freund";
-      else if (blocked.indexOf(id) !== -1) label = "blockiert";
-      else if (hasIncoming(id)) { label = "Annehmen"; run = function () { acceptFriend(id); }; }
-      else if (hasOutgoing(id)) { label = "Angefragt · zurückziehen"; run = function () { cancelFriend(id); }; }
-      else { label = "Anfrage senden"; run = function () { requestFriend(id); }; }
+      if (friends.indexOf(id) !== -1) label = T("Freund");
+      else if (blocked.indexOf(id) !== -1) label = T("blockiert");
+      else if (hasIncoming(id)) { label = T("Annehmen"); run = function () { acceptFriend(id); }; }
+      else if (hasOutgoing(id)) { label = T("Angefragt · zurückziehen"); run = function () { cancelFriend(id); }; }
+      else { label = T("Anfrage senden"); run = function () { requestFriend(id); }; }
       var el = document.createElement(run ? "button" : "small");
       el.textContent = label;
       if (run) { el.type = "button"; el.className = "linkish"; el.addEventListener("click", run); }
@@ -702,9 +703,9 @@
   function renderAccount() {
     var editing = !$("#acc-form").hidden;
     $("#acc-avatar").src = avatarOf(me);
-    $("#acc-name").textContent = mine.nick || "Spieler";
-    $("#acc-stats").textContent = pts(mine.total) + " Punkte · " + mine.games + (mine.games === 1 ? " Quiz" : " Quizze") +
-      " · " + pts(compTotal(mine)) + " im Wettbewerb";
+    $("#acc-name").textContent = mine.nick || T("Spieler");
+    $("#acc-stats").textContent = T("{p} Punkte", { p: pts(mine.total) }) + " · " + T(mine.games === 1 ? "{n} Quiz" : "{n} Quizze", { n: mine.games }) +
+      " · " + T("{p} im Wettbewerb", { p: pts(compTotal(mine)) });
     if (!editing) $("#acc-preview").src = avatarOf(me);
   }
   function accMsg(text, kind) {
@@ -721,8 +722,8 @@
     accMsg("");
     if (open) {
       $("#acc-nick-hint").textContent = mine.g === "f"
-        ? "Als Schwester spielst du mit einer Kunya: Umm …, Bint …, أم …, بنت …, Mutter von … oder Tochter von …. Jeden Namen gibt es nur einmal."
-        : "3–24 Zeichen, lateinisch oder arabisch, jeden Namen gibt es nur einmal.";
+        ? T("Als Schwester spielst du mit einer Kunya: Umm …, Bint …, أم …, بنت …, Mutter von … oder Tochter von …. Jeden Namen gibt es nur einmal.")
+        : T("3–24 Zeichen, lateinisch oder arabisch, jeden Namen gibt es nur einmal.");
       $("#acc-nick").value = mine.nick || "";
       $("#acc-preview").src = avatarOf(me);
       $("#acc-nick").focus();
@@ -736,20 +737,20 @@
     delete avatars[me];
     $("#acc-preview").src = avatarOf(me);
     if (keep) avatars[me] = keep;
-    accMsg("Bild wird beim Speichern entfernt.");
+    accMsg(T("Bild wird beim Speichern entfernt."));
   });
   $("#acc-file").addEventListener("change", function (e) {
     var file = e.target.files && e.target.files[0];
     e.target.value = "";
     if (!file) return;
-    if (!/^image\//.test(file.type)) { accMsg("Bitte eine Bilddatei wählen.", "bad"); return; }
-    if (file.size > 15 * 1024 * 1024) { accMsg("Das Bild ist zu groß (max. 15 MB).", "bad"); return; }
-    accMsg("Bild wird vorbereitet …");
+    if (!/^image\//.test(file.type)) { accMsg(T("Bitte eine Bilddatei wählen."), "bad"); return; }
+    if (file.size > 15 * 1024 * 1024) { accMsg(T("Das Bild ist zu groß (max. 15 MB)."), "bad"); return; }
+    accMsg(T("Bild wird vorbereitet …"));
     shrink(file).then(function (url) {
       draftImg = url;
       $("#acc-preview").src = url;
-      accMsg("Vorschau – mit „Speichern“ übernehmen.");
-    }, function () { accMsg("Das Bild konnte nicht gelesen werden.", "bad"); });
+      accMsg(T("Vorschau – mit „Speichern“ übernehmen."));
+    }, function () { accMsg(T("Das Bild konnte nicht gelesen werden."), "bad"); });
   });
   /* Square center crop, 128 x 128 JPEG: a few KB, fits easily in one document. */
   function shrink(file) {
@@ -783,7 +784,7 @@
     nameTimer = setTimeout(function () {
       B.nameAvailable(v).then(function (free) {
         if ($("#acc-nick").value.trim() !== v) return;
-        accMsg(free ? "„" + v + "“ ist frei." : "„" + v + "“ ist schon vergeben.", free ? "good" : "bad");
+        accMsg(free ? T("„{v}“ ist frei.", { v: v }) : T("„{v}“ ist schon vergeben.", { v: v }), free ? "good" : "bad");
       }, function () {});
     }, 350);
   });
@@ -803,7 +804,7 @@
     }
     if (!jobs.length) { openAccount(false); return; }
     $("#acc-save").disabled = true;
-    accMsg("Speichere …");
+    accMsg(T("Speichere …"));
     Promise.all(jobs).then(function () {
       $("#acc-save").disabled = false;
       openAccount(false);
@@ -850,10 +851,10 @@
   };
 
   if (!B || !B.available) {
-    off("Online-Funktionen noch nicht eingerichtet",
+    off(T("Online-Funktionen noch nicht eingerichtet"),
       B && B.reason === "sdk"
-        ? "Die Verbindung zum Server konnte nicht geladen werden. Prüfe deine Internetverbindung und lade die Seite neu. Nachschlagen und Quiz funktionieren trotzdem."
-        : "Konten, Ranglisten und der Wochenwettbewerb brauchen einen Server (Firebase). Die Anleitung steht in SETUP.md. Nachschlagen und Quiz funktionieren schon jetzt.");
+        ? T("Die Verbindung zum Server konnte nicht geladen werden. Prüfe deine Internetverbindung und lade die Seite neu. Nachschlagen und Quiz funktionieren trotzdem.")
+        : T("Konten, Ranglisten und der Wochenwettbewerb brauchen einen Server (Firebase). Die Anleitung steht in SETUP.md. Nachschlagen und Quiz funktionieren schon jetzt."));
     return;
   }
 
@@ -864,7 +865,7 @@
     loaded = true;
     render();
     migrate();
-  }, function () { showError("Die Rangliste wird gerade nicht aktualisiert. Lade die Seite neu."); });
+  }, function () { showError(T("Die Rangliste wird gerade nicht aktualisiert. Lade die Seite neu.")); });
   B.collection("avatars").onSnapshot(function (snap) {
     var next = {};
     snap.docs.forEach(function (d) { var img = d.exists && cleanImg((d.data() || {}).img); if (img) next[d.id] = img; });
@@ -895,7 +896,7 @@
       legacyFriends = Array.isArray(f) ? f.filter(function (x) { return typeof x === "string" && x !== me; }) : [];
       var bl = snaps[1].exists ? snaps[1].data().blocked : [];
       blocked = Array.isArray(bl) ? bl.filter(function (x) { return typeof x === "string"; }) : [];
-      if (!mine) showError("Zu deinem Konto gibt es kein Spielerprofil. Melde dich ab und registriere dich neu oder wende dich an die Betreiber.");
+      if (!mine) showError(T("Zu deinem Konto gibt es kein Spielerprofil. Melde dich ab und registriere dich neu oder wende dich an die Betreiber."));
       render();
       migrate();
     }, function (e) { showError(B.message(e)); });

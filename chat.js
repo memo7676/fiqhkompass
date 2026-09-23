@@ -3,6 +3,7 @@
    Uses window.FIQH_BACKEND and window.FIQH_SOCIAL (names, pictures, block list). */
 (function () {
   "use strict";
+  var T = window.T || function (x) { return x; }, LOC = window.I18N ? window.I18N.locale : "de-DE";
   var B = window.FIQH_BACKEND, S = window.FIQH_SOCIAL, APP = window.FIQH_APP;
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -20,17 +21,17 @@
   function isUnread(c) {
     return !!(c.last && c.last.from !== me() && c.last.at > (c.read[me()] || 0));
   }
-  function time(ms) { return new Date(ms).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }); }
+  function time(ms) { return new Date(ms).toLocaleTimeString(LOC, { hour: "2-digit", minute: "2-digit" }); }
   function dayLabel(ms) {
     var d = new Date(ms), today = new Date();
     var y = new Date(); y.setDate(today.getDate() - 1);
-    if (d.toDateString() === today.toDateString()) return "Heute";
-    if (d.toDateString() === y.toDateString()) return "Gestern";
-    return d.toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" });
+    if (d.toDateString() === today.toDateString()) return T("Heute");
+    if (d.toDateString() === y.toDateString()) return T("Gestern");
+    return d.toLocaleDateString(LOC, { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" });
   }
   function shortWhen(ms) {
     if (!ms) return "";
-    return new Date(ms).toDateString() === new Date().toDateString() ? time(ms) : new Date(ms).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
+    return new Date(ms).toDateString() === new Date().toDateString() ? time(ms) : new Date(ms).toLocaleDateString(LOC, { day: "2-digit", month: "2-digit" });
   }
   function openAuth(p) { if (window.FIQH_AUTH) window.FIQH_AUTH.open(p); }
 
@@ -43,16 +44,16 @@
     $("#chat-on").hidden = true;
   }
   function refresh() {
-    if (!B || !B.available) { off("Chat noch nicht eingerichtet", "Der Chat braucht den Server (Firebase). Die Anleitung steht in SETUP.md.", false); return; }
-    if (!authUser) { off("Chat mit anderen Spielern", "Melde dich an, um mit anderen Spielern zu schreiben – Brüder mit Brüdern, Schwestern mit Schwestern.", true); return; }
-    if (!authUser.emailVerified) { off("Bitte bestätige deine E-Mail-Adresse", "Der Chat ist freigeschaltet, sobald deine E-Mail-Adresse bestätigt ist.", false); return; }
+    if (!B || !B.available) { off(T("Chat noch nicht eingerichtet"), T("Der Chat braucht den Server (Firebase). Die Anleitung steht in SETUP.md."), false); return; }
+    if (!authUser) { off(T("Chat mit anderen Spielern"), T("Melde dich an, um mit anderen Spielern zu schreiben – Brüder mit Brüdern, Schwestern mit Schwestern."), true); return; }
+    if (!authUser.emailVerified) { off(T("Bitte bestätige deine E-Mail-Adresse"), T("Der Chat ist freigeschaltet, sobald deine E-Mail-Adresse bestätigt ist."), false); return; }
     var mine = S.mine();
-    if (!mine) { off("Einen Moment …", "Dein Spielerprofil wird geladen.", false); return; }
+    if (!mine) { off(T("Einen Moment …"), T("Dein Spielerprofil wird geladen."), false); return; }
     $("#chat-off").hidden = true;
     $("#chat-on").hidden = false;
     $("#chat-rule").textContent = mine.g === "f"
-      ? "Du kannst mit anderen Schwestern schreiben."
-      : "Du kannst mit anderen Brüdern schreiben.";
+      ? T("Du kannst mit anderen Schwestern schreiben.")
+      : T("Du kannst mit anderen Brüdern schreiben.");
     renderList();
     if (active) renderConvoHead();
   }
@@ -68,7 +69,7 @@
       renderList();
       updateBadge();
       maybeMarkRead();
-    }, function () { off("Chat gerade nicht erreichbar", "Lade die Seite neu und versuch es noch einmal.", false); });
+    }, function () { off(T("Chat gerade nicht erreichbar"), T("Lade die Seite neu und versuch es noch einmal."), false); });
     refresh();
   }
 
@@ -83,7 +84,7 @@
     if (!list.length) {
       var li = document.createElement("li");
       li.className = "empty";
-      li.textContent = "Noch keine Gespräche. Such oben nach einem Spielernamen oder tippe bei einem Freund im Reiter „Wettbewerb“ auf ✉.";
+      li.textContent = T("Noch keine Gespräche. Such oben nach einem Spielernamen oder tippe bei einem Freund im Reiter „Wettbewerb“ auf ✉.");
       box.appendChild(li);
       return;
     }
@@ -98,7 +99,7 @@
       $("img", b).src = S.avatar(other);
       $("strong", b).textContent = S.name(other);
       $("small", b).textContent = blocked.indexOf(other) !== -1 ? "Blockiert"
-        : c.last ? (c.last.from === me() ? "Du: " : "") + c.last.text : "Noch keine Nachricht";
+        : c.last ? (c.last.from === me() ? T("Du: ") : "") + c.last.text : T("Noch keine Nachricht");
       $(".ci-time", b).textContent = c.last ? shortWhen(c.last.at) : "";
       if (isUnread(c)) { var dot = document.createElement("span"); dot.className = "dot"; dot.setAttribute("aria-label", "ungelesen"); $(".ci-meta", b).appendChild(dot); }
       b.addEventListener("click", function () { openChat(c.id); });
@@ -111,7 +112,7 @@
     var badge = $("#chat-badge");
     badge.hidden = !n;
     badge.textContent = n > 9 ? "9+" : String(n);
-    badge.setAttribute("aria-label", n + " ungelesene Gespräche");
+    badge.setAttribute("aria-label", T("{n} ungelesene Gespräche", { n: n }));
   }
 
   /* ---------- new chat: search players of the same group ---------- */
@@ -125,7 +126,7 @@
     }).slice(0, 8);
     if (!hits.length) {
       box.innerHTML = '<li class="note"></li>';
-      $(".note", box).textContent = S.mine().g === "f" ? "Keine Schwester mit diesem Namen gefunden." : "Keinen Bruder mit diesem Namen gefunden.";
+      $(".note", box).textContent = S.mine().g === "f" ? T("Keine Schwester mit diesem Namen gefunden.") : T("Keinen Bruder mit diesem Namen gefunden.");
       return;
     }
     hits.forEach(function (id) {
@@ -179,7 +180,7 @@
       renderMessages(nearBottom || (grew && list.length && list[list.length - 1].from === me()));
       maybeMarkRead();
     }, function () {
-      $("#msgs").innerHTML = '<li class="empty">Die Nachrichten konnten nicht geladen werden.</li>';
+      $("#msgs").innerHTML = '<li class="empty">' + T("Die Nachrichten konnten nicht geladen werden.") + "</li>";
     });
     if (window.matchMedia("(hover: hover)").matches) $("#msg-text").focus();
   }
@@ -201,12 +202,12 @@
     var gone = !players[other];
     $("#convo-img").src = S.avatar(other);
     $("#convo-name").textContent = S.name(other);
-    $("#convo-sub").textContent = gone ? "Konto gelöscht" : players[other].g === "f" ? "Schwester" : "Bruder";
-    $("#convo-block").textContent = isBlocked ? "Blockierung aufheben" : "Blockieren";
+    $("#convo-sub").textContent = gone ? T("Konto gelöscht") : players[other].g === "f" ? T("Schwester") : T("Bruder");
+    $("#convo-block").textContent = isBlocked ? T("Blockierung aufheben") : T("Blockieren");
     var note = $("#convo-note");
     var canWrite = !isBlocked && !gone;
     note.hidden = canWrite;
-    note.textContent = gone ? "Dieses Konto wurde gelöscht." : isBlocked ? "Du hast diesen Spieler blockiert. Ihr könnt euch nicht mehr schreiben." : "";
+    note.textContent = gone ? T("Dieses Konto wurde gelöscht.") : isBlocked ? T("Du hast diesen Spieler blockiert. Ihr könnt euch nicht mehr schreiben.") : "";
     $("#msg-text").disabled = !canWrite;
     $("#msg-send").disabled = !canWrite;
     $("#convo-report").hidden = gone;
@@ -219,7 +220,7 @@
     if (!messages.length) {
       var e = document.createElement("li");
       e.className = "empty";
-      e.textContent = "Noch keine Nachrichten. Schreib die erste – freundlich und respektvoll.";
+      e.textContent = T("Noch keine Nachrichten. Schreib die erste – freundlich und respektvoll.");
       box.appendChild(e);
       return;
     }
@@ -237,7 +238,7 @@
       li.className = "msg" + (m.from === me() ? " mine" : "") + (m.pending ? " pending" : "");
       li.textContent = m.text;
       var t = document.createElement("time");
-      t.textContent = m.pending ? "wird gesendet …" : time(m.at);
+      t.textContent = m.pending ? T("wird gesendet …") : time(m.at);
       li.appendChild(t);
       box.appendChild(li);
     });
@@ -275,7 +276,7 @@
       if (active === chatId && !ta.value) { ta.value = text; grow(); }
       var note = $("#convo-note");
       note.hidden = false;
-      note.textContent = "Nicht gesendet: " + B.message(e);
+      note.textContent = T("Nicht gesendet: ") + B.message(e);
     });
   }
   $("#composer").addEventListener("submit", function (e) { e.preventDefault(); send(); });
@@ -308,7 +309,7 @@
       $("#report-box").hidden = true;
       var note = $("#convo-note");
       note.hidden = false;
-      note.textContent = "Danke, deine Meldung ist eingegangen. Du kannst den Spieler zusätzlich blockieren.";
+      note.textContent = T("Danke, deine Meldung ist eingegangen. Du kannst den Spieler zusätzlich blockieren.");
     }, function (e2) {
       var note = $("#convo-note"); note.hidden = false; note.textContent = B.message(e2);
     });
