@@ -4,7 +4,8 @@
 
    Firestore layout (enforced by firestore.rules):
      usernames/<key>   { uid, name }       one document per player name, key = name in lower case
-     users/<uid>       private: { birthYear, parentalConsent, termsAt, createdAt, friends }, after deletion only { deletedAt }
+     users/<uid>       private: { birthYear, parentalConsent, termsAt, createdAt, friends (old, only shrinks), blocked }, after deletion only { deletedAt }
+     friendRequests/<from>_<to>  { from, to, at }   friendships/<a>_<b>  { users: [a, b], at }
      players/<uid>     public:  { nick, nickKey, g, total, games, comp, at }
      avatars/<uid>     public:  { img }   128 x 128 JPEG as data URL
      chats/<a>_<b>     { members: [a, b], last, updatedAt, read: { uid: time } }   only brother-brother or sister-sister
@@ -230,6 +231,39 @@
       });
     },
 
+    /* ---------- friends: request -> accept -> friendship ---------- */
+    watchFriends: function (uid, next, err) {
+      return fs.collection("friendships").where("users", "array-contains", uid).onSnapshot(function (qs) {
+        next(qs.docs.map(function (d) { var u = d.data().users || []; return u[0] === uid ? u[1] : u[0]; }).filter(Boolean));
+      }, err);
+    },
+    /* next({ incoming: [{ from, at }], outgoing: [{ to, at }] }) */
+    watchFriendRequests: function (uid, next, err) {
+      var state = { incoming: null, outgoing: null };
+      function map(qs, key) {
+        return qs.docs.map(function (d) { var r = d.data({ serverTimestamps: "estimate" }); var o = { at: millis(r.at) }; o[key] = r[key]; return o; });
+      }
+      function emit() { if (state.incoming && state.outgoing) next({ incoming: state.incoming, outgoing: state.outgoing }); }
+      var a = fs.collection("friendRequests").where("to", "==", uid).onSnapshot(function (qs) { state.incoming = map(qs, "from"); emit(); }, err);
+      var b = fs.collection("friendRequests").where("from", "==", uid).onSnapshot(function (qs) { state.outgoing = map(qs, "to"); emit(); }, err);
+      return function () { a(); b(); };
+    },
+    sendFriendRequest: function (to) {
+      var uid = auth.currentUser.uid;
+      return fs.doc("friendRequests/" + uid + "_" + to).set({ from: uid, to: to, at: FieldValue.serverTimestamp() });
+    },
+    /* alsoMine: I had sent one to them as well -> remove it too */
+    acceptFriendRequest: function (from, alsoMine) {
+      var uid = auth.currentUser.uid, users = [uid, from].sort(), b = fs.batch();
+      b.set(fs.doc("friendships/" + users.join("_")), { users: users, at: FieldValue.serverTimestamp() });
+      b.delete(fs.doc("friendRequests/" + from + "_" + uid));
+      if (alsoMine) b.delete(fs.doc("friendRequests/" + uid + "_" + from));
+      return b.commit();
+    },
+    declineFriendRequest: function (from) { return fs.doc("friendRequests/" + from + "_" + auth.currentUser.uid).delete(); },
+    cancelFriendRequest: function (to) { return fs.doc("friendRequests/" + auth.currentUser.uid + "_" + to).delete(); },
+    removeFriend: function (other) { return fs.doc("friendships/" + [auth.currentUser.uid, other].sort().join("_")).delete(); },
+
     /* ---------- chat ---------- */
     chatId: function (a, b) { return [a, b].sort().join("_"); },
     /* Opens the conversation with another player, creating it on first use.
@@ -283,8 +317,17 @@
     /* Deletes everything stored about the player, then the login itself. */
     deleteAccount: function (password, nickKey) {
       var uid = auth.currentUser.uid;
+      var mine = [];
       return api.reauth(password).then(function () {
+        /* friendships and open requests go too */
+        return Promise.all([
+          fs.collection("friendships").where("users", "array-contains", uid).get(),
+          fs.collection("friendRequests").where("to", "==", uid).get(),
+          fs.collection("friendRequests").where("from", "==", uid).get()
+        ]).then(function (all) { all.forEach(function (qs) { qs.docs.forEach(function (d) { mine.push(d.ref); }); }); }, function () {});
+      }).then(function () {
         var b = fs.batch();
+        mine.slice(0, 400).forEach(function (ref) { b.delete(ref); });
         b.delete(fs.doc("players/" + uid));
         b.delete(fs.doc("avatars/" + uid));
         b.delete(fs.doc("progress/" + uid));

@@ -59,8 +59,9 @@ service cloud.firestore {
         && request.resource.data.friends.size() == 0;
       allow update: if isOwner(uid) && !('deletedAt' in resource.data) && (
         (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['friends', 'blocked'])
+          // Old one-sided friend list: may only shrink (friends now come from friendships).
           && request.resource.data.friends is list
-          && request.resource.data.friends.size() <= 200
+          && request.resource.data.friends.size() <= resource.data.get('friends', []).size()
           && request.resource.data.get('blocked', []) is list
           && request.resource.data.get('blocked', []).size() <= 500)
         || request.resource.data.keys().hasOnly(['deletedAt']));
@@ -141,6 +142,42 @@ service cloud.firestore {
           && !blockedIn(otherOf(chat().members), request.auth.uid)
           && !blockedIn(request.auth.uid, otherOf(chat().members));
       }
+    }
+
+    // Friend requests: <from>_<to>. Only between two brothers or two sisters
+    // (like the chat), never to or from someone who blocked the other.
+    function pairId(a, b) { return a < b ? a + '_' + b : b + '_' + a; }
+    function friendsDoc(a, b) { return /databases/$(database)/documents/friendships/$(pairId(a, b)); }
+    match /friendRequests/{id} {
+      allow read, delete: if signedIn()
+        && (resource.data.from == request.auth.uid || resource.data.to == request.auth.uid);
+      allow create: if signedIn() && verified()
+        && request.resource.data.keys().hasOnly(['from', 'to', 'at'])
+        && request.resource.data.from == request.auth.uid
+        && request.resource.data.to is string
+        && request.resource.data.to != request.auth.uid
+        && id == request.auth.uid + '_' + request.resource.data.to
+        && request.resource.data.at == request.time
+        && exists(/databases/$(database)/documents/players/$(request.resource.data.to))
+        && playerG(request.auth.uid) == playerG(request.resource.data.to)
+        && !exists(friendsDoc(request.auth.uid, request.resource.data.to))
+        && !blockedIn(request.resource.data.to, request.auth.uid)
+        && !blockedIn(request.auth.uid, request.resource.data.to);
+    }
+
+    // Friendship: exists only after the other one sent a request and this one accepted it.
+    // Either of the two can end it.
+    match /friendships/{id} {
+      allow read, delete: if signedIn() && request.auth.uid in resource.data.users;
+      allow create: if signedIn() && verified()
+        && request.resource.data.keys().hasOnly(['users', 'at'])
+        && request.resource.data.users is list
+        && request.resource.data.users.size() == 2
+        && request.auth.uid in request.resource.data.users
+        && request.resource.data.users[0] < request.resource.data.users[1]
+        && id == request.resource.data.users[0] + '_' + request.resource.data.users[1]
+        && request.resource.data.at == request.time
+        && exists(/databases/$(database)/documents/friendRequests/$(otherOf(request.resource.data.users) + '_' + request.auth.uid));
     }
 
     // Reports about chat messages: write-only, read in the Firebase console.

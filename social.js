@@ -5,7 +5,8 @@
    Data (see backend.js / firestore.rules):
      players/<uid>   public score card { nick, nickKey, g, total, games, comp: { "s1w2": {...} }, at }
      avatars/<uid>   public profile picture { img }
-     users/<uid>     private { friends: [uid, ...], ... }                                 */
+     friendRequests  { from, to, at }  -> accepted: friendships { users: [a, b], at }
+     Friends only between two brothers or two sisters, like the chat.                   */
 (function () {
   "use strict";
   var APP = window.FIQH_APP;
@@ -64,7 +65,9 @@
   var mine = null;            // my own player doc (local truth)
   var players = {};           // uid -> sanitized player doc (everyone)
   var avatars = {};           // uid -> validated data: URL
-  var friends = [];           // uids
+  var friends = [];           // uids (from friendships, both sides agreed)
+  var incoming = [], outgoing = [];   // open friend requests: [{ from|to, at }]
+  var legacyFriends = [];     // old one-sided list in users/<uid>, turned into requests once
   var blocked = [];           // uids this player blocked (chat)
   var loaded = false;         // first players snapshot arrived
   var topFilter = APP.store("top") || "season";
@@ -122,10 +125,6 @@
       throw e;
     });
     return chain;
-  }
-  function saveFriends() {
-    if (!me) return;
-    B.doc("users/" + me).update({ friends: friends.slice(0, 200) }).catch(function (e) { showError(B.message(e)); });
   }
   function showError(msg) {
     var el = $("#comp-error");
@@ -345,9 +344,13 @@
   }
   /* Chat only between two brothers or two sisters (the server rules enforce it too). */
   function canChat(id) { return !!(mine && players[id] && players[id].g && players[id].g === mine.g && id !== me); }
+  function hasIncoming(id) { return incoming.some(function (r) { return r.from === id; }); }
+  function hasOutgoing(id) { return outgoing.some(function (r) { return r.to === id; }); }
+  function canBefriend(id) { return canChat(id) && friends.indexOf(id) === -1 && blocked.indexOf(id) === -1; }
   function addAction(id) {
-    if (!me || id === me || friends.indexOf(id) !== -1) return null;
-    return { label: "+", title: "Als Freund hinzufügen", run: function () { addFriend(id); } };
+    if (!me || !canBefriend(id) || hasOutgoing(id)) return null;
+    if (hasIncoming(id)) return { label: "✓", title: "Freundschaftsanfrage annehmen", run: function () { acceptFriend(id); } };
+    return { label: "+", title: "Freundschaftsanfrage senden", run: function () { requestFriend(id); } };
   }
   function gSub(p) { return p.g === "f" ? "Schwester" : p.g === "m" ? "Bruder" : ""; }
   function empty(list, text) {
@@ -460,23 +463,99 @@
         name: displayName(r.id), avatar: avatarOf(r.id), sub: sub,
         actions: r.id === me ? [] : [
           canChat(r.id) ? { label: "✉", title: "Nachricht schreiben", run: function () { if (window.FIQH_CHAT) window.FIQH_CHAT.openWith(r.id); } } : null,
-          { label: "×", title: "Aus Freunden entfernen", run: function () { removeFriend(r.id); } }
+          { label: "×", title: "Freundschaft beenden", run: function () { removeFriend(r.id); } }
         ]
       }));
     });
-    if (!friends.length) empty(list, "Noch keine Freunde. Such unten nach Spielernamen oder tippe in einer Rangliste auf +.");
+    if (!friends.length) empty(list, "Noch keine Freunde. Such unten nach Spielernamen und schick eine Freundschaftsanfrage.");
+    renderRequests();
   }
-  function addFriend(id) {
-    if (!me || id === me || friends.indexOf(id) !== -1) return;
-    friends.push(id);
-    saveFriends();
-    render();
-    runSearch($("#friend-q").value.trim());
+
+  /* Open requests: received ones to accept or decline, sent ones to withdraw. */
+  function renderRequests() {
+    var box = $("#friend-requests");
+    box.innerHTML = "";
+    box.hidden = !incoming.length && !outgoing.length;
+    function item(id, text, buttons) {
+      var li = document.createElement("li");
+      li.className = "req";
+      li.innerHTML = '<img alt=""><span class="req-name"><strong></strong><small></small></span><span class="req-actions"></span>';
+      $("img", li).src = avatarOf(id);
+      $("strong", li).textContent = displayName(id);
+      $("small", li).textContent = text;
+      buttons.forEach(function (b) {
+        var el = document.createElement("button");
+        el.type = "button";
+        el.className = b.primary ? "btn btn-primary btn-sm" : "btn btn-sm";
+        el.textContent = b.label;
+        el.addEventListener("click", function () { el.disabled = true; b.run(); });
+        $(".req-actions", li).appendChild(el);
+      });
+      return li;
+    }
+    function list(title, items) {
+      if (!items.length) return;
+      var h = document.createElement("p");
+      h.className = "step-label";
+      h.textContent = title;
+      var ul = document.createElement("ul");
+      ul.className = "req-list";
+      items.forEach(function (li) { ul.appendChild(li); });
+      box.appendChild(h);
+      box.appendChild(ul);
+    }
+    list("Freundschaftsanfragen (" + incoming.length + ")", incoming.map(function (r) {
+      return item(r.from, "möchte mit dir befreundet sein", [
+        { label: "Annehmen", primary: true, run: function () { acceptFriend(r.from); } },
+        { label: "Ablehnen", run: function () { declineFriend(r.from); } }
+      ]);
+    }));
+    list("Gesendet – wartet auf Antwort", outgoing.map(function (r) {
+      return item(r.to, "Anfrage gesendet", [{ label: "Zurückziehen", run: function () { cancelFriend(r.to); } }]);
+    }));
+  }
+  function updateBadge() {
+    var badge = $("#friend-badge");
+    if (!badge) return;
+    badge.hidden = !incoming.length;
+    badge.textContent = incoming.length > 9 ? "9+" : String(incoming.length);
+    badge.setAttribute("aria-label", incoming.length + " Freundschaftsanfragen");
+  }
+  function friendOp(p, done) {
+    return p.then(function () { if (done) done(); }, function (e) { showError(B.message(e)); render(); });
+  }
+  function afterChange() { render(); runSearch($("#friend-q").value.trim()); }
+  function requestFriend(id) {
+    if (!canPlay()) { showError("Bestätige zuerst deine E-Mail-Adresse – dann kannst du Freundschaftsanfragen senden."); return; }
+    if (hasIncoming(id)) { acceptFriend(id); return; }
+    if (!canBefriend(id) || hasOutgoing(id)) return;
+    outgoing.push({ to: id, at: Date.now() });   // shown at once, the snapshot confirms it
+    afterChange();
+    friendOp(B.sendFriendRequest(id));
+  }
+  function acceptFriend(id) {
+    if (!canPlay()) { showError("Bestätige zuerst deine E-Mail-Adresse – dann kannst du Anfragen annehmen."); return; }
+    var alsoMine = hasOutgoing(id);
+    incoming = incoming.filter(function (r) { return r.from !== id; });
+    outgoing = outgoing.filter(function (r) { return r.to !== id; });
+    if (friends.indexOf(id) === -1) friends.push(id);
+    updateBadge(); afterChange();
+    friendOp(B.acceptFriendRequest(id, alsoMine));
+  }
+  function declineFriend(id) {
+    incoming = incoming.filter(function (r) { return r.from !== id; });
+    updateBadge(); afterChange();
+    friendOp(B.declineFriendRequest(id));
+  }
+  function cancelFriend(id) {
+    outgoing = outgoing.filter(function (r) { return r.to !== id; });
+    afterChange();
+    friendOp(B.cancelFriendRequest(id));
   }
   function removeFriend(id) {
     friends = friends.filter(function (f) { return f !== id; });
-    saveFriends();
-    render();
+    afterChange();
+    friendOp(B.removeFriend(id));
   }
 
   /* Search by player name among everyone who has an account. */
@@ -485,8 +564,9 @@
     box.innerHTML = "";
     if (!q || !me) return;
     var lq = B.nameKey(q);   // also finds "أحمد" when typing "احمد"
+    // only brothers find brothers and sisters find sisters (like the chat)
     var hits = Object.keys(players).filter(function (id) {
-      return id !== me && players[id].nick && B.nameKey(players[id].nick).indexOf(lq) !== -1;
+      return id !== me && canChat(id) && players[id].nick && B.nameKey(players[id].nick).indexOf(lq) !== -1;
     }).sort(function (a, b) {
       return (B.nameKey(players[a].nick).indexOf(lq) === 0 ? 0 : 1) - (B.nameKey(players[b].nick).indexOf(lq) === 0 ? 0 : 1) ||
         players[a].nick.localeCompare(players[b].nick);
@@ -498,19 +578,17 @@
       li.innerHTML = '<img alt=""><span></span>';
       $("img", li).src = avatarOf(id);
       $("span", li).textContent = players[id].nick;
-      if (friends.indexOf(id) !== -1) {
-        var s = document.createElement("small");
-        s.className = "chip-count";
-        s.textContent = "Freund";
-        li.appendChild(s);
-      } else {
-        var b = document.createElement("button");
-        b.type = "button";
-        b.className = "linkish";
-        b.textContent = "Hinzufügen";
-        b.addEventListener("click", function () { addFriend(id); });
-        li.appendChild(b);
-      }
+      var label = null, run = null;
+      if (friends.indexOf(id) !== -1) label = "Freund";
+      else if (blocked.indexOf(id) !== -1) label = "blockiert";
+      else if (hasIncoming(id)) { label = "Annehmen"; run = function () { acceptFriend(id); }; }
+      else if (hasOutgoing(id)) { label = "Angefragt · zurückziehen"; run = function () { cancelFriend(id); }; }
+      else { label = "Anfrage senden"; run = function () { requestFriend(id); }; }
+      var el = document.createElement(run ? "button" : "small");
+      el.textContent = label;
+      if (run) { el.type = "button"; el.className = "linkish"; el.addEventListener("click", run); }
+      else el.className = "chip-count";
+      li.appendChild(el);
       box.appendChild(li);
     });
   }
@@ -656,7 +734,13 @@
     blocked: function () { return blocked.slice(); },
     setBlocked: function (id, on) {
       blocked = blocked.filter(function (x) { return x !== id; });
-      if (on) blocked.push(id);
+      if (on) {
+        blocked.push(id);
+        /* blocking also ends the friendship and open requests */
+        if (friends.indexOf(id) !== -1) removeFriend(id);
+        if (hasIncoming(id)) declineFriend(id);
+        if (hasOutgoing(id)) cancelFriend(id);
+      }
       return B.doc("users/" + me).update({ blocked: blocked.slice(0, 500) });
     },
     render: render
@@ -676,6 +760,7 @@
     players = next;
     loaded = true;
     render();
+    migrate();
   }, function () { showError("Die Rangliste wird gerade nicht aktualisiert. Lade die Seite neu."); });
   B.collection("avatars").onSnapshot(function (snap) {
     var next = {};
@@ -689,22 +774,59 @@
     var token = ++authToken;
     var sameUser = u && me === u.uid;
     authUser = u;
-    if (!u) { me = null; mine = null; friends = []; blocked = []; $("#acc-form").hidden = true; $("#acc-edit").hidden = false; render(); return; }
+    if (!u) {
+      me = null; mine = null; friends = []; incoming = []; outgoing = []; blocked = []; stopFriends();
+      updateBadge(); $("#acc-form").hidden = true; $("#acc-edit").hidden = false; render(); return;
+    }
     if (sameUser && mine) { render(); return; }   // e.g. e-mail just confirmed
     me = u.uid;
     mine = null;
+    stopFriends();
+    friends = []; incoming = []; outgoing = [];
+    watchFriends(me);
     render();
     Promise.all([B.doc("players/" + me).get(), B.doc("users/" + me).get()]).then(function (snaps) {
       if (token !== authToken) return;
       mine = snaps[0].exists ? cleanPlayer(snaps[0].data()) : null;
       var f = snaps[1].exists ? snaps[1].data().friends : [];
-      friends = Array.isArray(f) ? f.filter(function (x) { return typeof x === "string" && x !== me; }) : [];
+      legacyFriends = Array.isArray(f) ? f.filter(function (x) { return typeof x === "string" && x !== me; }) : [];
       var bl = snaps[1].exists ? snaps[1].data().blocked : [];
       blocked = Array.isArray(bl) ? bl.filter(function (x) { return typeof x === "string"; }) : [];
       if (!mine) showError("Zu deinem Konto gibt es kein Spielerprofil. Melde dich ab und registriere dich neu oder wende dich an die Betreiber.");
       render();
+      migrate();
     }, function (e) { showError(B.message(e)); });
   });
+
+  /* ---------- friends and requests from the server ---------- */
+  var unwatch = [], requestsLoaded = false;
+  function stopFriends() { unwatch.forEach(function (fn) { try { fn(); } catch (e) {} }); unwatch = []; requestsLoaded = false; }
+  function watchFriends(uid) {
+    unwatch.push(B.watchFriends(uid, function (list) {
+      if (uid !== me) return;
+      friends = list.filter(function (x) { return typeof x === "string" && x !== me; });
+      afterChange();
+    }, function () {}));
+    unwatch.push(B.watchFriendRequests(uid, function (r) {
+      if (uid !== me) return;
+      incoming = r.incoming.filter(function (x) { return typeof x.from === "string" && blocked.indexOf(x.from) === -1; });
+      outgoing = r.outgoing.filter(function (x) { return typeof x.to === "string"; });
+      requestsLoaded = true;
+      updateBadge(); afterChange(); migrate();
+    }, function () {}));
+  }
+  /* The old list was one-sided: each old friend now gets a request instead, once. */
+  function migrate() {
+    if (!legacyFriends.length || !canPlay() || !loaded || !requestsLoaded) return;
+    var list = legacyFriends;
+    legacyFriends = [];
+    list.forEach(function (id) {
+      if (friends.indexOf(id) === -1 && !hasOutgoing(id) && canBefriend(id)) {
+        if (hasIncoming(id)) acceptFriend(id); else requestFriend(id);
+      }
+    });
+    B.doc("users/" + me).update({ friends: [] }).catch(function () {});
+  }
 
   APP.on("view", function (name) { if (name === "wettbewerb") render(); });
   setInterval(function () {

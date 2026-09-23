@@ -105,7 +105,8 @@ function reg(db, uid, name, g = 'm', year = 1995) {
   await t('Fremdes Profilbild setzen', bob().doc('avatars/alice').set({ img }), false);
 
   console.log('Freunde');
-  await t('Freundesliste speichern', aliceV().doc('users/alice').update({ friends: ['bob'] }), true);
+  await t('Alte Freundesliste kann nicht wachsen (nur per Anfrage)', aliceV().doc('users/alice').update({ friends: ['bob'] }), false);
+  await t('Alte Freundesliste leeren', aliceV().doc('users/alice').update({ friends: [] }), true);
   await t('Geburtsjahr nachträglich ändern', aliceV().doc('users/alice').update({ birthYear: 1980 }), false);
 
   console.log('Namen ändern');
@@ -155,6 +156,38 @@ function reg(db, uid, name, g = 'm', year = 1995) {
   await t('Nachricht melden', aliceV().collection('reports').add({ from: 'alice', about: 'bob', chatId: chatAB, text: 'unfreundlich', at: TS() }), true);
   await t('Meldungen kann niemand lesen', aliceV().collection('reports').get(), false);
   await t('Blockierung aufheben', bob().doc('users/bob').update({ blocked: [] }), true);
+
+  console.log('Freundschaftsanfragen');
+  const req = (db, from, to) => db.doc('friendRequests/' + from + '_' + to).set({ from, to, at: TS() });
+  const befriend = (db, users) => db.doc('friendships/' + users.join('_')).set({ users, at: TS() });
+  await t('Unbestätigt: keine Anfrage', req(ctx('carl'), 'carl', 'bob'), false);
+  await t('Alice schickt Bob eine Anfrage', req(aliceV(), 'alice', 'bob'), true);
+  await t('Anfrage im Namen eines anderen', req(aliceV(), 'bob', 'alice'), false);
+  await t('Anfrage an sich selbst', req(aliceV(), 'alice', 'alice'), false);
+  await t('Anfrage an unbekanntes Konto', req(aliceV(), 'alice', 'nobody'), false);
+  await t('Bruder an Schwester: keine Anfrage', req(aliceV(), 'alice', 'sara'), false);
+  await t('Schwester an Schwester', req(ctx('sara', true), 'sara', 'zey'), true);
+  await t('Bob sieht eingehende Anfragen', bob().collection('friendRequests').where('to', '==', 'bob').get(), true);
+  await t('Alice sieht gesendete Anfragen', aliceV().collection('friendRequests').where('from', '==', 'alice').get(), true);
+  await t('Dritte sehen die Anfrage nicht', ctx('sara', true).doc('friendRequests/alice_bob').get(), false);
+  await t('Alice kann sich nicht selbst annehmen', befriend(aliceV(), ['alice', 'bob']), false);
+  await t('Freundschaft ohne Anfrage', befriend(ctx('sara', true), ['ayse', 'sara']), false);
+  await t('Bob nimmt an (Freundschaft + Anfrage weg)', (async () => {
+    const db = bob(), b = db.batch();
+    b.set(db.doc('friendships/alice_bob'), { users: ['alice', 'bob'], at: TS() });
+    b.delete(db.doc('friendRequests/alice_bob'));
+    return b.commit();
+  })(), true);
+  await t('Beide sehen die Freundschaft', aliceV().collection('friendships').where('users', 'array-contains', 'alice').get(), true);
+  await t('Dritte sehen sie nicht', ctx('sara', true).doc('friendships/alice_bob').get(), false);
+  await t('Keine neue Anfrage unter Freunden', req(bob(), 'bob', 'alice'), false);
+  await t('Freundschaft beenden', aliceV().doc('friendships/alice_bob').delete(), true);
+  await t('Zey lehnt Saras Anfrage ab', ctx('zey', true).doc('friendRequests/sara_zey').delete(), true);
+  await t('Anfrage erneut senden und zurückziehen', (async () => { await req(aliceV(), 'alice', 'bob'); return aliceV().doc('friendRequests/alice_bob').delete(); })(), true);
+  await t('Blockiert: keine Anfrage', (async () => {
+    await bob().doc('users/bob').update({ blocked: ['alice'] });
+    try { await req(aliceV(), 'alice', 'bob'); } finally { await bob().doc('users/bob').update({ blocked: [] }); }
+  })(), false);
 
   console.log('Lernfortschritt');
   await t('Eigenen Lernstand speichern', aliceV().doc('progress/alice').set({ q: { 'wudhu-abc': [2, 1] }, at: 1 }), true);

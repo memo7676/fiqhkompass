@@ -1002,6 +1002,20 @@ dialog.auth { border-radius: 20px; }
 .ar-intro summary { cursor: pointer; padding: 10px 0; font-weight: 700; }
 .ar-intro p { margin: 0 0 12px; max-width: 72ch; }
 .ar-pager { display: flex; justify-content: space-between; gap: 10px; }
+
+/* ---------- Freundschaftsanfragen ---------- */
+.friend-requests { display: grid; gap: 8px; padding: 12px; border-radius: 12px; background: var(--primary-soft); border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--line)); }
+.friend-requests .step-label { margin: 0; }
+.req-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.req { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); }
+.req img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.req-name { display: grid; min-width: 0; }
+.req-name strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; unicode-bidi: plaintext; }
+.req-name small { color: var(--muted); font-size: .8rem; }
+.req-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.btn-sm { padding: 6px 12px; font-size: .88rem; }
+@media (max-width: 420px) { .req { grid-template-columns: 34px minmax(0, 1fr); } .req-actions { grid-column: 1 / -1; justify-content: stretch; } .req-actions .btn { flex: 1; } }
+.friend-hint { margin: 0; color: var(--muted); font-size: .85rem; }
 </style>
 </head>
 <body>
@@ -1027,7 +1041,7 @@ dialog.auth { border-radius: 20px; }
       <button type="button" class="tab" role="tab" data-view="quiz" aria-selected="false">
         <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.7 9.6a2.4 2.4 0 1 1 3.3 2.2c-.7.3-1 .8-1 1.5v.4M12 16.6v.2"/></svg><span class="tab-label">Quiz</span></button>
       <button type="button" class="tab" role="tab" data-view="wettbewerb" aria-selected="false">
-        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5h8v4.5a4 4 0 0 1-8 0zM8 6.5H5.5a2.5 2.5 0 0 0 2.6 3.6M16 6.5h2.5a2.5 2.5 0 0 1-2.6 3.6M12 13v3.5M8.5 19.5h7M10 16.5h4v3h-4z"/></svg><span class="tab-label"><span class="tl-long">Wettbewerb</span><span class="tl-short">Liga</span></span></button>
+        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5h8v4.5a4 4 0 0 1-8 0zM8 6.5H5.5a2.5 2.5 0 0 0 2.6 3.6M16 6.5h2.5a2.5 2.5 0 0 1-2.6 3.6M12 13v3.5M8.5 19.5h7M10 16.5h4v3h-4z"/></svg><span class="tab-label"><span class="tl-long">Wettbewerb</span><span class="tl-short">Liga</span></span><span class="tab-badge" id="friend-badge" hidden></span></button>
       <button type="button" class="tab" role="tab" data-view="chat" aria-selected="false">
         <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 17h-8.5L6 20.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/></svg><span class="tab-label">Chat</span><span class="tab-badge" id="chat-badge" hidden></span></button>
     </nav>
@@ -1389,9 +1403,11 @@ dialog.auth { border-radius: 20px; }
             <p class="eyebrow">Freunde</p>
             <h3>Wer hat mehr Punkte?</h3>
             <p class="board-note">Alle Punkte aus Quiz und Wettbewerb zusammen.</p>
+            <div class="friend-requests" id="friend-requests" hidden aria-live="polite"></div>
             <ol class="ranking" id="friend-board"></ol>
             <div class="friend-search">
               <label for="friend-q" class="step-label">Freund hinzufügen</label>
+              <p class="friend-hint">Schick eine Freundschaftsanfrage – befreundet seid ihr, sobald sie angenommen ist. Wie beim Chat nur unter Brüdern bzw. unter Schwestern.</p>
               <input id="friend-q" dir="auto" type="search" autocomplete="off" placeholder="Spielername suchen">
               <ul class="hits" id="friend-hits"></ul>
             </div>
