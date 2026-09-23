@@ -35,7 +35,8 @@
     });
     return out;
   }
-  function level(q) { var v = prog[q._lid]; return v ? v[0] : 0; }
+  function levelOf(id) { var v = prog[id]; return v ? v[0] : 0; }
+  function level(q) { return levelOf(q._lid); }
   function stats(list) {
     var s = { total: list.length, learned: 0, almost: 0, wrong: 0, fresh: 0 };
     list.forEach(function (q) {
@@ -57,15 +58,16 @@
   }
 
   /* one answer -> new level and the line shown in the feedback box */
-  function record(q, ok) {
-    var l = level(q), next, note;
+  function record(q, ok) { return recordId(q._lid, ok); }
+  function recordId(id, ok) {
+    var l = levelOf(id), next, note;
     if (!ok) {
       next = -1;
       note = l === 2 ? "Schon gelernt, aber vergessen – kommt wieder." : "Kommt wieder – die richtige Antwort ist markiert.";
     } else if (l === 0) { next = 2; note = "✓ Gelernt"; }
     else if (l === -1) { next = 1; note = "Gut! Noch einmal richtig, dann ist sie gelernt."; }
     else { next = 2; note = l === 1 ? "✓ Jetzt gelernt" : "✓ Sitzt"; }
-    prog[q._lid] = [next, Date.now()];
+    prog[id] = [next, Date.now()];
     persist();
     return note;
   }
@@ -229,13 +231,20 @@
   });
   $("#learn-reset-no").addEventListener("click", function () { $("#learn-reset-confirm").hidden = true; });
   $("#learn-reset-yes").addEventListener("click", function () {
-    prog = {};
+    resetWhere(function (k) { return k.indexOf("ar-") !== 0; });
     lastRound = null;
-    APP.store("learn", prog);
     $("#learn-reset-confirm").hidden = true;
-    pushCloud(true);
     render();
   });
+  /* the Arabic part (arabic.js) keeps its progress in the same store, ids start with "ar-" */
+  function resetWhere(test) {
+    Object.keys(prog).forEach(function (k) { if (test(k)) delete prog[k]; });
+    APP.store("learn", prog);
+    pushCloud(true);
+    changed();
+  }
+  var changeFns = [];
+  function changed() { changeFns.forEach(function (fn) { try { fn(); } catch (e) { console.error(e); } }); }
 
   APP.on("view", function (name) { if (name === "lernen") render(); });
   APP.on("overview", renderSlots);
@@ -265,13 +274,17 @@
       B.doc("progress/" + uid).get().then(function (snap) {
         var remote = snap.exists ? cleanProg((snap.data() || {}).q) : {};
         var hadLocal = Object.keys(prog).length;
-        if (merge(remote)) { APP.store("learn", prog); render(); renderSlots(); }
+        if (merge(remote)) { APP.store("learn", prog); render(); renderSlots(); changed(); }
         cloudReady = true;
         if (hadLocal) pushCloud();
       }, function () { cloudReady = true; });
     });
   }
 
-  window.FIQH_LEARN = { stats: function () { return stats(allQuestions()); }, topicStats: topicStats };
+  window.FIQH_LEARN = {
+    stats: function () { return stats(allQuestions()); }, topicStats: topicStats,
+    hash: hash, levelOf: levelOf, recordId: recordId, sync: function () { pushCloud(); },
+    reset: resetWhere, onChange: function (fn) { changeFns.push(fn); }
+  };
   render();
 })();

@@ -806,7 +806,7 @@ h1, h2, h3, .setup h2, .article h2, .entry h3, .social h2, .social h3, .ov-head,
   .acc-btn { order: 0; max-width: 150px; font-size: .9rem; }
   .masthead .tabs {
     order: 0; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; width: auto;
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 0;
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
     background: color-mix(in srgb, var(--surface) 92%, transparent);
     backdrop-filter: saturate(1.4) blur(16px); -webkit-backdrop-filter: saturate(1.4) blur(16px);
@@ -926,6 +926,82 @@ mark { background: color-mix(in srgb, var(--gold) 30%, transparent); }
 .foot-links a { color: var(--muted); }
 dialog.auth { border-radius: 20px; }
 .auth-head h2 { font: 600 1.8rem/1.1 var(--display); }
+
+/* ---------- Arabisch ---------- */
+.tl-short { display: none; }
+@media (max-width: 760px) { .tl-long { display: none; } .tl-short { display: inline; } .masthead .tabs { padding-left: 4px; padding-right: 4px; } }
+@media (min-width: 761px) and (max-width: 1100px) { .tab { padding: 0 9px; font-size: .9rem; } .tab::after { left: 9px; right: 9px; } }
+[lang="ar"], .ar-in, .opt-ar, .q-text.is-ar { font-family: var(--arabic); }
+.ar-in { font-size: 1.12em; line-height: 1.5; unicode-bidi: isolate; }
+.q-text.is-ar { font-size: clamp(1.6rem, 4vw, 2rem); line-height: 1.6; }
+.opt-text { flex: 1; min-width: 0; }
+.opt-ar { font-size: 1.35rem; line-height: 1.55; text-align: right; padding-top: 0; }
+#fb-text[lang="ar"] { font-size: 1.2rem; }
+.q-ar {
+  margin: 0; padding: 14px 18px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line);
+  font: 400 clamp(1.7rem, 5vw, 2.3rem)/1.8 var(--arabic); text-align: center; color: var(--ink);
+}
+.q-ar mark { background: color-mix(in srgb, var(--gold) 30%, transparent); color: inherit; border-radius: 6px; padding: 0 6px; box-shadow: inset 0 -2px 0 var(--gold); }
+.hero-ar h1 { max-width: 20ch; }
+.arabic { display: grid; gap: 18px; }
+.ar-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--line); scroll-margin-top: 90px; }
+.ar-tab { flex: 1; padding: 9px 10px; border-radius: 10px; border: 0; background: none; font: 600 .95rem/1.2 var(--body); color: var(--muted); cursor: pointer; }
+.ar-tab[aria-selected="true"] { background: var(--surface); color: var(--primary); box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 0 0 1px var(--line); }
+.ar-lessons { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ar-lessons .lt { display: block; padding: 0; }
+.ar-lesson { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; padding: 12px 14px; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; border-radius: inherit; }
+.ar-lesson .lt-main { flex: 1; }
+.ar-lesson .lt-pct { min-width: 3.4em; }
+.ar-lesson:hover .lt-title strong { color: var(--primary); }
+.ar-num { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font: 700 .95rem/1 var(--body); background: var(--primary-soft); color: var(--primary); font-variant-numeric: lining-nums tabular-nums; }
+.lt-done .ar-num { background: var(--gold); color: #1b1405; }
+.ar-lesson-view { display: grid; gap: 16px; }
+.ar-back { justify-self: start; }
+.ar-lesson-head h2 { margin: 2px 0 4px; font: 600 clamp(1.7rem, 4vw, 2.2rem)/1.15 var(--display); }
+.ar-title { font-size: 1.5rem; color: var(--accent); }
+.ar-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media (max-width: 560px) { .ar-parts { grid-template-columns: 1fr; } }
+.ar-part { display: grid; gap: 6px; text-align: left; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: inherit; font: inherit; cursor: pointer; }
+.ar-part:hover { border-color: var(--primary); }
+.ar-part small { color: var(--muted); }
+.ar-part.is-done { border-color: color-mix(in srgb, var(--good) 50%, var(--line)); }
+.ar-lesson-view > .btn-primary { justify-self: start; }
+.ar-block { display: grid; gap: 10px; }
+.ar-block h3 { margin: 6px 0 0; font: 600 1.45rem/1.2 var(--display); display: flex; align-items: baseline; gap: 8px; }
+.ar-block h3 small { font: 600 .8rem/1 var(--body); color: var(--muted); }
+.ar-grammar { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; max-width: 72ch; }
+.ar-grammar li::marker { color: var(--gold); }
+.ar-examples { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.ar-examples li { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center; padding: 10px 14px; background: var(--surface); }
+.ar-ex { font-size: 1.3rem; line-height: 1.6; text-align: right; order: 2; }
+.ar-de { color: var(--muted); }
+@media (max-width: 560px) { .ar-examples li { grid-template-columns: 1fr; gap: 2px; } .ar-ex { order: 0; } }
+.ar-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.ar-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.ar-table th { text-align: left; font: 700 .72rem/1.2 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 10px 12px; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.ar-table td { padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.ar-table tr:last-child td { border-bottom: 0; }
+.ar-word { font-size: 1.3rem; line-height: 1.5; white-space: nowrap; }
+.ar-irab { font-size: 1.08rem; line-height: 1.7; display: block; min-width: 14em; text-align: right; }
+.ar-irab-table td:last-child { color: var(--muted); min-width: 12em; }
+.ar-lek { color: var(--muted); font-variant-numeric: lining-nums tabular-nums; }
+.ar-vocab-head { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.ar-vocab-head .search { flex: 1 1 240px; }
+.ar-vocab-pane, .ar-irab-pane { display: grid; gap: 12px; }
+.ar-count { margin: 0; color: var(--muted); font-size: .9rem; }
+.ar-model { margin: 0; display: grid; gap: 8px; }
+.ar-sentence { margin: 0; font-size: clamp(1.6rem, 4.5vw, 2rem); line-height: 1.7; text-align: center; padding: 10px; border-radius: 12px; background: var(--surface-2); }
+.ar-model figcaption { text-align: center; color: var(--muted); font-style: italic; }
+.ar-model-src { margin: 14px 0 -2px; font: 700 .72rem/1.2 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.ar-irab-cta { display: flex; gap: 18px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 20px 22px; }
+.ar-irab-cta h3 { margin: 2px 0 6px; font: 600 1.6rem/1.15 var(--display); }
+.ar-irab-cta p:not(.eyebrow) { margin: 0; color: var(--muted); max-width: 52ch; }
+.ar-irab-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.ar-intro { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 4px 16px; }
+.ar-intro + .ar-intro { margin-top: 8px; }
+.ar-intro summary { cursor: pointer; padding: 10px 0; font-weight: 700; }
+.ar-intro p { margin: 0 0 12px; max-width: 72ch; }
+.ar-pager { display: flex; justify-content: space-between; gap: 10px; }
 </style>
 </head>
 <body>
@@ -943,13 +1019,15 @@ dialog.auth { border-radius: 20px; }
     </a>
     <nav class="tabs" role="tablist" aria-label="Bereich">
       <button type="button" class="tab" role="tab" data-view="nachschlagen" aria-selected="true">
-        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5zM12 6.5v13"/></svg><span class="tab-label">Nachschlagen</span></button>
+        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5zM12 6.5v13"/></svg><span class="tab-label"><span class="tl-long">Nachschlagen</span><span class="tl-short">Themen</span></span></button>
       <button type="button" class="tab" role="tab" data-view="lernen" aria-selected="false">
         <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5L12 5l9 4.5-9 4.5z"/><path d="M7 11.5v4c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4M21 9.5v5"/></svg><span class="tab-label">Lernen</span></button>
+      <button type="button" class="tab" role="tab" data-view="arabisch" aria-selected="false">
+        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><text x="12" y="17.5" text-anchor="middle" font-size="17" font-family="Amiri, serif" fill="currentColor" stroke="none">ع</text></svg><span class="tab-label">Arabisch</span></button>
       <button type="button" class="tab" role="tab" data-view="quiz" aria-selected="false">
         <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.7 9.6a2.4 2.4 0 1 1 3.3 2.2c-.7.3-1 .8-1 1.5v.4M12 16.6v.2"/></svg><span class="tab-label">Quiz</span></button>
       <button type="button" class="tab" role="tab" data-view="wettbewerb" aria-selected="false">
-        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5h8v4.5a4 4 0 0 1-8 0zM8 6.5H5.5a2.5 2.5 0 0 0 2.6 3.6M16 6.5h2.5a2.5 2.5 0 0 1-2.6 3.6M12 13v3.5M8.5 19.5h7M10 16.5h4v3h-4z"/></svg><span class="tab-label">Wettbewerb</span></button>
+        <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5h8v4.5a4 4 0 0 1-8 0zM8 6.5H5.5a2.5 2.5 0 0 0 2.6 3.6M16 6.5h2.5a2.5 2.5 0 0 1-2.6 3.6M12 13v3.5M8.5 19.5h7M10 16.5h4v3h-4z"/></svg><span class="tab-label"><span class="tl-long">Wettbewerb</span><span class="tl-short">Liga</span></span></button>
       <button type="button" class="tab" role="tab" data-view="chat" aria-selected="false">
         <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 17h-8.5L6 20.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/></svg><span class="tab-label">Chat</span><span class="tab-badge" id="chat-badge" hidden></span></button>
     </nav>
@@ -1011,6 +1089,49 @@ dialog.auth { border-radius: 20px; }
           <span>Wirklich alles auf 0 % setzen?</span>
           <button type="button" class="btn btn-danger" id="learn-reset-yes">Ja, zurücksetzen</button>
           <button type="button" class="btn" id="learn-reset-no">Abbrechen</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ARABISCH ================= -->
+  <section id="view-arabic" aria-label="Arabisch" hidden>
+    <div class="hero hero-ar">
+      <div class="wrap intro">
+        <p class="hero-eyebrow">Arabisch <span lang="ar" dir="rtl">·&nbsp;دُرُوسُ اللُّغَةِ الْعَرَبِيَّةِ</span></p>
+        <h1>Arabisch mit dem Madina-Buch 1</h1>
+        <p>Vokabeln, Grammatik und alles drumherum – Lektion für Lektion, bis du einen Satz vollständig analysieren kannst: den <b>Iʿrāb</b>. Die deutschen Erklärungen folgen dem Schlüssel zum Buch.</p>
+        <div class="stats"><span><b id="ar-count-lessons">0</b> Lektionen</span><span><b id="ar-count-vocab">0</b> Vokabeln</span><span><b id="ar-count-q">0</b> Übungsfragen</span></div>
+      </div>
+    </div>
+    <div class="wrap learn arabic">
+      <div class="panel learn-round" id="ar-round" hidden aria-live="polite"></div>
+      <div class="panel learn-head">
+        <div class="learn-ring" id="ar-ring"></div>
+        <div class="learn-intro">
+          <p class="eyebrow">Dein Fortschritt</p>
+          <h2>Lektion für Lektion bis zum Iʿrāb</h2>
+          <p>Jede Lektion hat drei Teile: <b>Vokabeln</b>, <b>Grammatik</b> und <b>Iʿrāb</b>. Wie im Lernmodus kommen falsche Antworten wieder, bis alles sitzt.</p>
+          <div class="learn-stats" id="ar-stats"></div>
+          <div class="learn-actions">
+            <button type="button" class="btn btn-primary btn-lg" id="ar-next">Loslegen</button>
+            <button type="button" class="btn" id="ar-mistakes" hidden>Fehler wiederholen</button>
+          </div>
+        </div>
+      </div>
+      <div class="ar-tabs" id="ar-tabs" role="tablist" aria-label="Arabisch-Bereich">
+        <button type="button" class="ar-tab" role="tab" data-ar-tab="lektionen" aria-selected="true">Lektionen</button>
+        <button type="button" class="ar-tab" role="tab" data-ar-tab="vokabeln" aria-selected="false">Vokabeln</button>
+        <button type="button" class="ar-tab" role="tab" data-ar-tab="irab" aria-selected="false">Iʿrāb</button>
+      </div>
+      <div id="ar-body" aria-live="polite"></div>
+      <div class="learn-foot">
+        <p>Der Arabisch-Fortschritt wird mit deinem Lernstand gespeichert – auf diesem Gerät und, wenn du angemeldet bist, in deinem Konto.</p>
+        <button type="button" class="linkish" id="ar-reset">Arabisch-Fortschritt zurücksetzen</button>
+        <div class="learn-reset" id="ar-reset-confirm" hidden>
+          <span>Wirklich den Arabisch-Fortschritt auf 0 % setzen?</span>
+          <button type="button" class="btn btn-danger" id="ar-reset-yes">Ja, zurücksetzen</button>
+          <button type="button" class="btn" id="ar-reset-no">Abbrechen</button>
         </div>
       </div>
     </div>
@@ -1089,6 +1210,7 @@ dialog.auth { border-radius: 20px; }
         <div class="panel qcard">
           <span class="q-topic" id="q-topic"></span>
           <h2 class="q-text" id="q-text"></h2>
+          <p class="q-ar" id="q-ar" lang="ar" dir="rtl" hidden></p>
           <div class="options" id="q-options"></div>
 
           <div class="feedback" id="q-feedback" hidden aria-live="polite">
@@ -1535,6 +1657,10 @@ dialog.auth { border-radius: 20px; }
 <script src="chat.js"></script>
 <script src="auth.js"></script>
 <script src="learn.js"></script>
+<script src="arabisch/madina1-a.js"></script>
+<script src="arabisch/madina1-b.js"></script>
+<script src="arabisch/madina1-c.js"></script>
+<script src="arabic.js"></script>
 <script src="install.js"></script>
 </body>
 </html>

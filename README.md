@@ -15,6 +15,12 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - eine Frage ist gelernt, wenn sie gleich richtig beantwortet wird, nach einem Fehler erst nach zwei richtigen Antworten hintereinander
   - Runden mit 10 Fragen: zuerst die falschen, dann die fast gelernten, dann neue; „Fehler wiederholen“ über alle Themen
   - Fortschritt je Thema, Sachgebiet und gesamt (auch in der Themenübersicht), gespeichert auf dem Gerät und, angemeldet, in `progress/<id>`
+- **Arabisch** mit dem Madina-Buch 1 (Dr. V. Abdur Rahim), Lektionen 1–23, Erklärungen nach dem deutschen Schlüssel (Google-Drive-Ordner „Madina Books“):
+  - jede Lektion mit Grammatik, Beispielsätzen, Vokabeltabelle und Iʿrāb Schritt für Schritt
+  - Lernen wie im Lernmodus, getrennt nach Vokabeln (Bedeutung, Arabisch, Plural), Grammatik und Iʿrāb
+  - Vokabelliste aller Lektionen mit Suche (Deutsch oder Arabisch, Vokalzeichen egal)
+  - Iʿrāb-Bereich: Einführung (Fälle, Zeichen, muʿrab/mabnī, Sonderfälle), Fachbegriffe, Musteranalysen, Training und Prüfung mit 20 Sätzen
+  - Daten in `arabisch/madina1-*.js`, Oberfläche in `arabic.js`; der Fortschritt teilt sich den Speicher mit dem Lernmodus (Kennungen `ar-…`)
 - **Quiz**:
   - Themenquiz (einzelne Gebiete oder ganze Sachgebiete) oder gemischter Modus
   - 5/10/15 Fragen

@@ -76,7 +76,7 @@
   }
 
   /* ---------- views ---------- */
-  var views = { nachschlagen: $("#view-lookup"), lernen: $("#view-learn"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
+  var views = { nachschlagen: $("#view-lookup"), lernen: $("#view-learn"), arabisch: $("#view-arabic"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
   function showView(name, push) {
     if (!views[name]) name = "nachschlagen";
     Object.keys(views).forEach(function (k) { views[k].hidden = k !== name; });
@@ -412,11 +412,12 @@
 
     $("#q-progress-text").textContent = (game.preset ? game.preset.label + " · " : "") + "Frage " + (game.i + 1) + " von " + game.qs.length;
     $("#q-bar").style.width = (game.i / game.qs.length * 100) + "%";
-    $("#q-topic").textContent = t.title;
+    $("#q-topic").textContent = t ? t.title : item.src.tt || "";
     $("#q-score").textContent = game.score;
     $("#q-streak").textContent = game.streak > 1 ? game.streak + "er-Serie" : "";
     $("#q-streak").hidden = game.streak < 2;
-    $("#q-text").textContent = item.src.q;
+    setText($("#q-text"), item.src.q);
+    renderArabicLine(item.src);
     $("#q-feedback").hidden = true;
     $("#joker").disabled = !game.joker;
     $("#joker").textContent = game.joker ? "50:50-Joker" : "Joker verbraucht";
@@ -425,7 +426,7 @@
     var box = $("#q-options");
     box.innerHTML = item.options.map(function (o, i) {
       return '<button type="button" class="option" data-opt="' + i + '"><span class="opt-key">' + letters[i] + "</span>" +
-        '<span class="opt-text">' + esc(o.text) + "</span></button>";
+        '<span class="opt-text' + (arOnly(o.text) ? ' opt-ar" lang="ar" dir="rtl"' : '" dir="auto"') + '>' + esc(o.text) + "</span></button>";
     }).join("");
     $all(".option", box).forEach(function (b) {
       b.addEventListener("click", function () { answer(+b.getAttribute("data-opt")); });
@@ -433,6 +434,27 @@
     if (game.preset && game.preset.learn) stopTimer(); else startTimer();
     var first = $(".option", box);
     if (first && document.activeElement && document.activeElement.classList.contains("option")) first.focus();
+  }
+
+  /* Arabic in questions and answers (Arabisch-Bereich): whole-Arabic text gets the Arabic
+     font and right-to-left; mixed text finds its direction itself. */
+  var AR_RE = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/;
+  function arOnly(s) { return AR_RE.test(s) && !/[A-Za-zÄÖÜäöüß]/.test(s); }
+  function setText(el, s) {
+    el.textContent = s;
+    el.setAttribute("dir", "auto");
+    el.classList.toggle("is-ar", arOnly(s));
+    if (arOnly(s)) el.setAttribute("lang", "ar"); else el.removeAttribute("lang");
+  }
+  /* q.ar: an Arabic word or sentence shown large; q.arMark: index of the word to highlight */
+  function renderArabicLine(q) {
+    var el = $("#q-ar");
+    if (!el) return;
+    el.hidden = !q.ar;
+    if (!q.ar) { el.innerHTML = ""; return; }
+    el.innerHTML = String(q.ar).split(/\s+/).map(function (w, i) {
+      return i === q.arMark ? "<mark>" + esc(w) + "</mark>" : esc(w);
+    }).join(" ");
   }
 
   function startTimer() {
@@ -507,8 +529,9 @@
     }
     $("#fb-title").textContent = ok ? "Richtig!" : "Leider falsch";
     $("#fb-points").textContent = learnNote || (ok ? parts.join("  ") : "Die richtige Antwort ist markiert.");
-    $("#fb-text").textContent = item.src.e;
-    $("#fb-source").textContent = "Quelle: " + (item.src.src === "buch" ? BOOK : TOPIC_BY_ID[item.src.t].lessons) + " – " + TOPIC_BY_ID[item.src.t].title;
+    setText($("#fb-text"), item.src.e);
+    var st = TOPIC_BY_ID[item.src.t];
+    $("#fb-source").textContent = st ? "Quelle: " + (item.src.src === "buch" ? BOOK : st.lessons) + " – " + st.title : item.src.srcText || "";
     $("#next-q").textContent = game.i + 1 < game.qs.length ? "Nächste Frage" : (game.preset && game.preset.learn ? "Runde abschließen" : "Ergebnis ansehen");
     $("#q-score").textContent = game.score;
     $("#q-streak").textContent = game.streak > 1 ? game.streak + "er-Serie" : "";
@@ -592,7 +615,7 @@
         '<p class="rv-a"><span class="rv-label bad">Deine Antwort</span> ' + esc(a.item.options[a.chosen].text) + "</p>" +
         '<p class="rv-a"><span class="rv-label good">Richtig</span> ' + esc(right) + "</p>" +
         '<p class="rv-e">' + esc(a.item.src.e) + "</p>" +
-        '<button type="button" class="linkish" data-review-topic="' + t.id + '">Im Nachschlagen öffnen: ' + esc(t.title) + "</button></li>";
+        (t ? '<button type="button" class="linkish" data-review-topic="' + t.id + '">Im Nachschlagen öffnen: ' + esc(t.title) + "</button>" : "") + "</li>";
     }).join("");
     $all("[data-review-topic]").forEach(function (b) {
       b.addEventListener("click", function () {
