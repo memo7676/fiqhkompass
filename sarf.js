@@ -14,7 +14,7 @@
   if (!APP || !L || !view) return;
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
-  var esc = APP.esc;
+  var esc = APP.esc, T = window.T || function (x) { return x; };
 
   /* ---------- letters ---------- */
   var FA = "َ", DA = "ُ", KA = "ِ", SU = "ْ", SH = "ّ", TUN = "ٌ";
@@ -172,10 +172,10 @@
     var st = { slots: right.map(function () { return null; }), pool: seededShuffle(right.concat(extra)).map(function (x, k) { return { k: k, x: x, used: false }; }), sel: 0, checked: false };
     run.st = st;
     $("#sarf-head").innerHTML =
-      '<p class="eyebrow">' + esc(run.opts.label || "Sarf") + (run.tables.length > 1 ? " · Tabelle " + (run.i + 1) + " von " + run.tables.length : "") + "</p>" +
-      '<h2><span lang="ar" dir="rtl" class="sarf-verb">' + esc(v.past) + " " + esc(v.pres) + "</span> <small>" + esc(v.de) + "</small></h2>" +
-      '<p class="sarf-form"><b>' + esc(f.de) + '</b> · <span lang="ar" dir="rtl">' + esc(f.ar) + "</span> · Bāb " + v.bab.n + ' <span lang="ar" dir="rtl">(' + esc(v.bab.w) + ")</span></p>" +
-      '<p class="sarf-help">Tippe die Formen in der richtigen Reihenfolge an. Ein Feld antippen, um es zu leeren oder auszuwählen.' + (extra.length ? " Achtung: " + extra.length + " Formen passen nicht in diese Tabelle." : "") + "</p>";
+      '<p class="eyebrow">' + esc(run.opts.label || "Sarf") + (run.tables.length > 1 ? " · " + T("Tabelle {n} von {m}", { n: run.i + 1, m: run.tables.length }) : "") + "</p>" +
+      '<h2><span lang="ar" dir="rtl" class="sarf-verb">' + esc(v.past) + " " + esc(v.pres) + "</span> <small>" + esc(T(v.de)) + "</small></h2>" +
+      '<p class="sarf-form"><b>' + esc(T(f.de)) + '</b> · <span lang="ar" dir="rtl">' + esc(f.ar) + "</span> · Bāb " + v.bab.n + ' <span lang="ar" dir="rtl">(' + esc(v.bab.w) + ")</span></p>" +
+      '<p class="sarf-help">' + T("Tippe die Formen in der richtigen Reihenfolge an. Ein Feld antippen, um es zu leeren oder auszuwählen.") + (extra.length ? " " + T("Achtung: {n} Formen passen nicht in diese Tabelle.", { n: extra.length }) : "") + "</p>";
     draw();
   }
   function draw() {
@@ -183,7 +183,7 @@
     $("#sarf-grid").innerHTML = idx.map(function (pi, k) {
       var lab = rowLabel(f, pi), val = st.slots[k] !== null ? st.pool[st.slots[k]].x : "";
       var cls = "sarf-slot" + (k === st.sel && !st.checked ? " is-sel" : "") + (st.checked ? (val === right[k] ? " is-ok" : " is-bad") : "");
-      return '<div class="sarf-row"><span class="sarf-p"><span lang="ar" dir="rtl">' + esc(lab[0]) + "</span><small>" + esc(lab[1]) + "</small></span>" +
+      return '<div class="sarf-row"><span class="sarf-p"><span lang="ar" dir="rtl">' + esc(lab[0]) + "</span><small>" + esc(T(lab[1])) + "</small></span>" +
         '<button type="button" class="' + cls + '" data-slot="' + k + '"' + (st.checked ? " disabled" : "") + ' lang="ar" dir="rtl">' + esc(val) +
         (st.checked && val !== right[k] ? '<small class="sarf-right">' + esc(right[k]) + "</small>" : "") + "</button></div>";
     }).join("");
@@ -196,13 +196,13 @@
       var ok = st.slots.filter(function (s, k) { return st.pool[s].x === right[k]; }).length;
       $("#sarf-result").hidden = false;
       $("#sarf-result").className = "feedback " + (ok === right.length ? "good" : "bad");
-      $("#sarf-result").innerHTML = "<p><b>" + (ok === right.length ? "Fehlerfrei!" : ok + " von " + right.length + " richtig") + "</b>" +
+      $("#sarf-result").innerHTML = "<p><b>" + (ok === right.length ? T("Fehlerfrei!") : T("{n} von {m} richtig", { n: ok, m: right.length })) + "</b>" +
         (st.note ? " · " + esc(st.note) : "") + "</p>";
-      go.textContent = run.i + 1 < run.tables.length ? "Nächste Tabelle" : "Fertig";
+      go.textContent = run.i + 1 < run.tables.length ? T("Nächste Tabelle") : T("Fertig");
       go.disabled = false;
     } else {
       $("#sarf-result").hidden = true;
-      go.textContent = "Prüfen";
+      go.textContent = T("Prüfen");
       go.disabled = !full;
     }
     $all("[data-slot]", view).forEach(function (b) {
@@ -265,15 +265,15 @@
   }
   function bar(s) {
     function seg(n, cls) { return n ? '<span class="lb-' + cls + '" style="width:' + (n / s.total * 100) + '%"></span>' : ""; }
-    return '<span class="lbar" role="img" aria-label="' + s.learned + " von " + s.total + ' gelernt">' + seg(s.learned, "ok") + seg(s.almost, "mid") + seg(s.wrong, "bad") + "</span>";
+    return '<span class="lbar" role="img" aria-label="' + T("{n} von {m} gelernt", { n: s.learned, m: s.total }) + '">' + seg(s.learned, "ok") + seg(s.almost, "mid") + seg(s.wrong, "bad") + "</span>";
   }
   function fullTable(v) {
     var fs = formsFor(v);
     function block(list, rows, labels) {
       return '<div class="ar-table-wrap"><table class="ar-table sarf-table"><thead><tr><th></th>' +
-        list.map(function (f) { return '<th><span lang="ar" dir="rtl">' + esc(f.ar) + "</span><small>" + esc(f.de) + "</small></th>"; }).join("") + "</tr></thead><tbody>" +
+        list.map(function (f) { return '<th><span lang="ar" dir="rtl">' + esc(f.ar) + "</span><small>" + esc(T(f.de)) + "</small></th>"; }).join("") + "</tr></thead><tbody>" +
         rows.map(function (pi, k) {
-          return '<tr><th><span lang="ar" dir="rtl">' + esc(labels(pi)[0]) + "</span><small>" + esc(labels(pi)[1]) + "</small></th>" +
+          return '<tr><th><span lang="ar" dir="rtl">' + esc(labels(pi)[0]) + "</span><small>" + esc(T(labels(pi)[1])) + "</small></th>" +
             list.map(function (f) {
               var ri = rowIdx(f).indexOf(pi);
               return '<td lang="ar" dir="rtl">' + (ri === -1 ? "" : esc(f.make(v, pi))) + "</td>";
@@ -290,16 +290,16 @@
     var html = '<div class="sarf-pane">';
     if (state.last) {
       var r = state.last;
-      html += '<div class="panel learn-round"><h3>' + r.perfect + " von " + r.n + (r.n === 1 ? " Tabelle" : " Tabellen") + " fehlerfrei</h3>" +
-        "<p>Sarf gesamt: <b>" + r.before.pct + " % → " + r.after.pct + " %</b></p>" +
-        '<div class="lr-actions"><button type="button" class="btn btn-primary" data-sarf-next>Weiter üben</button><button type="button" class="linkish" data-sarf-close>Schließen</button></div></div>';
+      html += '<div class="panel learn-round"><h3>' + T(r.n === 1 ? "{p} von {n} Tabelle fehlerfrei" : "{p} von {n} Tabellen fehlerfrei", { p: r.perfect, n: r.n }) + "</h3>" +
+        "<p>" + T("Sarf gesamt:") + " <b>" + r.before.pct + " % → " + r.after.pct + " %</b></p>" +
+        '<div class="lr-actions"><button type="button" class="btn btn-primary" data-sarf-next>' + T("Weiter üben") + '</button><button type="button" class="linkish" data-sarf-close>' + T("Schließen") + "</button></div></div>";
     }
     if (!v) {
-      html += '<div class="panel ar-irab-cta"><div><p class="eyebrow">Sarf · صَرْف</p><h3>Verben konjugieren wie in der Emsile</h3>' +
-        "<p>" + VERBS.length + " Verben aus allen sechs Abwāb, je bis zu " + FORMS.length + " Formen: Vergangenheit und Gegenwart, Passiv, Befehl, Verbot, Verneinung mit lam und lan, Partizip Aktiv und Passiv. " +
-        "Eine Tabelle ist gelernt, wenn du sie fehlerfrei ordnest – nach einem Fehler zweimal hintereinander.</p>" +
-        '<div class="learn-stats"><span><b>' + all.learned + "</b> von " + all.total + " Tabellen gelernt</span><span><b>" + core.pct + " %</b> Vergangenheit &amp; Gegenwart</span></div></div>" +
-        '<div class="ar-irab-actions"><button type="button" class="btn btn-primary" data-sarf-next>' + (all.learned ? "Weiter üben" : "Loslegen") + " · " + all.pct + " %</button></div></div>";
+      html += '<div class="panel ar-irab-cta"><div><p class="eyebrow">Sarf · صَرْف</p><h3>' + T("Verben konjugieren wie in der Emsile") + "</h3>" +
+        "<p>" + T("{v} Verben aus allen sechs Abwāb, je bis zu {f} Formen: Vergangenheit und Gegenwart, Passiv, Befehl, Verbot, Verneinung mit lam und lan, Partizip Aktiv und Passiv.", { v: VERBS.length, f: FORMS.length }) + " " +
+        T("Eine Tabelle ist gelernt, wenn du sie fehlerfrei ordnest – nach einem Fehler zweimal hintereinander.") + "</p>" +
+        '<div class="learn-stats"><span>' + T("<b>{n}</b> von {m} Tabellen gelernt", { n: all.learned, m: all.total }) + "</span><span>" + T("<b>{n} %</b> Vergangenheit &amp; Gegenwart", { n: core.pct }) + "</span></div></div>" +
+        '<div class="ar-irab-actions"><button type="button" class="btn btn-primary" data-sarf-next>' + (all.learned ? T("Weiter üben") : T("Loslegen")) + " · " + all.pct + " %</button></div></div>";
       html += ABWAB.map(function (b) {
         var vs = VERBS.filter(function (x) { return x.bab === b; });
         return '<section class="lg"><h3 class="lg-head"><span>Bāb ' + b.n + ' <span lang="ar" dir="rtl" class="sarf-bab">' + esc(b.model) + "</span></span><small>" + esc(b.w) + "</small></h3>" +
@@ -308,23 +308,23 @@
             var st = s.pct === 100 ? "done" : s.learned + s.almost + s.wrong ? "busy" : "new";
             return '<li class="lt lt-' + st + '"><button type="button" class="ar-lesson" data-sarf-verb="' + x.id + '">' +
               '<span class="ar-num sarf-num" lang="ar" dir="rtl">' + esc(x.past) + "</span>" +
-              '<span class="lt-main"><span class="lt-title"><strong>' + esc(x.de) + '</strong><span class="lt-ar" lang="ar" dir="rtl">' + esc(x.pres) + "</span></span>" + bar(s) +
-              '<small class="lt-meta">' + s.total + " Tabellen" + (x.t ? "" : " · intransitiv, ohne Passiv") + "</small></span>" +
+              '<span class="lt-main"><span class="lt-title"><strong>' + esc(T(x.de)) + '</strong><span class="lt-ar" lang="ar" dir="rtl">' + esc(x.pres) + "</span></span>" + bar(s) +
+              '<small class="lt-meta">' + T("{n} Tabellen", { n: s.total }) + (x.t ? "" : " · " + T("intransitiv, ohne Passiv")) + "</small></span>" +
               '<span class="lt-pct">' + (st === "done" ? "✓" : s.pct + " %") + "</span></button></li>";
           }).join("") + "</ol></section>";
       }).join("");
     } else {
       var ts = TABLES.filter(function (t) { return t.v === v; });
-      html += '<div class="ar-lesson-view"><button type="button" class="linkish ar-back" data-sarf-back>← Alle Verben</button>' +
-        '<div class="panel sarf-verb-head"><h3><span lang="ar" dir="rtl" class="sarf-verb">' + esc(v.past) + " " + esc(v.pres) + "</span> " + esc(v.de) + "</h3>" +
-        "<p>Bāb " + v.bab.n + ' <span lang="ar" dir="rtl">' + esc(v.bab.w) + "</span> · wie " + '<span lang="ar" dir="rtl">' + esc(v.bab.model) + "</span>" + (v.t ? "" : " · intransitiv, daher ohne Passiv") + "</p>" +
+      html += '<div class="ar-lesson-view"><button type="button" class="linkish ar-back" data-sarf-back>← ' + T("Alle Verben") + "</button>" +
+        '<div class="panel sarf-verb-head"><h3><span lang="ar" dir="rtl" class="sarf-verb">' + esc(v.past) + " " + esc(v.pres) + "</span> " + esc(T(v.de)) + "</h3>" +
+        "<p>Bāb " + v.bab.n + ' <span lang="ar" dir="rtl">' + esc(v.bab.w) + "</span> · " + T("wie") + ' <span lang="ar" dir="rtl">' + esc(v.bab.model) + "</span>" + (v.t ? "" : " · " + T("intransitiv, daher ohne Passiv")) + "</p>" +
         '<div class="ar-parts">' + ts.map(function (t) {
           var l = lv(t), s = { total: 1, learned: l === 2 ? 1 : 0, almost: l === 1 ? 1 : 0, wrong: l === -1 ? 1 : 0 };
-          return '<button type="button" class="ar-part' + (l === 2 ? " is-done" : "") + '" data-sarf-table="' + t.id + '"><strong>' + esc(t.f.de) + "</strong>" + bar(s) +
-            "<small>" + (l === 2 ? "✓ gelernt" : l === 1 ? "fast – noch 1× fehlerfrei" : l === -1 ? "nochmal üben" : "offen") + "</small></button>";
+          return '<button type="button" class="ar-part' + (l === 2 ? " is-done" : "") + '" data-sarf-table="' + t.id + '"><strong>' + esc(T(t.f.de)) + "</strong>" + bar(s) +
+            "<small>" + (l === 2 ? T("✓ gelernt") : l === 1 ? T("fast – noch 1× fehlerfrei") : l === -1 ? T("nochmal üben") : T("offen")) + "</small></button>";
         }).join("") + "</div>" +
-        '<div class="lr-actions"><button type="button" class="btn btn-primary" data-sarf-verb-all>Alle offenen Tabellen üben</button></div></div>' +
-        '<section class="ar-block"><h3>Die ganze Tabelle</h3>' + fullTable(v) + "</section></div>";
+        '<div class="lr-actions"><button type="button" class="btn btn-primary" data-sarf-verb-all>' + T("Alle offenen Tabellen üben") + "</button></div></div>" +
+        '<section class="ar-block"><h3>' + T("Die ganze Tabelle") + "</h3>" + fullTable(v) + "</section></div>";
     }
     return html + "</div>";
   }

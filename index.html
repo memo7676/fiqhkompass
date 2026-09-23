@@ -1096,6 +1096,11 @@ dialog.auth { border-radius: 20px; }
 .league-tabs [lang="ar"] { font-family: var(--arabic); }
 @media (max-width: 560px) { .league-tabs { width: 100%; } .league-tabs button { flex: 1; } }
 
+/* ---------- Sprache ---------- */
+.lang-select { margin-left: auto; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 8px; font: 700 .8rem/1 var(--body); cursor: pointer; }
+.lang-select + .acc-btn { margin-left: 0; }
+@media (max-width: 760px) { .lang-select { order: 1; padding: 5px 4px; } }
+
 /* ---------- Fehlerordner ---------- */
 .btn-ghost { background: transparent; }
 .setup-folder { margin: 6px 0 0; color: var(--muted); font-size: .9rem; }
@@ -1155,6 +1160,7 @@ dialog.auth { border-radius: 20px; }
       <button type="button" class="tab" role="tab" data-view="chat" aria-selected="false">
         <svg class="tab-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 17h-8.5L6 20.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/></svg><span class="tab-label">Chat</span><span class="tab-badge" id="chat-badge" hidden></span></button>
     </nav>
+    <select class="lang-select" id="lang-select" aria-label="Sprache / Language"><option value="de">DE</option></select>
     <button type="button" class="acc-btn" id="acc-btn" hidden><img alt="" id="acc-btn-img" hidden><span id="acc-btn-text">Anmelden</span></button>
   </div>
 </header>
@@ -1841,6 +1847,8 @@ dialog.auth { border-radius: 20px; }
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="i18n-en.js"></script>
+<script src="i18n.js"></script>
 <script src="firebase-config.js"></script>
 <script src="backend.js"></script>
 <script src="data.js"></script>

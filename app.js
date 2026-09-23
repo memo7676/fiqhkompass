@@ -1,5 +1,6 @@
 (function () {
   "use strict";
+  var T = window.T || function (s, v) { return v ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return v[k]; }) : s; };
 
   var TOPICS = window.FIQH_TOPICS || [];
   var QUESTIONS = window.FIQH_QUESTIONS || [];
@@ -31,7 +32,7 @@
   var BOOK = "İlmihal (H. Döndüren)";
   function hasBook(t) { return t.sections.some(function (s) { return s.src; }); }
   function topicSource(t) {
-    return hasBook(t) && t.lessons.indexOf("İlmihal") === -1 ? t.lessons + " · ergänzt aus dem İlmihal" : t.lessons;
+    return hasBook(t) && t.lessons.indexOf("İlmihal") === -1 ? t.lessons + " · " + T("ergänzt aus dem İlmihal") : t.lessons;
   }
   function srcBadge(s) {
     return s.src ? ' <span class="src-badge" title="' + esc(BOOK) + '">' + esc(s.src) + "</span>" : "";
@@ -122,13 +123,13 @@
     $("#lookup").className = "wrap lookup is-overview";
     $all(".topic-link").forEach(function (b) { b.setAttribute("aria-current", "false"); });
     var html = GROUPS.map(function (g) {
-      return '<section class="ov-group"><h2 class="ov-head">' + esc(g.name) + ' <small>' + g.topics.length + " Themen</small></h2>" +
+      return '<section class="ov-group"><h2 class="ov-head">' + esc(T(g.name)) + ' <small>' + T("{n} Themen", { n: g.topics.length }) + "</small></h2>" +
         '<div class="ov-grid">' + g.topics.map(function (t) {
           return '<button type="button" class="topic-card" data-open-topic="' + t.id + '">' +
             '<span class="tc-ar" lang="ar" dir="rtl">' + esc(t.ar) + "</span>" +
             '<strong class="tc-title">' + esc(t.title) + "</strong>" +
             '<span class="tc-intro">' + esc(t.intro) + "</span>" +
-            '<span class="tc-meta">' + t.sections.length + " Abschnitte · " + countFor(t.id) + " Quizfragen</span>" +
+            '<span class="tc-meta">' + T("{n} Abschnitte · {m} Quizfragen", { n: t.sections.length, m: countFor(t.id) }) + "</span>" +
             '<span class="tc-learn" data-learn-card="' + t.id + '"></span></button>';
         }).join("") + "</div></section>";
     }).join("");
@@ -141,7 +142,7 @@
   function renderTopicNav() {
     var nav = $("#topic-nav");
     nav.innerHTML = GROUPS.map(function (g) {
-      return '<p class="nav-group">' + esc(g.name) + "</p>" + g.topics.map(function (t) {
+      return '<p class="nav-group">' + esc(T(g.name)) + "</p>" + g.topics.map(function (t) {
         return '<button type="button" class="topic-link" data-topic="' + t.id + '">' +
           '<span class="tl-ar" lang="ar" dir="rtl">' + esc(t.ar) + "</span>" +
           '<span class="tl-title">' + esc(t.title) + "</span>" +
@@ -165,16 +166,16 @@
     $all(".topic-link").forEach(function (b) {
       b.setAttribute("aria-current", b.getAttribute("data-topic") === id ? "true" : "false");
     });
-    var html = '<button type="button" class="back-link" data-overview>← Alle Themen</button>' +
+    var html = '<button type="button" class="back-link" data-overview>← ' + T("Alle Themen") + "</button>" +
       '<header class="article-head">' +
       '<p class="eyebrow">' + esc(topicSource(t)) + "</p>" +
       '<h2>' + esc(t.title) + ' <span class="h-ar" lang="ar" dir="rtl">' + esc(t.ar) + "</span></h2>" +
       '<p class="lede">' + esc(t.intro) + "</p>" +
       '<div class="article-actions">' +
       '<span class="learn-slot" data-learn-slot="' + t.id + '"></span>' +
-      '<button type="button" class="btn" data-quiz-topic="' + t.id + '">Quiz zu diesem Thema · ' + countFor(t.id) + ' Fragen</button>' +
+      '<button type="button" class="btn" data-quiz-topic="' + t.id + '">' + T("Quiz zu diesem Thema · {n} Fragen", { n: countFor(t.id) }) + "</button>" +
       "</div>" +
-      '<nav class="toc" aria-label="Abschnitte">' + t.sections.map(function (s, i) {
+      '<nav class="toc" aria-label="' + T("Abschnitte") + '">' + t.sections.map(function (s, i) {
         return '<a href="#" data-jump="sec-' + t.id + "-" + i + '">' + esc(s.h) + "</a>";
       }).join("") + "</nav></header>";
     html += t.sections.map(function (s, i) {
@@ -248,9 +249,9 @@
       });
     });
     var total = hits.reduce(function (n, h) { return n + h.items.length; }, 0);
-    var html = '<button type="button" class="back-link" data-overview>← Alle Themen</button>' +
-      '<header class="article-head"><p class="eyebrow">Suche</p><h2>„' + esc(query) + "“</h2>" +
-      '<p class="lede">' + (total ? total + " Treffer in " + hits.length + " Abschnitten" : "Keine Treffer. Versuche einen anderen Begriff, z. B. „Mest“, „Qibla“ oder „Kaffāra“.") + "</p></header>";
+    var html = '<button type="button" class="back-link" data-overview>← ' + T("Alle Themen") + "</button>" +
+      '<header class="article-head"><p class="eyebrow">' + T("Suche") + "</p><h2>„" + esc(query) + "“</h2>" +
+      '<p class="lede">' + (total ? T("{n} Treffer in {m} Abschnitten", { n: total, m: hits.length }) : T("Keine Treffer. Versuche einen anderen Begriff, z. B. „Mest“, „Qibla“ oder „Kaffāra“.")) + "</p></header>";
     html += hits.map(function (h) {
       return '<section class="entry"><p class="hit-topic"><button type="button" class="linkish" data-open-topic="' + h.t.id + '">' +
         esc(h.t.title) + "</button> · " + esc(h.s.src || h.t.lessons) + "</p><h3>" + esc(h.s.h) + "</h3><ul>" +
@@ -298,8 +299,8 @@
     var chips = $("#topic-chips");
     chips.innerHTML = GROUPS.map(function (g, gi) {
       var allOn = g.topics.every(function (t) { return setup.topics.indexOf(t.id) !== -1; });
-      return '<div class="chip-group"><div class="chip-group-head"><span>' + esc(g.name) + "</span>" +
-        '<button type="button" class="linkish" data-chip-group="' + gi + '">' + (allOn ? "abwählen" : "alle wählen") + "</button></div>" +
+      return '<div class="chip-group"><div class="chip-group-head"><span>' + esc(T(g.name)) + "</span>" +
+        '<button type="button" class="linkish" data-chip-group="' + gi + '">' + (allOn ? T("abwählen") : T("alle wählen")) + "</button></div>" +
         '<div class="chips">' + g.topics.map(function (t) {
           var on = setup.topics.indexOf(t.id) !== -1;
           return '<button type="button" class="chip" data-chip="' + t.id + '" aria-pressed="' + on + '">' +
@@ -338,13 +339,13 @@
     startBtn.disabled = !ok;
     var n = Math.min(setup.count, pool.length);
     $("#setup-summary").textContent = ok
-      ? n + " Fragen aus " + (setup.mode === "mixed" ? "allen " + TOPICS.length + " Themengebieten" :
-        (setup.topics.length === 1 ? "„" + TOPIC_BY_ID[setup.topics[0]].title + "“" : setup.topics.length + " Themengebieten")) +
-        " · " + pool.length + " im Pool"
-      : "Wähle mindestens ein Themengebiet.";
+      ? T("{n} Fragen aus {from} · {p} im Pool", { n: n, p: pool.length,
+          from: setup.mode === "mixed" ? T("allen {n} Themengebieten", { n: TOPICS.length }) :
+            setup.topics.length === 1 ? "„" + TOPIC_BY_ID[setup.topics[0]].title + "“" : T("{n} Themengebieten", { n: setup.topics.length }) })
+      : T("Wähle mindestens ein Themengebiet.");
 
     var best = store(bestKey());
-    $("#setup-best").textContent = best ? "Dein Bestwert hier: " + best.score + " Punkte (" + best.correct + "/" + best.total + ")" : "Noch kein Bestwert für diese Auswahl.";
+    $("#setup-best").textContent = best ? T("Dein Bestwert hier: {s} Punkte ({c}/{t})", { s: best.score, c: best.correct, t: best.total }) : T("Noch kein Bestwert für diese Auswahl.");
 
     store("mode", setup.mode); store("topics", setup.topics); store("count", setup.count);
   }
@@ -407,7 +408,7 @@
     showView("quiz");
     var learn = !!(preset && preset.learn);
     $("#quiz-play").classList.toggle("is-learn", learn);
-    $("#quit-quiz").textContent = learn ? "Pause" : preset ? "Beenden (zählt so)" : "Abbrechen";
+    $("#quit-quiz").textContent = learn ? T("Pause") : preset ? T("Beenden (zählt so)") : T("Abbrechen");
     $("#quiz-setup").hidden = true;
     $("#quiz-result").hidden = true;
     $("#quiz-play").hidden = false;
@@ -423,17 +424,17 @@
     game.hidden = [];
     game.startedAt = Date.now();
 
-    $("#q-progress-text").textContent = (game.preset ? game.preset.label + " · " : "") + "Frage " + (game.i + 1) + " von " + game.qs.length;
+    $("#q-progress-text").textContent = (game.preset ? game.preset.label + " · " : "") + T("Frage {n} von {m}", { n: game.i + 1, m: game.qs.length });
     $("#q-bar").style.width = (game.i / game.qs.length * 100) + "%";
     $("#q-topic").textContent = t ? t.title : item.src.tt || "";
     $("#q-score").textContent = game.score;
-    $("#q-streak").textContent = game.streak > 1 ? game.streak + "er-Serie" : "";
+    $("#q-streak").textContent = game.streak > 1 ? T("{n}er-Serie", { n: game.streak }) : "";
     $("#q-streak").hidden = game.streak < 2;
     setText($("#q-text"), item.src.q);
     renderArabicLine(item.src);
     $("#q-feedback").hidden = true;
     $("#joker").disabled = !game.joker;
-    $("#joker").textContent = game.joker ? "50:50-Joker" : "Joker verbraucht";
+    $("#joker").textContent = game.joker ? T("50:50-Joker") : T("Joker verbraucht");
 
     var letters = ["A", "B", "C", "D"];
     var box = $("#q-options");
@@ -497,7 +498,7 @@
       game.hidden.push(i);
     });
     $("#joker").disabled = true;
-    $("#joker").textContent = "Joker verbraucht";
+    $("#joker").textContent = T("Joker verbraucht");
   }
   $("#joker").addEventListener("click", useJoker);
 
@@ -538,17 +539,17 @@
     var parts = [];
     if (ok) {
       parts.push("+" + BASE_POINTS);
-      if (timeBonus) parts.push("+" + timeBonus + " Zeit");
-      if (streakBonus) parts.push("+" + streakBonus + " Serie");
+      if (timeBonus) parts.push("+" + timeBonus + " " + T("Zeit"));
+      if (streakBonus) parts.push("+" + streakBonus + " " + T("Serie"));
     }
-    $("#fb-title").textContent = ok ? "Richtig!" : "Leider falsch";
-    $("#fb-points").textContent = learnNote || (ok ? parts.join("  ") : "Die richtige Antwort ist markiert.");
+    $("#fb-title").textContent = ok ? T("Richtig!") : T("Leider falsch");
+    $("#fb-points").textContent = learnNote || (ok ? parts.join("  ") : T("Die richtige Antwort ist markiert."));
     setText($("#fb-text"), item.src.e);
     var st = TOPIC_BY_ID[item.src.t];
-    $("#fb-source").textContent = st ? "Quelle: " + (item.src.src === "buch" ? BOOK : st.lessons) + " – " + st.title : item.src.srcText || "";
-    $("#next-q").textContent = game.i + 1 < game.qs.length ? "Nächste Frage" : (game.preset && game.preset.learn ? "Runde abschließen" : "Ergebnis ansehen");
+    $("#fb-source").textContent = st ? T("Quelle:") + " " + (item.src.src === "buch" ? BOOK : st.lessons) + " – " + st.title : T(item.src.srcText || "");
+    $("#next-q").textContent = game.i + 1 < game.qs.length ? T("Nächste Frage") : (game.preset && game.preset.learn ? T("Runde abschließen") : T("Ergebnis ansehen"));
     $("#q-score").textContent = game.score;
-    $("#q-streak").textContent = game.streak > 1 ? game.streak + "er-Serie" : "";
+    $("#q-streak").textContent = game.streak > 1 ? T("{n}er-Serie", { n: game.streak }) : "";
     $("#q-streak").hidden = game.streak < 2;
     $("#q-bar").style.width = ((game.i + 1) / game.qs.length * 100) + "%";
     $("#next-q").focus({ preventScroll: true });
@@ -593,10 +594,10 @@
   }
 
   function rankFor(ratio) {
-    if (ratio === 1) return { name: "Mā schāʾ Allāh – alles richtig!", note: "Du beherrschst dieses Gebiet. Probier den gemischten Modus mit 15 Fragen." };
-    if (ratio >= 0.8) return { name: "Sehr gut (Mutqin)", note: "Nur noch Kleinigkeiten – schau dir die markierten Fragen an." };
-    if (ratio >= 0.5) return { name: "Auf gutem Weg (Mutawassiṭ)", note: "Lies die Abschnitte zu deinen Fehlern im Nachschlagen nach und versuch es erneut." };
-    return { name: "Am Anfang des Weges (Mubtadiʾ)", note: "„Wer sich auf den Weg macht, um Wissen zu erlangen, dem erleichtert Allah den Weg ins Paradies.“" };
+    if (ratio === 1) return { name: T("Mā schāʾ Allāh – alles richtig!"), note: T("Du beherrschst dieses Gebiet. Probier den gemischten Modus mit 15 Fragen.") };
+    if (ratio >= 0.8) return { name: T("Sehr gut (Mutqin)"), note: T("Nur noch Kleinigkeiten – schau dir die markierten Fragen an.") };
+    if (ratio >= 0.5) return { name: T("Auf gutem Weg (Mutawassiṭ)"), note: T("Lies die Abschnitte zu deinen Fehlern im Nachschlagen nach und versuch es erneut.") };
+    return { name: T("Am Anfang des Weges (Mubtadiʾ)"), note: T("„Wer sich auf den Weg macht, um Wissen zu erlangen, dem erleichtert Allah den Weg ins Paradies.“") };
   }
 
   function showResult() {
@@ -622,10 +623,10 @@
     if (game.preset) game.preset.onFinish(progress(true));
     else emit("finish", { score: game.score, correct: game.correct, total: total, mode: setup.mode });
     $("#again").hidden = !!game.preset;
-    $("#to-setup").textContent = game.preset ? game.preset.nextLabel || "Zur Rangliste" : "Anderes Thema wählen";
+    $("#to-setup").textContent = game.preset ? game.preset.nextLabel || T("Zur Rangliste") : T("Anderes Thema wählen");
 
     $("#r-score").textContent = game.score;
-    $("#r-max").textContent = "von max. " + maxScore(total) + " Punkten";
+    $("#r-max").textContent = T("von max. {n} Punkten", { n: maxScore(total) });
     $("#r-correct").textContent = game.correct + " / " + total;
     $("#r-streak").textContent = game.bestStreak;
     $("#r-rank").textContent = rank.name;
@@ -637,16 +638,16 @@
     resultWrong = { qs: wrong.map(function (a) { return a.item.src; }), back: game.preset ? "wettbewerb" : "quiz" };
     var rm = $("#r-mistakes");
     rm.hidden = !(window.FIQH_MISTAKES && wrong.length) || !!(game.preset && game.preset.nextLabel);
-    rm.textContent = "Fehler wiederholen (" + wrong.length + ")";
-    $("#review-title").textContent = wrong.length ? "Zum Nachlesen (" + wrong.length + ")" : "Alle Antworten richtig";
+    rm.textContent = T("Fehler wiederholen ({n})", { n: wrong.length });
+    $("#review-title").textContent = wrong.length ? T("Zum Nachlesen ({n})", { n: wrong.length }) : T("Alle Antworten richtig");
     $("#review").innerHTML = wrong.map(function (a) {
       var right = a.item.options.filter(function (o) { return o.correct; })[0].text;
       var t = TOPIC_BY_ID[a.item.src.t];
       return '<li class="review-item"><p class="rv-q">' + esc(a.item.src.q) + "</p>" +
-        '<p class="rv-a"><span class="rv-label bad">Deine Antwort</span> ' + esc(a.item.options[a.chosen].text) + "</p>" +
-        '<p class="rv-a"><span class="rv-label good">Richtig</span> ' + esc(right) + "</p>" +
+        '<p class="rv-a"><span class="rv-label bad">' + T("Deine Antwort") + "</span> " + esc(a.item.options[a.chosen].text) + "</p>" +
+        '<p class="rv-a"><span class="rv-label good">' + T("Richtig") + "</span> " + esc(right) + "</p>" +
         '<p class="rv-e">' + esc(a.item.src.e) + "</p>" +
-        (t ? '<button type="button" class="linkish" data-review-topic="' + t.id + '">Im Nachschlagen öffnen: ' + esc(t.title) + "</button>" : "") + "</li>";
+        (t ? '<button type="button" class="linkish" data-review-topic="' + t.id + '">' + T("Im Nachschlagen öffnen:") + " " + esc(t.title) + "</button>" : "") + "</li>";
     }).join("");
     $all("[data-review-topic]").forEach(function (b) {
       b.addEventListener("click", function () {
@@ -663,7 +664,7 @@
   $("#r-mistakes").addEventListener("click", function () {
     if (!resultWrong || !window.FIQH_MISTAKES) return;
     game = null;
-    window.FIQH_MISTAKES.practice(resultWrong.qs, "Fehler aus dem Quiz", resultWrong.back);
+    window.FIQH_MISTAKES.practice(resultWrong.qs, T("Fehler aus dem Quiz"), resultWrong.back);
   });
   $("#again").addEventListener("click", function () { startQuiz(); });
   $("#to-setup").addEventListener("click", function () {

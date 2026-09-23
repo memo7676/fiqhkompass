@@ -3,6 +3,7 @@
    because Safari only installs via Share -> "Zum Home-Bildschirm". */
 (function () {
   "use strict";
+  var T = window.T || function (x) { return x; };
   function $(sel) { return document.querySelector(sel); }
   var APP = window.FIQH_APP;
 
@@ -45,7 +46,7 @@
     how.innerHTML = "";
     var ol = document.createElement("ol");
     ol.className = "install-steps";
-    ["Auf „Teilen“ tippen – das Quadrat mit Pfeil nach oben, unten in der Leiste oder im Menü „•••“.", "„Zum Home-Bildschirm“ wählen (evtl. etwas nach unten scrollen).", "Oben rechts „Hinzufügen“ tippen."].forEach(function (t) {
+    [T("Auf „Teilen“ tippen – das Quadrat mit Pfeil nach oben, unten in der Leiste oder im Menü „•••“."), T("„Zum Home-Bildschirm“ wählen (evtl. etwas nach unten scrollen)."), T("Oben rechts „Hinzufügen“ tippen.")].forEach(function (t) {
       var li = document.createElement("li"); li.textContent = t; ol.appendChild(li);
     });
     how.appendChild(ol);
