@@ -16,7 +16,7 @@
       stats: function () { return L ? L.stats() : null; },
       actions: [{ label: "Nachschlagen", view: "nachschlagen", primary: true }, { label: "Lernen", view: "lernen", progress: true }] },
     { id: "arabisch", name: "Arabisch", ar: "اللُّغَةُ الْعَرَبِيَّةُ",
-      text: "Madina-Buch 1: Vokabeln, Grammatik und alles drumherum – bis du einen Satz vollständig analysieren kannst (Iʿrāb).",
+      text: "Madina-Buch 1: Vokabeln, Grammatik, Sarf nach der Emsile und Iʿrāb – bis du einen Satz vollständig analysieren kannst.",
       meta: function () {
         if (!AR) return [];
         return [[AR.lessons.length, "Lektionen"], [AR.lessons.reduce(function (n, l) { return n + l.vocab.length; }, 0), "Vokabeln"]];

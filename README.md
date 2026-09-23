@@ -21,6 +21,8 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - Lernen wie im Lernmodus, getrennt nach Vokabeln (Bedeutung, Arabisch, Plural), Grammatik und Iʿrāb
   - Vokabelliste aller Lektionen mit Suche (Deutsch oder Arabisch, Vokalzeichen egal)
   - Iʿrāb-Bereich: Einführung (Fälle, Zeichen, muʿrab/mabnī, Sonderfälle), Fachbegriffe, Musteranalysen, Training und Prüfung mit 20 Sätzen
+  - neue Iʿrāb-Sätze (`irabgen.js`): ein Generator baut aus dem Wortschatz des Buchs Sätze nach festen Mustern (Nominalsatz, Genitivverbindung, Präposition, Verbalsatz, Adjektiv, Demonstrativ) mit deutscher Übersetzung. Sitzen alle Iʿrāb-Sätze, kommen nach 24 Stunden 10 neue dazu (Kennungen `ar-x-…`; Paket k ist immer dasselbe, auf einem anderen Gerät wird es über den Lernstand wiedergefunden)
+  - Sarf (`sarf.js`), aufgebaut wie die Emsile (Google-Drive-Ordner „Madina Books“): 47 gesunde dreiradikalige Verben aus allen sechs Abwāb, je bis zu 10 Formen – Vergangenheit und Gegenwart aktiv und passiv, Befehl, Verbot, Verneinung mit lam und lan, Partizip Aktiv und Passiv. Geübt wird, indem man die Formen einer Tabelle in die richtige Reihenfolge tippt (mit falschen Formen dazwischen); eine Tabelle ist gelernt, wenn sie fehlerfrei ist (Kennungen `ar-s-<Wurzel>-<Form>`). Zu jedem Verb gibt es die ganze Tabelle zum Nachschlagen
   - Daten in `arabisch/madina1-*.js`, Oberfläche in `arabic.js`; der Fortschritt teilt sich den Speicher mit dem Lernmodus (Kennungen `ar-…`)
 - **Quiz**:
   - Themenquiz (einzelne Gebiete oder ganze Sachgebiete) oder gemischter Modus
@@ -39,7 +41,9 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - Zustimmung zu Datenschutz und Regeln ([`datenschutz.html`](datenschutz.html))
   - eigenes Profilbild, das im Browser auf 128 × 128 px verkleinert wird
 - **Wettbewerb & Freunde**:
-  - Wochenquiz mit 15 Fragen, für alle dieselben, ein Versuch pro Woche
+  - zwei Ligen, umschaltbar: Fiqh-Liga und Arabisch-Liga
+  - Fiqh-Liga: Wochenquiz mit 15 Fragen, für alle dieselben, ein Versuch pro Woche
+  - Arabisch-Liga (Schlüssel `s<Saison>w<Woche>a` in `comp`): 10 Vokabeln und 10 Grammatikfragen aus den Lektionen der Woche (vier Blöcke von Lektion 1 bis 23), 10 jede Woche neu erzeugte Iʿrāb-Sätze, danach der Sarf von 3 Verben (Vergangenheit und Gegenwart, 6 Tabellen, 10 Punkte je Feld, 50 Bonus je fehlerfreier Tabelle). Eigene Ranglisten; die Punkte zählen nicht zum Quiz-Gesamtstand, daher bleiben die Firestore-Regeln unverändert
   - jede Woche ein anderes Sachgebiet, der Reihe nach: Glaube & Grundlagen, Reinheit, Gebet, Fasten, Zakāt & Ḥaǧǧ, Alltag & Gesellschaft
   - eine Saison dauert 4 Wochen (Start: Montag, 21.09.2026). Die Summe der vier Wochen entscheidet
   - Top 10 weltweit (diese Saison oder aller Zeiten, alle, nur Brüder oder nur Schwestern) und Saisonrangliste
