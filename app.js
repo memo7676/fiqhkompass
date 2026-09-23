@@ -367,15 +367,18 @@
     });
 
     var pool = poolFor();
+    var mixed = setup.mode === "mixed";
     var startBtn = $("#start-quiz");
-    var ok = pool.length > 0;
+    var ok = mixed || pool.length > 0;
     startBtn.disabled = !ok;
-    var n = Math.min(setup.count, pool.length);
+    var n = mixed ? Math.min(setup.count, QUESTIONS.length) : Math.min(setup.count, pool.length);
+    var paused = mixed ? QUESTIONS.length - pool.length : 0;
     $("#setup-summary").textContent = ok
       ? T("{n} Fragen aus {from} · {p} im Pool", { n: n, p: pool.length,
           from: setup.mode === "mixed" ? T("allen {n} Themengebieten", { n: TOPICS.length }) :
             setup.topics.length === 1 ? T("„{t}“", { t: TOPIC_BY_ID[setup.topics[0]].title }) : T("{n} Themengebieten", { n: setup.topics.length }) })
       : T("Wähle mindestens ein Themengebiet.");
+    if (ok && paused) $("#setup-summary").textContent += " · " + T("{k} kürzlich gestellt (2 Std. Pause)", { k: paused });
 
     var best = store(bestKey());
     $("#setup-best").textContent = best ? T("Dein Bestwert hier: {s} Punkte ({c}/{t})", { s: best.score, c: best.correct, t: best.total }) : T("Noch kein Bestwert für diese Auswahl.");
@@ -392,9 +395,33 @@
   $("#select-all").addEventListener("click", function () { setup.topics = TOPICS.map(function (t) { return t.id; }); renderSetup(); });
   $("#select-none").addEventListener("click", function () { setup.topics = []; renderSetup(); });
 
+  /* Mixed mode: a question that was asked in the last two hours is left out.
+     Only if too few remain are the longest-ago ones used to fill the round. */
+  var MIX_PAUSE = 2 * 60 * 60 * 1000;
+  function qid(q) { return q._lid || q.t + "|" + (q.q_de || q.q); }
+  function mixSeen() {
+    var seen = store("mixseen") || {}, now = Date.now(), out = {};
+    Object.keys(seen).forEach(function (k) { if (now - seen[k] < MIX_PAUSE) out[k] = seen[k]; });
+    return out;
+  }
+  function markMixSeen(q) {
+    var seen = mixSeen();
+    seen[qid(q)] = Date.now();
+    store("mixseen", seen);
+  }
   function poolFor() {
-    if (setup.mode === "mixed") return QUESTIONS.slice();
+    if (setup.mode === "mixed") {
+      var seen = mixSeen();
+      return QUESTIONS.filter(function (q) { return !seen[qid(q)]; });
+    }
     return QUESTIONS.filter(function (q) { return setup.topics.indexOf(q.t) !== -1; });
+  }
+  function mixFill(pool, n) {
+    if (pool.length >= n) return [];
+    var seen = mixSeen();
+    return QUESTIONS.filter(function (q) { return seen[qid(q)]; })
+      .sort(function (a, b) { return seen[qid(a)] - seen[qid(b)]; })
+      .slice(0, n - pool.length);
   }
 
   /* Pick questions spread across topics so a mixed round really is mixed.
@@ -434,10 +461,13 @@
       qs = preset.questions.map(function (q) { return withOptions(q, preset.rnd); });
     } else {
       var pool = poolFor();
-      if (!pool.length) return;
-      qs = pickQuestions(pool, Math.min(setup.count, pool.length)).map(function (q) { return withOptions(q); });
+      var extra = setup.mode === "mixed" ? mixFill(pool, setup.count) : [];
+      if (!pool.length && !extra.length) return;
+      qs = shuffle(pickQuestions(pool, Math.min(setup.count, pool.length)).concat(extra))
+        .map(function (q) { return withOptions(q); });
     }
-    game = { qs: qs, i: 0, score: 0, correct: 0, streak: 0, bestStreak: 0, joker: true, answers: [], key: preset ? null : bestKey(), preset: preset || null };
+    game = { qs: qs, i: 0, score: 0, correct: 0, streak: 0, bestStreak: 0, joker: true, answers: [], key: preset ? null : bestKey(), preset: preset || null,
+      mixed: !preset && setup.mode === "mixed" };
     showView("quiz");
     var learn = !!(preset && preset.learn);
     $("#quiz-play").classList.toggle("is-learn", learn);
@@ -456,6 +486,7 @@
     game.answered = false;
     game.hidden = [];
     game.startedAt = Date.now();
+    if (game.mixed) markMixSeen(item.src);
 
     $("#q-progress-text").textContent = (game.preset ? game.preset.label + " · " : "") + T("Frage {n} von {m}", { n: game.i + 1, m: game.qs.length });
     $("#q-bar").style.width = (game.i / game.qs.length * 100) + "%";

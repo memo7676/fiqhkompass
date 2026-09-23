@@ -70,3 +70,7 @@ Wo die Inhalte stehen:
 ## Quellenangaben im Quiz
 
 Jede Fiqh-Frage verweist mit `s` auf den Abschnitt ihres Themas (Index in `sections`). Abschnitte aus dem Unterricht tragen `u: "Unterricht N"`, Abschnitte aus dem İlmihal `src: "İlmihal S. …"`. Nach der Antwort, in der Auswertung und im Fehlerordner steht deshalb z. B. „Quelle: İlmihal (H. Döndüren), S. 143–150 · Wuḍūʾ – Gebetswaschung › Vertiefung: Mest, Socken und Verband“. Der Knopf in der Auswertung springt direkt zu diesem Abschnitt. Neue Fragen brauchen ebenfalls ein `s`.
+
+## Gemischter Modus: 2 Stunden Pause
+
+Im Quiz-Modus „Gemischt“ merkt sich `app.js` in `localStorage` („fiqh:mixseen“), wann eine Frage gestellt wurde. Fragen der letzten zwei Stunden kommen nicht wieder. Bleiben zu wenige übrig, wird die Runde mit den am längsten zurückliegenden aufgefüllt. Themen-Quiz, Lernen und Wettbewerb sind davon nicht betroffen.
