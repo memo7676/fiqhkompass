@@ -28,7 +28,7 @@
   /* Sisters play under a kunya ("Umm Yusuf", "Bint Ömer", "أم يوسف", "بنت عمر"), never their own first name. */
   var KUNYA_PREFIXES = ["Umm", "Bint", "Mutter von", "Tochter von", "أم", "بنت"];
   var KUNYA_RE = /^(umm|bint|mutter von|tochter von|ام|بنت) \S/;
-  var RESERVED = ["admin", "administrator", "moderator", "mod", "support", "fiqh", "fiqhkompass", "fiqh-kompass", "system", "root", "null", "undefined", "مدير", "مشرف", "ادمن"];
+  var RESERVED = ["admin", "administrator", "moderator", "mod", "support", "fiqh", "fiqhkompass", "fiqh-kompass", "talibulilm", "talib_ul_ilm", "طالب العلم", "system", "root", "null", "undefined", "مدير", "مشرف", "ادمن"];
   /* The key that makes a name unique: lower case, and Arabic letters that look alike folded
      together (أ إ آ → ا, ى ی → ي, ک → ك). firestore.rules does the same in fold(). */
   function nameKey(name) {

@@ -1,7 +1,7 @@
 {
-  "name": "Fiqh-Kompass",
-  "short_name": "Fiqh-Kompass",
-  "description": "Fiqh-Themen nachschlagen, im Quiz üben und im Wochenwettbewerb mitspielen.",
+  "name": "Ṭālibu l-ʿIlm",
+  "short_name": "Ṭālibu l-ʿIlm",
+  "description": "Fiqh nachschlagen und lernen, Arabisch mit dem Madina-Buch, Quiz und Wochenwettbewerb.",
   "lang": "de",
   "dir": "ltr",
   "id": "./",

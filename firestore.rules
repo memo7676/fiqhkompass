@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// Fiqh-Kompass: accounts, unique player names, rankings.
+// Ṭālibu l-ʿIlm (formerly Fiqh-Kompass): accounts, unique player names, rankings.
 // Deploy: Firebase console -> Firestore Database -> Rules -> paste this file -> Publish.
 service cloud.firestore {
   match /databases/{database}/documents {

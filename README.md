@@ -1,4 +1,4 @@
-# Fiqh-Kompass
+# Ṭālibu l-ʿIlm (طَالِبُ الْعِلْمِ)
 
 Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht 1–16“ (Google-Drive-Ordner „Fiqh“), vertieft und erweitert mit Hamdi Döndüren, „Delilleriyle İslâm İlmihali“.
 
