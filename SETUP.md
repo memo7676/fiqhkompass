@@ -56,9 +56,9 @@ Für eine öffentliche Seite in Deutschland sind Impressum und Datenschutzhinwei
   **Firestore → `players` / `avatars` / `usernames`**. Konten sperren geht unter **Authentication → Nutzer**.
   Gemeldete Chats stehen unter **Firestore → `reports`**, mit Begründung, den letzten Nachrichten und der Chat-ID.
   Schau dort regelmäßig nach.
-- **Neue Regeln:** Wenn sich `firestore.rules` ändert (zuletzt für Kunya und Chat), den Inhalt erneut unter **Firestore → Regeln** einfügen und veröffentlichen.
+- **Neue Regeln:** Wenn sich `firestore.rules` ändert (zuletzt für arabische Namen), den Inhalt erneut unter **Firestore → Regeln** einfügen und veröffentlichen.
 - **Chat-Index:** Der Chat braucht keinen eigenen Index. Falls Firebase im Browser trotzdem „requires an index“ meldet, führt der Link in der Fehlermeldung direkt zum Anlegen.
-- **Regeln testen:** `cd tests && npm install && npm test` startet den Firestore-Emulator (Java nötig) und prüft 76 Fälle,
+- **Regeln testen:** `cd tests && npm install && npm test` startet den Firestore-Emulator (Java nötig) und prüft 86 Fälle,
   z. B. doppelte Namen, Kunya-Pflicht, fremde Punkte, einen zweiten Versuch pro Woche, Chat zwischen Bruder und Schwester,
   Mitlesen durch Dritte, Blockieren oder Skripte als Profilbild.
 - **Regeln per Kommandozeile hochladen** (statt Schritt 6): `npx firebase-tools deploy --only firestore:rules --project <projekt-id>`.

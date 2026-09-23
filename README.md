@@ -18,7 +18,8 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - Bestwerte und Auswertung mit Links zum Nachlesen
 - **Konten** (Registrierung mit E-Mail und Passwort, E-Mail-Bestätigung, Passwort vergessen, Konto löschen):
   - Spielername, den es nur einmal gibt. Groß- und Kleinschreibung zählt dabei nicht, Ali und ali sind also derselbe Name
-  - Schwestern melden sich mit einer Kunya an (Umm …, Bint …, Mutter von …, Tochter von …); diese Beinamen sind Schwestern vorbehalten
+  - Namen auch mit arabischen Buchstaben, die von rechts nach links angezeigt werden (ohne Vokalzeichen; أ/إ/آ/ا und ى/ي zählen als derselbe Name)
+  - Schwestern melden sich mit einer Kunya an (Umm …, Bint …, أم …, بنت …, Mutter von …, Tochter von …); diese Beinamen sind Schwestern vorbehalten
   - Geschlecht (Bruder/Schwester), Geburtsjahr; unter 16 Jahren nur mit Einverständnis der Eltern
   - Zustimmung zu Datenschutz und Regeln ([`datenschutz.html`](datenschutz.html))
   - eigenes Profilbild, das im Browser auf 128 × 128 px verkleinert wird
@@ -32,7 +33,7 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
 - **Chat** zwischen Spielern: Brüder mit Brüdern, Schwestern mit Schwestern, nie zwischen Bruder und Schwester. Mit Ungelesen-Anzeige, Blockieren und Melden.
 
   Ranglisten sieht jeder, mitspielen und chatten können alle mit bestätigter E-Mail-Adresse.
-  Die Server-Regeln in [`firestore.rules`](firestore.rules) sichern das ab: eindeutige Namen, Kunya für Schwestern, nur eigene Daten, Punkte können nicht sinken, kein zweiter Versuch pro Woche, Chat nur unter Brüdern bzw. Schwestern. Getestet wird das in `tests/` (76 Fälle).
+  Die Server-Regeln in [`firestore.rules`](firestore.rules) sichern das ab: eindeutige Namen, Kunya für Schwestern, nur eigene Daten, Punkte können nicht sinken, kein zweiter Versuch pro Woche, Chat nur unter Brüdern bzw. Schwestern. Getestet wird das in `tests/` (86 Fälle).
 
 Einrichtung von Firebase und GitHub Pages: [`SETUP.md`](SETUP.md). Ohne Firebase funktionieren Nachschlagen und Quiz trotzdem.
 

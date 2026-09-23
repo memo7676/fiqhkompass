@@ -7,8 +7,10 @@ async function t(name, p, ok) {
   try { await (ok ? assertSucceeds(p) : assertFails(p)); pass++; console.log('  ok  ', name); }
   catch (e) { fail++; console.log('  FAIL', name, '-', e.message.split('\n')[0]); }
 }
+// Same as nameKey() in backend.js.
+const fold = n => n.normalize('NFC').toLowerCase().replace(/[أإآ]/g, 'ا').replace(/[ىی]/g, 'ي').replace(/ک/g, 'ك');
 function reg(db, uid, name, g = 'm', year = 1995) {
-  const key = name.normalize('NFC').toLowerCase(), b = db.batch();
+  const key = fold(name), b = db.batch();
   b.set(db.doc('usernames/' + key), { uid, name });
   b.set(db.doc('users/' + uid), { birthYear: year, parentalConsent: false, termsAt: TS(), createdAt: TS(), friends: [] });
   b.set(db.doc('players/' + uid), { nick: name, nickKey: key, g, total: 0, games: 0, comp: {}, at: 'x' });
@@ -57,6 +59,18 @@ function reg(db, uid, name, g = 'm', year = 1995) {
     return b.commit();
   })(), false);
   await t('Doppelte Leerzeichen im Namen abgelehnt', ctx('q').doc('usernames/umm  ali').set({ uid: 'q', name: 'Umm  Ali' }), false);
+
+  console.log('Arabische Namen');
+  await t('Bruder "محمد"', reg(ctx('ar1'), 'ar1', 'محمد', 'm'), true);
+  await t('Bruder "أحمد"', reg(ctx('ar2'), 'ar2', 'أحمد', 'm'), true);
+  await t('"احمد" ist derselbe Name wie "أحمد"', reg(ctx('ar3'), 'ar3', 'احمد', 'm'), false);
+  await t('Mit Vokalzeichen "مُحَمَّد" abgelehnt', reg(ctx('ar4'), 'ar4', 'مُحَمَّد', 'm'), false);
+  await t('Schwester "أم يوسف"', reg(ctx('ar5'), 'ar5', 'أم يوسف', 'f'), true);
+  await t('Schwester "بنت عمر"', reg(ctx('ar6'), 'ar6', 'بنت عمر', 'f'), true);
+  await t('Schwester ohne Kunya "فاطمة" abgelehnt', reg(ctx('ar7'), 'ar7', 'فاطمة', 'f'), false);
+  await t('Bruder mit "بنت علي" abgelehnt', reg(ctx('ar8'), 'ar8', 'بنت علي', 'm'), false);
+  await t('Gemischt "Umm يوسف" (Schwester)', reg(ctx('ar9'), 'ar9', 'Umm يوسف', 'f'), true);
+  await t('Arabische Ziffern "علي_٧٦"', reg(ctx('ar10'), 'ar10', 'علي_٧٦', 'm'), true);
 
   console.log('Lesen');
   await t('Gast liest Rangliste (players)', guest().collection('players').get(), true);

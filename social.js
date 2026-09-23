@@ -198,7 +198,8 @@
   function baseName(id) { return playerFor(id).nick; }
   function displayName(id) {
     var n = baseName(id);
-    if (id === me) return n ? n + " (du)" : "Du";
+    // U+2068/U+2069 isolate the name, so "(du)" stays behind an Arabic name too.
+    if (id === me) return n ? "\u2068" + n + "\u2069 (du)" : "Du";
     return n || "Gelöschtes Konto";
   }
   function hue(id) { var h = 0; for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) % 360; return h; }
@@ -483,11 +484,11 @@
     var box = $("#friend-hits");
     box.innerHTML = "";
     if (!q || !me) return;
-    var lq = q.toLowerCase();
+    var lq = B.nameKey(q);   // also finds "أحمد" when typing "احمد"
     var hits = Object.keys(players).filter(function (id) {
-      return id !== me && players[id].nick && players[id].nick.toLowerCase().indexOf(lq) !== -1;
+      return id !== me && players[id].nick && B.nameKey(players[id].nick).indexOf(lq) !== -1;
     }).sort(function (a, b) {
-      return (players[a].nick.toLowerCase().indexOf(lq) === 0 ? 0 : 1) - (players[b].nick.toLowerCase().indexOf(lq) === 0 ? 0 : 1) ||
+      return (B.nameKey(players[a].nick).indexOf(lq) === 0 ? 0 : 1) - (B.nameKey(players[b].nick).indexOf(lq) === 0 ? 0 : 1) ||
         players[a].nick.localeCompare(players[b].nick);
     }).slice(0, 8);
     if (!hits.length) { box.innerHTML = '<li class="note">Kein Spieler mit diesem Namen gefunden.</li>'; return; }
@@ -539,8 +540,8 @@
     accMsg("");
     if (open) {
       $("#acc-nick-hint").textContent = mine.g === "f"
-        ? "Als Schwester spielst du mit einer Kunya: Umm …, Bint …, Mutter von … oder Tochter von …. Jeden Namen gibt es nur einmal."
-        : "3–24 Zeichen, jeden Namen gibt es nur einmal.";
+        ? "Als Schwester spielst du mit einer Kunya: Umm …, Bint …, أم …, بنت …, Mutter von … oder Tochter von …. Jeden Namen gibt es nur einmal."
+        : "3–24 Zeichen, lateinisch oder arabisch, jeden Namen gibt es nur einmal.";
       $("#acc-nick").value = mine.nick || "";
       $("#acc-preview").src = avatarOf(me);
       $("#acc-nick").focus();

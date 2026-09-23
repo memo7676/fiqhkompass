@@ -119,9 +119,9 @@
     var box = $("#chat-new-hits");
     box.innerHTML = "";
     if (!q) return;
-    var lq = q.toLowerCase(), players = S.players();
+    var lq = B.nameKey(q), players = S.players();
     var hits = Object.keys(players).filter(function (id) {
-      return S.canChat(id) && players[id].nick.toLowerCase().indexOf(lq) !== -1;
+      return S.canChat(id) && B.nameKey(players[id].nick).indexOf(lq) !== -1;
     }).slice(0, 8);
     if (!hits.length) {
       box.innerHTML = '<li class="note"></li>';

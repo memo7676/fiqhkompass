@@ -12,7 +12,11 @@ service cloud.firestore {
     // other capitals allowed in names are mapped by hand (same result as JS toLowerCase).
     function fold(n) {
       return n.lower().replace('Ä', 'ä').replace('Ö', 'ö').replace('Ü', 'ü')
-        .replace('Ç', 'ç').replace('Ş', 'ş').replace('Ğ', 'ğ');
+        .replace('Ç', 'ç').replace('Ş', 'ş').replace('Ğ', 'ğ')
+        // Arabic letters that look alike count as the same name.
+        .replace('[\\x{0623}\\x{0625}\\x{0622}]', 'ا')
+        .replace('[\\x{0649}\\x{06CC}]', 'ي')
+        .replace('\\x{06A9}', 'ك');
     }
     function nameAfter(key) { return getAfter(/databases/$(database)/documents/usernames/$(key)); }
 
@@ -28,7 +32,8 @@ service cloud.firestore {
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.name is string
         && fold(request.resource.data.name) == key
-        && key.matches('^[a-z0-9äöüßçşğı_.-]+( [a-z0-9äöüßçşğı_.-]+)*$')
+        // Latin and Arabic letters (no vowel signs), digits, _ . - and single spaces.
+        && key.matches('^[a-z0-9äöüßçşğı_.\\x{0621}-\\x{063A}\\x{0641}-\\x{064A}\\x{0660}-\\x{0669}\\x{067E}\\x{0686}\\x{0698}\\x{06A9}\\x{06AF}\\x{06CC}\\x{06F0}-\\x{06F9}-]+( [a-z0-9äöüßçşğı_.\\x{0621}-\\x{063A}\\x{0641}-\\x{064A}\\x{0660}-\\x{0669}\\x{067E}\\x{0686}\\x{0698}\\x{06A9}\\x{06AF}\\x{06CC}\\x{06F0}-\\x{06F9}-]+)*$')
         && key.size() >= 3 && key.size() <= 24;
       // Only the spelling may change (same key), and only by the owner.
       allow update: if signedIn()
@@ -70,7 +75,7 @@ service cloud.firestore {
           && d.total is int && d.games is int && d.comp is map
           && d.nick is string && d.nickKey is string
           // Sisters play under a kunya, and only sisters may use one.
-          && (d.g == 'f') == d.nickKey.matches('^(umm|bint|mutter von|tochter von) .+')
+          && (d.g == 'f') == d.nickKey.matches('^(umm|bint|mutter von|tochter von|\\x{0627}\\x{0645}|\\x{0628}\\x{0646}\\x{062A}) .+')
           && nameAfter(d.nickKey).data.uid == request.auth.uid
           && nameAfter(d.nickKey).data.name == d.nick;
       }

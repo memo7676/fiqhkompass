@@ -14,23 +14,38 @@
   "use strict";
   if (window.FIQH_BACKEND) return;
 
-  /* Letters incl. German umlauts and Turkish ç ş ğ ı, digits, _ . - and single spaces. */
-  var NAME_RE = /^[A-Za-z0-9ÄÖÜäöüßÇçŞşĞğı_.-]+( [A-Za-z0-9ÄÖÜäöüßÇçŞşĞğı_.-]+)*$/;
-  /* Sisters play under a kunya ("Umm Yusuf", "Bint Ömer"), never their own first name. */
-  var KUNYA_PREFIXES = ["Umm", "Bint", "Mutter von", "Tochter von"];
-  var KUNYA_RE = /^(umm|bint|mutter von|tochter von) \S/;
-  var RESERVED = ["admin", "administrator", "moderator", "mod", "support", "fiqh", "fiqhkompass", "fiqh-kompass", "system", "root", "null", "undefined"];
-  function nameKey(name) { return String(name || "").normalize("NFC").toLowerCase(); }
+  /* Letters incl. German umlauts, Turkish ç ş ğ ı and the Arabic alphabet (with the
+     Persian/Urdu letters پ چ ژ ک گ ی), digits (also ٠-٩), _ . - and single spaces.
+     Arabic vowel signs (tashkīl) and tatweel are left out so that "محمد" and "مُحَمَّد"
+     can not become two different players. */
+  var AR = "\u0621-\u063A\u0641-\u064A\u0660-\u0669\u067E\u0686\u0698\u06A9\u06AF\u06CC\u06F0-\u06F9";
+  var CH = "A-Za-z0-9ÄÖÜäöüßÇçŞşĞğı_.\\-" + AR;
+  var NAME_RE = new RegExp("^[" + CH + "]+( [" + CH + "]+)*$");
+  var LETTER_RE = new RegExp("[A-Za-zÄÖÜäöüßÇçŞşĞğı\u0621-\u063A\u0641-\u064A\u067E\u0686\u0698\u06A9\u06AF\u06CC]");
+  var TASHKIL_RE = /[\u0610-\u061A\u0640\u064B-\u065F\u0670\u06D6-\u06ED]/;
+  var ARABIC_RE = /[\u0600-\u06FF]/;
+  /* Sisters play under a kunya ("Umm Yusuf", "Bint Ömer", "أم يوسف", "بنت عمر"), never their own first name. */
+  var KUNYA_PREFIXES = ["Umm", "Bint", "Mutter von", "Tochter von", "أم", "بنت"];
+  var KUNYA_RE = /^(umm|bint|mutter von|tochter von|ام|بنت) \S/;
+  var RESERVED = ["admin", "administrator", "moderator", "mod", "support", "fiqh", "fiqhkompass", "fiqh-kompass", "system", "root", "null", "undefined", "مدير", "مشرف", "ادمن"];
+  /* The key that makes a name unique: lower case, and Arabic letters that look alike folded
+     together (أ إ آ → ا, ى ی → ي, ک → ك). firestore.rules does the same in fold(). */
+  function nameKey(name) {
+    return String(name || "").normalize("NFC").toLowerCase()
+      .replace(/[أإآ]/g, "ا").replace(/[ىی]/g, "ي").replace(/ک/g, "ك");
+  }
   function isKunya(name) { return KUNYA_RE.test(nameKey(name)); }
+  function hasArabic(name) { return ARABIC_RE.test(String(name || "")); }
   /* gender: "m", "f" or empty (then only the general rules are checked). */
   function checkName(name, gender) {
     name = String(name || "").normalize("NFC").trim();
     if (name.length < 3 || name.length > 24) return "Der Spielername muss 3–24 Zeichen lang sein.";
-    if (!NAME_RE.test(name)) return "Erlaubt sind Buchstaben (auch ä, ö, ü, ß, ç, ş, ğ), Ziffern, _ . - und einzelne Leerzeichen.";
-    if (!/[A-Za-zÄÖÜäöüßÇçŞşĞğı]/.test(name)) return "Der Spielername braucht mindestens einen Buchstaben.";
+    if (TASHKIL_RE.test(name)) return "Bitte den arabischen Namen ohne Vokalzeichen (Taschkīl) und ohne Streckstrich schreiben, z. B. محمد statt مُحَمَّد.";
+    if (!NAME_RE.test(name)) return "Erlaubt sind lateinische und arabische Buchstaben (auch ä, ö, ü, ß, ç, ş, ğ), Ziffern, _ . - und einzelne Leerzeichen.";
+    if (!LETTER_RE.test(name)) return "Der Spielername braucht mindestens einen Buchstaben.";
     if (RESERVED.indexOf(nameKey(name)) !== -1) return "Dieser Name ist reserviert.";
-    if (gender === "f" && !isKunya(name)) return "Schwestern spielen mit einer Kunya, z. B. „Umm Yusuf“ oder „Bint Ömer“.";
-    if (gender === "m" && isKunya(name)) return "Namen mit Umm, Bint, Mutter von oder Tochter von sind Schwestern vorbehalten.";
+    if (gender === "f" && !isKunya(name)) return "Schwestern spielen mit einer Kunya, z. B. „Umm Yusuf“, „Bint Ömer“ oder „أم يوسف“.";
+    if (gender === "m" && isKunya(name)) return "Namen mit Umm, Bint, أم, بنت, Mutter von oder Tochter von sind Schwestern vorbehalten.";
     return "";
   }
   function checkPassword(pw, email, name) {
@@ -76,7 +91,7 @@
     return MESSAGES[code] || (e && e.userMessage) || "Das hat nicht geklappt. Versuch es bitte noch einmal.";
   }
 
-  var helpers = { KUNYA_PREFIXES: KUNYA_PREFIXES, isKunya: isKunya, checkName: checkName, checkPassword: checkPassword, passwordStrength: passwordStrength, nameKey: nameKey, message: message };
+  var helpers = { KUNYA_PREFIXES: KUNYA_PREFIXES, isKunya: isKunya, hasArabic: hasArabic, checkName: checkName, checkPassword: checkPassword, passwordStrength: passwordStrength, nameKey: nameKey, message: message };
 
   var cfg = window.FIQH_FIREBASE;
   if (!cfg || !window.firebase || !firebase.initializeApp) {

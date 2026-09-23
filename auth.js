@@ -71,7 +71,7 @@
 
   /* ---------- Registrieren ---------- */
   /* Brothers type a player name, sisters build a kunya: prefix + name of child or father. */
-  var NAME_HINT = "3–24 Zeichen: Buchstaben, Ziffern, _ . -. Jeden Namen gibt es nur einmal.";
+  var NAME_HINT = "3–24 Zeichen: lateinische oder arabische Buchstaben, Ziffern, _ . -. Jeden Namen gibt es nur einmal.";
   var KUNYA_HINT = "Jeden Namen gibt es nur einmal.";
   function gender() { var g = $('input[name="rg-gender"]:checked', pane("register")); return g ? g.value : ""; }
   function regName() {

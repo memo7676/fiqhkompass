@@ -25,7 +25,7 @@
   --bad: #b0413a;
   --bad-soft: #f8e4e1;
   --shadow: 0 1px 2px rgba(14, 40, 34, .06), 0 8px 24px rgba(14, 40, 34, .06);
-  --display: "Alegreya", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --display: "Alegreya", "Amiri", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
   --arabic: "Amiri", "Traditional Arabic", "Geeza Pro", serif;
   --radius: 10px;
@@ -594,6 +594,16 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
   .convo-tools { flex-direction: column; gap: 2px; align-items: flex-end; }
 }
 
+/* ---------- names & messages in Arabic (right to left) ---------- */
+.rank-name strong, .winner strong, .board-note b, #acc-name, #acc-btn-text, #ac-name,
+.chat-item strong, .chat-item small, #convo-name, .hit span, #rg-kunya-preview, .msg, #board-note b {
+  unicode-bidi: plaintext;
+}
+.msg { text-align: start; }
+/* In lists and headers names keep the row's left alignment; only the letters run right to left. */
+.rank-name strong, .chat-item strong, .chat-item small, #convo-name, .hit span, #acc-name, #ac-name { text-align: left; }
+input[dir="auto"], textarea[dir="auto"] { text-align: start; }
+
 .foot { border-top: 1px solid var(--line); padding-block: 20px 34px; color: var(--muted); font-size: .85rem; }
 .foot p { margin: 0; max-width: 80ch; }
 </style>
@@ -632,7 +642,7 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
       <aside class="side">
         <form class="search" id="search-form" role="search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-          <input id="search" type="search" aria-label="Themen durchsuchen" placeholder="Suchen, z. B. Mest, Qibla, Kaffāra" autocomplete="off">
+          <input id="search" dir="auto" type="search" aria-label="Themen durchsuchen" placeholder="Suchen, z. B. Mest, Qibla, Kaffāra" autocomplete="off">
         </form>
         <nav class="topic-nav" id="topic-nav" aria-label="Themengebiete"></nav>
       </aside>
@@ -801,8 +811,8 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
           <form class="acc-form" id="acc-form" hidden>
             <div class="acc-field">
               <label class="step-label" for="acc-nick">Spielername</label>
-              <input id="acc-nick" type="text" maxlength="24" autocomplete="username" spellcheck="false">
-              <small class="acc-hint" id="acc-nick-hint">3–24 Zeichen, jeden Namen gibt es nur einmal.</small>
+              <input id="acc-nick" dir="auto" type="text" maxlength="24" autocomplete="username" spellcheck="false">
+              <small class="acc-hint" id="acc-nick-hint">3–24 Zeichen, lateinisch oder arabisch, jeden Namen gibt es nur einmal.</small>
             </div>
             <div class="acc-field">
               <span class="step-label">Profilbild</span>
@@ -894,7 +904,7 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
             <ol class="ranking" id="friend-board"></ol>
             <div class="friend-search">
               <label for="friend-q" class="step-label">Freund hinzufügen</label>
-              <input id="friend-q" type="search" autocomplete="off" placeholder="Spielername suchen">
+              <input id="friend-q" dir="auto" type="search" autocomplete="off" placeholder="Spielername suchen">
               <ul class="hits" id="friend-hits"></ul>
             </div>
           </div>
@@ -923,7 +933,7 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
             <h2>Nachrichten</h2>
             <p class="chat-rule" id="chat-rule"></p>
             <label class="visually-hidden" for="chat-new">Spieler suchen</label>
-            <input id="chat-new" type="search" autocomplete="off" placeholder="Neuer Chat: Spielername suchen">
+            <input id="chat-new" dir="auto" type="search" autocomplete="off" placeholder="Neuer Chat: Spielername suchen">
             <ul class="hits" id="chat-new-hits"></ul>
           </div>
           <ul class="chat-list" id="chat-list"></ul>
@@ -955,7 +965,7 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
             <p class="convo-note" id="convo-note" hidden></p>
             <form class="composer" id="composer">
               <label class="visually-hidden" for="msg-text">Nachricht</label>
-              <textarea id="msg-text" rows="1" maxlength="1000" placeholder="Nachricht schreiben …"></textarea>
+              <textarea id="msg-text" dir="auto" rows="1" maxlength="1000" placeholder="Nachricht schreiben …"></textarea>
               <button type="submit" class="btn btn-primary" id="msg-send">Senden</button>
             </form>
             <small class="composer-hint" id="composer-hint">Enter zum Senden, Umschalt + Enter für eine neue Zeile.</small>
@@ -1011,12 +1021,12 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
     <p class="hint name-wait" id="rg-name-wait">Wähle zuerst aus, ob du Bruder oder Schwester bist – danach legst du deinen Spielernamen fest.</p>
     <div class="field" id="rg-name-plain" hidden>
       <label for="rg-name">Spielername</label>
-      <input id="rg-name" type="text" autocomplete="username" maxlength="24" spellcheck="false" aria-describedby="rg-name-hint">
-      <small class="hint" id="rg-name-hint">3–24 Zeichen: Buchstaben, Ziffern, _ . -. Jeden Namen gibt es nur einmal.</small>
+      <input id="rg-name" dir="auto" type="text" autocomplete="username" maxlength="24" spellcheck="false" aria-describedby="rg-name-hint">
+      <small class="hint" id="rg-name-hint">3–24 Zeichen: lateinische oder arabische Buchstaben, Ziffern, _ . -. Jeden Namen gibt es nur einmal.</small>
     </div>
     <div class="kunya" id="rg-kunya-wrap" hidden>
       <p class="kunya-title">Schwestern melden sich mit einer Kunya an</p>
-      <p>Statt deines eigenen Vornamens wählst du einen Beinamen, zum Beispiel <strong>Umm Yusuf</strong> (Mutter von Yusuf) oder <strong>Bint Ömer</strong> (Tochter von Ömer). Nur dieser Name ist in Ranglisten und im Chat zu sehen, dein Vorname bleibt privat.</p>
+      <p>Statt deines eigenen Vornamens wählst du einen Beinamen, zum Beispiel <strong>Umm Yusuf</strong> (Mutter von Yusuf) oder <strong>Bint Ömer</strong> (Tochter von Ömer) – auch auf Arabisch: <bdi lang="ar"><strong>أم يوسف</strong></bdi> oder <bdi lang="ar"><strong>بنت عمر</strong></bdi>. Nur dieser Name ist in Ranglisten und im Chat zu sehen, dein Vorname bleibt privat.</p>
       <div class="kunya-row">
         <div class="field">
           <label for="rg-kunya-pre">Beginn</label>
@@ -1025,11 +1035,13 @@ dialog.auth::backdrop { background: rgba(8, 20, 17, .55); backdrop-filter: blur(
             <option value="Bint">Bint (Tochter von)</option>
             <option value="Mutter von">Mutter von</option>
             <option value="Tochter von">Tochter von</option>
+            <option value="أم">أم (Umm, arabisch)</option>
+            <option value="بنت">بنت (Bint, arabisch)</option>
           </select>
         </div>
         <div class="field">
           <label for="rg-kunya-name">Name des Kindes bzw. Vaters</label>
-          <input id="rg-kunya-name" type="text" maxlength="18" spellcheck="false" placeholder="z. B. Ömer">
+          <input id="rg-kunya-name" dir="auto" type="text" maxlength="18" spellcheck="false" placeholder="z. B. Ömer oder عمر">
         </div>
       </div>
       <p class="kunya-preview">Dein Spielername: <strong id="rg-kunya-preview">–</strong></p>
