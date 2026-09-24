@@ -58,10 +58,10 @@
      Fiqh-Liga: 15 questions from the Sachgebiet of the week (key "s1w2").
      Arabisch-Liga (key "s1w2a"): 10 Vokabeln from the lessons of the week (5 Arabic → German,
      5 German → Arabic), 10 Grammatik from the whole book (one from each tenth, easy to hard),
-     10 new Iʿrāb sentences (irabgen.js, patterns in turn) and the Sarf of three verbs from three
+     10 new Iʿrāb sentences (irabgen.js, patterns in turn) and the Sarf of two verbs from two
      different abwāb, past and present (sarf.js). Every week is thus about equally hard.
      Its points count only in the Arabic rankings, not in the quiz total. */
-  var AR_Q = 10, AR_VERBS = 3;
+  var AR_Q = 10, AR_VERBS = 2;
   var AR_CELLS = AR_VERBS * 2 * 14, AR_TOTAL = 3 * AR_Q + AR_CELLS;
   var SARF_CELL = 10, SARF_PERFECT = 50;
   var league = APP.store("league") === "arabisch" ? "arabisch" : "fiqh";
@@ -74,7 +74,7 @@
   var LEAGUES = {
     fiqh: { sfx: "", total: COMP_QUESTIONS, name: T("Fiqh-Liga"), theme: themeFor, what: T("jede Woche ein anderes Sachgebiet, 15 Fragen") },
     arabisch: { sfx: "a", total: AR_TOTAL, name: T("Arabisch-Liga"), theme: arTheme,
-      what: T("10 Vokabeln aus den Lektionen der Woche, 10 Grammatikfragen aus dem ganzen Buch, 10 neue Iʿrāb-Sätze und der Sarf von 3 Verben – jede Woche gleich schwer") }
+      what: T("10 Vokabeln aus den Lektionen der Woche, 10 Grammatikfragen aus dem ganzen Buch, 10 neue Iʿrāb-Sätze und der Sarf von 2 Verben – jede Woche gleich schwer") }
   };
   function LG() { return LEAGUES[league]; }
   function lkey(cal) { return cal.key + LG().sfx; }
@@ -441,7 +441,7 @@
       state.textContent = T("Bestätige zuerst deine E-Mail-Adresse – dann kannst du mitspielen.");
     } else if (!e) {
       state.textContent = league === "fiqh" ? T("Ein Versuch, 15 Fragen, dieselben wie bei allen anderen.")
-        : T("Ein Versuch: 30 Fragen, dann 6 Sarf-Tabellen (3 Verben, Vergangenheit und Gegenwart) – für alle dieselben.");
+        : T("Ein Versuch: 30 Fragen, dann 4 Sarf-Tabellen (2 Verben, Vergangenheit und Gegenwart) – für alle dieselben.");
     } else if (e.done) {
       state.innerHTML = T("Diese Woche erledigt: <b>{p} Punkte</b> ({n} / {m} richtig). Nächste Runde ab {d}", { p: pts(e.score), n: e.correct, m: lg.total, d: esc(dayLong(cal.weekEnd)) });
     } else if (APP.isPlaying()) {

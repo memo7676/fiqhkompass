@@ -44,7 +44,7 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
 - **Wettbewerb & Freunde**:
   - zwei Ligen, umschaltbar: Fiqh-Liga und Arabisch-Liga
   - Fiqh-Liga: Wochenquiz mit 15 Fragen, für alle dieselben, ein Versuch pro Woche
-  - Arabisch-Liga (Schlüssel `s<Saison>w<Woche>a` in `comp`): 10 Vokabeln und 10 Grammatikfragen aus den Lektionen der Woche (vier Blöcke von Lektion 1 bis 23), 10 jede Woche neu erzeugte Iʿrāb-Sätze, danach der Sarf von 3 Verben (Vergangenheit und Gegenwart, 6 Tabellen, 10 Punkte je Feld, 50 Bonus je fehlerfreier Tabelle). Eigene Ranglisten; die Punkte zählen nicht zum Quiz-Gesamtstand, daher bleiben die Firestore-Regeln unverändert
+  - Arabisch-Liga (Schlüssel `s<Saison>w<Woche>a` in `comp`): 10 Vokabeln und 10 Grammatikfragen aus den Lektionen der Woche (vier Blöcke von Lektion 1 bis 23), 10 jede Woche neu erzeugte Iʿrāb-Sätze, danach der Sarf von 2 Verben (Vergangenheit und Gegenwart, 4 Tabellen, 10 Punkte je Feld, 50 Bonus je fehlerfreier Tabelle). Eigene Ranglisten; die Punkte zählen nicht zum Quiz-Gesamtstand, daher bleiben die Firestore-Regeln unverändert
   - jede Woche ein anderes Sachgebiet, der Reihe nach: Glaube & Grundlagen, Reinheit, Gebet, Fasten, Zakāt & Ḥaǧǧ, Alltag & Gesellschaft
   - eine Saison dauert 4 Wochen (Start: Montag, 21.09.2026). Die Summe der vier Wochen entscheidet
   - Top 10 weltweit (diese Saison oder aller Zeiten, alle, nur Brüder oder nur Schwestern) und Saisonrangliste
@@ -81,7 +81,7 @@ Seit Woche 1 der ersten Saison (`AR_BALANCED_FROM` in `social.js`) gilt:
 - **Vokabeln**: 10 Wörter aus den Lektionen der Woche, immer 5 × Arabisch → Deutsch und 5 × Deutsch → Arabisch, jedes Wort nur einmal.
 - **Grammatik**: nicht mehr an die Lektionen gebunden. Alle Grammatikfragen des Buchs werden in Buchreihenfolge in 10 Stufen geteilt (leicht → schwer), jede Woche kommt je eine Frage aus jeder Stufe. Innerhalb einer Stufe wiederholt sich eine Frage erst, wenn alle dran waren.
 - **Iʿrāb**: die Satzmuster von `irabgen.js` kommen der Reihe nach dran (`make(…, balanced)`), jede Woche also dieselbe Mischung.
-- **Sarf**: drei Verben aus drei verschiedenen Abwāb.
+- **Sarf**: zwei Verben aus zwei verschiedenen Abwāb.
 
 
 ## Belege (Dalīl) zu den Antworten
