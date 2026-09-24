@@ -3,7 +3,7 @@
    because Safari only installs via Share -> "Zum Home-Bildschirm". */
 (function () {
   "use strict";
-  var T = window.T || function (x) { return x; };
+  var T = window.T || function (s, v) { return v ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return v[k] !== undefined ? v[k] : m; }) : s; };
   function $(sel) { return document.querySelector(sel); }
   var APP = window.FIQH_APP;
 
