@@ -102,7 +102,8 @@
       '<p class="rv-a"><span class="rv-label good">' + T("Richtig") + "</span> " + mixed(q.a[q.c], "span") + "</p>" +
       (q.e ? mixed(q.e, "p", "rv-e") : "") +
       (q.s !== undefined && APP.sourceLine ? '<p class="fb-source">' + esc(APP.sourceLine(q)) + "</p>" : "") +
-      (APP.dalilHtml && APP.dalilHtml(q) ? '<ul class="fb-dalil">' + APP.dalilHtml(q) + "</ul>" : "") + "</li>";
+      (APP.dalilHtml && APP.dalilHtml(q) ? '<ul class="fb-dalil">' + APP.dalilHtml(q) + "</ul>" : "") +
+      (APP.termsHtml && APP.termsHtml(q) ? '<div class="fb-terms">' + APP.termsHtml(q) + "</div>" : "") + "</li>";
   }
 
   function renderRound() {

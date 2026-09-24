@@ -656,6 +656,9 @@
     var dl = dalilHtml(item.src);
     $("#fb-dalil").innerHTML = dl;
     $("#fb-dalil").hidden = !dl;
+    var th = termsHtml(item.src, item.options.map(function (o) { return o.text; }));
+    $("#fb-terms").innerHTML = th;
+    $("#fb-terms").hidden = !th;
     $("#next-q").textContent = game.i + 1 < game.qs.length ? T("Nächste Frage") : (game.preset && game.preset.learn ? T("Runde abschließen") : T("Ergebnis ansehen"));
     $("#q-score").textContent = game.score;
     $("#q-streak").textContent = game.streak > 1 ? T("{n}er-Serie", { n: game.streak }) : "";
@@ -663,6 +666,18 @@
     $("#q-bar").style.width = ((game.i + 1) / game.qs.length * 100) + "%";
     $("#next-q").focus({ preventScroll: true });
     fb.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+
+  /* Begriffe: the foreign technical terms in question, answers and explanation, explained
+     after answering (glossar.js). Iʿrāb answers are Arabic grammar terms, so those are looked up too. */
+  function termsHtml(q, answers) {
+    if (!window.FIQH_TERMS) return "";
+    var ar = q.t === "arabisch";
+    var list = window.FIQH_TERMS([q.arMark != null ? "" : q.q].concat(answers || q.a || [], [q.e]), ar ? "a" : "f", ar && q.arMark != null).slice(0, 8);
+    if (!list.length) return "";
+    return '<p class="fb-terms-h">' + esc(T("Begriffe in dieser Frage")) + "</p>" + list.map(function (t) {
+      return '<p class="fb-term" dir="ltr"><b>' + bidiHtml(t[0]) + "</b> – " + bidiHtml(t[1]) + "</p>";
+    }).join("");
   }
 
   /* Quiz and Wettbewerb feed the Fehlerordner (mistakes.js): a wrong answer puts the question in,
@@ -798,7 +813,7 @@
   }
   window.FIQH_APP = {
     TOPICS: TOPICS, QUESTIONS: QUESTIONS, TOPIC_BY_ID: TOPIC_BY_ID, GROUPS: GROUPS,
-    esc: esc, bidiHtml: bidiHtml, arOnly: arOnly, store: store, sourceLine: sourceLine, dalilHtml: dalilHtml, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
+    esc: esc, bidiHtml: bidiHtml, arOnly: arOnly, store: store, sourceLine: sourceLine, dalilHtml: dalilHtml, termsHtml: termsHtml, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
     showView: showView, tabOf: TAB_OF, startQuiz: startQuiz, renderSetup: renderSetup, openTopic: openTopic,
     isPlaying: function () { return !!game && !$("#quiz-play").hidden; },
     on: function (name, fn) { (listeners[name] = listeners[name] || []).push(fn); }

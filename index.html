@@ -317,6 +317,11 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
 .fb-dalil .dl-ref { color: var(--muted); }
 .fb-dalil .dl-bk { display: block; font-size: .78rem; color: var(--muted); }
 .feedback .btn { justify-self: start; margin-top: 6px; }
+.fb-terms { margin: .5rem 0 0; padding: .55rem .7rem; border-radius: 10px; background: color-mix(in srgb, var(--surface, #fff) 70%, transparent); font-size: .86rem; line-height: 1.45; }
+.fb-terms p { margin: 0; }
+.fb-terms .fb-terms-h { font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: .2rem; }
+.fb-terms .fb-term + .fb-term { margin-top: .2rem; }
+.fb-terms bdi[lang="ar"] { font-size: 1.1em; }
 .kbd-hint { font-size: .8rem; color: var(--muted); text-align: center; margin: 0; }
 @media (hover: none) { .kbd-hint { display: none; } }
 
@@ -1537,6 +1542,7 @@ dialog.auth { border-radius: 20px; }
             <p id="fb-text"></p>
             <p class="fb-source" id="fb-source"></p>
             <ul class="fb-dalil" id="fb-dalil" hidden></ul>
+            <div class="fb-terms" id="fb-terms" hidden></div>
             <button type="button" class="btn btn-primary" id="next-q">Nächste Frage</button>
           </div>
 
@@ -1983,6 +1989,7 @@ dialog.auth { border-radius: 20px; }
 <script src="buch/10-alltag.js"></script>
 <script src="fiqh-en.js"></script>
 <script src="fiqh-belege.js"></script>
+<script src="glossar.js"></script>
 <script src="app.js"></script>
 <script src="social.js"></script>
 <script src="chat.js"></script>

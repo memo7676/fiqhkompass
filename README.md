@@ -52,6 +52,7 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - Freunde über den Spielernamen finden und Gesamtpunkte vergleichen
   - Freundschaft nur mit Anfrage: senden, annehmen oder ablehnen, zurückziehen, beenden; offene Anfragen zeigt eine Zahl am Reiter. Wie beim Chat nur unter Brüdern bzw. unter Schwestern, nicht bei Blockierung (`friendRequests`, `friendships`). Alte Freundeslisten werden einmalig zu Anfragen
 
+- **Begriffe erklärt** (`glossar.js`): Nach jeder Antwort (Quiz, Lernmodus, Wettbewerb) stehen unter der Erklärung die Fremdwörter aus Frage, Antworten und Erklärung mit kurzer Bedeutung (Deutsch oder Englisch), ebenso im Fehlerordner. Fiqh-Fragen nutzen die Fiqh-Begriffe (Reinheit, Gebet, Urteile, Quellen, Glaube, Fasten, Zakāt, Ḥaǧǧ, Familie), Arabisch-Fragen die Grammatikbegriffe; bei Iʿrāb-Fragen werden auch die arabischen Fachwörter der Antworten (مَرْفُوعٌ، مُبْتَدَأٌ …) erklärt. Die Schreibweisen werden ohne Umschriftzeichen verglichen (Wuḍūʾ = Wudu = wuḍū); neue Begriffe trägt man in `glossar.js` ein.
 - **Mein Lernstand** (`progress.js`, Ansicht `#lernstand`): zeigt pro Fach (Arabisch / Fiqh), worin man stark ist und wo man noch Probleme hat.
   - Kennzahlen: gelernt, offene Fehler, Trefferquote; Balken der letzten 14 Tage (richtig/falsch pro Tag)
   - „Hier hast du noch Probleme“: die dringendsten Bereiche (offene Fehler zählen am meisten, dann kürzlich falsch beantwortete Fragen, dann eine niedrige Trefferquote); bei Lektionen steht dabei, welcher Teil hakt (Vokabeln, Grammatik, Iʿrāb)
