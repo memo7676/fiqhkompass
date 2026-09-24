@@ -17,34 +17,34 @@ window.FIQH_DALIL = {
 "Bis wohin heben Männer nach den Hanafiten beim Eröffnungstakbīr die Hände?": [
 [
 "H",
-"Muslim u. a. (Wāʾil b. Ḥuǧr, al-Barāʾ, Anas)",
-"Der Prophet ﷺ hob beim Takbīr die Hände, bis seine Daumen die Ohrläppchen berührten. Schafiiten und Mālikiten stützen die Schulterhöhe auf Ibn ʿUmar (Buḫārī, Muslim).",
-"The Prophet ﷺ raised his hands at the takbīr until his thumbs touched his earlobes. Shāfiʿīs and Mālikīs base shoulder height on Ibn ʿUmar (Bukhārī, Muslim).",
+"Muslim 401 u. a. (Wāʾil b. Ḥuǧr, al-Barāʾ, Anas)",
+"Der Prophet ﷺ hob beim Takbīr die Hände, bis seine Daumen die Ohrläppchen berührten. Schafiiten und Mālikiten stützen die Schulterhöhe auf Ibn ʿUmar (Buḫārī 735, Muslim 390).",
+"The Prophet ﷺ raised his hands at the takbīr until his thumbs touched his earlobes. Shāfiʿīs and Mālikīs base shoulder height on Ibn ʿUmar (Bukhārī 735, Muslim 390).",
 235,
 222,
-"Muslim e.g. (Wāʾil b. Ḥujr, al-Barāʾ, Anas)"
+"Muslim 401 e.g. (Wāʾil b. Ḥujr, al-Barāʾ, Anas)"
 ]
 ],
 "Wo binden Männer nach den Hanafiten die Hände im Stehen?": [
 [
 "A",
-"ʿAlī (u. a. Abū Dāwūd)",
+"ʿAlī (u. a. Abū Dāwūd 756)",
 "„Die rechte Hand auf die linke unter den Nabel zu legen gehört zur Sunnah.“",
 "“Placing the right hand on the left below the navel is part of the sunnah.”",
 236,
 229,
-"ʿAlī (e.g. Abū Dāwūd)"
+"ʿAlī (e.g. Abū Dāwūd 756)"
 ]
 ],
 "Wie oft heben die Hanafiten im Gebet die Hände?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Ibn Masʿūd)",
-"Ibn Masʿūd betete den Gebetsablauf des Propheten ﷺ vor und hob die Hände nur beim ersten Takbīr. Die Schafiiten stützen das mehrfache Heben auf Ibn ʿUmar (Buḫārī, Muslim).",
-"Ibn Masʿūd demonstrated the Prophet's ﷺ prayer and raised his hands only at the first takbīr. The Shāfiʿīs base raising several times on Ibn ʿUmar (Bukhārī, Muslim).",
+"Abū Dāwūd 748, at-Tirmiḏī 257 (Ibn Masʿūd)",
+"Ibn Masʿūd betete den Gebetsablauf des Propheten ﷺ vor und hob die Hände nur beim ersten Takbīr. Die Schafiiten stützen das mehrfache Heben auf Ibn ʿUmar (Buḫārī 735, Muslim 390).",
+"Ibn Masʿūd demonstrated the Prophet's ﷺ prayer and raised his hands only at the first takbīr. The Shāfiʿīs base raising several times on Ibn ʿUmar (Bukhārī 735, Muslim 390).",
 235,
 0,
-"Abū Dāwūd, at-Tirmidhī (Ibn Masʿūd)"
+"Abū Dāwūd 748, at-Tirmidhī 257 (Ibn Masʿūd)"
 ]
 ],
 "Was ist das Mindestmaß der Pflichtrezitation (hanafitisch)?": [
@@ -70,12 +70,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Buḫārī und Muslim (ʿUbāda b. aṣ-Ṣāmit)",
+"Buḫārī 756, Muslim 394 (ʿUbāda b. aṣ-Ṣāmit)",
 "„Kein Gebet für den, der die Fātiḥa nicht liest.“ Die Hanafiten verstehen: kein vollkommenes Gebet.",
 "“No prayer for the one who does not recite the Fātiḥa.” The Ḥanafīs understand: no complete prayer.",
 222,
 180,
-"Bukhārī and Muslim (ʿUbāda b. aṣ-Ṣāmit)"
+"Bukhārī 756, Muslim 394 (ʿUbāda b. aṣ-Ṣāmit)"
 ]
 ],
 "Rezitiert der Betende hinter dem Imam nach hanafitischer Lehre die Fātiḥa?": [
@@ -90,12 +90,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"u. a. Ibn Māja (Ǧābir)",
+"u. a. Ibn Māja 850 (Ǧābir)",
 "„Wer einen Imam hat, dessen Rezitation ist die Rezitation des Imams.“",
 "“Whoever has an imam, the imam's recitation is his recitation.”",
 0,
 0,
-"e.g. Ibn Māja (Jābir)"
+"e.g. Ibn Māja 850 (Jābir)"
 ]
 ],
 "In welchen Gebeten wird in allen Rakʿa leise rezitiert?": [
@@ -121,12 +121,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 780, Muslim 410 (Abū Hurayra)",
 "„Wenn der Imam Āmīn sagt, sagt Āmīn; wessen Āmīn mit dem der Engel übereinstimmt, dem werden seine früheren Sünden vergeben.“",
 "“When the imam says āmīn, say āmīn; whoever's āmīn coincides with that of the angels, his past sins are forgiven.”",
 237,
 235,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 780, Muslim 410 (Abū Hurayra)"
 ]
 ],
 "Ist die Basmala nach hanafitischer Lehre ein Vers der Fātiḥa?": [
@@ -165,23 +165,23 @@ window.FIQH_DALIL = {
 "Was muss man mindestens im Rukūʿ sagen können, damit man lange genug verweilt?": [
 [
 "H",
-"Muslim (Ḥuḏaifa); Abū Dāwūd",
+"Muslim 772 (Ḥuḏaifa); Abū Dāwūd",
 "Der Prophet ﷺ sagte im Rukūʿ „Subḥāna rabbiya l-ʿaẓīm“. Dreimal ist Sunnah; einmal ist das Mindeste, damit man im Rukūʿ verweilt.",
 "The Prophet ﷺ said “Subḥāna rabbiya l-ʿaẓīm” in rukūʿ. Three times is sunnah; once is the minimum so that one pauses in rukūʿ.",
 287,
 0,
-"Muslim (Ḥudhaifa); Abū Dāwūd"
+"Muslim 772 (Ḥudhaifa); Abū Dāwūd"
 ]
 ],
 "Auf wie vielen Körperteilen erfolgt die Niederwerfung?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 812, Muslim 490 (Ibn ʿAbbās)",
 "„Mir wurde befohlen, mich auf sieben Knochen niederzuwerfen: die Stirn – und er zeigte auf seine Nase –, die Hände, die Knie und die Füße.“",
 "“I was commanded to prostrate on seven bones: the forehead – and he pointed to his nose –, the hands, the knees and the feet.”",
 224,
 197,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 812, Muslim 490 (Ibn ʿAbbās)"
 ]
 ],
 "Was ist beim Suǧūd Fardh, was wadschib?": [
@@ -198,12 +198,12 @@ window.FIQH_DALIL = {
 "Was setzt man nach hanafitischer Lehre beim Hinabgehen in den Suǧūd zuerst auf den Boden?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Wāʾil b. Ḥuǧr)",
-"„Ich sah den Gesandten Allahs ﷺ bei der Niederwerfung die Knie vor die Hände setzen.“ Die Mālikiten stützen sich auf „Kniet nicht nieder wie ein Kamel“ (Abū Hurayra).",
-"“I saw the Messenger of Allah ﷺ place his knees before his hands in prostration.” The Mālikīs rely on “Do not kneel like a camel” (Abū Hurayra).",
+"Abū Dāwūd 838, at-Tirmiḏī 268 (Wāʾil b. Ḥuǧr)",
+"„Ich sah den Gesandten Allahs ﷺ bei der Niederwerfung die Knie vor die Hände setzen.“ Die Mālikiten stützen sich auf „Kniet nicht nieder wie ein Kamel“ (Abū Hurayra, Abū Dāwūd 840).",
+"“I saw the Messenger of Allah ﷺ place his knees before his hands in prostration.” The Mālikīs rely on “Do not kneel like a camel” (Abū Hurayra, Abū Dāwūd 840).",
 239,
 241,
-"Abū Dāwūd, at-Tirmidhī (Wāʾil b. Ḥujr)"
+"Abū Dāwūd 838, at-Tirmidhī 268 (Wāʾil b. Ḥujr)"
 ]
 ],
 "Wie viel höher als die Füße darf der Ort der Stirn beim Suǧūd höchstens sein?": [
@@ -220,12 +220,12 @@ window.FIQH_DALIL = {
 "Welche Einstufung hat das letzte Sitzen in der Dauer des Taschahhud?": [
 [
 "H",
-"u. a. Abū Dāwūd (Ibn Masʿūd)",
+"u. a. Abū Dāwūd 970 (Ibn Masʿūd)",
 "Nach dem Taschahhud: „Wenn du das gesagt oder getan hast, hast du dein Gebet vollendet.“ Das letzte Sitzen ist deshalb Fardh.",
 "After the tashahhud: “When you have said or done this, you have completed your prayer.” So the last sitting is farḍ.",
 227,
 0,
-"e.g. Abū Dāwūd (Ibn Masʿūd)"
+"e.g. Abū Dāwūd 970 (Ibn Masʿūd)"
 ]
 ],
 "Welche Einstufung hat der Salām nach rechts bei den Hanafiten?": [
@@ -242,12 +242,12 @@ window.FIQH_DALIL = {
 "Was ist Taʿdīl al-Arkān?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 757, Muslim 397 (Abū Hurayra)",
 "Zum Mann, der schlecht betete: „Geh und bete, denn du hast nicht gebetet … dann verbeuge dich, bis du im Rukūʿ zur Ruhe kommst.“",
 "To the man who prayed badly: “Go back and pray, for you have not prayed … then bow until you are at rest in rukūʿ.”",
 228,
 204,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 757, Muslim 397 (Abū Hurayra)"
 ],
 [
 "J",
@@ -284,12 +284,12 @@ window.FIQH_DALIL = {
 "Welche Gebete verkürzt der Reisende?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 350, Muslim 685 (ʿĀʾiša)",
 "„Das Gebet wurde zu zwei Rakʿa vorgeschrieben; auf Reisen blieb es so, beim Ansässigen wurde es erweitert.“ Maġrib und Faǧr bleiben unverändert.",
 "“Prayer was prescribed as two rakʿas; on journeys it stayed so, for the resident it was increased.” Maghrib and fajr stay unchanged.",
 356,
 0,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 350, Muslim 685 (ʿĀʾisha)"
 ],
 [
 "Q",
@@ -304,23 +304,23 @@ window.FIQH_DALIL = {
 "Ein Reisender betet hinter einem ansässigen Imam ein vierteiliges Gebet. Wie viele Rakʿa betet er?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 722, Muslim 414 (Abū Hurayra)",
 "„Der Imam wurde eingesetzt, damit ihm gefolgt wird.“ Ibn ʿAbbās nannte das volle Beten hinter dem Ansässigen „die Sunnah des Abū l-Qāsim“ (Aḥmad).",
 "“The imam was appointed to be followed.” Ibn ʿAbbās called praying in full behind a resident “the sunnah of Abū l-Qāsim” (Aḥmad).",
 0,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 722, Muslim 414 (Abū Hurayra)"
 ]
 ],
 "Wann darf man nach hanafitischer Lehre zwei Gebete wirklich zusammenlegen?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn Masʿūd)",
+"Buḫārī 1682, Muslim 1289 (Ibn Masʿūd)",
 "„Ich sah den Gesandten Allahs ﷺ nie ein Gebet außerhalb seiner Zeit beten, außer in ʿArafa und Muzdalifa.“",
 "“I never saw the Messenger of Allah ﷺ pray a prayer outside its time except at ʿArafa and Muzdalifa.”",
 184,
 53,
-"Bukhārī and Muslim (Ibn Masʿūd)"
+"Bukhārī 1682, Muslim 1289 (Ibn Masʿūd)"
 ]
 ],
 "Was ist Talfīq – und ist es erlaubt?": [
@@ -337,34 +337,34 @@ window.FIQH_DALIL = {
 "Welches Sunnah-Gebet darf man nach Abū Ḥanīfa NICHT ohne Grund im Sitzen verrichten?": [
 [
 "H",
-"Muslim (ʿĀʾiša)",
+"Muslim 724 (ʿĀʾiša)",
 "„Der Prophet ﷺ achtete auf keine Nafila so sehr wie auf die zwei Rakʿa des Faǧr.“ Deshalb betet man sie ohne Grund nicht im Sitzen.",
 "“The Prophet ﷺ was not as careful about any nafl as about the two rakʿas of fajr.” So one does not pray them sitting without reason.",
 192,
 87,
-"Muslim (ʿĀʾisha)"
+"Muslim 724 (ʿĀʾisha)"
 ]
 ],
 "Welches Gebet darf man während einer Autofahrt außerhalb der Stadt in Fahrtrichtung verrichten?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀmir b. Rabīʿa)",
+"Buḫārī 1097, Muslim 701 (ʿĀmir b. Rabīʿa)",
 "„Ich sah den Gesandten Allahs ﷺ auf seinem Reittier Nafila beten, mit dem Kopf andeuten, in welche Richtung es ging; im Fardh tat er das nicht.“",
 "“I saw the Messenger of Allah ﷺ pray nafl on his mount, gesturing with his head, in whatever direction it went; he did not do so in farḍ.”",
 209,
 157,
-"Bukhārī and Muslim (ʿĀmir b. Rabīʿa)"
+"Bukhārī 1097, Muslim 701 (ʿĀmir b. Rabīʿa)"
 ]
 ],
 "Wie viele Rakʿa hat das Awwābīn-Gebet nach Maghrib?": [
 [
 "H",
-"at-Tirmiḏī (Abū Hurayra)",
+"at-Tirmiḏī 435 (Abū Hurayra)",
 "„Wer nach dem Maġrib sechs Rakʿa betet, ohne dazwischen Schlechtes zu reden, dem wird es gleich zwölf Jahren Anbetung angerechnet.“",
 "“Whoever prays six rakʿas after maghrib without speaking evil in between, it counts for him like twelve years of worship.”",
 321,
 0,
-"at-Tirmidhī (Abū Hurayra)"
+"at-Tirmidhī 435 (Abū Hurayra)"
 ]
 ],
 "Was ist nach Abū Ḥanīfa die Pflichtmenge der Rezitation in einer Rakʿa?": [
@@ -458,45 +458,45 @@ window.FIQH_DALIL = {
 "Was sagt, wer hinter dem Imam betet, beim Aufrichten aus dem Rukūʿ?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 796, Muslim 409 (Abū Hurayra)",
 "„Wenn der Imam sagt: Samiʿa llāhu li-man ḥamidah, dann sagt: Rabbanā laka l-ḥamd.“",
 "“When the imam says: Samiʿa llāhu li-man ḥamidah, then say: Rabbanā laka l-ḥamd.”",
 0,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 796, Muslim 409 (Abū Hurayra)"
 ]
 ],
 "Was geht bei der Niederwerfung nach hanafitischer Sunnah zuerst zu Boden?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Wāʾil b. Ḥuǧr)",
+"Abū Dāwūd 838, at-Tirmiḏī 268 (Wāʾil b. Ḥuǧr)",
 "„Ich sah den Gesandten Allahs ﷺ bei der Niederwerfung die Knie vor die Hände setzen und beim Aufstehen die Hände vor den Knien heben.“",
 "“I saw the Messenger of Allah ﷺ place his knees before his hands in prostration and lift his hands before his knees on rising.”",
 239,
 241,
-"Abū Dāwūd, at-Tirmidhī (Wāʾil b. Ḥujr)"
+"Abū Dāwūd 838, at-Tirmidhī 268 (Wāʾil b. Ḥujr)"
 ]
 ],
 "Welches Duʿāʾ verdirbt das Gebet?": [
 [
 "H",
-"Muslim (Muʿāwiya b. al-Ḥakam)",
+"Muslim 537 (Muʿāwiya b. al-Ḥakam)",
 "„In diesem Gebet taugt nichts von der Rede der Menschen.“ Eine Bitte, die man auch an Menschen richten kann („tilge meine Schulden“), gilt als Rede.",
 "“Nothing of people's speech is fit in this prayer.” A request one could also make of people (“pay off my debts”) counts as speech.",
 254,
 0,
-"Muslim (Muʿāwiya b. al-Ḥakam)"
+"Muslim 537 (Muʿāwiya b. al-Ḥakam)"
 ]
 ],
 "Wer im Gebet „Yarḥamukallāh“ zu einem Niesenden sagt …": [
 [
 "H",
-"Muslim (Muʿāwiya b. al-Ḥakam)",
+"Muslim 537 (Muʿāwiya b. al-Ḥakam)",
 "Er sagte im Gebet „Yarḥamukallāh“ zu einem Niesenden; danach lehrte ihn der Prophet ﷺ: „In diesem Gebet taugt nichts von der Rede der Menschen.“",
 "He said “Yarḥamukallāh” to someone sneezing during prayer; afterwards the Prophet ﷺ taught him: “Nothing of people's speech is fit in this prayer.”",
 252,
 0,
-"Muslim (Muʿāwiya b. al-Ḥakam)"
+"Muslim 537 (Muʿāwiya b. al-Ḥakam)"
 ]
 ],
 "Wie unterscheidet man ʿamal kaṯīr von ʿamal qalīl?": [
@@ -557,12 +557,12 @@ window.FIQH_DALIL = {
 "Wo ist das Gebet nach dem Hadith der „sieben Orte“ NICHT makrūh?": [
 [
 "H",
-"at-Tirmiḏī, Ibn Māja (Ibn ʿUmar)",
+"at-Tirmiḏī 346, Ibn Māja 746 (Ibn ʿUmar)",
 "Der Prophet ﷺ verbot das Gebet an sieben Orten: Müllplatz, Schlachthof, Friedhof, Wegmitte, Badehaus, Kamelpferch und auf dem Dach der Kaʿba.",
 "The Prophet ﷺ forbade prayer in seven places: rubbish dump, slaughterhouse, graveyard, middle of the road, bathhouse, camel pen and on the roof of the Kaʿba.",
 250,
 0,
-"at-Tirmidhī, Ibn Māja (Ibn ʿUmar)"
+"at-Tirmidhī 346, Ibn Māja 746 (Ibn ʿUmar)"
 ]
 ],
 "Einem brennenden Ofen gegenüber zu beten ist makrūh. Wie ist es bei einem Heizkörper oder einer Kerze?": [
@@ -601,23 +601,23 @@ window.FIQH_DALIL = {
 "Wie heißen die sechs Rakʿāt nach Maġrib?": [
 [
 "H",
-"at-Tirmiḏī (Abū Hurayra)",
+"at-Tirmiḏī 435 (Abū Hurayra)",
 "„Wer nach dem Maġrib sechs Rakʿa betet … dem wird es gleich zwölf Jahren Anbetung angerechnet.“ Awwābīn heißt „die sich oft Allah Zuwendenden“.",
 "“Whoever prays six rakʿas after maghrib … it counts for him like twelve years of worship.” Awwābīn means “those who often turn to Allah”.",
 321,
 0,
-"at-Tirmidhī (Abū Hurayra)"
+"at-Tirmidhī 435 (Abū Hurayra)"
 ]
 ],
 "Welchen Rang hat das Witr nach Abū Ḥanīfa?": [
 [
 "H",
-"u. a. Abū Dāwūd (Burayda)",
+"u. a. Abū Dāwūd 1419 (Burayda)",
 "„Das Witr ist Pflicht; wer kein Witr betet, gehört nicht zu uns.“ Deshalb wadschib nach Abū Ḥanīfa; die anderen: Sunnah muʾakkada.",
 "“Witr is a duty; whoever does not pray witr is not of us.” Hence wājib according to Abū Ḥanīfa; the others: sunnah muʾakkada.",
 292,
 0,
-"e.g. Abū Dāwūd (Burayda)"
+"e.g. Abū Dāwūd 1419 (Burayda)"
 ]
 ],
 "Wann wird das Witr in Gemeinschaft gebetet?": [
@@ -645,12 +645,12 @@ window.FIQH_DALIL = {
 "Wie oft sagt man nach dem Gebet Subḥānallāh, al-Ḥamdu lillāh und Allāhu akbar?": [
 [
 "H",
-"Muslim (Abū Hurayra)",
+"Muslim 597 (Abū Hurayra)",
 "„Wer nach jedem Gebet 33-mal Subḥānallāh, 33-mal al-Ḥamdu lillāh und 33-mal Allāhu akbar sagt und als hundertstes Lā ilāha illallāh …, dem werden seine Fehler vergeben.“",
 "“Whoever says after every prayer Subḥānallāh 33 times, al-Ḥamdu lillāh 33 times and Allāhu akbar 33 times and as the hundredth Lā ilāha illallāh …, his faults are forgiven.”",
 0,
 0,
-"Muslim (Abū Hurayra)"
+"Muslim 597 (Abū Hurayra)"
 ]
 ],
 "Welche Mindeststrecke gilt hanafitisch für die Reise?": [
@@ -667,12 +667,12 @@ window.FIQH_DALIL = {
 "Wie urteilen die Hanafiten über das Verkürzen auf Reisen?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 350, Muslim 685 (ʿĀʾiša)",
 "„Das Gebet wurde zu zwei Rakʿa vorgeschrieben; auf Reisen blieb es so …“ – deshalb ist das Verkürzen die ʿAzīma und absichtlich vier zu beten makrūh.",
 "“Prayer was prescribed as two rakʿas; on journeys it stayed so …” – so shortening is the ʿazīma and deliberately praying four is makrūh.",
 356,
 0,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 350, Muslim 685 (ʿĀʾisha)"
 ]
 ],
 "Ab wie vielen Tagen beabsichtigtem Aufenthalt betet ein Reisender hanafitisch wieder voll?": [
@@ -742,12 +742,12 @@ window.FIQH_DALIL = {
 "Wie entstand der heutige Adhān?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (ʿAbdullāh b. Zaid)",
+"Abū Dāwūd 499, at-Tirmiḏī 189 (ʿAbdullāh b. Zaid)",
 "„Es ist ein wahrer Traum, in schāʾ Allāh. Steh auf und lehre Bilāl, was du gesehen hast, denn seine Stimme ist schöner als deine.“",
 "“It is a true dream, in shāʾ Allāh. Get up and teach Bilāl what you saw, for his voice is finer than yours.”",
 193,
 92,
-"Abū Dāwūd, at-Tirmidhī (ʿAbdullāh b. Zaid)"
+"Abū Dāwūd 499, at-Tirmidhī 189 (ʿAbdullāh b. Zaid)"
 ]
 ],
 "Welchen Rang hat der Adhān für Männer nach den Hanafiten?": [
@@ -762,45 +762,45 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Buḫārī und Muslim (Mālik b. al-Ḥuwairiṯ)",
+"Buḫārī 628, Muslim 674 (Mālik b. al-Ḥuwairiṯ)",
 "„Wenn die Gebetszeit kommt, soll einer von euch den Adhān rufen, und der Älteste soll vorbeten.“",
 "“When the prayer time comes, let one of you call the adhān and the eldest lead the prayer.”",
 193,
 91,
-"Bukhārī and Muslim (Mālik b. al-Ḥuwairith)"
+"Bukhārī 628, Muslim 674 (Mālik b. al-Ḥuwairith)"
 ]
 ],
 "Wie viele Sätze hat der Adhān bei Hanafiten und Hanbaliten?": [
 [
 "H",
-"Abū Dāwūd (ʿAbdullāh b. Zaid)",
+"Abū Dāwūd 499 (ʿAbdullāh b. Zaid)",
 "Die Worte des Adhān im Traum von ʿAbdullāh b. Zaid – ohne Tarǧīʿ. Für das Faǧr: „Sag zweimal aṣ-Ṣalātu ḫairun mina n-nawm“ (Abū Maḥḏūra).",
 "The words of the adhān in ʿAbdullāh b. Zayd's dream – without tarjīʿ. For fajr: “Say twice aṣ-ṣalātu khayrun mina n-nawm” (Abū Maḥdhūra).",
 195,
 100,
-"Abū Dāwūd (ʿAbdullāh b. Zaid)"
+"Abū Dāwūd 499 (ʿAbdullāh b. Zaid)"
 ]
 ],
 "Was ist Tarǧīʿ?": [
 [
 "H",
-"Muslim (Abū Maḥḏūra)",
+"Muslim 379 (Abū Maḥḏūra)",
 "Die Schafiiten stützen den Tarǧīʿ auf den Adhān, den der Prophet ﷺ Abū Maḥḏūra lehrte; die Hanafiten auf den Traum ʿAbdullāh b. Zaids ohne Tarǧīʿ.",
 "The Shāfiʿīs base tarjīʿ on the adhān the Prophet ﷺ taught Abū Maḥdhūra; the Ḥanafīs on ʿAbdullāh b. Zayd's dream without tarjīʿ.",
 195,
 99,
-"Muslim (Abū Maḥdhūra)"
+"Muslim 379 (Abū Maḥdhūra)"
 ]
 ],
 "Wohin dreht der Muʾaḏḏin das Gesicht bei „Ḥayya ʿala l-falāḥ“?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Ǧuḥaifa)",
+"Buḫārī 634, Muslim 503 (Abū Ǧuḥaifa)",
 "„Ich sah Bilāl den Adhān rufen; er wandte sein Gesicht nach rechts und links bei Ḥayya ʿala ṣ-ṣalāh, Ḥayya ʿala l-falāḥ, die Finger in den Ohren.“",
 "“I saw Bilāl calling the adhān; he turned his face right and left at Ḥayya ʿala ṣ-ṣalāh, Ḥayya ʿala l-falāḥ, with his fingers in his ears.”",
 197,
 106,
-"Bukhārī and Muslim (Abū Juḥaifa)"
+"Bukhārī 634, Muslim 503 (Abū Juḥaifa)"
 ]
 ],
 "Wessen Adhān muss man wiederholen, seine Iqāma aber nicht?": [
@@ -817,34 +817,34 @@ window.FIQH_DALIL = {
 "Was antwortet man auf „Ḥayya ʿala ṣ-ṣalāh“?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Saʿīd); Muslim (ʿUmar)",
+"Buḫārī 611, Muslim 383 (Abū Saʿīd); Muslim 385 (ʿUmar)",
 "„Wenn ihr den Adhān hört, sagt, was der Muʾaḏḏin sagt.“ Bei Ḥayya ʿala ṣ-ṣalāh und Ḥayya ʿala l-falāḥ: „Lā ḥawla wa lā quwwata illā billāh.“",
 "“When you hear the adhān, say what the muʾadhdhin says.” At Ḥayya ʿala ṣ-ṣalāh and Ḥayya ʿala l-falāḥ: “Lā ḥawla wa lā quwwata illā billāh.”",
 198,
 111,
-"Bukhārī and Muslim (Abū Saʿīd); Muslim (ʿUmar)"
+"Bukhārī 611, Muslim 383 (Abū Saʿīd); Muslim 385 (ʿUmar)"
 ]
 ],
 "Was verheißt das Duʿāʾ al-Wasīla nach dem Adhān?": [
 [
 "H",
-"Buḫārī (Ǧābir)",
+"Buḫārī 614 (Ǧābir)",
 "„Wer beim Hören des Rufs sagt: Allāhumma rabba hāḏihi d-daʿwati t-tāmma … dem wird am Tag der Auferstehung meine Fürsprache zuteil.“",
 "“Whoever says on hearing the call: Allāhumma rabba hādhihi d-daʿwati t-tāmma … my intercession is due to him on the Day of Resurrection.”",
 199,
 113,
-"Bukhārī (Jābir)"
+"Bukhārī 614 (Jābir)"
 ]
 ],
 "Wie wird die Iqāma nach den Hanafiten gesprochen?": [
 [
 "H",
-"u. a. Abū Dāwūd (ʿAbdullāh b. Zaid)",
-"Im Traum sprach der Mann Adhān und Iqāma „paarweise“. Die Schafiiten stützen die einfache Iqāma auf Anas: „Bilāl wurde befohlen, den Adhān doppelt und die Iqāma einfach zu sprechen“ (Buḫārī, Muslim).",
-"In the dream the man said adhān and iqāma “in pairs”. The Shāfiʿīs base the single iqāma on Anas: “Bilāl was ordered to say the adhān in pairs and the iqāma singly” (Bukhārī, Muslim).",
+"u. a. Abū Dāwūd 499 (ʿAbdullāh b. Zaid)",
+"Im Traum sprach der Mann Adhān und Iqāma „paarweise“. Die Schafiiten stützen die einfache Iqāma auf Anas: „Bilāl wurde befohlen, den Adhān doppelt und die Iqāma einfach zu sprechen“ (Buḫārī 605, Muslim 378).",
+"In the dream the man said adhān and iqāma “in pairs”. The Shāfiʿīs base the single iqāma on Anas: “Bilāl was ordered to say the adhān in pairs and the iqāma singly” (Bukhārī 605, Muslim 378).",
 199,
 114,
-"e.g. Abū Dāwūd (ʿAbdullāh b. Zaid)"
+"e.g. Abū Dāwūd 499 (ʿAbdullāh b. Zaid)"
 ]
 ],
 "Für welche Gebete gibt es keine Iqāma?": [
@@ -861,23 +861,23 @@ window.FIQH_DALIL = {
 "Wie lang soll der Abstand zwischen Adhān und Iqāma bei Maġrib sein?": [
 [
 "H",
-"at-Tirmiḏī (Ǧābir)",
+"at-Tirmiḏī 195 (Ǧābir)",
 "„O Bilāl, lass zwischen Adhān und Iqāma so viel Zeit, dass einer, der isst, fertig wird und seine Notdurft verrichten kann.“ Bei Maġrib wird das Gebet beeilt.",
 "“O Bilāl, leave enough time between adhān and iqāma for one who is eating to finish and relieve himself.” For maghrib the prayer is hastened.",
 197,
 109,
-"at-Tirmidhī (Jābir)"
+"at-Tirmidhī 195 (Jābir)"
 ]
 ],
 "Wann ist ein Adhān außerhalb des Gebets mandūb?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Abū Rāfiʿ)",
-"„Ich sah den Gesandten Allahs ﷺ den Gebetsruf in das Ohr von al-Ḥasan sprechen, als Fāṭima ihn geboren hatte.“ Dazu: Der Satan flieht beim Adhān (Buḫārī, Muslim).",
-"“I saw the Messenger of Allah ﷺ give the call to prayer in the ear of al-Ḥasan when Fāṭima gave birth to him.” Also: Satan flees at the adhān (Bukhārī, Muslim).",
+"Abū Dāwūd 5105, at-Tirmiḏī 1514 (Abū Rāfiʿ)",
+"„Ich sah den Gesandten Allahs ﷺ den Gebetsruf in das Ohr von al-Ḥasan sprechen, als Fāṭima ihn geboren hatte.“ Dazu: Der Satan flieht beim Adhān (Buḫārī 608, Muslim 389).",
+"“I saw the Messenger of Allah ﷺ give the call to prayer in the ear of al-Ḥasan when Fāṭima gave birth to him.” Also: Satan flees at the adhān (Bukhārī 608, Muslim 389).",
 200,
 116,
-"Abū Dāwūd, at-Tirmidhī (Abū Rāfiʿ)"
+"Abū Dāwūd 5105, at-Tirmidhī 1514 (Abū Rāfiʿ)"
 ]
 ],
 "Welche zwei Eigenschaften machen einen Muslim zum Mukallaf?": [
@@ -892,12 +892,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (ʿAlī, ʿĀʾiša)",
+"Abū Dāwūd 4403, 4398; at-Tirmiḏī 1423 (ʿAlī, ʿĀʾiša)",
 "„Das Schreibrohr ist von dreien erhoben: vom Schlafenden, bis er erwacht, vom Kind, bis es reif wird, und vom Irren, bis er zu Verstand kommt.“",
 "“The pen is lifted from three: the sleeper until he wakes, the child until he matures and the insane until he regains his reason.”",
 0,
 0,
-"Abū Dāwūd, at-Tirmidhī (ʿAlī, ʿĀʾisha)"
+"Abū Dāwūd 4403, 4398; at-Tirmidhī 1423 (ʿAlī, ʿĀʾisha)"
 ]
 ],
 "In wie viele Kategorien werden die Handlungen des Mukallaf eingeteilt?": [
@@ -967,12 +967,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿUmar)",
+"Buḫārī 645, Muslim 650 (Ibn ʿUmar)",
 "„Das Gebet in Gemeinschaft ist 27 Stufen besser als das Gebet allein.“",
 "“Prayer in congregation is twenty-seven degrees better than prayer alone.”",
 0,
 0,
-"Bukhārī and Muslim (Ibn ʿUmar)"
+"Bukhārī 645, Muslim 650 (Ibn ʿUmar)"
 ]
 ],
 "Was ist nach der Grundregel der Ursprungszustand aller Dinge?": [
@@ -998,12 +998,12 @@ window.FIQH_DALIL = {
 "Mit Knoblauchgeruch in die Moschee gehen ist …": [
 [
 "H",
-"Buḫārī und Muslim (Ǧābir)",
+"Buḫārī 855, Muslim 564 (Ǧābir)",
 "„Wer Zwiebeln oder Knoblauch gegessen hat, soll unserer Moschee fernbleiben und zu Hause bleiben.“ Das Verbot ist nicht streng – deshalb tenzīhen makrūh.",
 "“Whoever has eaten onion or garlic shall stay away from our mosque and remain at home.” The prohibition is not strict – so it is makrūh tanzīhan.",
 53,
 142,
-"Bukhārī and Muslim (Jābir)"
+"Bukhārī 855, Muslim 564 (Jābir)"
 ]
 ],
 "Beim Kauf über das Geschäft eines anderen hinweg kaufen ist nach hanafitischer Einstufung …": [
@@ -1172,12 +1172,12 @@ window.FIQH_DALIL = {
 "Welches Tier ist hanafitisch erlaubt?": [
 [
 "H",
-"Muslim (Ibn ʿAbbās)",
+"Muslim 1934 (Ibn ʿAbbās)",
 "„Der Gesandte Allahs ﷺ verbot jedes Raubtier mit Reißzahn und jeden Vogel mit Kralle.“ Gemeint sind Krallen, mit denen gejagt wird; die Taube jagt nicht.",
 "“The Messenger of Allah ﷺ forbade every predator with fangs and every bird with talons.” Meant are talons used to hunt; the pigeon does not hunt.",
 596,
 0,
-"Muslim (Ibn ʿAbbās)"
+"Muslim 1934 (Ibn ʿAbbās)"
 ]
 ],
 "Welches Landtier erlauben die Schafiiten, nicht aber die Hanafiten?": [
@@ -1205,12 +1205,12 @@ window.FIQH_DALIL = {
 "Wie viele Personen verfluchte der Prophet ﷺ im Zusammenhang mit Wein?": [
 [
 "H",
-"at-Tirmiḏī, Ibn Māja (Anas)",
+"at-Tirmiḏī 1295, Ibn Māja 3381 (Anas)",
 "Verflucht wurden zehn im Zusammenhang mit Wein: wer ihn presst, für wen er gepresst wird, wer ihn trinkt, trägt, zu wem er getragen wird, ausschenkt, verkauft, von seinem Preis isst, kauft und für wen er gekauft wird.",
 "Ten were cursed in connection with wine: who presses it, for whom it is pressed, who drinks, carries, to whom it is carried, pours, sells, lives off its price, buys and for whom it is bought.",
 597,
 0,
-"at-Tirmidhī, Ibn Māja (Anas)"
+"at-Tirmidhī 1295, Ibn Māja 3381 (Anas)"
 ]
 ],
 "Wie urteilt das Buch heute über das Rauchen?": [
@@ -1258,20 +1258,20 @@ window.FIQH_DALIL = {
 "Was ist nach dem Buch das Ziel des Taṣawwuf?": [
 [
 "H",
-"Muslim (ʿUmar) – Ǧibrīl-Hadith",
+"Muslim 8 (ʿUmar) – Ǧibrīl-Hadith",
 "„Iḥsān ist, dass du Allah dienst, als ob du Ihn siehst …“ – das ist das Ziel des Taṣawwuf, auf dem Boden der gelebten Scharīʿa.",
 "“Iḥsān is that you worship Allah as if you see Him …” – that is the aim of taṣawwuf, on the basis of the lived sharīʿa.",
 599,
 0,
-"Muslim (ʿUmar) – hadith of Jibrīl"
+"Muslim 8 (ʿUmar) – hadith of Jibrīl"
 ]
 ],
 "Was nannte der Prophet ﷺ nach Tabūk den „großen Ǧihād“?": [
 [
 "H",
 "al-Bayhaqī (Ǧābir) – schwach",
-"„Wir kehren vom kleinen Ǧihād zum großen zurück.“ Die Hadithgelehrten stufen diese Überlieferung als schwach ein; den Inhalt stützt „Der Kämpfer ist, wer gegen seine Nafs kämpft“ (at-Tirmiḏī).",
-"“We return from the lesser jihād to the greater.” The hadith scholars grade this report as weak; its content is supported by “The fighter is one who fights his nafs” (al-Tirmidhī).",
+"„Wir kehren vom kleinen Ǧihād zum großen zurück.“ Die Hadithgelehrten stufen diese Überlieferung als schwach ein; den Inhalt stützt „Der Kämpfer ist, wer gegen seine Nafs kämpft“ (at-Tirmiḏī 1621).",
+"“We return from the lesser jihād to the greater.” The hadith scholars grade this report as weak; its content is supported by “The fighter is one who fights his nafs” (al-Tirmidhī 1621).",
 601,
 0,
 "al-Bayhaqī (Jābir) – weak"
@@ -1280,12 +1280,12 @@ window.FIQH_DALIL = {
 "Was ist nach dem Hadith der beste Ǧihād?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Abū Saʿīd)",
+"Abū Dāwūd 4344, at-Tirmiḏī 2174 (Abū Saʿīd)",
 "„Der beste Ǧihād ist ein Wort der Wahrheit vor einem ungerechten Herrscher.“ Dazu: „Der Herr der Märtyrer ist Ḥamza und ein Mann, der vor einen ungerechten Herrscher trat …“ (al-Ḥākim).",
 "“The best jihād is a word of truth before an unjust ruler.” Also: “The master of martyrs is Ḥamza and a man who stood before an unjust ruler …” (al-Ḥākim).",
 601,
 0,
-"Abū Dāwūd, at-Tirmidhī (Abū Saʿīd)"
+"Abū Dāwūd 4344, at-Tirmidhī 2174 (Abū Saʿīd)"
 ]
 ],
 "Wann wird der Ǧihād Fardh ʿAyn?": [
@@ -1390,12 +1390,12 @@ window.FIQH_DALIL = {
 "Ist es erlaubt, die Frau anzusehen, die man heiraten will?": [
 [
 "H",
-"at-Tirmiḏī, an-Nasāʾī (al-Muġīra b. Šuʿba)",
+"at-Tirmiḏī 1087, an-Nasāʾī 3235 (al-Muġīra b. Šuʿba)",
 "„Sieh sie an, denn das ist eher geeignet, dauerhafte Liebe zwischen euch zu stiften.“",
 "“Look at her, for that is more likely to create lasting love between you.”",
 570,
 0,
-"at-Tirmidhī, an-Nasāʾī (al-Mughīra b. Shuʿba)"
+"at-Tirmidhī 1087, an-Nasāʾī 3235 (al-Mughīra b. Shuʿba)"
 ]
 ],
 "Was ist „Tafwīḍ aṭ-Ṭalāq“?": [
@@ -1423,12 +1423,12 @@ window.FIQH_DALIL = {
 "Was ist die Mutʿa-Ehe und wie ist sie heute?": [
 [
 "H",
-"Muslim (Sabra al-Ǧuhanī)",
+"Muslim 1406 (Sabra al-Ǧuhanī)",
 "„Ich hatte euch die Mutʿa erlaubt; Allah hat sie nun bis zum Tag der Auferstehung verboten.“",
 "“I had permitted you mutʿa; Allah has now forbidden it until the Day of Resurrection.”",
 572,
 0,
-"Muslim (Sabra al-Juhanī)"
+"Muslim 1406 (Sabra al-Juhanī)"
 ]
 ],
 "Warum empfiehlt das Buch nach der standesamtlichen Ehe eine religiöse Trauung?": [
@@ -1456,23 +1456,23 @@ window.FIQH_DALIL = {
 "Wie urteilt die hanafitische Schule über eine abgesprochene Ḥulla mit Scheidungsbedingung?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (ʿAlī, Ibn Masʿūd)",
+"Abū Dāwūd 2076 (ʿAlī), at-Tirmiḏī 1120 (Ibn Masʿūd)",
 "„Allah verflucht den, der die Ḥulla macht, und den, für den sie gemacht wird.“",
 "“Allah curses the one who performs ḥulla and the one for whom it is performed.”",
 574,
 0,
-"Abū Dāwūd, at-Tirmidhī (ʿAlī, Ibn Masʿūd)"
+"Abū Dāwūd 2076 (ʿAlī), at-Tirmidhī 1120 (Ibn Masʿūd)"
 ]
 ],
 "Wie viele Scheidungen treten nach allen vier Schulen ein, wenn man „dreifach“ in einem Satz scheidet?": [
 [
 "A",
-"ʿUmar (Muslim, Ibn ʿAbbās)",
+"ʿUmar (Muslim 1472, Ibn ʿAbbās)",
 "ʿUmar ließ die dreifache Scheidung in einem Satz als drei gelten; die vier Schulen folgen dem.",
 "ʿUmar let a triple divorce in one sentence count as three; the four schools follow this.",
 575,
 0,
-"ʿUmar (Muslim, Ibn ʿAbbās)"
+"ʿUmar (Muslim 1472, Ibn ʿAbbās)"
 ]
 ],
 "Jemand sagt dreimal einzeln „Ich scheide dich“ als Bekräftigung. Was gilt?": [
@@ -1555,23 +1555,23 @@ window.FIQH_DALIL = {
 "An welchen Tagen ist das Fasten verboten?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Saʿīd, ʿUmar)",
-"Der Prophet ﷺ verbot das Fasten am Tag des Fastenbrechens und am Opfertag; die Tašrīq-Tage sind „Tage des Essens und Trinkens“ (Muslim).",
-"The Prophet ﷺ forbade fasting on the day of breaking the fast and the day of sacrifice; the tashrīq days are “days of eating and drinking” (Muslim).",
+"Buḫārī 1991, Muslim 827 (Abū Saʿīd); Buḫārī 1990, Muslim 1137 (ʿUmar)",
+"Der Prophet ﷺ verbot das Fasten am Tag des Fastenbrechens und am Opfertag; die Tašrīq-Tage sind „Tage des Essens und Trinkens“ (Muslim 1141).",
+"The Prophet ﷺ forbade fasting on the day of breaking the fast and the day of sacrifice; the tashrīq days are “days of eating and drinking” (Muslim 1141).",
 389,
 0,
-"Bukhārī and Muslim (Abū Saʿīd, ʿUmar)"
+"Bukhārī 1991, Muslim 827 (Abū Saʿīd); Bukhārī 1990, Muslim 1137 (ʿUmar)"
 ]
 ],
 "Was sind die „weißen Tage“ (Ayyām al-Bīḍ)?": [
 [
 "H",
-"at-Tirmiḏī, an-Nasāʾī (Abū Ḏarr)",
+"at-Tirmiḏī 761, an-Nasāʾī 2424 (Abū Ḏarr)",
 "„Wenn du im Monat drei Tage fastest, dann faste den 13., 14. und 15.“",
 "“When you fast three days in a month, fast the 13th, 14th and 15th.”",
 387,
 9,
-"at-Tirmidhī, an-Nasāʾī (Abū Dharr)"
+"at-Tirmidhī 761, an-Nasāʾī 2424 (Abū Dharr)"
 ]
 ],
 "Warum fastete der Prophet ﷺ montags und donnerstags?": [
@@ -1588,12 +1588,12 @@ window.FIQH_DALIL = {
 "Wer den Ramadan fastet und sechs Tage im Schawwāl folgen lässt, …": [
 [
 "H",
-"Muslim (Abū Ayyūb)",
+"Muslim 1164 (Abū Ayyūb)",
 "„Wer den Ramaḍān fastet und ihm sechs Tage aus dem Šawwāl folgen lässt, ist wie einer, der das ganze Jahr gefastet hat.“",
 "“Whoever fasts Ramaḍān and follows it with six days of Shawwāl is like one who fasted the whole year.”",
 388,
 13,
-"Muslim (Abū Ayyūb)"
+"Muslim 1164 (Abū Ayyūb)"
 ]
 ],
 "Bis wann kann man hanafitisch die Absicht für das Ramadan-Fasten fassen, wenn man seit Fadschr nichts gebrochen hat?": [
@@ -1610,12 +1610,12 @@ window.FIQH_DALIL = {
 "Für welches Fasten muss die Absicht nachts und genau bestimmt gefasst werden?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī, an-Nasāʾī (Ḥafṣa)",
+"Abū Dāwūd 2454, at-Tirmiḏī 730, an-Nasāʾī (Ḥafṣa)",
 "„Wer die Absicht zum Fasten nicht vor dem Faǧr fasst, hat kein Fasten.“ Die Hanafiten wenden das auf nicht zeitgebundene Fasten wie Qaḍāʾ und Kaffāra an.",
 "“Whoever does not form the intention to fast before fajr has no fast.” The Ḥanafīs apply this to fasts not tied to a time, like qaḍāʾ and kaffāra.",
 400,
 0,
-"Abū Dāwūd, at-Tirmidhī, an-Nasāʾī (Ḥafṣa)"
+"Abū Dāwūd 2454, at-Tirmidhī 730, an-Nasāʾī (Ḥafṣa)"
 ]
 ],
 "Welche Schule lässt eine einzige Absicht zu Beginn des Ramadan für den ganzen Monat genügen?": [
@@ -1632,34 +1632,34 @@ window.FIQH_DALIL = {
 "Hindert der Zustand der Janāba am Morgen das Fasten?": [
 [
 "H",
-"Buḫārī und Muslim (Umm Salama, ʿĀʾiša)",
+"Buḫārī 1926, Muslim 1109 (Umm Salama, ʿĀʾiša)",
 "Der Prophet ﷺ wachte im Ramaḍān im Zustand der Janāba auf und fastete weiter, ohne nachzuholen.",
 "The Prophet ﷺ woke up in Ramaḍān in a state of janāba and continued fasting without making it up.",
 400,
 42,
-"Bukhārī and Muslim (Umm Salama, ʿĀʾisha)"
+"Bukhārī 1926, Muslim 1109 (Umm Salama, ʿĀʾisha)"
 ]
 ],
 "Womit bricht man das Fasten nach der Sunnah am besten?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Anas)",
+"Abū Dāwūd 2356, at-Tirmiḏī 696 (Anas)",
 "Der Prophet ﷺ brach das Fasten mit frischen Datteln, sonst mit trockenen, sonst mit ein paar Schluck Wasser.",
 "The Prophet ﷺ broke his fast with fresh dates, otherwise dry ones, otherwise a few sips of water.",
 405,
 57,
-"Abū Dāwūd, at-Tirmidhī (Anas)"
+"Abū Dāwūd 2356, at-Tirmidhī 696 (Anas)"
 ]
 ],
 "Man isst im Ramadan aus Versehen, weil man vergessen hat, dass man fastet. Was gilt?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1933, Muslim 1155 (Abū Hurayra)",
 "„Wer fastet und aus Vergesslichkeit isst oder trinkt, soll sein Fasten vollenden; Allah hat ihn gespeist und getränkt.“",
 "“Whoever is fasting and eats or drinks out of forgetfulness, let him complete his fast; Allah has fed him and given him drink.”",
 420,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1933, Muslim 1155 (Abū Hurayra)"
 ],
 [
 "J",
@@ -1685,23 +1685,23 @@ window.FIQH_DALIL = {
 "Welche Handlung erfordert Qaḍāʾ UND Kaffāra?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1936, Muslim 1111 (Abū Hurayra)",
 "Der Mann, der im Ramaḍān mit seiner Frau verkehrte, sollte einen Sklaven freilassen, sonst zwei Monate fasten, sonst sechzig Arme speisen.",
 "The man who had intercourse with his wife in Ramaḍān was to free a slave, otherwise fast two months, otherwise feed sixty poor people.",
 369,
 534,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1936, Muslim 1111 (Abū Hurayra)"
 ]
 ],
 "Bricht eine Blutabnahme das Fasten?": [
 [
 "H",
-"Buḫārī (Ibn ʿAbbās)",
+"Buḫārī 1938 (Ibn ʿAbbās)",
 "Der Prophet ﷺ ließ sich im Iḥrām und fastend schröpfen.",
 "The Prophet ﷺ had himself cupped while in iḥrām and fasting.",
 422,
 98,
-"Bukhārī (Ibn ʿAbbās)"
+"Bukhārī 1938 (Ibn ʿAbbās)"
 ],
 [
 "A",
@@ -1738,23 +1738,23 @@ window.FIQH_DALIL = {
 "Bricht unwillkürliches Erbrechen das Fasten?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Abū Hurayra)",
+"Abū Dāwūd 2380, at-Tirmiḏī 720 (Abū Hurayra)",
 "„Wen das Erbrechen überkommt, der muss nichts nachholen; wer absichtlich erbricht, soll nachholen.“",
 "“Whoever is overcome by vomiting need not make up; whoever vomits deliberately shall make up.”",
 416,
 90,
-"Abū Dāwūd, at-Tirmidhī (Abū Hurayra)"
+"Abū Dāwūd 2380, at-Tirmidhī 720 (Abū Hurayra)"
 ]
 ],
 "Bricht üble Nachrede (Ġība) das Fasten?": [
 [
 "H",
-"Buḫārī (Abū Hurayra)",
+"Buḫārī 1903 (Abū Hurayra)",
 "„Wer das Lügen und das Handeln danach nicht lässt, dessen Verzicht auf Essen und Trinken braucht Allah nicht.“",
 "“Whoever does not give up lying and acting on it, Allah has no need of his giving up food and drink.”",
 407,
 0,
-"Bukhārī (Abū Hurayra)"
+"Bukhārī 1903 (Abū Hurayra)"
 ]
 ],
 "Ab welcher Reisestrecke darf man das Fasten brechen?": [
@@ -1811,23 +1811,23 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Buḫārī (ʿĀʾiša)",
+"Buḫārī 2017 (ʿĀʾiša)",
 "„Sucht die Laylat al-Qadr in den ungeraden Nächten der letzten zehn des Ramaḍān.“",
 "“Seek Laylat al-Qadr in the odd nights of the last ten of Ramaḍān.”",
 0,
 0,
-"Bukhārī (ʿĀʾisha)"
+"Bukhārī 2017 (ʿĀʾisha)"
 ]
 ],
 "Woran erkennt man die Laylat al-Qadr am nächsten Morgen?": [
 [
 "H",
-"Muslim (Ubayy b. Kaʿb)",
+"Muslim 762 (Ubayy b. Kaʿb)",
 "„An ihrem Morgen geht die Sonne weiß auf, ohne Strahlen.“",
 "“On its morning the sun rises white, without rays.”",
 0,
 0,
-"Muslim (Ubayy b. Kaʿb)"
+"Muslim 762 (Ubayy b. Kaʿb)"
 ]
 ],
 "Was bedeutet das Wort „Tarāwīḥ“?": [
@@ -1866,12 +1866,12 @@ window.FIQH_DALIL = {
 "Wie lange dauert ein gelobter (Naḏr-)Iʿtikāf nach den Hanafiten mindestens?": [
 [
 "A",
-"ʿĀʾiša (Abū Dāwūd)",
+"ʿĀʾiša (Abū Dāwūd 2473)",
 "„Kein Iʿtikāf ohne Fasten.“ Deshalb dauert der gelobte Iʿtikāf mindestens einen Tag mit Fasten.",
 "“No iʿtikāf without fasting.” So a vowed iʿtikāf lasts at least one day with fasting.",
 441,
 0,
-"ʿĀʾisha (Abū Dāwūd)"
+"ʿĀʾisha (Abū Dāwūd 2473)"
 ]
 ],
 "Darf man nach hanafitischer Ansicht die sechs Schawwāl-Tage fasten, obwohl man noch Qaḍāʾ-Tage offen hat?": [
@@ -1899,45 +1899,45 @@ window.FIQH_DALIL = {
 "Wie heißt das Paradiestor nur für Fastende?": [
 [
 "H",
-"Buḫārī und Muslim (Sahl b. Saʿd)",
+"Buḫārī 1896, Muslim 1152 (Sahl b. Saʿd)",
 "„Im Paradies gibt es ein Tor namens ar-Rayyān; durch es treten am Tag der Auferstehung nur die Fastenden ein.“",
 "“In Paradise there is a gate called al-Rayyān; only those who fast will enter through it on the Day of Resurrection.”",
 385,
 3,
-"Bukhārī and Muslim (Sahl b. Saʿd)"
+"Bukhārī 1896, Muslim 1152 (Sahl b. Saʿd)"
 ]
 ],
 "Welches freiwillige Fasten ist das vorzüglichste?": [
 [
 "H",
-"Buḫārī und Muslim (ʿAbdullāh b. ʿAmr)",
+"Buḫārī 1976, Muslim 1159 (ʿAbdullāh b. ʿAmr)",
 "„Faste einen Tag und brich einen Tag – das ist das Fasten Dāwūds, und es ist das vorzüglichste Fasten.“",
 "“Fast one day and break one day – that is the fast of Dāwūd, and it is the best fast.”",
 0,
 0,
-"Bukhārī and Muslim (ʿAbdullāh b. ʿAmr)"
+"Bukhārī 1976, Muslim 1159 (ʿAbdullāh b. ʿAmr)"
 ]
 ],
 "Welche Tage heißen „ayyām al-bīḍ“?": [
 [
 "H",
-"at-Tirmiḏī, an-Nasāʾī (Abū Ḏarr)",
+"at-Tirmiḏī 761, an-Nasāʾī 2424 (Abū Ḏarr)",
 "„Wenn du im Monat drei Tage fastest, dann faste den 13., 14. und 15.“",
 "“When you fast three days in a month, fast the 13th, 14th and 15th.”",
 387,
 9,
-"at-Tirmidhī, an-Nasāʾī (Abū Dharr)"
+"at-Tirmidhī 761, an-Nasāʾī 2424 (Abū Dharr)"
 ]
 ],
 "Welches Fasten im Muḥarram empfiehlt das Buch?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
-"Er sah die Juden am ʿĀšūrāʾ fasten und sagte: „Ich habe mehr Anrecht auf Mūsā als ihr.“ Dazu: „Wenn ich bis nächstes Jahr lebe, faste ich auch den Neunten“ (Muslim).",
-"He saw the Jews fasting on ʿĀshūrāʾ and said: “I have more right to Mūsā than you.” Also: “If I live until next year I will also fast the ninth” (Muslim).",
+"Buḫārī 2004, Muslim 1130 (Ibn ʿAbbās)",
+"Er sah die Juden am ʿĀšūrāʾ fasten und sagte: „Ich habe mehr Anrecht auf Mūsā als ihr.“ Dazu: „Wenn ich bis nächstes Jahr lebe, faste ich auch den Neunten“ (Muslim 1134).",
+"He saw the Jews fasting on ʿĀshūrāʾ and said: “I have more right to Mūsā than you.” Also: “If I live until next year I will also fast the ninth” (Muslim 1134).",
 388,
 0,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 2004, Muslim 1130 (Ibn ʿAbbās)"
 ]
 ],
 "Wie wird erklärt, dass Ramaḍān plus sechs Šawwāl-Tage wie ein ganzes Jahr sind?": [
@@ -1954,45 +1954,45 @@ window.FIQH_DALIL = {
 "An welchen Tagen ist Fasten tahrīman makrūh?": [
 [
 "H",
-"Buḫārī und Muslim; Muslim",
+"Buḫārī 1991, Muslim 827; Muslim 1141",
 "Verbot des Fastens am Tag des Fastenbrechens und am Opfertag; die Tašrīq-Tage sind „Tage des Essens, Trinkens und Gedenkens Allahs“.",
 "Prohibition of fasting on the day of breaking the fast and the day of sacrifice; the tashrīq days are “days of eating, drinking and remembering Allah”.",
 389,
 0,
-"Bukhārī and Muslim; Muslim"
+"Bukhārī 1991, Muslim 827; Muslim 1141"
 ]
 ],
 "Was ist „Wiṣāl“?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 1964, Muslim 1105 (ʿĀʾiša)",
 "Er verbot aus Barmherzigkeit das Wiṣāl. Gefragt, warum er es selbst tue: „Ich bin nicht wie ihr; mein Herr speist und tränkt mich.“",
 "Out of mercy he forbade wiṣāl. Asked why he did it himself: “I am not like you; my Lord feeds me and gives me drink.”",
 389,
 0,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 1964, Muslim 1105 (ʿĀʾisha)"
 ]
 ],
 "Ist Fasten am Zweifelstag (Yawm aš-šakk) als rein freiwilliges Fasten makrūh?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1914, Muslim 1082 (Abū Hurayra)",
 "„Keiner von euch soll dem Ramaḍān mit ein oder zwei Tagen Fasten vorausgehen, außer jemand, der ein gewohntes Fasten hat.“ Die Karāha betrifft das Hinzufügen zum Ramaḍān.",
 "“None of you should precede Ramaḍān with a day or two of fasting, except one who has a habitual fast.” The dislike concerns adding to Ramaḍān.",
 389,
 21,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1914, Muslim 1082 (Abū Hurayra)"
 ]
 ],
 "Wer muss für den Ramaḍān-Hilāl bei klarem Himmel ihn gesehen haben?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1909, Muslim 1081 (Abū Hurayra)",
 "„Fastet, wenn ihr ihn (den Hilāl) seht, und brecht, wenn ihr ihn seht; ist es bewölkt, so vollendet den Šaʿbān auf dreißig.“ Bei klarem Himmel wäre die Sichtung eines Einzelnen fraglich.",
 "“Fast when you see it (the crescent) and break when you see it; if it is cloudy, complete Shaʿbān as thirty.” In a clear sky one person's sighting would be doubtful.",
 392,
 29,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1909, Muslim 1081 (Abū Hurayra)"
 ]
 ],
 "Der Richter weist das Zeugnis eines Mannes zurück, der den Ramaḍān-Hilāl sah. Was tut er?": [
@@ -2020,12 +2020,12 @@ window.FIQH_DALIL = {
 "Was gilt nach der hanafitischen Fatwa für unterschiedliche Mondaufgangsorte?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
-"„Fastet, wenn ihr ihn seht …“ richtet sich an alle Muslime; deshalb gilt nach der hanafitischen Fatwa eine bestätigte Sichtung überall. Die Schafiiten stützen sich auf den Bericht Kuraibs (Muslim).",
-"“Fast when you see it …” is addressed to all Muslims; so according to the Ḥanafī fatwā a confirmed sighting applies everywhere. The Shāfiʿīs rely on Kurayb's report (Muslim).",
+"Buḫārī 1909, Muslim 1081 (Abū Hurayra)",
+"„Fastet, wenn ihr ihn seht …“ richtet sich an alle Muslime; deshalb gilt nach der hanafitischen Fatwa eine bestätigte Sichtung überall. Die Schafiiten stützen sich auf den Bericht Kuraibs (Muslim 1087).",
+"“Fast when you see it …” is addressed to all Muslims; so according to the Ḥanafī fatwā a confirmed sighting applies everywhere. The Shāfiʿīs rely on Kurayb's report (Muslim 1087).",
 392,
 29,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1909, Muslim 1081 (Abū Hurayra)"
 ]
 ],
 "Was gilt nach dem Buch als Niyya fürs Fasten?": [
@@ -2042,12 +2042,12 @@ window.FIQH_DALIL = {
 "Welche Fasten erfordern eine nächtliche und bestimmte Niyya?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī, an-Nasāʾī (Ḥafṣa)",
+"Abū Dāwūd 2454, at-Tirmiḏī 730, an-Nasāʾī (Ḥafṣa)",
 "„Wer die Absicht nicht vor dem Faǧr fasst, hat kein Fasten“ – für Nachholen, Kaffāra und unbestimmtes Gelübde.",
 "“Whoever does not form the intention before fajr has no fast” – for making up, kaffāra and an unspecified vow.",
 400,
 0,
-"Abū Dāwūd, at-Tirmidhī, an-Nasāʾī (Ḥafṣa)"
+"Abū Dāwūd 2454, at-Tirmidhī 730, an-Nasāʾī (Ḥafṣa)"
 ]
 ],
 "Wie oft braucht man im Ramaḍān nach den Mālikiten eine Niyya?": [
@@ -2075,12 +2075,12 @@ window.FIQH_DALIL = {
 "Was sagte der Prophet ﷺ über das Fastenbrechen und den Saḥūr?": [
 [
 "H",
-"Buḫārī und Muslim (Sahl b. Saʿd)",
+"Buḫārī 1957, Muslim 1098 (Sahl b. Saʿd)",
 "„Die Menschen bleiben im Guten, solange sie das Fastenbrechen beeilen.“ Und: „Nehmt den Saḥūr, denn im Saḥūr liegt Segen.“",
 "“People will remain in good as long as they hasten to break the fast.” And: “Take suḥūr, for in suḥūr there is blessing.”",
 405,
 56,
-"Bukhārī and Muslim (Sahl b. Saʿd)"
+"Bukhārī 1957, Muslim 1098 (Sahl b. Saʿd)"
 ]
 ],
 "Nach welchem Imam darf der Fastende sich mit Wasser abkühlen, ohne dass es makrūh ist (Fatwa)?": [
@@ -2240,12 +2240,12 @@ window.FIQH_DALIL = {
 "Was muss man tun, wenn ein kräftiger Mensch vergesslich im Ramaḍān isst?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1933, Muslim 1155 (Abū Hurayra)",
 "„Wer fastet und aus Vergesslichkeit isst oder trinkt, soll sein Fasten vollenden; Allah hat ihn gespeist und getränkt.“",
 "“Whoever is fasting and eats or drinks out of forgetfulness, let him complete his fast; Allah has fed him and given him drink.”",
 420,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1933, Muslim 1155 (Abū Hurayra)"
 ],
 [
 "J",
@@ -2304,12 +2304,12 @@ window.FIQH_DALIL = {
 "Welche Art Iʿtikāf ist in den letzten zehn Ramaḍān-Tagen gemeint?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 2026, Muslim 1172 (ʿĀʾiša)",
 "„Der Prophet ﷺ verrichtete Iʿtikāf in den letzten zehn Tagen des Ramaḍān, bis Allah ihn zu Sich nahm.“ Tut es einer, ist der ganze Ort frei (kifāya).",
 "“The Prophet ﷺ made iʿtikāf in the last ten days of Ramaḍān until Allah took him.” If one person does it the whole place is free (kifāya).",
 441,
 0,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 2026, Muslim 1172 (ʿĀʾisha)"
 ]
 ],
 "Wo machen Frauen hanafitisch am besten Iʿtikāf?": [
@@ -2326,12 +2326,12 @@ window.FIQH_DALIL = {
 "Was bricht den Iʿtikāf NICHT?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 2029, Muslim 297 (ʿĀʾiša)",
 "„Im Iʿtikāf betrat er das Haus nur für ein menschliches Bedürfnis.“",
 "“In iʿtikāf he only entered the house for a human need.”",
 444,
 0,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 2029, Muslim 297 (ʿĀʾisha)"
 ]
 ],
 "Welche drei frauenbezogenen Zustände behandelt der Fiqh?": [
@@ -2379,34 +2379,34 @@ window.FIQH_DALIL = {
 "Was gilt für Gebet und Fasten während der Menstruation?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 321, Muslim 335 (ʿĀʾiša)",
 "„Wir menstruierten zur Zeit des Gesandten Allahs ﷺ; uns wurde befohlen, das Fasten nachzuholen, aber nicht das Gebet.“",
 "“We menstruated in the time of the Messenger of Allah ﷺ; we were ordered to make up the fast but not the prayer.”",
 170,
 184,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 321, Muslim 335 (ʿĀʾisha)"
 ]
 ],
 "Welchen Ritus der Ḥaddsch darf eine menstruierende Frau NICHT verrichten?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 305, Muslim 1211 (ʿĀʾiša)",
 "„Tu alles, was der Pilger tut, außer den Ṭawāf um das Haus, bis du rein bist.“",
 "“Do everything the pilgrim does except the ṭawāf around the House until you are pure.”",
 170,
 185,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 305, Muslim 1211 (ʿĀʾisha)"
 ]
 ],
 "Darf eine Frau während der Menstruation Duʿāʾ-Verse wie „Rabbanā ātinā…“ sprechen?": [
 [
 "H",
-"at-Tirmiḏī, Ibn Māja (Ibn ʿUmar)",
+"at-Tirmiḏī 131, Ibn Māja 595 (Ibn ʿUmar)",
 "„Die Menstruierende und der Junub rezitieren nichts vom Qurʾān.“ Verse mit der Absicht des Bittgebets bleiben nach den Hanafiten erlaubt.",
 "“The menstruating woman and the junub do not recite anything of the Qurʾān.” Verses with the intention of supplication remain permitted according to the Ḥanafīs.",
 171,
 187,
-"at-Tirmidhī, Ibn Māja (Ibn ʿUmar)"
+"at-Tirmidhī 131, Ibn Māja 595 (Ibn ʿUmar)"
 ]
 ],
 "Wann darf der eheliche Verkehr nach dem Ende der Menstruation wieder stattfinden?": [
@@ -2423,12 +2423,12 @@ window.FIQH_DALIL = {
 "Was ist die Höchstdauer des Nifās nach den Hanafiten und Hanbaliten?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Umm Salama)",
+"Abū Dāwūd 311, at-Tirmiḏī 139 (Umm Salama)",
 "„Die Wöchnerin wartete zur Zeit des Gesandten Allahs ﷺ vierzig Tage und Nächte.“ Eine Mindestdauer nennt kein Text.",
 "“The woman after childbirth waited forty days and nights in the time of the Messenger of Allah ﷺ.” No text gives a minimum.",
 169,
 176,
-"Abū Dāwūd, at-Tirmidhī (Umm Salama)"
+"Abū Dāwūd 311, at-Tirmidhī 139 (Umm Salama)"
 ]
 ],
 "Bei einer Fehlgeburt gilt die Blutung als Nifās, wenn …": [
@@ -2478,12 +2478,12 @@ window.FIQH_DALIL = {
 "Welche Sahābiya litt unter Istiḥāḍa und fragte den Propheten ﷺ danach?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 306, Muslim 333 (ʿĀʾiša)",
 "Fāṭima bint Abī Ḥubaiš fragte, ob sie das Gebet lassen solle. „Das ist eine Ader, keine Menstruation …“",
 "Fāṭima bint Abī Ḥubaysh asked whether she should leave the prayer. “That is a vein, not menstruation …”",
 172,
 197,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 306, Muslim 333 (ʿĀʾisha)"
 ]
 ],
 "Wie heißt eine Scheidung während der Menstruation?": [
@@ -2511,21 +2511,21 @@ window.FIQH_DALIL = {
 "Darf man essen, was eine menstruierende Frau gekocht hat?": [
 [
 "H",
-"Muslim (ʿĀʾiša)",
+"Muslim 300 (ʿĀʾiša)",
 "„Ich trank während der Menstruation und reichte ihm das Gefäß; er setzte seinen Mund an meine Stelle und trank.“",
 "“I drank while menstruating and handed him the vessel; he put his mouth where mine had been and drank.”",
 166,
 170,
-"Muslim (ʿĀʾisha)"
+"Muslim 300 (ʿĀʾisha)"
 ],
 [
 "H",
-"Muslim (Anas)",
+"Muslim 302 (Anas)",
 "„Tut alles außer dem Geschlechtsverkehr.“",
 "“Do everything except intercourse.”",
 165,
 168,
-"Muslim (Anas)"
+"Muslim 302 (Anas)"
 ]
 ],
 "Kann eine Schwangere nach Hanafiten und Hanbaliten menstruieren?": [
@@ -2586,56 +2586,56 @@ window.FIQH_DALIL = {
 "Was hindert eine Frau mit Istiḥāḍa?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 306, Muslim 333 (ʿĀʾiša)",
 "„Das ist eine Ader, keine Menstruation.“ Istiḥāḍa bricht nur den Wuḍūʾ und hindert weder Gebet noch Fasten, Ṭawāf, Moschee oder Verkehr.",
 "“That is a vein, not menstruation.” Istiḥāḍa only breaks wuḍūʾ and prevents neither prayer nor fasting, ṭawāf, mosque or intercourse.",
 172,
 197,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 306, Muslim 333 (ʿĀʾisha)"
 ]
 ],
 "Was riet der Prophet ﷺ Ḥamna bint Jaḥsch bei starker Istiḥāḍa?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Ḥamna bint Ǧaḥš)",
+"Abū Dāwūd 287, at-Tirmiḏī 128 (Ḥamna bint Ǧaḥš)",
 "„Ich empfehle dir, Watte einzulegen und festzubinden, denn sie hält das Blut zurück.“ Er befahl ihr, zu fasten und zu beten.",
 "“I recommend you put in cotton and bind it, for it stops the blood.” He told her to fast and pray.",
 172,
 199,
-"Abū Dāwūd, at-Tirmidhī (Ḥamna bint Jaḥsh)"
+"Abū Dāwūd 287, at-Tirmidhī 128 (Ḥamna bint Jaḥsh)"
 ]
 ],
 "Ist eine Scheidung während der Menstruation wirksam?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿUmar)",
+"Buḫārī 5251, Muslim 1471 (Ibn ʿUmar)",
 "Der Prophet ﷺ wies Ibn ʿUmar an, seine Frau zurückzunehmen und in der Reinheitszeit oder während der Schwangerschaft zu scheiden. Die Scheidung in der Menstruation ist also wirksam, aber verboten (bidʿī).",
 "The Prophet ﷺ told Ibn ʿUmar to take his wife back and divorce in the period of purity or during pregnancy. Divorce during menstruation is thus effective but forbidden (bidʿī).",
 172,
 195,
-"Bukhārī and Muslim (Ibn ʿUmar)"
+"Bukhārī 5251, Muslim 1471 (Ibn ʿUmar)"
 ]
 ],
 "In welcher Nacht wurde das Gebet zur Pflicht?": [
 [
 "H",
-"Buḫārī und Muslim (Anas)",
+"Buḫārī 349, Muslim 162 (Anas)",
 "In der Nacht des Miʿrāǧ wurden 50 Gebete auferlegt und auf fünf verringert: „Das Wort wird bei Mir nicht geändert – für diese fünf hast du den Lohn von fünfzig.“",
 "On the night of the Miʿrāj 50 prayers were prescribed and reduced to five: “My word is not changed – for these five you have the reward of fifty.”",
 175,
 8,
-"Bukhārī and Muslim (Anas)"
+"Bukhārī 349, Muslim 162 (Anas)"
 ]
 ],
 "Wer lehrte dem Propheten ﷺ die Gebetszeiten?": [
 [
 "H",
-"u. a. at-Tirmiḏī, an-Nasāʾī (Ǧābir b. ʿAbdullāh)",
+"u. a. at-Tirmiḏī 150, an-Nasāʾī (Ǧābir b. ʿAbdullāh)",
 "Ǧibrīl kam an zwei Tagen und betete jedes Gebet einmal am Anfang und einmal am Ende seiner Zeit: „Zwischen diesen beiden ist die Zeit.“",
 "Jibrīl came on two days and led each prayer once at the start and once at the end of its time: “Between these two is the time.”",
 212,
 160,
-"e.g. at-Tirmidhī, an-Nasāʾī (Jābir b. ʿAbdullāh)"
+"e.g. at-Tirmidhī 150, an-Nasāʾī (Jābir b. ʿAbdullāh)"
 ]
 ],
 "Wann gilt ein Gebet nach Abū Ḥanīfa noch als in der Zeit verrichtet (adāʾ)?": [
@@ -2663,12 +2663,12 @@ window.FIQH_DALIL = {
 "Darf man nach dem ʿAṣr-Gebet versäumte Gebete (Qaḍāʾ) nachholen?": [
 [
 "H",
-"Muslim (ʿUqba b. ʿĀmir)",
+"Muslim 831 (ʿUqba b. ʿĀmir)",
 "Verboten sind nur drei Zeiten: Sonnenaufgang, Zenit und Sonnenuntergang. Nach ʿAṣr und Faǧr ist nur Nafila makrūh, weil die Zeit dem Fardh gehört.",
 "Only three times are forbidden: sunrise, zenith and sunset. After ʿaṣr and fajr only nafl is makrūh because the time belongs to the farḍ.",
 367,
 532,
-"Muslim (ʿUqba b. ʿĀmir)"
+"Muslim 831 (ʿUqba b. ʿĀmir)"
 ]
 ],
 "Wer ist „ṣāḥib at-tartīb“?": [
@@ -2762,23 +2762,23 @@ window.FIQH_DALIL = {
 "Welche Zeit für das Fadschr-Gebet bevorzugt Abū Ḥanīfa?": [
 [
 "H",
-"at-Tirmiḏī, Abū Dāwūd (Rāfiʿ b. Ḫadīǧ)",
+"at-Tirmiḏī 154, Abū Dāwūd 424 (Rāfiʿ b. Ḫadīǧ)",
 "„Betet das Faǧr im Hellwerden, denn das ist größer an Lohn.“ – so kommen auch mehr Leute zur Gemeinschaft.",
 "“Pray fajr when it has become light, for that is greater in reward.” – and more people come to the congregation.",
 186,
 62,
-"at-Tirmidhī, Abū Dāwūd (Rāfiʿ b. Khadīj)"
+"at-Tirmidhī 154, Abū Dāwūd 424 (Rāfiʿ b. Khadīj)"
 ]
 ],
 "Wann endet die Ẓuhr-Zeit nach Abū Ḥanīfa?": [
 [
 "H",
-"Buḫārī und Muslim",
+"Buḫārī 536, Muslim 615",
 "Abū Ḥanīfa: „Betet das Ẓuhr, wenn es kühler wird, denn die Hitze ist vom Hauch der Hölle.“ Die Mehrheit: Ǧibrīl betete am zweiten Tag Ẓuhr beim einfachen Schatten.",
 "Abū Ḥanīfa: “Pray ẓuhr when it cools, for the heat is from the breath of Hell.” The majority: Jibrīl led ẓuhr on the second day at the single shadow.",
 180,
 37,
-"Bukhārī and Muslim"
+"Bukhārī 536, Muslim 615"
 ]
 ],
 "Was ist nach Abū Ḥanīfa die Abenddämmerung (Schafaq), mit deren Verschwinden Maghrib endet?": [
@@ -2806,23 +2806,23 @@ window.FIQH_DALIL = {
 "Was darf man in der Zeit nach dem ʿAṣr-Gebet bis Sonnenuntergang nicht beten?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Saʿīd al-Ḫudrī)",
+"Buḫārī 586, Muslim 827 (Abū Saʿīd al-Ḫudrī)",
 "„Kein Gebet nach dem Faǧr-Gebet, bis die Sonne aufgeht, und kein Gebet nach dem ʿAṣr-Gebet, bis sie untergeht.“ Das betrifft Nafila.",
 "“No prayer after the fajr prayer until the sun rises, and no prayer after the ʿaṣr prayer until it sets.” This concerns nafl prayers.",
 188,
 73,
-"Bukhārī and Muslim (Abū Saʿīd al-Khudrī)"
+"Bukhārī 586, Muslim 827 (Abū Saʿīd al-Khudrī)"
 ]
 ],
 "Welche Nafila ist nach Eintritt der wahren Morgendämmerung vor dem Fadschr-Fardh erlaubt?": [
 [
 "H",
-"Muslim (ʿĀʾiša)",
+"Muslim 725 (ʿĀʾiša)",
 "„Die zwei Rakʿa des Faǧr sind besser als die Welt und alles, was darin ist.“ Andere Nafila vor dem Fardh: „Nach Anbruch des Faǧr gibt es kein Gebet außer den zwei Rakʿa“ (Ibn ʿUmar).",
 "“The two rakʿas of fajr are better than the world and everything in it.” Other nafl before the farḍ: “After dawn there is no prayer except the two rakʿas” (Ibn ʿUmar).",
 192,
 86,
-"Muslim (ʿĀʾisha)"
+"Muslim 725 (ʿĀʾisha)"
 ]
 ],
 "Wie lange nach der Hidschra wurde die Qibla von Jerusalem zur Kaʿba geändert?": [
@@ -2839,12 +2839,12 @@ window.FIQH_DALIL = {
 "Wie weit darf man nach hanafitischer Ansicht von der Qibla-Richtung abweichen?": [
 [
 "H",
-"at-Tirmiḏī (Abū Hurayra)",
+"at-Tirmiḏī 342 (Abū Hurayra)",
 "„Zwischen Osten und Westen ist Qibla.“ Wäre die genaue Kaʿba verlangt, wären in einer langen Reihe nur wenige Gebete gültig.",
 "“Between east and west is qibla.” If the exact Kaʿba were required, only a few prayers in a long row would be valid.",
 208,
 153,
-"at-Tirmidhī (Abū Hurayra)"
+"at-Tirmidhī 342 (Abū Hurayra)"
 ]
 ],
 "Man hat sich nach Kräften um die Qibla bemüht und merkt nach dem Gebet, dass es falsch war. Was gilt?": [
@@ -2861,12 +2861,12 @@ window.FIQH_DALIL = {
 "Was ist der eigentliche Ort der Niyya?": [
 [
 "H",
-"Buḫārī und Muslim (ʿUmar)",
+"Buḫārī 1, Muslim 1907 (ʿUmar)",
 "„Die Taten sind nur gemäß den Absichten.“ Die Niyya ist Sache des Herzens; sie auszusprechen ist mustaḥabb, weil die Zunge dem Herzen hilft.",
 "“Deeds are only by intentions.” The niyya belongs to the heart; saying it is mustaḥabb because the tongue helps the heart.",
 213,
 162,
-"Bukhārī and Muslim (ʿUmar)"
+"Bukhārī 1, Muslim 1907 (ʿUmar)"
 ]
 ],
 "Wann soll man bei einem Gemeinschaftsgebet die Absicht fassen, dem Imam zu folgen?": [
@@ -2883,23 +2883,23 @@ window.FIQH_DALIL = {
 "In welcher Nacht wurden die fünf täglichen Gebete Pflicht?": [
 [
 "H",
-"Buḫārī und Muslim (Anas)",
+"Buḫārī 349, Muslim 162 (Anas)",
 "In der Nacht des Miʿrāǧ wurden 50 Gebete auferlegt und auf fünf verringert: „Das Wort wird bei Mir nicht geändert – für diese fünf hast du den Lohn von fünfzig.“",
 "On the night of the Miʿrāj 50 prayers were prescribed and reduced to five: “My word is not changed – for these five you have the reward of fifty.”",
 175,
 8,
-"Bukhārī and Muslim (Anas)"
+"Bukhārī 349, Muslim 162 (Anas)"
 ]
 ],
 "Wie gilt nach den Hanafiten jemand, der das Gebet aus Faulheit unterlässt, es aber nicht leugnet?": [
 [
 "H",
-"Muslim (Ǧābir)",
+"Muslim 82 (Ǧābir)",
 "„Zwischen dem Menschen und dem Unglauben steht das Unterlassen des Gebets.“ Die Hanafiten: Wer es nur aus Faulheit lässt, wird Fāsiq; wer die Pflicht leugnet, verlässt den Islam.",
 "“Between a person and disbelief is the abandoning of prayer.” The Ḥanafīs: whoever leaves it only out of laziness becomes a fāsiq; whoever denies the obligation leaves Islam.",
 178,
 28,
-"Muslim (Jābir)"
+"Muslim 82 (Jābir)"
 ]
 ],
 "Was ist der „faǧr kāḏib“?": [
@@ -2949,12 +2949,12 @@ window.FIQH_DALIL = {
 "Wo legen die Hanafiten zwei Gebete wirklich in einer Zeit zusammen?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn Masʿūd)",
+"Buḫārī 1682, Muslim 1289 (Ibn Masʿūd)",
 "„Ich sah den Gesandten Allahs ﷺ nie ein Gebet außerhalb seiner Zeit beten, außer zwei: Ẓuhr und ʿAṣr in ʿArafa und Maġrib und ʿIšāʾ in Muzdalifa.“",
 "“I never saw the Messenger of Allah ﷺ pray a prayer outside its time except two: ẓuhr and ʿaṣr at ʿArafa and maghrib and ʿishāʾ at Muzdalifa.”",
 184,
 53,
-"Bukhārī and Muslim (Ibn Masʿūd)"
+"Bukhārī 1682, Muslim 1289 (Ibn Masʿūd)"
 ],
 [
 "Q",
@@ -2969,12 +2969,12 @@ window.FIQH_DALIL = {
 "Was ist hanafitisch beim Faǧr-Gebet mustaḥabb?": [
 [
 "H",
-"at-Tirmiḏī, Abū Dāwūd (Rāfiʿ b. Ḫadīǧ)",
+"at-Tirmiḏī 154, Abū Dāwūd 424 (Rāfiʿ b. Ḫadīǧ)",
 "„Betet das Faǧr im Hellwerden, denn das ist größer an Lohn.“ Ausnahme: die Pilger in Muzdalifa am Opfertag.",
 "“Pray fajr when it has become light, for that is greater in reward.” Exception: the pilgrims at Muzdalifa on the day of sacrifice.",
 186,
 62,
-"at-Tirmidhī, Abū Dāwūd (Rāfiʿ b. Khadīj)"
+"at-Tirmidhī 154, Abū Dāwūd 424 (Rāfiʿ b. Khadīj)"
 ]
 ],
 "Welches Gebet darf man beten, während die Sonne gelb wird und untergeht?": [
@@ -3185,23 +3185,23 @@ window.FIQH_DALIL = {
 "Muss man nach dem Austritt von Maḏī (Lusttropfen) Ġusl nehmen?": [
 [
 "H",
-"u. a. at-Tirmiḏī (ʿAlī)",
+"u. a. at-Tirmiḏī 114 (ʿAlī)",
 "„Ich hatte viel Maḏī und fragte den Propheten ﷺ. Er sagte: Beim Maḏī ist Wuḍūʾ nötig, beim Manī Ġusl.“",
 "“I had a lot of madhy and asked the Prophet ﷺ. He said: for madhy wuḍūʾ is due, for semen ghusl.”",
 153,
 128,
-"e.g. at-Tirmidhī (ʿAlī)"
+"e.g. at-Tirmidhī 114 (ʿAlī)"
 ]
 ],
 "Man erinnert sich an einen Traum, findet aber keinerlei Nässe. Ist Ġusl Pflicht?": [
 [
 "H",
-"Buḫārī und Muslim (Umm Salama)",
+"Buḫārī 130, Muslim 313 (Umm Salama)",
 "Gefragt, ob die Frau nach einem Traum Ġusl nehmen muss: „Ja, wenn sie Nässe sieht.“ – ohne Nässe also nicht.",
 "Asked whether a woman must make ghusl after a dream: “Yes, if she sees wetness.” – so not without it.",
 153,
 129,
-"Bukhārī and Muslim (Umm Salama)"
+"Bukhārī 130, Muslim 313 (Umm Salama)"
 ]
 ],
 "Was sind die Pflichtteile des Ġusl nach den Hanafiten?": [
@@ -3216,12 +3216,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"u. a. Abū Dāwūd, at-Tirmiḏī (Abū Hurayra)",
+"u. a. Abū Dāwūd 248, at-Tirmiḏī 106 (Abū Hurayra)",
 "„Unter jedem Haar ist Janāba; so wascht das Haar und reinigt die Haut.“",
 "“Under every hair there is janāba; so wash the hair and cleanse the skin.”",
 155,
 140,
-"e.g. Abū Dāwūd, at-Tirmidhī (Abū Hurayra)"
+"e.g. Abū Dāwūd 248, at-Tirmidhī 106 (Abū Hurayra)"
 ]
 ],
 "Welches Hindernis macht den Ġusl ungültig?": [
@@ -3238,12 +3238,12 @@ window.FIQH_DALIL = {
 "Was ist beim Ġusl anders als beim Wuḍūʾ?": [
 [
 "H",
-"u. a. Abū Dāwūd, at-Tirmiḏī (Abū Hurayra)",
+"u. a. Abū Dāwūd 248, at-Tirmiḏī 106 (Abū Hurayra)",
 "„Unter jedem Haar ist Janāba …“ – deshalb muss das Wasser bis zur Haut unter Haar und Bart, in Ohrlöcher und Nabel.",
 "“Under every hair there is janāba …” – so water must reach the skin under hair and beard, pierced earlobes and the navel.",
 155,
 140,
-"e.g. Abū Dāwūd, at-Tirmidhī (Abū Hurayra)"
+"e.g. Abū Dāwūd 248, at-Tirmidhī 106 (Abū Hurayra)"
 ]
 ],
 "Nach dem Ġusl merkt man, dass eine kleine Stelle trocken geblieben ist. Was tun?": [
@@ -3260,12 +3260,12 @@ window.FIQH_DALIL = {
 "Wie gießt man beim sunnagemäßen Ġusl das Wasser?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 248, Muslim 316 (ʿĀʾiša)",
 "Er wusch zuerst die Hände, dann den Schambereich, nahm Wuḍūʾ, fuhr mit den Fingern an die Haarwurzeln, goss drei Handvoll über den Kopf und dann Wasser über den übrigen Körper.",
 "He first washed his hands, then his private parts, made wuḍūʾ, ran his fingers to the roots of his hair, poured three handfuls over his head and then water over the rest of his body.",
 154,
 138,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 248, Muslim 316 (ʿĀʾisha)"
 ]
 ],
 "Was ist beim Ġusl makrūh?": [
@@ -3282,12 +3282,12 @@ window.FIQH_DALIL = {
 "Was darf ein Junub (im Zustand der Janāba) tun?": [
 [
 "H",
-"u. a. at-Tirmiḏī (ʿAlī)",
+"u. a. at-Tirmiḏī 146 (ʿAlī)",
 "„Der Gesandte Allahs ﷺ lehrte uns den Qurʾān in jedem Zustand, außer wenn er junub war.“ Dhikr, Ṣalawāt und Qurʾān-Verse als Duʿāʾ bleiben erlaubt.",
 "“The Messenger of Allah ﷺ taught us the Qurʾān in every state except when he was junub.” Dhikr, ṣalawāt and Qurʾān verses as duʿāʾ remain permitted.",
 158,
 151,
-"e.g. at-Tirmidhī (ʿAlī)"
+"e.g. at-Tirmidhī 146 (ʿAlī)"
 ]
 ],
 "Ist es erlaubt, ohne Wuḍūʾ in der Moschee zu sitzen?": [
@@ -3304,34 +3304,34 @@ window.FIQH_DALIL = {
 "Für wen ist das Schlafen in der Moschee nach hanafitischer Ansicht NICHT makrūh?": [
 [
 "H",
-"Buḫārī, Ṣalāh (Ibn ʿUmar)",
+"Buḫārī 440 (Ibn ʿUmar)",
 "Ibn ʿUmar schlief als junger, unverheirateter Mann in der Moschee des Propheten ﷺ; auch die Leute der Ṣuffa lebten dort.",
 "Ibn ʿUmar slept in the Prophet's ﷺ mosque as a young unmarried man; the people of the Ṣuffa also lived there.",
 0,
 0,
-"Bukhārī, Ṣalāh (Ibn ʿUmar)"
+"Bukhārī 440 (Ibn ʿUmar)"
 ]
 ],
 "Was soll man tun, bevor man sich in der Moschee hinsetzt?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Qatāda)",
+"Buḫārī 444, Muslim 714 (Abū Qatāda)",
 "„Wenn einer von euch die Moschee betritt, soll er zwei Rakʿa beten, bevor er sich setzt.“",
 "“When one of you enters the mosque, let him pray two rakʿas before sitting down.”",
 0,
 0,
-"Bukhārī and Muslim (Abū Qatāda)"
+"Bukhārī 444, Muslim 714 (Abū Qatāda)"
 ]
 ],
 "Welche drei Moscheen sind die vorzüglichsten?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1189, Muslim 1397 (Abū Hurayra)",
 "„Man bricht nur zu drei Moscheen eigens auf: zur Masǧid al-Ḥarām, zu meiner Moschee und zur Masǧid al-Aqṣā.“",
 "“One does not set out specially except to three mosques: al-Masjid al-Ḥarām, my mosque and al-Masjid al-Aqṣā.”",
 0,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1189, Muslim 1397 (Abū Hurayra)"
 ]
 ],
 "Jemand hebt eine schwere Last und es tritt Manī ohne Lust aus. Muss er Ġusl nehmen?": [
@@ -3359,12 +3359,12 @@ window.FIQH_DALIL = {
 "Welche Art von Pflicht ist das Waschen eines verstorbenen Muslims?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 1265, Muslim 1206 (Ibn ʿAbbās)",
 "Über den Mann, der vom Reittier fiel und starb: „Wascht ihn mit Wasser und Sidr und hüllt ihn in zwei Tücher.“ Die Waschung ist Fardh Kifāya.",
 "About the man who fell from his mount and died: “Wash him with water and sidr and shroud him in two cloths.” The washing is farḍ kifāya.",
 154,
 135,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 1265, Muslim 1206 (Ibn ʿAbbās)"
 ]
 ],
 "Jemand taucht mit Mund- und Nasenspülung ganz in einen See. Ist der Ġusl erfüllt?": [
@@ -3392,12 +3392,12 @@ window.FIQH_DALIL = {
 "Ein Mann hat in der Moschee einen Iḥtilām. Was soll er tun?": [
 [
 "H",
-"u. a. Abū Dāwūd (ʿĀʾiša)",
+"u. a. Abū Dāwūd 232 (ʿĀʾiša)",
 "„Die Moschee ist der Menstruierenden und dem Junub nicht erlaubt.“ Deshalb macht er Tayammum, um hinauszugehen.",
 "“The mosque is not permitted to a menstruating woman or to one who is junub.” So he makes tayammum to go out.",
 159,
 153,
-"e.g. Abū Dāwūd (ʿĀʾisha)"
+"e.g. Abū Dāwūd 232 (ʿĀʾisha)"
 ]
 ],
 "Welche zwei Rukn hat der Ḥaǧǧ nach den Hanafiten?": [
@@ -3414,23 +3414,23 @@ window.FIQH_DALIL = {
 "„Der Ḥaǧǧ ist …“ – wie lautet der Hadith?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī, an-Nasāʾī (ʿAbd ar-Raḥmān b. Yaʿmar)",
+"Abū Dāwūd 1949, at-Tirmiḏī 889, an-Nasāʾī (ʿAbd ar-Raḥmān b. Yaʿmar)",
 "„Der Ḥaǧǧ ist ʿArafa; wer in der Nacht von Muzdalifa vor dem Morgengrauen kommt, hat den Ḥaǧǧ erreicht.“",
 "“Ḥajj is ʿArafa; whoever comes on the night of Muzdalifa before dawn has caught the ḥajj.”",
 533,
 0,
-"Abū Dāwūd, at-Tirmidhī, an-Nasāʾī (ʿAbd ar-Raḥmān b. Yaʿmar)"
+"Abū Dāwūd 1949, at-Tirmidhī 889, an-Nasāʾī (ʿAbd ar-Raḥmān b. Yaʿmar)"
 ]
 ],
 "Wie lange dauert die Zeit des Wuqūf in ʿArafa?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (ʿAbd ar-Raḥmān b. Yaʿmar)",
+"Abū Dāwūd 1949, at-Tirmiḏī 889 (ʿAbd ar-Raḥmān b. Yaʿmar)",
 "Wer vor dem Morgengrauen des Opfertages kommt, hat den Ḥaǧǧ erreicht; der Prophet ﷺ stand nach dem Zenit bis Sonnenuntergang – deshalb ist das Bleiben bis dahin wadschib.",
 "Whoever comes before dawn on the day of sacrifice has caught the ḥajj; the Prophet ﷺ stood after the zenith until sunset – so staying until then is wājib.",
 533,
 0,
-"Abū Dāwūd, at-Tirmidhī (ʿAbd ar-Raḥmān b. Yaʿmar)"
+"Abū Dāwūd 1949, at-Tirmidhī 889 (ʿAbd ar-Raḥmān b. Yaʿmar)"
 ]
 ],
 "Welches Tal in ʿArafa ist kein Standort für den Wuqūf?": [
@@ -3447,23 +3447,23 @@ window.FIQH_DALIL = {
 "Ist der Ḥaǧǧ nach Abū Ḥanīfa sofort (fawrī) oder lebenslang (tarāḫī) zu erfüllen?": [
 [
 "H",
-"u. a. Abū Dāwūd, Aḥmad (Ibn ʿAbbās)",
+"u. a. Abū Dāwūd 1732, Aḥmad (Ibn ʿAbbās)",
 "„Wer den Ḥaǧǧ will, soll sich beeilen …“ Abū Ḥanīfa: sofort im ersten möglichen Jahr; asch-Schāfiʿī und Muḥammad: lebenslang.",
 "“Whoever intends ḥajj, let him hasten …” Abū Ḥanīfa: immediately in the first possible year; al-Shāfiʿī and Muḥammad: any time in life.",
 519,
 0,
-"e.g. Abū Dāwūd, Aḥmad (Ibn ʿAbbās)"
+"e.g. Abū Dāwūd 1732, Aḥmad (Ibn ʿAbbās)"
 ]
 ],
 "Warum wurde der Ḥaǧǧ nicht jedes Jahr Pflicht?": [
 [
 "H",
-"Muslim (Abū Hurayra)",
+"Muslim 1337 (Abū Hurayra)",
 "Gefragt, ob der Ḥaǧǧ jedes Jahr Pflicht sei: „Hätte ich ja gesagt, wäre es Pflicht geworden, und ihr hättet es nicht gekonnt.“",
 "Asked whether ḥajj is obligatory every year: “Had I said yes, it would have become obligatory and you would not have been able.”",
 519,
 0,
-"Muslim (Abū Hurayra)"
+"Muslim 1337 (Abū Hurayra)"
 ]
 ],
 "Wie deutete Ibn ʿAbbās die „Istiṭāʿa“ im Ḥaǧǧ-Vers?": [
@@ -3480,12 +3480,12 @@ window.FIQH_DALIL = {
 "Mit wem darf eine Frau hanafitisch NICHT als Maḥram pilgern?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 1862, Muslim 1341 (Ibn ʿAbbās)",
 "„Eine Frau soll nicht reisen außer mit einem Maḥram.“ Maḥram ist, wen sie nie heiraten darf; der Schwager ist nur zeitweilig verboten.",
 "“A woman shall not travel except with a maḥram.” A maḥram is one she may never marry; the brother-in-law is only temporarily forbidden.",
 525,
 0,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 1862, Muslim 1341 (Ibn ʿAbbās)"
 ]
 ],
 "Welche Hanafiten-Meinung gilt, wenn jemand im Iḥrām krank wird?": [
@@ -3502,34 +3502,34 @@ window.FIQH_DALIL = {
 "Welcher Mīqāt ist am weitesten von Mekka entfernt?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 1524, Muslim 1181 (Ibn ʿAbbās)",
 "„Der Prophet ﷺ bestimmte als Mīqāt für die Leute Medinas Ḏu l-Ḥulaifa, für Šām al-Ǧuḥfa, für Naǧd Qarn al-Manāzil und für Jemen Yalamlam.“",
 "“The Prophet ﷺ set as mīqāt for the people of Medina Dhu l-Ḥulayfa, for Shām al-Juḥfa, for Najd Qarn al-Manāzil and for Yemen Yalamlam.”",
 527,
 0,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 1524, Muslim 1181 (Ibn ʿAbbās)"
 ]
 ],
 "Welchen Mīqāt haben Pilger aus der Türkei, Ägypten und Europa, die übers Meer kommen?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 1524, Muslim 1181 (Ibn ʿAbbās)",
 "al-Ǧuḥfa ist der Mīqāt der Leute aus Šām – und aller, die aus dieser Richtung kommen, auch übers Meer.",
 "al-Juḥfa is the mīqāt of the people of Shām – and of all who come from that direction, including by sea.",
 527,
 0,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 1524, Muslim 1181 (Ibn ʿAbbās)"
 ]
 ],
 "Wo legen Mekkaner hanafitisch am besten den Iḥrām für die ʿUmra an?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 1784, Muslim 1212 (ʿĀʾiša)",
 "Der Prophet ﷺ ließ ʿĀʾiša mit ihrem Bruder ʿAbd ar-Raḥmān von Tanʿīm aus die ʿUmra machen.",
 "The Prophet ﷺ had ʿĀʾisha make ʿumra from Tanʿīm with her brother ʿAbd al-Raḥmān.",
 527,
 0,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 1784, Muslim 1212 (ʿĀʾisha)"
 ]
 ],
 "Wodurch tritt man hanafitisch in den Iḥrām ein?": [
@@ -3546,12 +3546,12 @@ window.FIQH_DALIL = {
 "Wann endet beim Ḥaǧǧ die Talbiya?": [
 [
 "H",
-"Buḫārī und Muslim (al-Faḍl b. ʿAbbās)",
+"Buḫārī 1685, Muslim 1281 (al-Faḍl b. ʿAbbās)",
 "„Der Prophet ﷺ hörte nicht auf, die Talbiya zu sprechen, bis er die ʿAqaba bewarf.“",
 "“The Prophet ﷺ did not stop saying the talbiya until he stoned al-ʿAqaba.”",
 528,
 0,
-"Bukhārī and Muslim (al-Faḍl b. ʿAbbās)"
+"Bukhārī 1685, Muslim 1281 (al-Faḍl b. ʿAbbās)"
 ]
 ],
 "Was ist der Tamattuʿ-Ḥaǧǧ?": [
@@ -3601,12 +3601,12 @@ window.FIQH_DALIL = {
 "Welcher Ṭawāf ist für Mekkaner NICHT nötig?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 1755, Muslim 1328 (Ibn ʿAbbās)",
 "„Den Leuten wurde befohlen, dass ihr Letztes beim Haus sei“ – das betrifft die Auswärtigen, die abreisen; Mekkaner reisen nicht ab.",
 "“People were commanded that their last act be at the House” – this concerns outsiders who leave; Meccans do not leave.",
 535,
 0,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 1755, Muslim 1328 (Ibn ʿAbbās)"
 ]
 ],
 "Welchen Rang hat der Saʿy zwischen Ṣafā und Marwa hanafitisch?": [
@@ -3634,34 +3634,34 @@ window.FIQH_DALIL = {
 "Für wen bat der Prophet ﷺ zweimal um Vergebung, bevor er die Kürzenden nannte?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿUmar)",
+"Buḫārī 1727, Muslim 1301 (Ibn ʿUmar)",
 "„O Allah, erbarme Dich derer, die sich rasieren.“ Man sagte: „Und die kürzen?“ Er wiederholte es, erst beim dritten Mal: „… und die kürzen.“",
 "“O Allah, have mercy on those who shave.” They said: “And those who shorten?” He repeated it, only the third time: “… and those who shorten.”",
 536,
 0,
-"Bukhārī and Muslim (Ibn ʿUmar)"
+"Bukhārī 1727, Muslim 1301 (Ibn ʿUmar)"
 ]
 ],
 "Was ist „Raml“ beim Ṭawāf?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 1602, Muslim 1266 (Ibn ʿAbbās)",
 "Die Götzendiener sagten, das Fieber von Yaṯrib habe die Muslime geschwächt; der Prophet ﷺ befahl, die ersten drei Runden im Raml zu gehen.",
 "The idolaters said the fever of Yathrib had weakened the Muslims; the Prophet ﷺ ordered the first three circuits to be walked in raml.",
 538,
 0,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 1602, Muslim 1266 (Ibn ʿAbbās)"
 ]
 ],
 "Was ist „Iḍṭibāʿ“?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Yaʿlā b. Umayya)",
+"Abū Dāwūd 1883, at-Tirmiḏī 859 (Yaʿlā b. Umayya)",
 "„Der Prophet ﷺ machte den Ṭawāf im Iḍṭibāʿ, mit einem grünen Umhang.“",
 "“The Prophet ﷺ performed ṭawāf in iḍṭibāʿ, wearing a green cloak.”",
 538,
 0,
-"Abū Dāwūd, at-Tirmidhī (Yaʿlā b. Umayya)"
+"Abū Dāwūd 1883, at-Tirmidhī 859 (Yaʿlā b. Umayya)"
 ]
 ],
 "Wie viele Chuṭbas hat der Ḥaǧǧ nach dem Buch?": [
@@ -3678,56 +3678,56 @@ window.FIQH_DALIL = {
 "Darf man hanafitisch für einen anderen pilgern, ohne selbst schon gepilgert zu haben?": [
 [
 "H",
-"Abū Dāwūd, Ibn Māja (Ibn ʿAbbās)",
+"Abū Dāwūd 1811, Ibn Māja 2903 (Ibn ʿAbbās)",
 "Die Schafiiten und Hanbaliten stützen sich auf: „Pilgere erst für dich, dann für Šubruma.“ Die Hanafiten verstehen es als Empfehlung.",
 "The Shāfiʿīs and Ḥanbalīs rely on: “Make ḥajj for yourself first, then for Shubruma.” The Ḥanafīs understand it as a recommendation.",
 541,
 0,
-"Abū Dāwūd, Ibn Māja (Ibn ʿAbbās)"
+"Abū Dāwūd 1811, Ibn Māja 2903 (Ibn ʿAbbās)"
 ]
 ],
 "Unter welcher Bedingung ist der Stellvertreter-Ḥaǧǧ hanafitisch gültig?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 1513, Muslim 1334 (Ibn ʿAbbās)",
 "Die Frau aus Ḫaṯʿam fragte für ihren alten Vater, der nicht auf dem Reittier sitzen kann; der Prophet ﷺ erlaubte es – die Stellvertretung gilt bei dauernder Unfähigkeit.",
 "The woman from Khathʿam asked on behalf of her old father, who could not sit on a mount; the Prophet ﷺ permitted it – proxy applies to permanent inability.",
 541,
 0,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 1513, Muslim 1334 (Ibn ʿAbbās)"
 ]
 ],
 "Was darf ein Mann im Iḥrām als Schatten nutzen?": [
 [
 "H",
-"Muslim (Umm al-Ḥuṣain)",
+"Muslim 1298 (Umm al-Ḥuṣain)",
 "Bei der Abschiedswallfahrt hielt Bilāl oder Usāma ein Tuch über den Propheten ﷺ, um ihn vor der Sonne zu schützen, während er die ʿAqaba bewarf.",
 "At the Farewell Pilgrimage Bilāl or Usāma held a cloth over the Prophet ﷺ to shade him from the sun while he stoned al-ʿAqaba.",
 542,
 0,
-"Muslim (Umm al-Ḥuṣain)"
+"Muslim 1298 (Umm al-Ḥuṣain)"
 ]
 ],
 "Was darf eine Frau im Iḥrām NICHT tragen?": [
 [
 "H",
-"Buḫārī (Ibn ʿUmar)",
+"Buḫārī 1838 (Ibn ʿUmar)",
 "„Die Frau im Iḥrām trägt keinen Gesichtsschleier und keine Handschuhe.“",
 "“The woman in iḥrām does not wear a face veil or gloves.”",
 543,
 0,
-"Bukhārī (Ibn ʿUmar)"
+"Bukhārī 1838 (Ibn ʿUmar)"
 ]
 ],
 "Darf ein Muḥrim hanafitisch einen Ehevertrag schließen?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
-"„Der Prophet ﷺ heiratete Maimūna, als er im Iḥrām war.“ Die Mehrheit stützt sich auf „Der Muḥrim heiratet nicht“ (Muslim, ʿUṯmān).",
-"“The Prophet ﷺ married Maymūna while in iḥrām.” The majority rely on “The muḥrim does not marry” (Muslim, ʿUthmān).",
+"Buḫārī 1837, Muslim 1410 (Ibn ʿAbbās)",
+"„Der Prophet ﷺ heiratete Maimūna, als er im Iḥrām war.“ Die Mehrheit stützt sich auf „Der Muḥrim heiratet nicht“ (Muslim 1409, ʿUṯmān).",
+"“The Prophet ﷺ married Maymūna while in iḥrām.” The majority rely on “The muḥrim does not marry” (Muslim 1409, ʿUthmān).",
 543,
 0,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 1837, Muslim 1410 (Ibn ʿAbbās)"
 ]
 ],
 "Was folgt aus Geschlechtsverkehr vor dem Wuqūf?": [
@@ -3756,8 +3756,8 @@ window.FIQH_DALIL = {
 [
 "Q",
 "al-Baqara 2:196",
-"„Wer von euch krank ist oder ein Leiden am Kopf hat, der leistet Ersatz durch Fasten, Ṣadaqa oder ein Opfer.“ Ka‘b b. ʿUǧra: drei Tage oder sechs Arme (Buḫārī, Muslim).",
-"“Whoever of you is ill or has an ailment of the head must compensate by fasting, charity or a sacrifice.” Kaʿb b. ʿUjra: three days or six poor people (Bukhārī, Muslim).",
+"„Wer von euch krank ist oder ein Leiden am Kopf hat, der leistet Ersatz durch Fasten, Ṣadaqa oder ein Opfer.“ Ka‘b b. ʿUǧra: drei Tage oder sechs Arme (Buḫārī 1814, Muslim 1201).",
+"“Whoever of you is ill or has an ailment of the head must compensate by fasting, charity or a sacrifice.” Kaʿb b. ʿUjra: three days or six poor people (Bukhārī 1814, Muslim 1201).",
 545,
 0,
 "al-Baqara 2:196"
@@ -3788,20 +3788,20 @@ window.FIQH_DALIL = {
 "Was darf eine Frau in Ḥayḍ während des Ḥaǧǧ NICHT tun?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 305, Muslim 1211 (ʿĀʾiša)",
 "„Tu alles, was der Pilger tut, außer den Ṭawāf um das Haus, bis du rein bist.“",
 "“Do everything the pilgrim does except the ṭawāf around the House until you are pure.”",
 170,
 185,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 305, Muslim 1211 (ʿĀʾisha)"
 ]
 ],
 "Welches Duʿāʾ spricht man beim Zamzam-Trinken?": [
 [
 "A",
 "Ibn ʿAbbās (ad-Dāraquṭnī, al-Ḥākim)",
-"Beim Zamzam-Trinken bat Ibn ʿAbbās: „O Allah, ich bitte Dich um nützliches Wissen …“ Dazu: „Zamzam ist für das, wofür es getrunken wird“ (Ibn Māja).",
-"When drinking Zamzam Ibn ʿAbbās asked: “O Allah, I ask You for beneficial knowledge …” Also: “Zamzam is for what it is drunk for” (Ibn Māja).",
+"Beim Zamzam-Trinken bat Ibn ʿAbbās: „O Allah, ich bitte Dich um nützliches Wissen …“ Dazu: „Zamzam ist für das, wofür es getrunken wird“ (Ibn Māja 3062).",
+"When drinking Zamzam Ibn ʿAbbās asked: “O Allah, I ask You for beneficial knowledge …” Also: “Zamzam is for what it is drunk for” (Ibn Māja 3062).",
 548,
 0,
 "Ibn ʿAbbās (ad-Dāraquṭnī, al-Ḥākim)"
@@ -3811,8 +3811,8 @@ window.FIQH_DALIL = {
 [
 "A",
 "ʿĀʾiša (al-Bayhaqī)",
-"„Die ʿUmra ist das ganze Jahr erlaubt außer an fünf Tagen: dem ʿArafa-Tag, dem Opfertag und den drei Tašrīq-Tagen.“ Im Ramaḍān: „Eine ʿUmra im Ramaḍān gleicht einem Ḥaǧǧ“ (Buḫārī, Muslim).",
-"“ʿUmra is permitted all year except on five days: the day of ʿArafa, the day of sacrifice and the three tashrīq days.” In Ramaḍān: “ʿUmra in Ramaḍān equals a ḥajj” (Bukhārī, Muslim).",
+"„Die ʿUmra ist das ganze Jahr erlaubt außer an fünf Tagen: dem ʿArafa-Tag, dem Opfertag und den drei Tašrīq-Tagen.“ Im Ramaḍān: „Eine ʿUmra im Ramaḍān gleicht einem Ḥaǧǧ“ (Buḫārī 1782, Muslim 1256).",
+"“ʿUmra is permitted all year except on five days: the day of ʿArafa, the day of sacrifice and the three tashrīq days.” In Ramaḍān: “ʿUmra in Ramaḍān equals a ḥajj” (Bukhārī 1782, Muslim 1256).",
 550,
 0,
 "ʿĀʾisha (al-Bayhaqī)"
@@ -3832,12 +3832,12 @@ window.FIQH_DALIL = {
 "Wie alt muss ein Kamel als Hady mindestens sein?": [
 [
 "H",
-"Muslim (Ǧābir)",
+"Muslim 1963 (Ǧābir)",
 "„Schlachtet nur eine Musinna …“ – die Mindestalter (Kamel fünf, Rind zwei, Schaf ein Jahr) gelten für Hady wie für das Opfer.",
 "“Slaughter only a musinna …” – the minimum ages (camel five, cattle two, sheep one year) apply to hady as to the sacrifice.",
 550,
 0,
-"Muslim (Jābir)"
+"Muslim 1963 (Jābir)"
 ]
 ],
 "Was bedeutet „Īmān“ als Fachbegriff?": [
@@ -3885,23 +3885,23 @@ window.FIQH_DALIL = {
 "Wie beschreibt der Ǧibrīl-Hadith den „Iḥsān“?": [
 [
 "H",
-"Muslim (ʿUmar) – Ǧibrīl-Hadith",
+"Muslim 8 (ʿUmar) – Ǧibrīl-Hadith",
 "„Iḥsān ist, dass du Allah dienst, als ob du Ihn siehst; und wenn du Ihn nicht siehst, so sieht Er dich.“",
 "“Iḥsān is that you worship Allah as if you see Him; and if you do not see Him, He sees you.”",
 0,
 0,
-"Muslim (ʿUmar) – hadith of Jibrīl"
+"Muslim 8 (ʿUmar) – hadith of Jibrīl"
 ]
 ],
 "Was antwortete der Prophet ﷺ Usāma, der einen Mann nach dem Glaubensbekenntnis getötet hatte?": [
 [
 "H",
-"Buḫārī und Muslim (Usāma b. Zaid)",
+"Buḫārī 4269, Muslim 96 (Usāma b. Zaid)",
 "„Hast du sein Herz aufgeschnitten, um zu sehen, ob er die Wahrheit sagte?“ – Menschen urteilen nach dem Äußeren.",
 "“Did you cut open his heart to see whether he was telling the truth?” – people judge by the outward.",
 58,
 4,
-"Bukhārī and Muslim (Usāma b. Zaid)"
+"Bukhārī 4269, Muslim 96 (Usāma b. Zaid)"
 ]
 ],
 "Wann nützt der Glaube eines Leugners nicht mehr?": [
@@ -3995,12 +3995,12 @@ window.FIQH_DALIL = {
 "Woraus sind die Engel erschaffen?": [
 [
 "H",
-"Muslim (ʿĀʾiša)",
+"Muslim 2996 (ʿĀʾiša)",
 "„Die Engel wurden aus Licht erschaffen, die Ǧinn aus rauchlosem Feuer und Ādam aus dem, was euch beschrieben wurde.“",
 "“The angels were created from light, the jinn from smokeless fire and Ādam from what has been described to you.”",
 82,
 0,
-"Muslim (ʿĀʾisha)"
+"Muslim 2996 (ʿĀʾisha)"
 ]
 ],
 "Welcher Engel ist für Regen, Wind und Pflanzenwuchs zuständig?": [
@@ -4138,12 +4138,12 @@ window.FIQH_DALIL = {
 "Wofür wurden die beiden Toten im Grab bestraft, an denen der Prophet ﷺ vorbeiging?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 216, Muslim 292 (Ibn ʿAbbās)",
 "„Sie werden bestraft … einer hütete sich nicht vor seinem Urin, der andere ging mit Verleumdung umher.“",
 "“They are being punished … one did not guard against his urine, the other went about slandering.”",
 125,
 32,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 216, Muslim 292 (Ibn ʿAbbās)"
 ]
 ],
 "Wie definiert al-Māturīdī den „Qadar“?": [
@@ -4171,12 +4171,12 @@ window.FIQH_DALIL = {
 "Was sagte ʿUmar, als er wegen der Pest nicht nach Damaskus ging?": [
 [
 "A",
-"ʿUmar (Buḫārī und Muslim)",
+"ʿUmar (Buḫārī 5729, Muslim 2219)",
 "„Ich fliehe vor Allahs Qaḍāʾ zu Allahs Qadar.“ Ähnlich der Prophet ﷺ an einer einsturzgefährdeten Mauer.",
 "“I flee from Allah's qaḍāʾ to Allah's qadar.” Similarly the Prophet ﷺ at a wall about to collapse.",
 113,
 0,
-"ʿUmar (Bukhārī and Muslim)"
+"ʿUmar (Bukhārī 5729, Muslim 2219)"
 ]
 ],
 "Was bedeutet „Iǧmālī Īmān“?": [
@@ -4193,23 +4193,23 @@ window.FIQH_DALIL = {
 "Wer sammelte den Qurʾān erstmals zwischen zwei Buchdeckeln?": [
 [
 "G",
-"Buḫārī (Zaid b. Ṯābit)",
+"Buḫārī 4986 (Zaid b. Ṯābit)",
 "Unter Abū Bakr wurde der Qurʾān auf Anregung ʿUmars gesammelt; unter ʿUṯmān vervielfältigte ihn eine Kommission unter Zaid b. Ṯābit.",
 "Under Abū Bakr the Qurʾān was collected at ʿUmar's suggestion; under ʿUthmān a commission under Zayd b. Thābit copied it.",
 31,
 86,
-"Bukhārī (Zaid b. Thābit)"
+"Bukhārī 4986 (Zaid b. Thābit)"
 ]
 ],
 "Wie viel vorzüglicher ist das Gemeinschaftsgebet nach dem Hadith?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿUmar; Abū Saʿīd)",
+"Buḫārī 645, Muslim 650 (Ibn ʿUmar); Buḫārī 646 (Abū Saʿīd)",
 "„Das Gebet in Gemeinschaft ist 27 Stufen besser als das Gebet allein“; in anderer Überlieferung 25.",
 "“Prayer in congregation is twenty-seven degrees better than prayer alone”; in another report 25.",
 269,
 290,
-"Bukhārī and Muslim (Ibn ʿUmar; Abū Saʿīd)"
+"Bukhārī 645, Muslim 650 (Ibn ʿUmar); Bukhārī 646 (Abū Saʿīd)"
 ]
 ],
 "Welches Urteil hat das Gemeinschaftsgebet nach den Hanbaliten?": [
@@ -4224,23 +4224,23 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Buḫārī und Muslim",
+"Buḫārī 645, Muslim 650",
 "Die anderen stützen die Sunnah auf den Vergleich „27 Stufen besser“ – ein Einzelgebet ist also gültig.",
 "The others base the sunnah on the comparison “27 degrees better” – a prayer alone is therefore valid.",
 270,
 0,
-"Bukhārī and Muslim"
+"Bukhārī 645, Muslim 650"
 ]
 ],
 "Nach dem Freitag – welche Gemeinschaft ist die stärkste?": [
 [
 "H",
-"Muslim (ʿUṯmān)",
+"Muslim 656 (ʿUṯmān)",
 "„Wer das ʿIšāʾ in Gemeinschaft betet, ist wie einer, der die halbe Nacht betet; wer auch das Faǧr in Gemeinschaft betet, wie einer, der die ganze Nacht betet.“",
 "“Whoever prays ʿishāʾ in congregation is like one who prays half the night; whoever also prays fajr in congregation is like one who prays the whole night.”",
 270,
 0,
-"Muslim (ʿUthmān)"
+"Muslim 656 (ʿUthmān)"
 ]
 ],
 "Ein Mann und eine Frau stehen im gleichen Gemeinschaftsgebet ohne Lücke nebeneinander. Wessen Gebet wird ungültig?": [
@@ -4257,12 +4257,12 @@ window.FIQH_DALIL = {
 "Welche Entschuldigung zählt hanafitisch NICHT für das Fernbleiben von der Gemeinschaft?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿUmar)",
+"Buḫārī 666, Muslim 697 (Ibn ʿUmar)",
 "In einer kalten, windigen Nacht ließ der Prophet ﷺ rufen: „Betet in euren Unterkünften.“ Starker Wind ist nur nachts eine Entschuldigung.",
 "On a cold, windy night the Prophet ﷺ had it called: “Pray in your dwellings.” Strong wind is an excuse only at night.",
 273,
 0,
-"Bukhārī and Muslim (Ibn ʿUmar)"
+"Bukhārī 666, Muslim 697 (Ibn ʿUmar)"
 ]
 ],
 "Wann ist es NICHT makrūh, in einer Moschee eine zweite Gemeinschaft zu bilden?": [
@@ -4279,23 +4279,23 @@ window.FIQH_DALIL = {
 "Wer hat nach der Rangfolge des Buches den ersten Anspruch auf das Imamat (bei sonst Gleichen)?": [
 [
 "H",
-"Muslim (Abū Masʿūd al-Anṣārī)",
+"Muslim 673 (Abū Masʿūd al-Anṣārī)",
 "„Die Leute führt, wer am besten das Buch Allahs rezitiert …“ Die Hanafiten stellen den Kenner der Gebetsurteile voran, weil man ihn im Gebet mehr braucht.",
 "“The people should be led by the one who best recites the Book of Allah …” The Ḥanafīs put the one who knows the rulings of prayer first because he is more needed in prayer.",
 279,
 0,
-"Muslim (Abū Masʿūd al-Anṣārī)"
+"Muslim 673 (Abū Masʿūd al-Anṣārī)"
 ]
 ],
 "Wer hat unabhängig von seiner Eignung Vorrang als Imam?": [
 [
 "H",
-"Muslim (Abū Masʿūd)",
+"Muslim 673 (Abū Masʿūd)",
 "„Niemand soll einen anderen in dessen Machtbereich führen …“; „Niemand soll in fremdem Haus ohne Erlaubnis des Hausherrn vorbeten.“",
 "“No one should lead another in his domain …”; “No one should lead the prayer in another's house without the owner's permission.”",
 275,
 311,
-"Muslim (Abū Masʿūd)"
+"Muslim 673 (Abū Masʿūd)"
 ]
 ],
 "Ist das Gebet hinter einem Fāsiq gültig?": [
@@ -4389,12 +4389,12 @@ window.FIQH_DALIL = {
 "Man steigt in der Niederwerfung beim Imam ein. Hat man diese Rakʿa?": [
 [
 "H",
-"Abū Dāwūd (Abū Hurayra)",
+"Abū Dāwūd 893 (Abū Hurayra)",
 "„Wenn ihr zum Gebet kommt, während wir uns niederwerfen, dann werft euch nieder, aber zählt es nicht … Wer den Rukūʿ erreicht, hat die Rakʿa erreicht.“",
 "“When you come to prayer while we are prostrating, prostrate but do not count it … Whoever catches the rukūʿ has caught the rakʿa.”",
 0,
 0,
-"Abū Dāwūd (Abū Hurayra)"
+"Abū Dāwūd 893 (Abū Hurayra)"
 ]
 ],
 "Was tut der Folgende, wenn der Imam das Händeheben bei der Taḥrīma lässt?": [
@@ -4422,12 +4422,12 @@ window.FIQH_DALIL = {
 "Wie wird der Talqīn beim Sterbenden gemacht?": [
 [
 "H",
-"Muslim (Abū Saʿīd)",
-"„Lehrt eure Sterbenden: Lā ilāha illallāh.“ Und: „Wessen letzte Worte Lā ilāha illallāh sind, der tritt ins Paradies ein“ (Abū Dāwūd).",
-"“Prompt your dying ones: Lā ilāha illallāh.” And: “Whoever's last words are Lā ilāha illallāh will enter Paradise” (Abū Dāwūd).",
+"Muslim 916 (Abū Saʿīd)",
+"„Lehrt eure Sterbenden: Lā ilāha illallāh.“ Und: „Wessen letzte Worte Lā ilāha illallāh sind, der tritt ins Paradies ein“ (Abū Dāwūd 3116).",
+"“Prompt your dying ones: Lā ilāha illallāh.” And: “Whoever's last words are Lā ilāha illallāh will enter Paradise” (Abū Dāwūd 3116).",
 371,
 0,
-"Muslim (Abū Saʿīd)"
+"Muslim 916 (Abū Saʿīd)"
 ]
 ],
 "Was wird beim Wuḍūʾ des Verstorbenen ausgelassen?": [
@@ -4455,23 +4455,23 @@ window.FIQH_DALIL = {
 "Aus wie vielen Teilen besteht das Sunnah-Kafan einer Frau?": [
 [
 "H",
-"Abū Dāwūd (Laila aṯ-Ṯaqafiyya); Buḫārī und Muslim (ʿĀʾiša)",
+"Abū Dāwūd 3157 (Laila aṯ-Ṯaqafiyya); Buḫārī 1264, Muslim 941 (ʿĀʾiša)",
 "Für Umm Kulṯūm, die Tochter des Propheten ﷺ, wurden fünf Teile gereicht; der Prophet ﷺ selbst wurde in drei Tüchern eingehüllt.",
 "For Umm Kulthūm, the Prophet's ﷺ daughter, five pieces were handed over; the Prophet ﷺ himself was wrapped in three cloths.",
 375,
 0,
-"Abū Dāwūd (Laila ath-Thaqafiyya); Bukhārī and Muslim (ʿĀʾisha)"
+"Abū Dāwūd 3157 (Laylā ath-Thaqafiyya); Bukhārī 1264, Muslim 941 (ʿĀʾisha)"
 ]
 ],
 "Was sind die Rukn des Totengebets?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1245, Muslim 951 (Abū Hurayra)",
 "Beim Tod des Negus betete der Prophet ﷺ und sprach vier Takbīre. Rukūʿ und Niederwerfung gibt es nicht.",
 "At the death of the Negus the Prophet ﷺ prayed and said four takbīrs. There is no rukūʿ or prostration.",
 376,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1245, Muslim 951 (Abū Hurayra)"
 ]
 ],
 "Was spricht man nach dem zweiten Takbīr des Totengebets?": [
@@ -4499,23 +4499,23 @@ window.FIQH_DALIL = {
 "Wird für ein tot geborenes Kind das Totengebet verrichtet?": [
 [
 "H",
-"at-Tirmiḏī (Ǧābir)",
+"at-Tirmiḏī 1032 (Ǧābir)",
 "„Für das Kind wird kein Totengebet verrichtet … bis es einen Laut von sich gegeben hat.“",
 "“No funeral prayer is performed for the child … until it has made a sound.”",
 378,
 0,
-"at-Tirmidhī (Jābir)"
+"at-Tirmidhī 1032 (Jābir)"
 ]
 ],
 "Wie viel Lohn erhält, wer bis zum Begräbnis dabeibleibt?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1325, Muslim 945 (Abū Hurayra)",
 "„Wer beim Totengebet dabei ist, erhält einen Qīrāṭ, und wer bis zum Begräbnis bleibt, zwei.“ Gefragt, was zwei Qīrāṭ seien: „Wie zwei große Berge.“",
 "“Whoever attends the funeral prayer receives one qīrāṭ, and whoever stays until the burial, two.” Asked what two qīrāṭ are: “Like two great mountains.”",
 379,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1325, Muslim 945 (Abū Hurayra)"
 ]
 ],
 "Wie stehen Hanafiten zum Totengebet in Abwesenheit (ġāʾib)?": [
@@ -4532,12 +4532,12 @@ window.FIQH_DALIL = {
 "Wie viele Schritte trägt man die Bahre nach der Sunnah insgesamt?": [
 [
 "A",
-"Ibn Masʿūd (Ibn Māja)",
+"Ibn Masʿūd (Ibn Māja 1478)",
 "„Wer einer Bahre folgt, soll an allen vier Seiten tragen, denn das gehört zur Sunnah.“",
 "“Whoever follows a bier should carry it at all four sides, for that is part of the sunnah.”",
 379,
 0,
-"Ibn Masʿūd (Ibn Māja)"
+"Ibn Masʿūd (Ibn Māja 1478)"
 ]
 ],
 "Mit wessen Namen ruft man den Verstorbenen beim Talqīn am Grab?": [
@@ -4554,20 +4554,20 @@ window.FIQH_DALIL = {
 "Wie lange trauert eine Witwe um ihren Mann?": [
 [
 "H",
-"Buḫārī und Muslim (Umm Ḥabība, Zainab)",
+"Buḫārī 1280, Muslim 1486 (Umm Ḥabība, Zainab)",
 "„Einer Frau, die an Allah glaubt, ist es nicht erlaubt, um einen Toten länger als drei Tage zu trauern, außer um ihren Mann – vier Monate und zehn Tage.“",
 "“It is not permitted for a woman who believes in Allah to mourn a dead person for more than three days, except for her husband – four months and ten days.”",
 381,
 0,
-"Bukhārī and Muslim (Umm Ḥabība, Zainab)"
+"Bukhārī 1280, Muslim 1486 (Umm Ḥabība, Zainab)"
 ]
 ],
 "Wird für einen Märtyrer hanafitisch das Totengebet verrichtet?": [
 [
 "J",
 "Hanafiten",
-"Die Hanafiten stützen sich auf Berichte, dass für Ḥamza und die Gefallenen von Uḥud gebetet wurde; die Mehrheit auf Ǧābir: weder gewaschen noch gebetet (Buḫārī).",
-"The Ḥanafīs rely on reports that prayer was said for Ḥamza and those killed at Uḥud; the majority on Jābir: neither washed nor prayed over (Bukhārī).",
+"Die Hanafiten stützen sich auf Berichte, dass für Ḥamza und die Gefallenen von Uḥud gebetet wurde; die Mehrheit auf Ǧābir: weder gewaschen noch gebetet (Buḫārī 1343).",
+"The Ḥanafīs rely on reports that prayer was said for Ḥamza and those killed at Uḥud; the majority on Jābir: neither washed nor prayed over (Bukhārī 1343).",
 382,
 0,
 "Ḥanafīs"
@@ -4587,23 +4587,23 @@ window.FIQH_DALIL = {
 "Was wird einem Märtyrer NICHT vergeben?": [
 [
 "H",
-"Muslim (ʿAbdullāh b. ʿAmr)",
+"Muslim 1886 (ʿAbdullāh b. ʿAmr)",
 "„Dem Märtyrer wird alles vergeben außer der Schuld.“",
 "“The martyr is forgiven everything except debt.”",
 383,
 0,
-"Muslim (ʿAbdullāh b. ʿAmr)"
+"Muslim 1886 (ʿAbdullāh b. ʿAmr)"
 ]
 ],
 "Wer ist nur ein „jenseitiger Märtyrer“ und wird normal gewaschen?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 2829, Muslim 1914 (Abū Hurayra)",
 "„Die Märtyrer sind fünf: der an der Pest Gestorbene, der an Bauchleiden Gestorbene, der Ertrunkene, der Verschüttete und der auf Allahs Weg Gefallene.“",
 "“The martyrs are five: one who dies of plague, one who dies of a stomach disease, one who drowns, one buried under rubble and one killed in the way of Allah.”",
 384,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 2829, Muslim 1914 (Abū Hurayra)"
 ]
 ],
 "Wer leitete die ersten Freitagsgebete in Medina vor der Hidschra?": [
@@ -4629,12 +4629,12 @@ window.FIQH_DALIL = {
 "Für wen ist das Freitagsgebet NICHT Pflicht?": [
 [
 "H",
-"Abū Dāwūd (Ṭāriq b. Šihāb)",
+"Abū Dāwūd 1067 (Ṭāriq b. Šihāb)",
 "„Das Freitagsgebet ist eine Pflicht für jeden Muslim in Gemeinschaft, außer für vier: Sklave, Frau, Kind und Kranker.“ Der Reisende ist nach anderen Überlieferungen ebenfalls befreit.",
 "“The Friday prayer is a duty on every Muslim in congregation except four: slave, woman, child and sick person.” The traveller is also exempt according to other reports.",
 300,
 0,
-"Abū Dāwūd (Ṭāriq b. Shihāb)"
+"Abū Dāwūd 1067 (Ṭāriq b. Shihāb)"
 ]
 ],
 "Wie definierte Abū Yūsuf eine „Stadt“ für das Freitagsgebet?": [
@@ -4662,12 +4662,12 @@ window.FIQH_DALIL = {
 "Ist die Erlaubnis des Staates hanafitisch eine Bedingung des Freitagsgebets?": [
 [
 "H",
-"Ibn Māja (Ǧābir)",
+"Ibn Māja 1081 (Ǧābir)",
 "„… wer es in meinem Leben oder nach mir lässt, während er einen Imam hat, gerecht oder ungerecht …“ – das Freitagsgebet ist an eine Obrigkeit gebunden.",
 "“… whoever leaves it in my life or after me while he has an imam, just or unjust …” – the Friday prayer is tied to an authority.",
 304,
 0,
-"Ibn Māja (Jābir)"
+"Ibn Māja 1081 (Jābir)"
 ],
 [
 "A",
@@ -4693,12 +4693,12 @@ window.FIQH_DALIL = {
 "Wer führte den zusätzlichen Freitags-Adhān am Markt (Zawrāʾ) ein?": [
 [
 "G",
-"Buḫārī (as-Sāʾib b. Yazīd)",
+"Buḫārī 912 (as-Sāʾib b. Yazīd)",
 "Zur Zeit des Propheten ﷺ, Abū Bakrs und ʿUmars gab es nur den Adhān, wenn der Imam saß; als die Leute mehr wurden, fügte ʿUṯmān den Ruf am Zawrāʾ hinzu.",
 "In the time of the Prophet ﷺ, Abū Bakr and ʿUmar there was only the adhān when the imam sat; when people increased ʿUthmān added the call at al-Zawrāʾ.",
 308,
 0,
-"Bukhārī (as-Sāʾib b. Yazīd)"
+"Bukhārī 912 (as-Sāʾib b. Yazīd)"
 ]
 ],
 "Warum wird das „Ẓuhr-i āḫir“ gebetet?": [
@@ -4737,12 +4737,12 @@ window.FIQH_DALIL = {
 "Wann wird die Chuṭba beim Festgebet gehalten?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿUmar)",
+"Buḫārī 963, Muslim 888 (Ibn ʿUmar)",
 "„Der Prophet ﷺ, Abū Bakr und ʿUmar beteten das Festgebet vor der Chuṭba.“",
 "“The Prophet ﷺ, Abū Bakr and ʿUmar prayed the ʿīd prayer before the khuṭba.”",
 313,
 0,
-"Bukhārī and Muslim (Ibn ʿUmar)"
+"Bukhārī 963, Muslim 888 (Ibn ʿUmar)"
 ]
 ],
 "Wie viele Zusatz-Takbīre hat das Festgebet hanafitisch pro Rakʿa?": [
@@ -4759,12 +4759,12 @@ window.FIQH_DALIL = {
 "Was isst man am Opferfest vor dem Festgebet?": [
 [
 "H",
-"at-Tirmiḏī (Burayda); Buḫārī (Anas)",
+"at-Tirmiḏī 542 (Burayda); Buḫārī 953 (Anas)",
 "„Am Tag des Fitr ging er nicht hinaus, bevor er gegessen hatte, und am Opferfest aß er nicht, bevor er gebetet hatte.“ Am Fitr aß er ungerade viele Datteln.",
 "“On the day of fiṭr he did not go out before eating, and on the day of sacrifice he did not eat before praying.” On fiṭr he ate an odd number of dates.",
 315,
 0,
-"at-Tirmidhī (Burayda); Bukhārī (Anas)"
+"at-Tirmidhī 542 (Burayda); Bukhārī 953 (Anas)"
 ]
 ],
 "Wie lange werden die Tašrīq-Takbīre nach der Fatwa gesprochen?": [
@@ -4869,12 +4869,12 @@ window.FIQH_DALIL = {
 "Man hat geschworen, nicht mit den Eltern zu sprechen. Was soll man tun?": [
 [
 "H",
-"Muslim (Abū Hurayra)",
+"Muslim 1650 (Abū Hurayra)",
 "„Wer einen Eid schwört und dann etwas Besseres sieht, der tue das Bessere und sühne seinen Eid.“",
 "“Whoever swears an oath and then sees something better, let him do what is better and expiate his oath.”",
 435,
 0,
-"Muslim (Abū Hurayra)"
+"Muslim 1650 (Abū Hurayra)"
 ]
 ],
 "Welches Gelübde muss man NICHT erfüllen?": [
@@ -4891,12 +4891,12 @@ window.FIQH_DALIL = {
 "Jemand gelobt: „Wenn ich lüge, faste ich einen Monat“ – und lügt. Was gilt?": [
 [
 "H",
-"Muslim (ʿUqba b. ʿĀmir)",
+"Muslim 1645 (ʿUqba b. ʿĀmir)",
 "„Die Sühne für ein Gelübde ist die Sühne für einen Eid.“ Ein Gelübde, das an etwas Unerwünschtes geknüpft ist, ist eine Art Eid – daher die Wahl.",
 "“The expiation for a vow is the expiation for an oath.” A vow tied to something undesired is a kind of oath – hence the choice.",
 438,
 0,
-"Muslim (ʿUqba b. ʿĀmir)"
+"Muslim 1645 (ʿUqba b. ʿĀmir)"
 ]
 ],
 "Was schuldet nach Abū Ḥanīfa, wer gelobt hat, seinen Sohn zu opfern?": [
@@ -5265,34 +5265,34 @@ window.FIQH_DALIL = {
 "Welche Sunnah ist die stärkste?": [
 [
 "H",
-"Abū Dāwūd (Abū Hurayra)",
+"Abū Dāwūd 1258 (Abū Hurayra)",
 "„Lasst die zwei Rakʿa des Faǧr nicht, auch wenn euch Pferde jagen.“ Dazu ʿĀʾiša: Auf keine Nafila achtete er so sehr (Buḫārī, Muslim).",
 "“Do not leave the two rakʿas of fajr even if horses are chasing you.” Also ʿĀʾisha: he was not as careful about any nafl (Bukhārī, Muslim).",
 318,
 434,
-"Abū Dāwūd (Abū Hurayra)"
+"Abū Dāwūd 1258 (Abū Hurayra)"
 ]
 ],
 "Wie viele Rakʿāt betete der Prophet ﷺ im Tarāwīḥ nach einigen Hadithgelehrten?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 1147, Muslim 738 (ʿĀʾiša)",
 "„Er betete weder im Ramaḍān noch sonst mehr als elf Rakʿa.“ Die 20 Rakʿa gehen auf die Praxis unter ʿUmar zurück.",
 "“He did not pray more than eleven rakʿas, in Ramaḍān or otherwise.” The 20 rakʿas go back to the practice under ʿUmar.",
 319,
 0,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 1147, Muslim 738 (ʿĀʾisha)"
 ]
 ],
 "Warum betete der Prophet ﷺ das Tarāwīḥ nicht jede Nacht in der Moschee?": [
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 2012, Muslim 761 (ʿĀʾiša)",
 "„Nichts hielt mich ab, zu euch hinauszugehen, außer dass ich fürchtete, es würde euch zur Pflicht gemacht.“",
 "“Nothing kept me from coming out to you except that I feared it would be made obligatory for you.”",
 319,
 0,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 2012, Muslim 761 (ʿĀʾisha)"
 ]
 ],
 "Was ist die Taḥiyya der Masǧid al-Ḥarām?": [
@@ -5309,12 +5309,12 @@ window.FIQH_DALIL = {
 "Wie viele Rakʿāt Ḍuḥā gelten als am besten?": [
 [
 "H",
-"Buḫārī und Muslim (Umm Hāniʾ)",
+"Buḫārī 357, Muslim 336 (Umm Hāniʾ)",
 "Am Tag der Eroberung Mekkas betete der Prophet ﷺ acht Rakʿa Ḍuḥā.",
 "On the day of the conquest of Mecca the Prophet ﷺ prayed eight rakʿas of ḍuḥā.",
 323,
 0,
-"Bukhārī and Muslim (Umm Hāniʾ)"
+"Bukhārī 357, Muslim 336 (Umm Hāniʾ)"
 ]
 ],
 "Wie beurteilt das Buch Zusammenkünfte in Moscheen eigens zur Belebung gesegneter Nächte?": [
@@ -5331,23 +5331,23 @@ window.FIQH_DALIL = {
 "Welche Farben im Traum deuten nach dem Istiḫāra auf Gutes?": [
 [
 "J",
-"Gelehrte",
-"Die Deutung der Farben (weiß oder grün gut, schwarz oder rot schlecht) ist Erfahrung der Gelehrten, kein Text. Das Istiḫāra-Gebet selbst lehrte der Prophet ﷺ (Buḫārī, Ǧābir).",
-"The interpretation of colours (white or green good, black or red bad) is the scholars' experience, not a text. The istikhāra prayer itself was taught by the Prophet ﷺ (Bukhārī, Jābir).",
+"Ibn ʿĀbidīn (Radd al-Muḥtār)",
+"Die Deutung der Farben (weiß oder grün gut, schwarz oder rot schlecht) ist Erfahrung der Gelehrten, kein Text. Das Istiḫāra-Gebet selbst lehrte der Prophet ﷺ (Buḫārī 1162, Ǧābir).",
+"The interpretation of colours (white or green good, black or red bad) is the scholars' experience, not a text. The istikhāra prayer itself was taught by the Prophet ﷺ (Bukhārī 1162, Jābir).",
 325,
 0,
-"scholars"
+"Ibn ʿĀbidīn (Radd al-Muḥtār)"
 ]
 ],
 "Wie oft sagt man den Tasbīḥ im Tasbīḥ-Gebet insgesamt?": [
 [
 "H",
-"Abū Dāwūd, Ibn Māja (Ibn ʿAbbās)",
+"Abū Dāwūd 1297, Ibn Māja 1387 (Ibn ʿAbbās)",
 "Der Prophet ﷺ lehrte seinem Onkel al-ʿAbbās das Tasbīḥ-Gebet mit 75 Tasbīḥ pro Rakʿa.",
 "The Prophet ﷺ taught his uncle al-ʿAbbās the tasbīḥ prayer with 75 tasbīḥs per rakʿa.",
 326,
 0,
-"Abū Dāwūd, Ibn Māja (Ibn ʿAbbās)"
+"Abū Dāwūd 1297, Ibn Māja 1387 (Ibn ʿAbbās)"
 ]
 ],
 "Was ist nach Abū Ḥanīfa das Regengebet (Istisqāʾ) im Kern?": [
@@ -5364,23 +5364,23 @@ window.FIQH_DALIL = {
 "Wie viele Rukūʿ hat das Sonnenfinsternis-Gebet hanafitisch pro Rakʿa?": [
 [
 "H",
-"Abū Dāwūd (an-Nuʿmān b. Bašīr)",
+"Abū Dāwūd 1193 (an-Nuʿmān b. Bašīr)",
 "Die Hanafiten folgen dem Bericht, dass er es wie andere Gebete mit je einem Rukūʿ betete; andere Schulen folgen Berichten mit zwei Rukūʿ (Buḫārī, Muslim).",
 "The Ḥanafīs follow the report that he prayed it like other prayers with one rukūʿ each; other schools follow reports with two rukūʿs (Bukhārī, Muslim).",
 329,
 0,
-"Abū Dāwūd (an-Nuʿmān b. Bashīr)"
+"Abū Dāwūd 1193 (an-Nuʿmān b. Bashīr)"
 ]
 ],
 "Was sagte der Prophet ﷺ, als die Sonne am Todestag seines Sohnes Ibrāhīm verfinsterte?": [
 [
 "H",
-"Buḫārī und Muslim (al-Muġīra)",
+"Buḫārī 1043, Muslim 915 (al-Muġīra)",
 "„Sonne und Mond sind Zeichen Allahs; sie verfinstern sich nicht wegen des Todes oder Lebens eines Menschen. Wenn ihr das seht, betet und bittet.“",
 "“The sun and moon are signs of Allah; they are not eclipsed for anyone's death or life. When you see that, pray and supplicate.”",
 330,
 0,
-"Bukhārī and Muslim (al-Mughīra)"
+"Bukhārī 1043, Muslim 915 (al-Mughīra)"
 ]
 ],
 "Was bedeutet das Wort „Fiqh“ sprachlich?": [
@@ -5395,12 +5395,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Buḫārī, ʿIlm",
+"Buḫārī 71 (Muʿāwiya)",
 "„Wem Allah Gutes will, den lässt Er die Religion verstehen (yufaqqihhu fi d-dīn).“",
 "“When Allah wants good for someone, He gives him understanding of the religion (yufaqqihhu fi d-dīn).”",
 35,
 0,
-"Bukhārī, ʿIlm"
+"Bukhārī 71 (Muʿāwiya)"
 ]
 ],
 "Wie definierte Imām Abū Ḥanīfa den Fiqh?": [
@@ -5437,12 +5437,12 @@ window.FIQH_DALIL = {
 "Wie viele Ahkām-Verse (Verse mit Rechtsbestimmungen) enthält der Qurʾān ungefähr?": [
 [
 "D",
-"Uṣūl-Gelehrte",
+"al-Ġazālī (al-Mustaṣfā), ar-Rāzī (al-Maḥṣūl)",
 "Die Zahl von rund 500 Rechtsversen nennen die Gelehrten als Kenntnis, die ein Mujtahid braucht. Das Buch nennt sie nicht; sie stammt aus dem Unterricht.",
 "The scholars name about 500 legal verses as knowledge a mujtahid needs. The book does not give the number; it comes from the lessons.",
 0,
 0,
-"uṣūl scholars"
+"al-Ghazālī (al-Mustaṣfā), ar-Rāzī (al-Maḥṣūl)"
 ]
 ],
 "Wie wurde der Qurʾān überliefert, sodass seine Echtheit gesichert ist?": [
@@ -5541,34 +5541,34 @@ window.FIQH_DALIL = {
 "Welche Handlung war nur dem Propheten ﷺ vorbehalten (Ḫaṣāʾiṣ an-Nabī)?": [
 [
 "H",
-"Buḫārī und Muslim",
+"Buḫārī 1964, Muslim 1105",
 "Der Prophet ﷺ verbot das ununterbrochene Fasten (wiṣāl) und sagte: „Ich bin nicht wie ihr; mein Herr gibt mir zu essen und zu trinken.“",
 "The Prophet ﷺ forbade continuous fasting (wiṣāl) and said: “I am not like you; my Lord gives me food and drink.”",
 0,
 0,
-"Bukhārī and Muslim"
+"Bukhārī 1964, Muslim 1105"
 ]
 ],
 "Wer einen Meschhūr-Hadith leugnet, gilt als …": [
 [
 "J",
-"Hanafitische Uṣūl-Gelehrte",
+"as-Saraḫsī und al-Bazdawī (Uṣūl)",
 "Der Mutawātir-Hadith ist so sicher wie der Qurʾān; wer ihn leugnet, leugnet Gewisses. Der Meschhūr ist fast so sicher; wer ihn leugnet, wird Fāsiq, aber nicht Kāfir.",
 "The mutawātir hadith is as certain as the Qurʾān; denying it denies something certain. The mashhūr is nearly as certain; denying it makes one a fāsiq but not a kāfir.",
 27,
 0,
-"Ḥanafī uṣūl scholars"
+"as-Sarakhsī and al-Bazdawī (Uṣūl)"
 ]
 ],
 "Aus welchen zwei Teilen besteht ein Hadith?": [
 [
 "D",
-"Hadithwissenschaft",
+"Ibn aṣ-Ṣalāḥ (Muqaddima)",
 "Sanad ist die Kette der Überlieferer, Matn der überlieferte Text.",
 "Sanad is the chain of narrators, matn the transmitted text.",
 0,
 0,
-"hadith science"
+"Ibn aṣ-Ṣalāḥ (Muqaddima)"
 ]
 ],
 "Wann gilt ein Idschmāʿ als ungültig?": [
@@ -5583,12 +5583,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"u. a. Ibn Māja, at-Tirmiḏī",
+"u. a. Ibn Māja 3950, at-Tirmiḏī 2167",
 "„Meine Umma vereinigt sich nicht auf einem Irrtum.“",
 "“My umma will not agree on an error.”",
 28,
 77,
-"e.g. Ibn Māja, at-Tirmidhī"
+"e.g. Ibn Māja 3950, at-Tirmidhī 2167"
 ],
 [
 "Q",
@@ -5603,12 +5603,12 @@ window.FIQH_DALIL = {
 "Welches Beispiel wird für einen schweigenden Idschmāʿ (sukūtī) genannt?": [
 [
 "G",
-"Buḫārī, Tarāwīḥ; Mālik, Muwaṭṭaʾ",
+"Buḫārī 2010; Mālik, Muwaṭṭaʾ",
 "ʿUmar vereinte die Leute im Ramaḍān hinter einem Imam (Ubayy b. Kaʿb); nach Überlieferungen im Muwaṭṭaʾ und bei al-Bayhaqī beteten sie 20 Rakʿa. Kein Gefährte widersprach – ein schweigender Idschmāʿ.",
 "ʿUmar gathered the people in Ramaḍān behind one imam (Ubayy b. Kaʿb); according to reports in the Muwaṭṭaʾ and al-Bayhaqī they prayed 20 rakʿas. No Companion objected – a silent ijmāʿ.",
 28,
 0,
-"Bukhārī, Tarāwīḥ; Mālik, Muwaṭṭaʾ"
+"Bukhārī 2010; Mālik, Muwaṭṭaʾ"
 ]
 ],
 "Beim Qiyās: Was ist die „ʿIllah“?": [
@@ -5623,12 +5623,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Buḫārī und Muslim (Frau aus Ḫaṯʿam)",
+"Buḫārī 1513, Muslim 1334 (Frau aus Ḫaṯʿam)",
 "Der Prophet ﷺ verglich den Ḥaǧǧ für den alten Vater mit der Begleichung seiner Schuld – ein Qiyās, den er selbst anwandte.",
 "The Prophet ﷺ compared ḥajj for an elderly father to paying off his debt – a qiyās he used himself.",
 29,
 80,
-"Bukhārī and Muslim (woman from Khathʿam)"
+"Bukhārī 1513, Muslim 1334 (woman from Khathʿam)"
 ]
 ],
 "Warum sind Wodka, Whisky und Rakı durch Qiyās verboten?": [
@@ -5643,12 +5643,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Muslim, Ašriba",
+"Muslim 2003 (Ibn ʿUmar)",
 "„Jedes Berauschende ist Ḫamr, und jedes Berauschende ist verboten.“",
 "“Every intoxicant is khamr and every intoxicant is forbidden.”",
 0,
 0,
-"Muslim, Ashriba"
+"Muslim 2003 (Ibn ʿUmar)"
 ]
 ],
 "Für welches Urteil ist ein Qiyās NICHT möglich, weil die ʿIllah nicht mit dem Verstand erfassbar ist?": [
@@ -5729,12 +5729,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 2240, Muslim 1604 (Ibn ʿAbbās)",
 "Zum Vergleich der Salam, der sich auf einen Hadith stützt: „Wer im Voraus kauft, soll es in bekanntem Maß, bekanntem Gewicht und für eine bekannte Frist tun.“",
 "For comparison, salam rests on a hadith: “Whoever pays in advance shall do so for a known measure, known weight and a known term.”",
 30,
 83,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 2240, Muslim 1604 (Ibn ʿAbbās)"
 ]
 ],
 "Welche Schule nutzt die Maṣāliḥ mursala (Gemeinwohl) am meisten?": [
@@ -5881,12 +5881,12 @@ window.FIQH_DALIL = {
 "Wann darf man in einer Stadt mit Festgebet frühestens opfern?": [
 [
 "H",
-"Buḫārī und Muslim (al-Barāʾ b. ʿĀzib)",
+"Buḫārī 5556, Muslim 1961 (al-Barāʾ b. ʿĀzib)",
 "„Wer vor dem Gebet schlachtet, hat nur Fleisch für seine Familie geschlachtet; es ist kein Opfer.“",
 "“Whoever slaughters before the prayer has only slaughtered meat for his family; it is not a sacrifice.”",
 556,
 0,
-"Bukhārī and Muslim (al-Barāʾ b. ʿĀzib)"
+"Bukhārī 5556, Muslim 1961 (al-Barāʾ b. ʿĀzib)"
 ]
 ],
 "Wie viele Tage dauert die Opferzeit nach asch-Schāfiʿī?": [
@@ -5925,34 +5925,34 @@ window.FIQH_DALIL = {
 "Ab welchem Alter darf ein stattliches Lamm geopfert werden?": [
 [
 "H",
-"Muslim (Ǧābir); an-Nasāʾī",
+"Muslim 1963 (Ǧābir); an-Nasāʾī",
 "„Schlachtet nur eine Musinna, es sei denn, es fällt euch schwer; dann schlachtet ein Ǧaḏaʿ vom Schaf.“",
 "“Slaughter only a musinna, unless it is hard for you; then slaughter a jadhaʿ of sheep.”",
 559,
 0,
-"Muslim (Jābir); an-Nasāʾī"
+"Muslim 1963 (Jābir); an-Nasāʾī"
 ]
 ],
 "Für wie viele Personen kann ein Rind geopfert werden?": [
 [
 "H",
-"Muslim (Ǧābir)",
+"Muslim 1318 (Ǧābir)",
 "„Wir opferten mit dem Gesandten Allahs ﷺ im Jahr von Ḥudaibiya ein Kamel für sieben und ein Rind für sieben.“",
 "“We sacrificed with the Messenger of Allah ﷺ in the year of Ḥudaybiya a camel for seven and a cow for seven.”",
 559,
 0,
-"Muslim (Jābir)"
+"Muslim 1318 (Jābir)"
 ]
 ],
 "Welcher Mangel macht ein Tier als Opfer ungültig?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (al-Barāʾ)",
+"Abū Dāwūd 2802, at-Tirmiḏī 1497 (al-Barāʾ)",
 "„Vier sind beim Opfer nicht erlaubt: das deutlich einäugige, das deutlich kranke, das deutlich hinkende und das abgemagerte ohne Mark.“",
 "“Four are not permitted as sacrifice: the clearly one-eyed, the clearly sick, the clearly lame and the emaciated without marrow.”",
 560,
 0,
-"Abū Dāwūd, at-Tirmidhī (al-Barāʾ)"
+"Abū Dāwūd 2802, at-Tirmidhī 1497 (al-Barāʾ)"
 ]
 ],
 "Das Opfertier eines Armen geht verloren und taucht auf, nachdem er ein anderes geopfert hat. Was gilt?": [
@@ -5980,12 +5980,12 @@ window.FIQH_DALIL = {
 "Darf man den Metzger mit Opferfleisch oder dem Fell bezahlen?": [
 [
 "A",
-"ʿAlī (Buḫārī und Muslim)",
+"ʿAlī (Buḫārī 1717, Muslim 1317)",
 "„Der Prophet ﷺ befahl mir, nichts davon dem Schlachter als Lohn zu geben; ‚wir geben ihm von uns aus.‘“",
 "“The Prophet ﷺ ordered me to give nothing of it to the butcher as wages; ‘we give him from ourselves.’”",
 562,
 0,
-"ʿAlī (Bukhārī and Muslim)"
+"ʿAlī (Bukhārī 1717, Muslim 1317)"
 ]
 ],
 "Was darf man mit dem Fell des Opfertiers tun?": [
@@ -6024,12 +6024,12 @@ window.FIQH_DALIL = {
 "Wann wird die ʿAqīqa am besten geopfert?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Samura)",
+"Abū Dāwūd 2838, at-Tirmiḏī 1522 (Samura)",
 "„Jedes Kind ist verpfändet an seine ʿAqīqa; am siebten Tag wird für es geschlachtet, es wird rasiert und bekommt seinen Namen.“",
 "“Every child is pledged by its ʿaqīqa; on the seventh day an animal is slaughtered for it, it is shaved and given its name.”",
 563,
 0,
-"Abū Dāwūd, at-Tirmidhī (Samura)"
+"Abū Dāwūd 2838, at-Tirmidhī 1522 (Samura)"
 ]
 ],
 "Was spricht man dem Neugeborenen ins linke Ohr?": [
@@ -6046,34 +6046,34 @@ window.FIQH_DALIL = {
 "Was ist „Taḥnīk“?": [
 [
 "H",
-"Buḫārī und Muslim (Anas)",
+"Buḫārī 5470, Muslim 2144 (Anas)",
 "Der Prophet ﷺ kaute eine Dattel und strich sie ʿAbdullāh b. Abī Ṭalḥa in den Mund.",
 "The Prophet ﷺ chewed a date and rubbed it into the mouth of ʿAbdullāh b. Abī Ṭalḥa.",
 565,
 0,
-"Bukhārī and Muslim (Anas)"
+"Bukhārī 5470, Muslim 2144 (Anas)"
 ]
 ],
 "Welche Namen liebt Allah am meisten?": [
 [
 "H",
-"Muslim (Ibn ʿUmar)",
+"Muslim 2132 (Ibn ʿUmar)",
 "„Die Allah liebsten eurer Namen sind ʿAbdullāh und ʿAbd ar-Raḥmān.“",
 "“The most beloved of your names to Allah are ʿAbdullāh and ʿAbd al-Raḥmān.”",
 565,
 0,
-"Muslim (Ibn ʿUmar)"
+"Muslim 2132 (Ibn ʿUmar)"
 ]
 ],
 "Wie änderte der Prophet ﷺ den Namen „ʿĀṣiya“?": [
 [
 "H",
-"Muslim (Ibn ʿUmar)",
+"Muslim 2139 (Ibn ʿUmar)",
 "„Der Prophet ﷺ änderte den Namen ʿĀṣiya und sagte: Du bist Ǧamīla.“",
 "“The Prophet ﷺ changed the name ʿĀṣiya and said: You are Jamīla.”",
 565,
 0,
-"Muslim (Ibn ʿUmar)"
+"Muslim 2139 (Ibn ʿUmar)"
 ]
 ],
 "Welcher Name darf einem Menschen NICHT gegeben werden?": [
@@ -6090,12 +6090,12 @@ window.FIQH_DALIL = {
 "Welchen Rang hat die Sahw-Niederwerfung hanafitisch?": [
 [
 "H",
-"Muslim (Ibn Masʿūd)",
+"Muslim 572 (Ibn Masʿūd)",
 "„Wenn einer von euch sich im Gebet irrt, soll er zwei Niederwerfungen machen.“ Der Befehl macht sie hanafitisch wadschib; andere Schulen: Sunnah.",
 "“When one of you makes a mistake in prayer, let him make two prostrations.” The command makes them wājib for the Ḥanafīs; other schools: sunnah.",
 339,
 487,
-"Muslim (Ibn Masʿūd)"
+"Muslim 572 (Ibn Masʿūd)"
 ]
 ],
 "Wann ist die Sahw-Niederwerfung nötig?": [
@@ -6112,31 +6112,31 @@ window.FIQH_DALIL = {
 "Wann machen asch-Schāfiʿī und Aḥmad die Sahw-Niederwerfung?": [
 [
 "H",
-"Buḫārī und Muslim (ʿAbdullāh b. Buḥaina)",
-"Er vergaß das erste Sitzen und warf sich vor dem Salām zweimal nieder. Die Hanafiten stützen das Niederwerfen nach dem Salām auf Ṯawbān: „Für jeden Irrtum zwei Niederwerfungen nach dem Salām“ (Abū Dāwūd).",
-"He forgot the first sitting and prostrated twice before the salām. The Ḥanafīs base prostrating after the salām on Thawbān: “For every mistake two prostrations after the salām” (Abū Dāwūd).",
+"Buḫārī 1224, Muslim 570 (ʿAbdullāh b. Buḥaina)",
+"Er vergaß das erste Sitzen und warf sich vor dem Salām zweimal nieder. Die Hanafiten stützen das Niederwerfen nach dem Salām auf Ṯawbān: „Für jeden Irrtum zwei Niederwerfungen nach dem Salām“ (Abū Dāwūd 1038).",
+"He forgot the first sitting and prostrated twice before the salām. The Ḥanafīs base prostrating after the salām on Thawbān: “For every mistake two prostrations after the salām” (Abū Dāwūd 1038).",
 345,
 0,
-"Bukhārī and Muslim (ʿAbdullāh b. Buḥaina)"
+"Bukhārī 1224, Muslim 570 (ʿAbdullāh b. Buḥaina)"
 ]
 ],
 "Jemand vergisst das erste Sitzen und ist dem Stehen näher. Was tut er?": [
 [
 "H",
-"Abū Dāwūd, Ibn Māja (al-Muġīra)",
+"Abū Dāwūd 1036, Ibn Māja 1208 (al-Muġīra)",
 "„Steht der Imam nach zwei Rakʿa auf und ist er dem Stehen noch nicht nahe, setzt er sich; steht er schon fast, setzt er sich nicht und macht zwei Niederwerfungen.“",
 "“If the imam stands after two rakʿas and is not yet close to standing, he sits; if he is almost standing, he does not sit and makes two prostrations.”",
 342,
 0,
-"Abū Dāwūd, Ibn Māja (al-Mughīra)"
+"Abū Dāwūd 1036, Ibn Māja 1208 (al-Mughīra)"
 ]
 ],
 "Wer zum ersten Mal im Leben an der Rakʿa-Zahl zweifelt …": [
 [
 "J",
 "",
-"Wem das zum ersten Mal geschieht, beginnt neu; wer oft zweifelt, folgt seiner Überzeugung, sonst nimmt er die kleinere Zahl (Hadith von Abū Saʿīd, Muslim).",
-"Someone for whom it happens the first time starts again; someone who doubts often follows his conviction, otherwise takes the smaller number (hadith of Abū Saʿīd, Muslim).",
+"Wem das zum ersten Mal geschieht, beginnt neu; wer oft zweifelt, folgt seiner Überzeugung, sonst nimmt er die kleinere Zahl (Hadith von Abū Saʿīd, Muslim 571).",
+"Someone for whom it happens the first time starts again; someone who doubts often follows his conviction, otherwise takes the smaller number (hadith of Abū Saʿīd, Muslim 571).",
 343,
 0,
 ""
@@ -6145,23 +6145,23 @@ window.FIQH_DALIL = {
 "Wie erinnern Frauen den Imam an einen Fehler?": [
 [
 "H",
-"Buḫārī und Muslim (Sahl b. Saʿd)",
+"Buḫārī 684, Muslim 421 (Sahl b. Saʿd)",
 "„Wem im Gebet etwas zustößt, der sage Subḥānallāh; das Klatschen ist für die Frauen.“",
 "“Whoever is struck by something in prayer, let him say Subḥānallāh; clapping is for women.”",
 0,
 0,
-"Bukhārī and Muslim (Sahl b. Saʿd)"
+"Bukhārī 684, Muslim 421 (Sahl b. Saʿd)"
 ]
 ],
 "Wie viele Tilāwa-Verse gibt es nach den Hanafiten?": [
 [
 "A",
-"ʿAmr b. al-ʿĀṣ (Abū Dāwūd)",
+"ʿAmr b. al-ʿĀṣ (Abū Dāwūd 1401)",
 "Der Prophet ﷺ ließ ihn 15 Niederwerfungen im Qurʾān lesen; die Hanafiten zählen 14 (ohne die zweite in al-Ḥaǧǧ, mit Ṣād).",
 "The Prophet ﷺ had him recite 15 prostrations in the Qurʾān; the Ḥanafīs count 14 (without the second in al-Ḥajj, with Ṣād).",
 350,
 0,
-"ʿAmr b. al-ʿĀṣ (Abū Dāwūd)"
+"ʿAmr b. al-ʿĀṣ (Abū Dāwūd 1401)"
 ]
 ],
 "Muss man sich nach einem Niederwerfungsvers von einem sprechenden Papagei oder einer Tonaufnahme niederwerfen?": [
@@ -6211,12 +6211,12 @@ window.FIQH_DALIL = {
 "„Die Reinheit ist … des Glaubens.“ Wie geht der Hadith weiter?": [
 [
 "H",
-"Muslim, Ṭahāra (Abū Mālik al-Ašʿarī)",
+"Muslim 223, Ṭahāra (Abū Mālik al-Ašʿarī)",
 "„Die Reinheit ist die Hälfte des Glaubens.“",
 "“Purity is half of faith.”",
 114,
 6,
-"Muslim, Ṭahāra (Abū Mālik al-Ashʿarī)"
+"Muslim 223, Ṭahāra (Abū Mālik al-Ashʿarī)"
 ],
 [
 "Q",
@@ -6262,12 +6262,12 @@ window.FIQH_DALIL = {
 "Eine Katze hat aus dem Wasser getrunken. Darf man damit Wuḍūʾ nehmen?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī, an-Nasāʾī (Abū Qatāda)",
+"Abū Dāwūd 75, at-Tirmiḏī 92, an-Nasāʾī 68 (Abū Qatāda)",
 "Über die Katze: „Sie ist nicht unrein; sie gehört zu denen, die bei euch ein- und ausgehen.“",
 "About the cat: “She is not impure; she is one of those who go around among you.”",
 0,
 0,
-"Abū Dāwūd, at-Tirmidhī, an-Nasāʾī (Abū Qatāda)"
+"Abū Dāwūd 75, at-Tirmidhī 92, an-Nasāʾī 68 (Abū Qatāda)"
 ],
 [
 "J",
@@ -6293,12 +6293,12 @@ window.FIQH_DALIL = {
 "Wie beurteilt Abū Ḥanīfa den Hund?": [
 [
 "H",
-"Muslim, Ṭahāra (Abū Hurayra)",
+"Muslim 279, Ṭahāra (Abū Hurayra)",
 "„Die Reinigung des Gefäßes, wenn ein Hund daraus getrunken hat, ist, es siebenmal zu waschen.“ – das betrifft den Speichel.",
 "“The purification of a vessel when a dog has drunk from it is to wash it seven times.” – this concerns the saliva.",
 0,
 0,
-"Muslim, Ṭahāra (Abū Hurayra)"
+"Muslim 279, Ṭahāra (Abū Hurayra)"
 ],
 [
 "J",
@@ -6313,12 +6313,12 @@ window.FIQH_DALIL = {
 "Welche Haut darf auch nach dem Gerben nicht verwendet werden?": [
 [
 "H",
-"Muslim, Ḥayḍ (Ibn ʿAbbās)",
+"Muslim 366, Ḥayḍ (Ibn ʿAbbās)",
 "„Jede Haut, die gegerbt wird, ist rein.“",
 "“Any skin that is tanned is pure.”",
 121,
 24,
-"Muslim, Ḥayḍ (Ibn ʿAbbās)"
+"Muslim 366, Ḥayḍ (Ibn ʿAbbās)"
 ],
 [
 "Q",
@@ -6432,12 +6432,12 @@ window.FIQH_DALIL = {
 "Was ist Istibrāʾ?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 216, Muslim 292 (Ibn ʿAbbās)",
 "An zwei Gräbern: „Sie werden bestraft … einer hütete sich nicht vor seinem Urin, der andere ging mit Verleumdung umher.“",
 "At two graves: “They are being punished … one did not guard against his urine, the other went about slandering.”",
 125,
 32,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 216, Muslim 292 (Ibn ʿAbbās)"
 ]
 ],
 "Mit welchem Fuß betritt man die Toilette?": [
@@ -6452,12 +6452,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Buḫārī und Muslim (ʿĀʾiša)",
+"Buḫārī 168, Muslim 268 (ʿĀʾiša)",
 "„Der Prophet ﷺ liebte es, mit rechts zu beginnen – beim Anziehen der Schuhe, beim Kämmen, bei der Reinigung und in all seinen Angelegenheiten.“",
 "“The Prophet ﷺ liked to start with the right – putting on shoes, combing, purifying and in all his affairs.”",
 130,
 56,
-"Bukhārī and Muslim (ʿĀʾisha)"
+"Bukhārī 168, Muslim 268 (ʿĀʾisha)"
 ]
 ],
 "Mit welchem Mittel reinigten sich die Leute von Qubāʾ, die der Qurʾān lobt?": [
@@ -6483,12 +6483,12 @@ window.FIQH_DALIL = {
 "Womit ist Istindschāʾ makrūh?": [
 [
 "H",
-"Muslim (Ibn Masʿūd)",
+"Muslim 450 (Ibn Masʿūd)",
 "Der Prophet ﷺ verbot, sich mit Dung oder Knochen zu reinigen: „Sie sind die Speise eurer Brüder unter den Ǧinn.“",
 "The Prophet ﷺ forbade cleaning oneself with dung or bones: “They are the food of your brothers among the jinn.”",
 124,
 0,
-"Muslim (Ibn Masʿūd)"
+"Muslim 450 (Ibn Masʿūd)"
 ]
 ],
 "Eine Maus stirbt in einem Brunnen, ohne aufgebläht zu sein. Wie viel Wasser schöpft man hanafitisch ab?": [
@@ -6558,12 +6558,12 @@ window.FIQH_DALIL = {
 "Welche Haut wird auch durch Gerben nicht rein?": [
 [
 "H",
-"Muslim (Ibn ʿAbbās); Tabūk-Bericht",
+"Muslim 366 (Ibn ʿAbbās); Tabūk-Bericht",
 "„Jede Haut, die gegerbt wird, ist rein.“ Auf dem Feldzug nach Tabūk: „Ihr Gerben ist ihre Reinigung.“",
 "“Any skin that is tanned is pure.” On the Tabūk campaign: “Its tanning is its purification.”",
 121,
 25,
-"Muslim (Ibn ʿAbbās); Tabūk report"
+"Muslim 366 (Ibn ʿAbbās); Tabūk report"
 ],
 [
 "J",
@@ -6600,32 +6600,32 @@ window.FIQH_DALIL = {
 "Wie ist es hanafitisch, sich beim Austreten mit der Rückseite zur Qibla zu wenden – auch in einem geschlossenen Raum?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Ayyūb)",
+"Buḫārī 394, Muslim 264 (Abū Ayyūb)",
 "„Wenn ihr zum Austreten geht, wendet der Qibla weder Gesicht noch Rücken zu.“ Die Hanafiten wenden das auch auf geschlossene Räume an.",
 "“When you go to relieve yourselves, do not face the qibla or turn your back to it.” The Ḥanafīs apply this to closed rooms too.",
 126,
 34,
-"Bukhārī and Muslim (Abū Ayyūb)"
+"Bukhārī 394, Muslim 264 (Abū Ayyūb)"
 ],
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Ǧābir)",
+"Abū Dāwūd 13, at-Tirmiḏī 9 (Ǧābir)",
 "Die anderen Schulen stützen sich auf den Bericht Ǧābirs und sehen es in geschlossenen Räumen nicht als makrūh.",
 "The other schools rely on Jābir's report and do not consider it makrūh in closed rooms.",
 126,
 35,
-"Abū Dāwūd, at-Tirmidhī (Jābir)"
+"Abū Dāwūd 13, at-Tirmidhī 9 (Jābir)"
 ]
 ],
 "Wie heißen die drei „verfluchten Orte“, an denen man nicht austreten soll?": [
 [
 "H",
-"Abū Dāwūd, Ibn Māja (Muʿāḏ)",
+"Abū Dāwūd 26, Ibn Māja 328 (Muʿāḏ)",
 "„Hütet euch vor den drei verfluchten Orten: an Wasserquellen, mitten auf dem Weg und im Schatten auszutreten.“",
 "“Beware of the three cursed places: relieving yourselves at water sources, in the middle of the road and in the shade.”",
 126,
 36,
-"Abū Dāwūd, Ibn Māja (Muʿādh)"
+"Abū Dāwūd 26, Ibn Māja 328 (Muʿādh)"
 ]
 ],
 "Wann wurde Tayammum erlaubt?": [
@@ -6642,23 +6642,23 @@ window.FIQH_DALIL = {
 "Was ersetzt der Tayammum?": [
 [
 "H",
-"u. a. Abū Dāwūd, at-Tirmiḏī (Abū Ḏarr)",
+"u. a. Abū Dāwūd 332, at-Tirmiḏī 124 (Abū Ḏarr)",
 "„Die reine Erde ist das Reinigungsmittel des Muslims, auch wenn er zehn Jahre kein Wasser findet.“ Der Vers nennt Wind (Wuḍūʾ) und Berührung der Frauen (Ġusl).",
 "“Clean earth is the purifier of the Muslim, even if he finds no water for ten years.” The verse mentions answering nature (wuḍūʾ) and touching women (ghusl).",
 160,
 156,
-"e.g. Abū Dāwūd, at-Tirmidhī (Abū Dharr)"
+"e.g. Abū Dāwūd 332, at-Tirmidhī 124 (Abū Dharr)"
 ]
 ],
 "„Das Heilmittel für Unwissenheit ist das Fragen.“ Bei welchem Ereignis sagte der Prophet ﷺ das?": [
 [
 "H",
-"Abū Dāwūd (Ǧābir)",
+"Abū Dāwūd 336 (Ǧābir)",
 "„Sie haben ihn getötet – möge Allah sie töten! Warum fragten sie nicht, wenn sie es nicht wussten? Das Heilmittel der Unwissenheit ist das Fragen.“",
 "“They killed him – may Allah kill them! Why did they not ask if they did not know? The cure for ignorance is asking.”",
 161,
 159,
-"Abū Dāwūd (Jābir)"
+"Abū Dāwūd 336 (Jābir)"
 ]
 ],
 "Ab welcher Entfernung zum Wasser ist Tayammum nach den Hanafiten erlaubt?": [
@@ -6752,12 +6752,12 @@ window.FIQH_DALIL = {
 "Extreme Kälte erlaubt Tayammum nach den Hanafiten nur …": [
 [
 "H",
-"Abū Dāwūd (ʿAmr b. al-ʿĀṣ)",
+"Abū Dāwūd 334 (ʿAmr b. al-ʿĀṣ)",
 "ʿAmr berief sich in einer eiskalten Nacht auf „Tötet euch nicht selbst“ (an-Nisāʾ 4:29) und machte Tayammum; der Prophet ﷺ billigte es.",
 "On a freezing night ʿAmr cited “Do not kill yourselves” (an-Nisāʾ 4:29) and made tayammum; the Prophet ﷺ approved.",
 161,
 160,
-"Abū Dāwūd (ʿAmr b. al-ʿĀṣ)"
+"Abū Dāwūd 334 (ʿAmr b. al-ʿĀṣ)"
 ]
 ],
 "Ist es sinnvoll, Tayammum bis zum Ende der Gebetszeit aufzuschieben?": [
@@ -6785,12 +6785,12 @@ window.FIQH_DALIL = {
 "Was tat der Prophet ﷺ, als ʿAmr ibn al-ʿĀṣ nach Iḥtilām in einer kalten Nacht mit Tayammum vorbetete?": [
 [
 "H",
-"Abū Dāwūd (ʿAmr b. al-ʿĀṣ)",
+"Abū Dāwūd 334 (ʿAmr b. al-ʿĀṣ)",
 "„Ich erinnerte mich an Allahs Wort ‚Tötet euch nicht selbst …‘, machte Tayammum und betete vor.“ Der Gesandte Allahs ﷺ lachte und sagte nichts – eine stillschweigende Billigung.",
 "“I remembered Allah's word ‘Do not kill yourselves …’, made tayammum and led the prayer.” The Messenger of Allah ﷺ laughed and said nothing – a tacit approval.",
 161,
 160,
-"Abū Dāwūd (ʿAmr b. al-ʿĀṣ)"
+"Abū Dāwūd 334 (ʿAmr b. al-ʿĀṣ)"
 ]
 ],
 "Mit welchem Tayammum darf man beten?": [
@@ -6851,23 +6851,23 @@ window.FIQH_DALIL = {
 "Was sagte ʿUmar über den Markt?": [
 [
 "A",
-"ʿUmar (at-Tirmiḏī)",
+"ʿUmar (at-Tirmiḏī 487)",
 "„Auf unserem Markt soll nur verkaufen, wer die Religion (die Regeln des Kaufs) versteht.“",
 "“Let no one sell in our market except one who understands the religion (the rules of sale).”",
 579,
 0,
-"ʿUmar (at-Tirmidhī)"
+"ʿUmar (at-Tirmidhī 487)"
 ]
 ],
 "Welche Riba schaffte der Prophet ﷺ in der Abschiedspredigt zuerst ab?": [
 [
 "H",
-"Muslim (Ǧābir) – Abschiedspredigt",
+"Muslim 1218 (Ǧābir) – Abschiedspredigt",
 "„Die Riba der Ǧāhiliyya ist aufgehoben; die erste Riba, die ich aufhebe, ist unsere, die Riba von al-ʿAbbās b. ʿAbd al-Muṭṭalib.“",
 "“The ribā of the Jāhiliyya is abolished; the first ribā I abolish is ours, the ribā of al-ʿAbbās b. ʿAbd al-Muṭṭalib.”",
 580,
 0,
-"Muslim (Jābir) – Farewell Sermon"
+"Muslim 1218 (Jābir) – Farewell Sermon"
 ],
 [
 "Q",
@@ -6882,23 +6882,23 @@ window.FIQH_DALIL = {
 "Wie müssen Gold gegen Gold oder Weizen gegen Weizen getauscht werden?": [
 [
 "H",
-"Muslim (ʿUbāda b. aṣ-Ṣāmit)",
+"Muslim 1587 (ʿUbāda b. aṣ-Ṣāmit)",
 "„Gold gegen Gold, Silber gegen Silber, Weizen gegen Weizen … gleich gegen gleich, Hand in Hand; sind die Gattungen verschieden, verkauft, wie ihr wollt, wenn es Hand in Hand geschieht.“",
 "“Gold for gold, silver for silver, wheat for wheat … like for like, hand to hand; if the kinds differ, sell as you wish if it is hand to hand.”",
 581,
 0,
-"Muslim (ʿUbāda b. aṣ-Ṣāmit)"
+"Muslim 1587 (ʿUbāda b. aṣ-Ṣāmit)"
 ]
 ],
 "Was sollte Bilāl statt des Tauschs von zwei Maß schlechter gegen ein Maß guter Datteln tun?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Saʿīd)",
+"Buḫārī 2312, Muslim 1594 (Abū Saʿīd)",
 "„Oh, oh – das ist die Riba selbst! Tu das nicht; wenn du kaufen willst, verkaufe die Datteln in einem anderen Geschäft und kaufe dann damit.“",
 "“Oh, oh – that is ribā itself! Do not do it; if you want to buy, sell the dates in a separate sale and then buy with that.”",
 581,
 0,
-"Bukhārī and Muslim (Abū Saʿīd)"
+"Bukhārī 2312, Muslim 1594 (Abū Saʿīd)"
 ]
 ],
 "Welche Ware darf man nicht verkaufen?": [
@@ -6916,8 +6916,8 @@ window.FIQH_DALIL = {
 [
 "H",
 "Aḥmad, al-Ḥākim (Ibn ʿUmar)",
-"„Wer Lebensmittel vierzig Nächte hortet, von dem hat sich Allah losgesagt.“ Und: „Nur ein Sünder hortet“ (Muslim).",
-"“Whoever hoards food for forty nights, Allah is quit of him.” And: “Only a sinner hoards” (Muslim).",
+"„Wer Lebensmittel vierzig Nächte hortet, von dem hat sich Allah losgesagt.“ Und: „Nur ein Sünder hortet“ (Muslim 1605).",
+"“Whoever hoards food for forty nights, Allah is quit of him.” And: “Only a sinner hoards” (Muslim 1605).",
 583,
 0,
 "Aḥmad, al-Ḥākim (Ibn ʿUmar)"
@@ -6926,12 +6926,12 @@ window.FIQH_DALIL = {
 "Wie reagierte der Prophet ﷺ auf die Bitte, Preise festzusetzen?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Anas)",
+"Abū Dāwūd 3451, at-Tirmiḏī 1314 (Anas)",
 "„Allah ist es, der die Preise festsetzt, der zurückhält, ausbreitet und versorgt …“ Das Buch erlaubt Preisfestsetzung nur, wenn der Markt missbraucht wird.",
 "“It is Allah who fixes prices, who withholds, gives freely and provides …” The book permits price fixing only when the market is abused.",
 583,
 0,
-"Abū Dāwūd, at-Tirmidhī (Anas)"
+"Abū Dāwūd 3451, at-Tirmidhī 1314 (Anas)"
 ]
 ],
 "Bei welchen Gütern erlauben Abū Ḥanīfa und Abū Yūsuf den Weiterverkauf vor der Inbesitznahme?": [
@@ -6948,23 +6948,23 @@ window.FIQH_DALIL = {
 "Was ist „Talaqqī ar-rukbān“?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 2158, Muslim 1521 (Ibn ʿAbbās)",
 "„Fangt die Karawanen nicht ab, und der Städter verkaufe nicht für den Beduinen.“",
 "“Do not intercept the caravans, and let the townsman not sell for the bedouin.”",
 585,
 0,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 2158, Muslim 1521 (Ibn ʿAbbās)"
 ]
 ],
 "Setzt der Islam eine feste prozentuale Gewinngrenze?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Anas)",
+"Abū Dāwūd 3451, at-Tirmiḏī 1314 (Anas)",
 "„Allah ist es, der die Preise festsetzt …“ – der Islam kennt keine feste Gewinngrenze; der Markt wird durch das Verbot von Zins, Horten, Lüge und Betrug geschützt.",
 "“It is Allah who fixes prices …” – Islam has no fixed profit limit; the market is protected by the prohibition of interest, hoarding, lying and fraud.",
 586,
 0,
-"Abū Dāwūd, at-Tirmidhī (Anas)"
+"Abū Dāwūd 3451, at-Tirmidhī 1314 (Anas)"
 ]
 ],
 "Ab welchem Aufschlag über dem Marktpreis liegt bei Immobilien nach Nuṣair ibn Yaḥyā grobe Übervorteilung vor?": [
@@ -7012,12 +7012,12 @@ window.FIQH_DALIL = {
 "Wie nennt der Hadith das Hinauszögern der Schuld durch einen Zahlungsfähigen?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 2287, Muslim 1564 (Abū Hurayra)",
 "„Das Hinauszögern (der Schuld) durch den Reichen ist Unrecht.“",
 "“Delay (of payment) by a wealthy person is injustice.”",
 589,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 2287, Muslim 1564 (Abū Hurayra)"
 ],
 [
 "Q",
@@ -7032,12 +7032,12 @@ window.FIQH_DALIL = {
 "Was darf beim Salam NICHT die Ware sein?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 2240, Muslim 1604 (Ibn ʿAbbās)",
 "„Wer im Voraus kauft, soll es in bekanntem Maß, bekanntem Gewicht und für eine bekannte Frist tun.“ Geld gegen Geld auf Zeit wäre Riba.",
 "“Whoever pays in advance shall do so for a known measure, known weight and a known term.” Money for money over time would be ribā.",
 30,
 83,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 2240, Muslim 1604 (Ibn ʿAbbās)"
 ]
 ],
 "Womit vergleicht das Buch die Gebühr für eine Bankgarantie?": [
@@ -7087,12 +7087,12 @@ window.FIQH_DALIL = {
 "Was ist beim Devisentausch Bedingung?": [
 [
 "A",
-"ʿUmar (Buḫārī)",
+"ʿUmar (Buḫārī 2174)",
 "„Nein, bei Allah – entweder du gibst ihm sein Silber, oder du gibst ihm das Gold zurück … Trenne dich nicht von Ṭalḥa, bis du die Dirham hast.“ Dazu: „Gold gegen Silber ist Riba, außer Hand in Hand.“",
 "“No, by Allah – either you give him his silver or you return the gold … Do not part from Ṭalḥa until you have the dirhams.” Also: “Gold for silver is ribā except hand to hand.”",
 593,
 0,
-"ʿUmar (Bukhārī)"
+"ʿUmar (Bukhārī 2174)"
 ]
 ],
 "Woran band Abū Yūsuf das Kupfergeld (Fils)?": [
@@ -7140,12 +7140,12 @@ window.FIQH_DALIL = {
 "Wie viel vom Kopf muss hanafitisch beim Masḥ mindestens bestrichen werden?": [
 [
 "H",
-"Muslim, Ṭahāra (al-Muġīra b. Šuʿba)",
+"Muslim 274, Ṭahāra (al-Muġīra b. Šuʿba)",
 "„Der Prophet ﷺ nahm den Wuḍūʾ und strich über seine Stirnpartie (nāṣiya), über den Turban und über die Mests.“",
 "“The Prophet ﷺ made wuḍūʾ and wiped over the front of his head (nāṣiya), over his turban and over his khuffs.”",
 128,
 42,
-"Muslim, Ṭahāra (al-Mughīra b. Shuʿba)"
+"Muslim 274, Ṭahāra (al-Mughīra b. Shuʿba)"
 ],
 [
 "J",
@@ -7178,12 +7178,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Buḫārī und Muslim (ʿUmar)",
+"Buḫārī 1, Muslim 1907 (ʿUmar)",
 "Die anderen Schulen: „Die Taten sind nur gemäß den Absichten.“ Dazu Qiyās auf Gebet und Tayammum, bei denen die Niyya Pflicht ist.",
 "The other schools: “Deeds are only by intentions.” Plus qiyās on prayer and tayammum, where niyya is obligatory.",
 129,
 46,
-"Bukhārī and Muslim (ʿUmar)"
+"Bukhārī 1, Muslim 1907 (ʿUmar)"
 ]
 ],
 "Das Reiben (Dalk) der Glieder ist Pflicht bei …": [
@@ -7198,43 +7198,43 @@ window.FIQH_DALIL = {
 ],
 [
 "J",
-"Mehrheit",
+"Hanafiten, Schafiiten, Hanbaliten (gegen die Mālikiten)",
 "Das Reiben ist nur Sunnah: Der Vers befiehlt es nicht, und die Sunnah belegt es nicht eindeutig.",
 "Rubbing is only sunnah: the verse does not command it and the sunnah does not establish it clearly.",
 132,
 67,
-"majority"
+"Ḥanafīs, Shāfiʿīs, Ḥanbalīs (against the Mālikīs)"
 ]
 ],
 "Ab wann gilt das Waschen eines Pflichtglieds als Verschwendung (isrāf)?": [
 [
 "H",
-"Abū Dāwūd, an-Nasāʾī, Ibn Māja (ʿAmr b. Šuʿayb)",
+"Abū Dāwūd 135, an-Nasāʾī 140, Ibn Māja 422 (ʿAmr b. Šuʿayb)",
 "Nach dem dreimaligen Waschen: „Wer mehr als das tut, hat schlecht gehandelt, das Maß überschritten und Unrecht getan.“",
 "After washing three times: “Whoever does more than this has done wrong, transgressed and been unjust.”",
 131,
 0,
-"Abū Dāwūd, an-Nasāʾī, Ibn Māja (ʿAmr b. Shuʿayb)"
+"Abū Dāwūd 135, an-Nasāʾī 140, Ibn Māja 422 (ʿAmr b. Shuʿayb)"
 ],
 [
 "H",
-"Ibn Māja, Ṭahāra (Saʿd)",
+"Ibn Māja 425, Ṭahāra (Saʿd)",
 "Der Prophet ﷺ ermahnte Saʿd, der beim Wuḍūʾ Wasser verschwendete – auch wenn er an einem fließenden Fluss sei.",
 "The Prophet ﷺ warned Saʿd, who was wasting water during wuḍūʾ – even if he were at a flowing river.",
 137,
 0,
-"Ibn Māja, Ṭahāra (Saʿd)"
+"Ibn Māja 425, Ṭahāra (Saʿd)"
 ]
 ],
 "Man ist unsicher, ob man einen Wind gelassen hat. Was gilt?": [
 [
 "H",
-"Buḫārī und Muslim (ʿAbdullāh b. Zayd)",
+"Buḫārī 137, Muslim 361 (ʿAbdullāh b. Zayd)",
 "Über jemanden, der im Gebet meint, etwas zu spüren: „Er soll nicht aufhören, bis er ein Geräusch hört oder einen Geruch wahrnimmt.“",
 "About someone who thinks he feels something in prayer: “Let him not leave until he hears a sound or notices a smell.”",
 143,
 107,
-"Bukhārī and Muslim (ʿAbdullāh b. Zayd)"
+"Bukhārī 137, Muslim 361 (ʿAbdullāh b. Zayd)"
 ],
 [
 "R",
@@ -7278,12 +7278,12 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (ʿĀʾiša)",
+"Abū Dāwūd 179, at-Tirmiḏī 86 (ʿĀʾiša)",
 "„Der Prophet ﷺ küsste eine seiner Frauen und betete dann, ohne den Wuḍūʾ zu erneuern.“",
 "“The Prophet ﷺ kissed one of his wives and then prayed without renewing wuḍūʾ.”",
 140,
 98,
-"Abū Dāwūd, at-Tirmidhī (ʿĀʾisha)"
+"Abū Dāwūd 179, at-Tirmidhī 86 (ʿĀʾisha)"
 ],
 [
 "H",
@@ -7318,12 +7318,12 @@ window.FIQH_DALIL = {
 "Welche Schlafhaltung bricht den Wuḍūʾ?": [
 [
 "H",
-"Abū Dāwūd, Ibn Māja (ʿAlī)",
+"Abū Dāwūd 203, Ibn Māja 477 (ʿAlī)",
 "„Das Auge ist das Band des Afters; wer schläft, soll Wuḍūʾ nehmen.“",
 "“The eye is the tie of the anus; so whoever sleeps shall make wuḍūʾ.”",
 139,
 95,
-"Abū Dāwūd, Ibn Māja (ʿAlī)"
+"Abū Dāwūd 203, Ibn Māja 477 (ʿAlī)"
 ],
 [
 "J",
@@ -7338,12 +7338,12 @@ window.FIQH_DALIL = {
 "Bricht es nach den Hanafiten den Wuḍūʾ, das eigene Geschlechtsteil mit der Hand zu berühren?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī, an-Nasāʾī (Ṭalq b. ʿAlī)",
+"Abū Dāwūd 182, at-Tirmiḏī 85, an-Nasāʾī 165 (Ṭalq b. ʿAlī)",
 "Gefragt, ob das Berühren des Glieds Wuḍūʾ erfordert: „Es ist nur ein Teil von dir.“",
 "Asked whether touching the private part requires wuḍūʾ: “It is only a part of you.”",
 141,
 102,
-"Abū Dāwūd, at-Tirmidhī, an-Nasāʾī (Ṭalq b. ʿAlī)"
+"Abū Dāwūd 182, at-Tirmidhī 85, an-Nasāʾī 165 (Ṭalq b. ʿAlī)"
 ],
 [
 "A",
@@ -7356,23 +7356,23 @@ window.FIQH_DALIL = {
 ],
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Busra bint Ṣafwān)",
+"Abū Dāwūd 181, at-Tirmiḏī 82 (Busra bint Ṣafwān)",
 "Die anderen Schulen: „Wer sein Glied berührt, soll nicht beten, bis er Wuḍūʾ nimmt.“ Das Buch hält ihre Belege für stärker.",
 "The other schools: “Whoever touches his private part shall not pray until he makes wuḍūʾ.” The book considers their evidence stronger.",
 142,
 104,
-"Abū Dāwūd, at-Tirmidhī (Busra bint Ṣafwān)"
+"Abū Dāwūd 181, at-Tirmidhī 82 (Busra bint Ṣafwān)"
 ]
 ],
 "Warum ist es mekrūh, beim Fasten Mund und Nase übertrieben auszuspülen?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī, an-Nasāʾī (Laqīṭ b. Ṣabira)",
+"Abū Dāwūd 142, at-Tirmiḏī 788, an-Nasāʾī (Laqīṭ b. Ṣabira)",
 "„… und übertreibe beim Hochziehen des Wassers in die Nase, außer wenn du fastest.“",
 "“… and go deep when drawing water into the nose, unless you are fasting.”",
 0,
 0,
-"Abū Dāwūd, at-Tirmidhī, an-Nasāʾī (Laqīṭ b. Ṣabira)"
+"Abū Dāwūd 142, at-Tirmidhī 788, an-Nasāʾī (Laqīṭ b. Ṣabira)"
 ],
 [
 "J",
@@ -7449,21 +7449,21 @@ window.FIQH_DALIL = {
 "Wie lange darf ein Ansässiger (Muqīm) über die Mests streichen?": [
 [
 "H",
-"Muslim, Ṭahāra (ʿAlī)",
+"Muslim 276, Ṭahāra (ʿAlī)",
 "„Der Gesandte Allahs ﷺ legte die Frist für den Reisenden auf drei Tage und Nächte fest, für den Ansässigen auf einen Tag und eine Nacht.“",
 "“The Messenger of Allah ﷺ set three days and nights for the traveller and one day and night for the resident.”",
 147,
 118,
-"Muslim, Ṭahāra (ʿAlī)"
+"Muslim 276, Ṭahāra (ʿAlī)"
 ],
 [
 "H",
-"at-Tirmiḏī, an-Nasāʾī (Ṣafwān b. ʿAssāl)",
+"at-Tirmiḏī 96, an-Nasāʾī 127 (Ṣafwān b. ʿAssāl)",
 "Auf Reisen drei Tage, als Ansässige einen Tag und eine Nacht – nicht ausziehen außer wegen Janāba.",
 "Three days when travelling, one day and night when resident – not taking them off except for janāba.",
 144,
 110,
-"at-Tirmidhī, an-Nasāʾī (Ṣafwān b. ʿAssāl)"
+"at-Tirmidhī 96, an-Nasāʾī 127 (Ṣafwān b. ʿAssāl)"
 ]
 ],
 "Wie groß darf ein Loch im Mest höchstens sein, damit Masḥ noch gültig ist (hanafitisch)?": [
@@ -7480,12 +7480,12 @@ window.FIQH_DALIL = {
 "Wie wird über die Mests gestrichen?": [
 [
 "A",
-"ʿAlī (Abū Dāwūd)",
+"ʿAlī (Abū Dāwūd 162)",
 "„Wäre die Religion nach bloßer Meinung, wäre die Unterseite des Mests eher zu bestreichen als die Oberseite. Ich sah den Gesandten Allahs ﷺ über die Oberseite streichen.“",
 "“If religion were by opinion alone, the underside of the khuff would be more fitting to wipe than the top. I saw the Messenger of Allah ﷺ wipe the top.”",
 144,
 108,
-"ʿAlī (Abū Dāwūd)"
+"ʿAlī (Abū Dāwūd 162)"
 ],
 [
 "H",
@@ -7533,12 +7533,12 @@ window.FIQH_DALIL = {
 "Wie oft wird der Kopf beim Wuḍūʾ nach der Mehrheit bestrichen?": [
 [
 "H",
-"u. a. Buḫārī und Muslim (ʿAbdullāh b. Zayd)",
+"u. a. Buḫārī 185, Muslim 235 (ʿAbdullāh b. Zayd)",
 "Viele Hadithe beschreiben, dass der Prophet ﷺ die Glieder zwei- oder dreimal wusch, den Kopf aber einmal bestrich.",
 "Many hadiths describe the Prophet ﷺ washing the limbs two or three times but wiping the head once.",
 131,
 58,
-"e.g. Bukhārī and Muslim (ʿAbdullāh b. Zayd)"
+"e.g. Bukhārī 185, Muslim 235 (ʿAbdullāh b. Zayd)"
 ],
 [
 "A",
@@ -7564,23 +7564,23 @@ window.FIQH_DALIL = {
 "Wer den Wuḍūʾ vollständig nimmt und danach die Schahāda spricht, dem …": [
 [
 "H",
-"Muslim, Ṭahāra; Zusatz bei at-Tirmiḏī",
+"Muslim 234, Ṭahāra; Zusatz bei at-Tirmiḏī 55",
 "„Wer den Wuḍūʾ vollständig nimmt und dann sagt: Ich bezeuge, dass es keinen Gott gibt außer Allah … und dass Muḥammad Sein Diener und Gesandter ist – dem werden die acht Tore des Paradieses geöffnet.“",
 "“Whoever completes wuḍūʾ and then says: I bear witness that there is no god but Allah … and that Muḥammad is His servant and Messenger – the eight gates of Paradise are opened for him.”",
 134,
 75,
-"Muslim, Ṭahāra; addition in at-Tirmidhī"
+"Muslim 234, Ṭahāra; addition in at-Tirmidhī 55"
 ]
 ],
 "Welche Einstufung hat nach hanafitischer Lehre der Wuḍūʾ für den Ṭawāf?": [
 [
 "H",
-"at-Tirmiḏī, an-Nasāʾī (Ibn ʿAbbās)",
+"at-Tirmiḏī 960, an-Nasāʾī (Ibn ʿAbbās)",
 "„Der Ṭawāf um das Haus ist ein Gebet, nur dass Allah darin das Sprechen erlaubt hat.“ – darauf stützt die Mehrheit die Pflicht.",
 "“Ṭawāf around the House is a prayer, except that Allah has permitted speaking in it.” – the majority base the obligation on this.",
 137,
 81,
-"at-Tirmidhī, an-Nasāʾī (Ibn ʿAbbās)"
+"at-Tirmidhī 960, an-Nasāʾī (Ibn ʿAbbās)"
 ],
 [
 "J",
@@ -7650,12 +7650,12 @@ window.FIQH_DALIL = {
 "Darf man hanafitisch über dicke Wollsocken streichen?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (al-Muġīra b. Šuʿba)",
+"Abū Dāwūd 159, at-Tirmiḏī 99 (al-Muġīra b. Šuʿba)",
 "„Der Gesandte Allahs ﷺ nahm Wuḍūʾ und strich über seine beiden Socken und Sandalen.“",
 "“The Messenger of Allah ﷺ made wuḍūʾ and wiped over his socks and sandals.”",
 146,
 115,
-"Abū Dāwūd, at-Tirmidhī (al-Mughīra b. Shuʿba)"
+"Abū Dāwūd 159, at-Tirmidhī 99 (al-Mughīra b. Shuʿba)"
 ],
 [
 "J",
@@ -7670,21 +7670,21 @@ window.FIQH_DALIL = {
 "Welche Regel gilt für das Bestreichen eines Gipsverbandes (Ǧabīra)?": [
 [
 "H",
-"u. a. Ibn Māja (ʿAlī)",
+"u. a. Ibn Māja 657 (ʿAlī)",
 "„Mein Handgelenk war gebrochen. Ich fragte den Propheten ﷺ, und er befahl mir, über die Verbände zu streichen.“",
 "“My wrist was broken. I asked the Prophet ﷺ and he told me to wipe over the bandages.”",
 148,
 121,
-"e.g. Ibn Māja (ʿAlī)"
+"e.g. Ibn Māja 657 (ʿAlī)"
 ],
 [
 "H",
-"Abū Dāwūd (Ǧābir)",
+"Abū Dāwūd 336 (Ǧābir)",
 "Über einen Verletzten: „Es hätte ihm genügt, Tayammum zu machen, ein Tuch um die Wunde zu binden, darüber zu streichen und den Rest zu waschen.“",
 "About an injured man: “It would have sufficed him to make tayammum, bind a cloth over the wound, wipe over it and wash the rest.”",
 149,
 122,
-"Abū Dāwūd (Jābir)"
+"Abū Dāwūd 336 (Jābir)"
 ],
 [
 "R",
@@ -7752,56 +7752,56 @@ window.FIQH_DALIL = {
 "Was sagte Abū Bakr über die Zakāt-Verweigerer?": [
 [
 "A",
-"Abū Bakr (Buḫārī und Muslim)",
+"Abū Bakr (Buḫārī 1399, Muslim 20)",
 "„Bei Allah, ich werde jeden bekämpfen, der Gebet und Zakāt trennt, denn die Zakāt ist das Recht des Vermögens … selbst wenn sie mir eine junge Ziege verweigern, die sie dem Propheten ﷺ gaben.“",
 "“By Allah, I will fight whoever separates prayer and zakāt, for zakāt is the right of wealth … even if they withhold from me a young goat they used to give the Prophet ﷺ.”",
 450,
 18,
-"Abū Bakr (Bukhārī and Muslim)"
+"Abū Bakr (Bukhārī 1399, Muslim 20)"
 ]
 ],
 "Schulden Kinder hanafitisch Zakāt auf ihr Vermögen?": [
 [
 "H",
-"Hanafiten: Abū Dāwūd, at-Tirmiḏī (ʿAlī, ʿĀʾiša)",
+"Hanafiten: Abū Dāwūd 4403, at-Tirmiḏī 1423 (ʿAlī, ʿĀʾiša)",
 "„Das Schreibrohr ist erhoben vom Kind, bis es reif wird …“ – die Zakāt ist eine Ibāda, die Reife voraussetzt. Die drei Schulen: „Handelt mit dem Vermögen der Waisen, damit die Zakāt es nicht aufzehrt.“",
 "“The pen is lifted from the child until he matures …” – zakāt is an act of worship requiring maturity. The three schools: “Trade with the orphans' wealth so that zakāt does not consume it.”",
 451,
 22,
-"Ḥanafīs: Abū Dāwūd, at-Tirmidhī (ʿAlī, ʿĀʾisha)"
+"Ḥanafīs: Abū Dāwūd 4403, at-Tirmidhī 1423 (ʿAlī, ʿĀʾisha)"
 ]
 ],
 "Wie viel ist der Gold-Niṣāb nach dem šarʿī-Maß?": [
 [
 "H",
-"u. a. Abū Dāwūd (ʿAlī)",
+"u. a. Abū Dāwūd 1573 (ʿAlī)",
 "„Auf Gold ist nichts, bis es zwanzig Dinar (Miṯqāl) erreicht; dann ist ein halber Dinar fällig.“ 20 Miṯqāl sind nach dem šarʿī-Maß 80 g.",
 "“There is nothing on gold until it reaches twenty dinars (mithqāl); then half a dinar is due.” 20 mithqāl are 80 g by the sharʿī measure.",
 464,
 0,
-"e.g. Abū Dāwūd (ʿAlī)"
+"e.g. Abū Dāwūd 1573 (ʿAlī)"
 ]
 ],
 "Wie viel ist der Silber-Niṣāb nach dem šarʿī-Maß?": [
 [
 "H",
-"u. a. Abū Dāwūd, at-Tirmiḏī (ʿAlī)",
+"u. a. Abū Dāwūd 1572, at-Tirmiḏī 620 (ʿAlī)",
 "„Gebt von je vierzig Dirham einen Dirham; auf 199 Dirham ist keine Zakāt; erreicht das Silber 200 Dirham, sind fünf Dirham fällig.“",
 "“Give one dirham out of every forty; on 199 dirhams there is no zakāt; when silver reaches 200 dirhams, five dirhams are due.”",
 465,
 58,
-"e.g. Abū Dāwūd, at-Tirmidhī (ʿAlī)"
+"e.g. Abū Dāwūd 1572, at-Tirmidhī 620 (ʿAlī)"
 ]
 ],
 "Ist das eigene Auto zakātpflichtig?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1464, Muslim 982 (Abū Hurayra)",
 "„Auf den Muslim ist für sein Pferd und seinen Sklaven keine Zakāt.“ Das eigene Auto gehört wie früher das Reittier zum Grundbedarf.",
 "“There is no zakāt on a Muslim for his horse or his slave.” One's own car belongs to basic needs, like the mount formerly.",
 452,
 24,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1464, Muslim 982 (Abū Hurayra)"
 ]
 ],
 "Was ist „Ḍimār“-Vermögen?": [
@@ -7873,12 +7873,12 @@ window.FIQH_DALIL = {
 "Darf man hanafitisch die Zakāt für mehrere Jahre im Voraus zahlen?": [
 [
 "H",
-"u. a. Abū Dāwūd, at-Tirmiḏī (ʿAlī)",
+"u. a. Abū Dāwūd 1624, at-Tirmiḏī 678 (ʿAlī)",
 "Al-ʿAbbās fragte, ob er die Zakāt vor Ablauf des Jahres zahlen dürfe, und der Prophet ﷺ erlaubte es.",
 "Al-ʿAbbās asked whether he could pay zakāt before the year was out, and the Prophet ﷺ allowed it.",
 461,
 0,
-"e.g. Abū Dāwūd, at-Tirmidhī (ʿAlī)"
+"e.g. Abū Dāwūd 1624, at-Tirmidhī 678 (ʿAlī)"
 ]
 ],
 "Seit wann zahlen Muslime die Zakāt der verborgenen Vermögen selbst?": [
@@ -7917,12 +7917,12 @@ window.FIQH_DALIL = {
 "Ist getragener Goldschmuck hanafitisch zakātpflichtig?": [
 [
 "H",
-"Abū Dāwūd, an-Nasāʾī (ʿAmr b. Šuʿayb)",
+"Abū Dāwūd 1563, an-Nasāʾī 2479 (ʿAmr b. Šuʿayb)",
 "Einer Frau, deren Tochter zwei Goldarmreifen trug: „Gibst du ihre Zakāt? … Möchtest du, dass Allah dir dafür am Tag der Auferstehung zwei Armreifen aus Feuer anlegt?“",
 "To a woman whose daughter wore two gold bracelets: “Do you pay their zakāt? … Would you like Allah to put two bracelets of fire on you for them on the Day of Resurrection?”",
 467,
 0,
-"Abū Dāwūd, an-Nasāʾī (ʿAmr b. Shuʿayb)"
+"Abū Dāwūd 1563, an-Nasāʾī 2479 (ʿAmr b. Shuʿayb)"
 ]
 ],
 "Welchen Niṣāb hält das Buch für Papiergeld für angemessener?": [
@@ -7950,23 +7950,23 @@ window.FIQH_DALIL = {
 "Welche Bodenschätze tragen hanafitisch das Fünftel?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1499, Muslim 1710 (Abū Hurayra)",
 "„Auf den Rikāz ist das Fünftel.“ Die Hanafiten zählen dazu schmelzbare Metalle; Erdöl und Diamanten fallen erst als Handelsware unter die Zakāt.",
 "“On rikāz there is a fifth.” The Ḥanafīs include meltable metals; oil and diamonds only fall under zakāt as trade goods.",
 473,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1499, Muslim 1710 (Abū Hurayra)"
 ]
 ],
 "Ein Schatz mit Kreuz- oder Götzenbild wird gefunden. Was gilt?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1499, Muslim 1710 (Abū Hurayra)",
 "„Auf den Rikāz ist das Fünftel.“ Ein Schatz mit Kreuz oder Götzenbild stammt aus der Zeit vor dem Islam; ein Schatz mit islamischen Zeichen ist Fundsache.",
 "“On rikāz there is a fifth.” A treasure with a cross or idol dates from before Islam; one with Islamic marks is lost property.",
 475,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1499, Muslim 1710 (Abū Hurayra)"
 ]
 ],
 "Wird eine Sache durch bloße spätere Absicht zur Handelsware?": [
@@ -8016,12 +8016,12 @@ window.FIQH_DALIL = {
 "Wie hoch ist der ʿUšr bei Regenbewässerung?": [
 [
 "H",
-"Buḫārī (Ibn ʿUmar)",
+"Buḫārī 1483 (Ibn ʿUmar)",
 "„Auf das, was Himmel und Quellen bewässern, ist das Zehntel; auf das, was man mit Mühe bewässert, das halbe Zehntel.“",
 "“On what is watered by the sky and springs a tenth; on what is irrigated with effort half a tenth.”",
 456,
 0,
-"Bukhārī (Ibn ʿUmar)"
+"Bukhārī 1483 (Ibn ʿUmar)"
 ]
 ],
 "Werden Saat- und Arbeitskosten vor dem ʿUšr abgezogen?": [
@@ -8060,12 +8060,12 @@ window.FIQH_DALIL = {
 "Auf welche Ernte erheben die beiden Schüler keinen ʿUšr?": [
 [
 "H",
-"u. a. at-Tirmiḏī",
-"„Auf Gemüse ist keine Zakāt“ und „auf weniger als fünf Wasq ist keine Ṣadaqa“ (Buḫārī, Muslim) – so die beiden Schüler; Abū Ḥanīfa nimmt „auf das, was der Himmel bewässert, das Zehntel“ allgemein.",
-"“There is no zakāt on vegetables” and “there is no ṣadaqa on less than five wasq” (Bukhārī, Muslim) – so the two students; Abū Ḥanīfa takes “on what the sky waters a tenth” generally.",
+"u. a. at-Tirmiḏī 638",
+"„Auf Gemüse ist keine Zakāt“ und „auf weniger als fünf Wasq ist keine Ṣadaqa“ (Buḫārī 1447, Muslim 979) – so die beiden Schüler; Abū Ḥanīfa nimmt „auf das, was der Himmel bewässert, das Zehntel“ allgemein.",
+"“There is no zakāt on vegetables” and “there is no ṣadaqa on less than five wasq” (Bukhārī 1447, Muslim 979) – so the two students; Abū Ḥanīfa takes “on what the sky waters a tenth” generally.",
 452,
 0,
-"e.g. at-Tirmidhī"
+"e.g. at-Tirmidhī 638"
 ]
 ],
 "Wer zahlt den ʿUšr bei Pachtland nach der späteren hanafitischen Fatwa?": [
@@ -8082,45 +8082,45 @@ window.FIQH_DALIL = {
 "Wie viele Schafe schuldet, wer 120 Schafe auf freier Weide hat?": [
 [
 "H",
-"Buḫārī (Brief Abū Bakrs, Anas)",
+"Buḫārī 1454 (Brief Abū Bakrs, Anas)",
 "„Bei weidenden Schafen: von 40 bis 120 ein Schaf; über 120 bis 200 zwei …“",
 "“For grazing sheep: from 40 to 120 one sheep; over 120 up to 200 two …”",
 493,
 0,
-"Bukhārī (letter of Abū Bakr, Anas)"
+"Bukhārī 1454 (letter of Abū Bakr, Anas)"
 ]
 ],
 "Sind Pferde nach der hanafitischen Fatwa zakātpflichtig?": [
 [
 "H",
-"Buḫārī und Muslim (Abū Hurayra)",
+"Buḫārī 1464, Muslim 982 (Abū Hurayra)",
 "„Auf den Muslim ist für sein Pferd keine Zakāt.“ – so die beiden Schüler; Abū Ḥanīfa hielt weidende Zuchtpferde für zakātpflichtig.",
 "“There is no zakāt on a Muslim for his horse.” – so the two students; Abū Ḥanīfa held grazing breeding horses subject to zakāt.",
 497,
 0,
-"Bukhārī and Muslim (Abū Hurayra)"
+"Bukhārī 1464, Muslim 982 (Abū Hurayra)"
 ]
 ],
 "Was ist ab 30 Rindern auf freier Weide zu geben?": [
 [
 "H",
-"Abū Dāwūd, at-Tirmiḏī (Muʿāḏ)",
+"Abū Dāwūd 1576, at-Tirmiḏī 623 (Muʿāḏ)",
 "„Er befahl mir, von je dreißig Rindern ein zweijähriges Kalb (tabīʿ) zu nehmen und von vierzig eine Dreijährige (musinna).“",
 "“He ordered me to take from every thirty cattle a two-year-old calf (tabīʿ) and from forty a three-year-old (musinna).”",
 495,
 128,
-"Abū Dāwūd, at-Tirmidhī (Muʿādh)"
+"Abū Dāwūd 1576, at-Tirmidhī 623 (Muʿādh)"
 ]
 ],
 "Was schuldet, wer fünf Kamele auf freier Weide hat?": [
 [
 "H",
-"Buḫārī (Brief Abū Bakrs, Anas)",
+"Buḫārī 1454 (Brief Abū Bakrs, Anas)",
 "„Bei unter 25 Kamelen: für je fünf ein Schaf; ab 25 eine Bint Maḫāḍ.“",
 "“For fewer than 25 camels: one sheep for every five; from 25 a bint makhāḍ.”",
 495,
 0,
-"Bukhārī (letter of Abū Bakr, Anas)"
+"Bukhārī 1454 (letter of Abū Bakr, Anas)"
 ]
 ],
 "Ist im Stall gefüttertes Vieh (ʿAlūfa) zakātpflichtig?": [
@@ -8255,8 +8255,8 @@ window.FIQH_DALIL = {
 [
 "J",
 "Hanafiten",
-"Maßgeblich ist, dass er keinen Niṣāb besitzt; die Schafiiten stützen sich auf „Die Ṣadaqa ist nicht erlaubt für den Reichen und den kräftigen Gesunden“ (Abū Dāwūd).",
-"What counts is that he owns no niṣāb; the Shāfiʿīs rely on “Ṣadaqa is not permitted for the rich or the strong and healthy” (Abū Dāwūd).",
+"Maßgeblich ist, dass er keinen Niṣāb besitzt; die Schafiiten stützen sich auf „Die Ṣadaqa ist nicht erlaubt für den Reichen und den kräftigen Gesunden“ (Abū Dāwūd 1634).",
+"What counts is that he owns no niṣāb; the Shāfiʿīs rely on “Ṣadaqa is not permitted for the rich or the strong and healthy” (Abū Dāwūd 1634).",
 508,
 0,
 "Ḥanafīs"
@@ -8265,23 +8265,23 @@ window.FIQH_DALIL = {
 "Darf man freiwillige Ṣadaqa an arme Ḏimmīs geben (Abū Ḥanīfa, Muḥammad)?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿAbbās)",
+"Buḫārī 1395, Muslim 19 (Ibn ʿAbbās)",
 "An Muʿāḏ: „… nimm sie von ihren Reichen und gib sie ihren Armen“ – Zakāt nur an Muslime; freiwillige Ṣadaqa darf auch an Nichtmuslime gehen.",
 "To Muʿādh: “… take it from their rich and give it to their poor” – zakāt only to Muslims; voluntary charity may also go to non-Muslims.",
 509,
 157,
-"Bukhārī and Muslim (Ibn ʿAbbās)"
+"Bukhārī 1395, Muslim 19 (Ibn ʿAbbās)"
 ]
 ],
 "Warum dürfen die Banū Hāšim keine Zakāt erhalten?": [
 [
 "H",
-"Muslim (ʿAbd al-Muṭṭalib b. Rabīʿa)",
+"Muslim 1072 (ʿAbd al-Muṭṭalib b. Rabīʿa)",
 "„Die Ṣadaqāt sind nur der Schmutz der Menschen; sie sind Muḥammad und der Familie Muḥammads nicht erlaubt.“",
 "“Ṣadaqāt are only the dirt of people; they are not permitted for Muḥammad or the family of Muḥammad.”",
 509,
 0,
-"Muslim (ʿAbd al-Muṭṭalib b. Rabīʿa)"
+"Muslim 1072 (ʿAbd al-Muṭṭalib b. Rabīʿa)"
 ]
 ],
 "Wem darf man seine Zakāt NICHT geben?": [
@@ -8298,12 +8298,12 @@ window.FIQH_DALIL = {
 "Darf eine Frau ihrem armen Ehemann Zakāt geben (nach den beiden Schülern)?": [
 [
 "H",
-"Buḫārī (Zainab, Frau Ibn Masʿūds)",
+"Buḫārī 1462 (Zainab, Frau Ibn Masʿūds)",
 "„Dein Mann und dein Kind haben das meiste Recht auf deine Ṣadaqa.“",
 "“Your husband and your child have the most right to your charity.”",
 510,
 0,
-"Bukhārī (Zainab, wife of Ibn Masʿūd)"
+"Bukhārī 1462 (Zainab, wife of Ibn Masʿūd)"
 ]
 ],
 "Darf man dem kleinen Kind eines Reichen Zakāt geben?": [
@@ -8320,20 +8320,20 @@ window.FIQH_DALIL = {
 "Wann wird die Ṣadaqat al-Fiṭr hanafitisch fällig?": [
 [
 "H",
-"Buḫārī und Muslim (Ibn ʿUmar)",
+"Buḫārī 1509, Muslim 986 (Ibn ʿUmar)",
 "„Er befahl, sie zu entrichten, bevor die Leute zum Gebet hinausgehen.“ Fällig wird sie am Morgen des Festtages.",
 "“He ordered that it be paid before people go out to the prayer.” It becomes due on the morning of the ʿīd.",
 511,
 0,
-"Bukhārī and Muslim (Ibn ʿUmar)"
+"Bukhārī 1509, Muslim 986 (Ibn ʿUmar)"
 ]
 ],
 "Wie viel Weizen beträgt die Fiṭra hanafitisch?": [
 [
 "A",
 "Muʿāwiya u. a.; Abū Saʿīd",
-"Die Hanafiten folgen Gefährten, die einen halben Ṣāʿ Weizen einem Ṣāʿ Datteln gleichsetzten; Abū Saʿīd gab weiter einen Ṣāʿ (Buḫārī, Muslim).",
-"The Ḥanafīs follow Companions who equated half a ṣāʿ of wheat with a ṣāʿ of dates; Abū Saʿīd kept giving a ṣāʿ (Bukhārī, Muslim).",
+"Die Hanafiten folgen Gefährten, die einen halben Ṣāʿ Weizen einem Ṣāʿ Datteln gleichsetzten; Abū Saʿīd gab weiter einen Ṣāʿ (Buḫārī 1508, Muslim 985).",
+"The Ḥanafīs follow Companions who equated half a ṣāʿ of wheat with a ṣāʿ of dates; Abū Saʿīd kept giving a ṣāʿ (Bukhārī 1508, Muslim 985).",
 512,
 0,
 "Muʿāwiya u. a.; Abū Saʿīd"
@@ -8364,12 +8364,12 @@ window.FIQH_DALIL = {
 "Warum legt der Hadith die Fiṭra in Lebensmitteln statt in einem festen Geldbetrag fest?": [
 [
 "H",
-"Abū Dāwūd (Ibn ʿAbbās)",
+"Abū Dāwūd 1609 (Ibn ʿAbbās)",
 "„… als Reinigung für den Fastenden … und als Speise für die Armen.“ Lebensmittel decken den Tagesbedarf trotz Preisschwankungen; der Wert darf gegeben werden.",
 "“… as purification for the one who fasted … and as food for the poor.” Food covers daily needs despite price changes; the value may be given.",
 514,
 0,
-"Abū Dāwūd (Ibn ʿAbbās)"
+"Abū Dāwūd 1609 (Ibn ʿAbbās)"
 ]
 ],
 "Wie viel nahm ʿUmar von den christlichen Banū Taġlib?": [
