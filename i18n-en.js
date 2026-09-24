@@ -446,6 +446,7 @@ window.I18N_EN = {
  "Pronomen und Fragewörter": "Pronouns and question words",
  "Zahl, Plural und besondere Nomen": "Number, plural and special nouns",
  "Weitere Begriffe": "Other terms",
+ "Begriffe in dieser Frage": "Terms in this question",
  "Buch": "Book",
  "Madina-Buch {n}": "Madina Book {n}",
  "Madina-Buch 2 ist noch gesperrt": "Madina Book 2 is still locked",
