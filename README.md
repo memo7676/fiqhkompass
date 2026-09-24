@@ -32,7 +32,7 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - Punkte mit Zeit- und Serienbonus, 50:50-Joker
   - Bestwerte und Auswertung mit Links zum Nachlesen
 - **Fehlerordner** (`mistakes.js`, erreichbar über die Startseite, Lernen, Arabisch und das Quiz): jede falsch beantwortete Frage aus Quiz, Wettbewerb, Lernen und Arabisch, sortiert nach Fach und Thema bzw. Lektion, mit richtiger Antwort und Erklärung.
-  - eine Frage bleibt drin, bis sie zweimal hintereinander richtig beantwortet wurde (gleicher Lernstand wie im Lernmodus); richtige Quiz-Antworten zählen nur für Fragen, die schon im Ordner sind
+  - eine Frage bleibt drin, bis sie einmal richtig beantwortet wurde (gleicher Lernstand wie im Lernmodus; ältere Einträge im Zustand „fast“ gehen mit der nächsten richtigen Antwort ebenfalls raus); richtige Quiz-Antworten zählen nur für Fragen, die schon im Ordner sind
   - wiederholen: alles (Runden mit 10 Fragen), je Fach oder je Thema
   - am Ende jeder Sitzung – Quiz, Wettbewerb, Lernrunde, Arabisch-Runde – gibt es „Fehler wiederholen“ nur mit den Fehlern dieser Sitzung
 - **Konten** (Registrierung mit E-Mail und Passwort, E-Mail-Bestätigung, Passwort vergessen, Konto löschen):

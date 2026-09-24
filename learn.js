@@ -96,7 +96,7 @@
       next = -1;
       note = l === 2 ? T("Schon gelernt, aber vergessen – kommt wieder.") : T("Kommt wieder – die richtige Antwort ist markiert.");
     } else if (l === 0) { next = 2; note = T("✓ Gelernt"); }
-    else if (l === -1) { next = 1; note = T("Gut! Noch einmal richtig, dann ist sie gelernt."); }
+    else if (l === -1) { next = 2; note = T("✓ Richtig – raus aus dem Fehlerordner"); }   // one right answer is enough
     else { next = 2; note = l === 1 ? T("✓ Jetzt gelernt") : T("✓ Sitzt"); }
     prog[id] = [next, Date.now()];
     persist();
