@@ -370,8 +370,11 @@
     }
     return initialsCache[k];
   }
+  /* Sisters are shown only to sisters: brothers and guests see no sister in any ranking. */
+  function seesSisters() { return !!(mine && mine.g === "f"); }
   function allIds() {
     var ids = Object.keys(players);
+    if (!seesSisters()) ids = ids.filter(function (id) { return players[id].g !== "f"; });
     if (me && ids.indexOf(me) === -1 && mine) ids.push(me);
     return ids;
   }
@@ -522,13 +525,16 @@
   /* ---------- top 10 worldwide ---------- */
   function renderTop(cal) {
     $all("[data-top]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-top") === topFilter ? "true" : "false"); });
-    $all("[data-gender]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-gender") === genderFilter ? "true" : "false"); });
+    /* the brothers/sisters filter only for sisters; everyone else sees brothers only anyway */
+    var gf = seesSisters() ? genderFilter : "all";
+    $("#gender-filter").hidden = !seesSisters();
+    $all("[data-gender]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-gender") === gf ? "true" : "false"); });
     $("#top-title").textContent = LG().name + " · " + (topFilter === "season" ? T("Saison {n} – die besten 10", { n: cal.season }) : T("alle Punkte seit Saison 1"));
     var rows = allIds().map(function (id) {
       var p = playerFor(id);
       var s = topFilter === "season" ? seasonSum(p, cal.season) : { sum: compTotal(p, LG().sfx), weeks: compKeys(p, LG().sfx).length };
       return { id: id, p: p, s: s };
-    }).filter(function (r) { return r.s.weeks > 0 && (genderFilter === "all" || r.p.g === genderFilter); });
+    }).filter(function (r) { return r.s.weeks > 0 && (gf === "all" || r.p.g === gf); });
     rows.sort(function (a, b) { return b.s.sum - a.s.sum; });
     var list = $("#top10");
     list.innerHTML = "";
