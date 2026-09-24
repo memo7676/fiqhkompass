@@ -1,5 +1,5 @@
 /* Fehlerordner: every question answered wrong – in Lernen, Arabisch, Quiz or Wettbewerb –
-   stays here until it sits again (right twice in a row, see learn.js).
+   stays here until it is answered right once (see learn.js).
    It reads the shared progress of learn.js: level -1 (falsch) and 1 (fast) are "in the folder".
    practice(list, label, back) runs one learn-style round; afterwards the folder shows the result
    and a way back to where it was started (Quiz, Lernen, Arabisch, …). */
@@ -156,7 +156,7 @@
 
     var body = $("#mf-body");
     if (!all.length) {
-      body.innerHTML = '<div class="panel mf-empty"><p><b>' + T("Dein Fehlerordner ist leer.") + "</b></p><p>" + T("Jede Frage, die du im Quiz, im Wettbewerb, beim Lernen oder in Arabisch falsch beantwortest, landet hier – bis du sie zweimal hintereinander richtig hast.") + "</p></div>";
+      body.innerHTML = '<div class="panel mf-empty"><p><b>' + T("Dein Fehlerordner ist leer.") + "</b></p><p>" + T("Jede Frage, die du im Quiz, im Wettbewerb, beim Lernen oder in Arabisch falsch beantwortest, landet hier – bis du sie richtig beantwortest.") + "</p></div>";
     } else {
       body.innerHTML = shown.map(function (s) {
         var n = openOf(s).length;
