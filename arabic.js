@@ -226,28 +226,48 @@
   function locked() { return state.book === 2 && !book2Open(); }
   var lastRound = null;
 
-  function start(list, label, info, size) {
+  /* from: where list comes from, so a round can be set up again after the language switch */
+  function start(list, label, info, size, from) {
     var r = roundFor(list, size);
     if (!r.qs.length) return;
-    var before = stats(list), correct = 0;
-    APP.startQuiz({
+    APP.startQuiz(roundPreset(list, r.qs, r.review, label, info, size, from, stats(list)));
+  }
+  function listFrom(from, info) {
+    if (info && info.lesson && SETS[info.lesson]) return info.part ? SETS[info.lesson][info.part] : lessonQs(info.lesson);
+    if (from === "vocab") return bookQs().filter(function (q) { return /^ar-[vdp]-/.test(q._lid); });
+    if (from === "irab2") return IRAB2;
+    if (from === "irab") return ALL_IRAB;
+    return null;
+  }
+  function roundPreset(list, qs, review, label, info, size, from, before) {
+    var correct = 0;
+    return {
       learn: true,
-      questions: r.qs,
-      label: r.review ? label + " " + T("(Wiederholung)") : label,
+      questions: qs,
+      label: review ? label + " " + T("(Wiederholung)") : label,
+      resume: { kind: "ar-round", args: { review: review, info: info, size: size, from: from, before: before } },
       onAnswer: function (q, ok) { if (ok) correct++; return L.recordId(q._lid, ok); },
       onFinish: function (p) {
         lastRound = { label: label, info: info, answered: p.answered, correct: correct, before: before, after: stats(list), list: list, size: size, wrong: p.wrong || [] };
         L.sync();
       },
       onLeave: function () { APP.showView("arabisch"); render(); window.scrollTo(0, 0); }
-    });
+    };
+  }
+  APP.onResume("ar-round", function (a, qs) {
+    var info = a.info || {}, l = info.lesson && BY_ID[info.lesson];
+    var label = l ? lessonLabel(l, info.part) : a.from === "vocab" ? T("Vokabeltrainer") : a.from ? T("Iʿrāb-Training") : T("Neue Iʿrāb-Sätze");
+    return roundPreset(listFrom(a.from, info) || qs, qs, a.review, label, info, a.size, a.from, a.before);
+  });
+  function lessonLabel(l, part) {
+    var names = { vocab: T("Vokabeln"), gram: T("Grammatik"), irab: "Iʿrāb" };
+    return (bookOf(l) === 2 ? T("Buch 2") + " · " : "") + T("Lektion") + " " + l.n + (part ? " · " + names[part] : "");
   }
   function startLesson(id, part) {
     var l = BY_ID[id], s = SETS[id];
     if (bookOf(l) === 2 && !book2Open()) return;
     var list = part ? s[part] : lessonQs(id);
-    var names = { vocab: T("Vokabeln"), gram: T("Grammatik"), irab: "Iʿrāb" };
-    start(list, (bookOf(l) === 2 ? T("Buch 2") + " · " : "") + T("Lektion") + " " + l.n + (part ? " · " + names[part] : ""), { lesson: id, part: part });
+    start(list, lessonLabel(l, part), { lesson: id, part: part });
   }
   function nextLesson() {
     var ls = lessons();
@@ -480,20 +500,26 @@
     }
     var vt = $("[data-ar-vocab-train]", body);
     if (vt) vt.addEventListener("click", function () {
-      start(bookQs().filter(function (q) { return /^ar-[vdp]-/.test(q._lid); }), T("Vokabeltrainer"), {});
+      start(listFrom("vocab"), T("Vokabeltrainer"), {}, undefined, "vocab");
     });
     var it = $("[data-ar-irab-train]", body);
     if (it) it.addEventListener("click", function () {
-      if (state.book === 2) { start(IRAB2, T("Iʿrāb-Training"), {}); return; }
+      if (state.book === 2) { start(IRAB2, T("Iʿrāb-Training"), {}, undefined, "irab2"); return; }
       var fresh = gen.fresh ? genBatch(gen.n) : null;
       gen.fresh = 0;
-      start(fresh && fresh.some(function (q) { return lv(q) !== 2; }) ? fresh : ALL_IRAB, fresh ? T("Neue Iʿrāb-Sätze") : T("Iʿrāb-Training"), {});
+      var useFresh = fresh && fresh.some(function (q) { return lv(q) !== 2; });
+      start(useFresh ? fresh : ALL_IRAB, fresh ? T("Neue Iʿrāb-Sätze") : T("Iʿrāb-Training"), {}, undefined, useFresh ? "" : "irab");
     });
     var ex = $("[data-ar-irab-exam]", body);
     if (ex) ex.addEventListener("click", function () {
-      var pool = irabList(), qs = APP.shuffle(pool.slice()).slice(0, 20), correct = 0;
-      APP.startQuiz({
-        learn: true, questions: qs, label: T("Iʿrāb-Prüfung"),
+      var pool = irabList(), qs = APP.shuffle(pool.slice()).slice(0, 20);
+      APP.startQuiz(examPreset(qs));
+    });
+  }
+  function examPreset(qs) {
+    var pool = irabList(), correct = 0;
+    return {
+        learn: true, questions: qs, label: T("Iʿrāb-Prüfung"), resume: { kind: "ar-exam" },
         onAnswer: function (q, ok) { if (ok) correct++; return L.recordId(q._lid, ok); },
         onFinish: function (p) {
           var s = stats(pool);
@@ -501,9 +527,9 @@
           L.sync();
         },
         onLeave: function () { APP.showView("arabisch"); render(); window.scrollTo(0, 0); }
-      });
-    });
+    };
   }
+  APP.onResume("ar-exam", function (a, qs) { return examPreset(qs); });
   function scrollToPane() {
     var el = $("#ar-tabs");
     if (el && el.getBoundingClientRect().top < 0) el.scrollIntoView({ block: "start" });

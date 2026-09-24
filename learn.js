@@ -127,12 +127,17 @@
     } else return;
     var r = roundFor(list);
     if (!r.qs.length) return;
-    var before = kind === "topic" ? topicStats(topicId) : stats(allQuestions());
+    APP.startQuiz(roundPreset(kind, topicId, r.qs, r.review, kind === "topic" ? topicStats(topicId) : stats(allQuestions())));
+  }
+  function roundPreset(kind, topicId, qs, review, before) {
+    var t = topicId && APP.TOPIC_BY_ID[topicId];
+    var label = kind === "topic" ? T("Lernen") + " · " + (t ? t.title : "") : T("Fehler wiederholen");
     var correct = 0;
-    APP.startQuiz({
+    return {
       learn: true,
-      questions: r.qs,
-      label: r.review ? label + " " + T("(Wiederholung)") : label,
+      questions: qs,
+      label: review ? label + " " + T("(Wiederholung)") : label,
+      resume: { kind: "learn", args: { kind: kind, topicId: topicId, review: review, before: before } },
       onAnswer: function (q, ok) { if (ok) correct++; return record(q, ok); },
       onFinish: function (p) {
         var after = kind === "topic" ? topicStats(topicId) : stats(allQuestions());
@@ -145,8 +150,9 @@
         render();
         window.scrollTo(0, 0);
       }
-    });
+    };
   }
+  APP.onResume("learn", function (a, qs) { return roundPreset(a.kind, a.topicId, qs, a.review, a.before); });
   function nextTopic() {
     var ids = [];
     APP.GROUPS.forEach(function (g) { g.topics.forEach(function (t) { ids.push(t.id); }); });

@@ -74,6 +74,7 @@
     sel.title = LANGS.filter(function (l) { return l[0] === lang; })[0][1];
     sel.addEventListener("change", function () {
       try { localStorage.setItem("fiqh:lang", sel.value); } catch (e) {}
+      try { window.dispatchEvent(new Event("fiqh:beforelang")); } catch (e) {}   // app.js keeps a running round
       location.reload();
     });
   }

@@ -256,33 +256,37 @@
     // The attempt is recorded before the first question: one try per week.
     save().then(function () {
       btn.disabled = false;
-      var counted = 0;
-      APP.startQuiz({
-        questions: weeklyQuestions(cal),
-        rnd: seeded("fiqh-kompass:options:" + cal.key),
-        label: T("Wettbewerb") + " · " + T(cal.theme.name),
-        onProgress: function (p) {
-          entry.score = p.score; entry.correct = p.correct; entry.answered = p.answered;
-          save().catch(function () {});
-        },
-        onFinish: function (p) {
-          if (entry.done) return;
-          entry.score = p.score; entry.correct = p.correct; entry.answered = p.answered; entry.done = true;
-          if (!counted) { counted = 1; addGame(p.score); }
-          save().catch(function () {});
-          render();
-        },
-        onLeave: function () {
-          APP.renderSetup();
-          APP.showView("wettbewerb");
-          window.scrollTo(0, 0);
-        }
-      });
+      APP.startQuiz(fiqhCompPreset(cal, entry));
     }, function () {
       delete mine.comp[cal.key];
       btn.disabled = false;
       render();
     });
+  }
+  function fiqhCompPreset(cal, entry) {
+    var counted = 0;
+    return {
+      questions: weeklyQuestions(cal),
+      rnd: seeded("fiqh-kompass:options:" + cal.key),
+      label: T("Wettbewerb") + " · " + T(cal.theme.name),
+      resume: { kind: "comp-fiqh", args: { key: cal.key } },
+      onProgress: function (p) {
+        entry.score = p.score; entry.correct = p.correct; entry.answered = p.answered;
+        save().catch(function () {});
+      },
+      onFinish: function (p) {
+        if (entry.done) return;
+        entry.score = p.score; entry.correct = p.correct; entry.answered = p.answered; entry.done = true;
+        if (!counted) { counted = 1; addGame(p.score); }
+        save().catch(function () {});
+        render();
+      },
+      onLeave: function () {
+        APP.renderSetup();
+        APP.showView("wettbewerb");
+        window.scrollTo(0, 0);
+      }
+    };
   }
   $("#comp-start").addEventListener("click", startCompetition);
 
@@ -296,18 +300,28 @@
     btn.disabled = true;
     $("#comp-error").hidden = true;
     var entry = { score: 0, correct: 0, answered: 0, done: false, at: new Date().toISOString() };
-    var quiz = { score: 0, correct: 0, answered: 0 }, sarf = { score: 0, correct: 0, answered: 0 };
+    mine.comp[key] = entry;
+    save().then(function () {
+      btn.disabled = false;
+      APP.startQuiz(arabicCompPreset(cal, week, entry, { score: 0, correct: 0, answered: 0 }));
+    }, function () {
+      delete mine.comp[key];
+      btn.disabled = false;
+      render();
+    });
+  }
+  /* quiz: points of the question part so far (0 at the start, the saved state after the language switch) */
+  function arabicCompPreset(cal, week, entry, quiz) {
+    var sarf = { score: 0, correct: 0, answered: 0 };
     function sync() {
       entry.score = quiz.score + sarf.score; entry.correct = quiz.correct + sarf.correct; entry.answered = quiz.answered + sarf.answered;
       save().catch(function () {});
     }
-    mine.comp[key] = entry;
-    save().then(function () {
-      btn.disabled = false;
-      var finished = false;
-      APP.startQuiz({
+    var finished = false;
+    return {
         questions: week.questions,
         rnd: seeded("arabisch-liga:options:" + cal.key),
+        resume: { kind: "comp-arabic", args: { key: cal.key } },
         label: T("Arabisch-Liga") + " · " + week.theme.name,
         nextLabel: week.tables.length ? T("Weiter zum Sarf") : T("Zur Rangliste"),
         onProgress: function (p) { quiz.score = p.score; quiz.correct = p.correct; quiz.answered = p.answered; sync(); },
@@ -332,13 +346,34 @@
             onLeave: function () { APP.renderSetup(); APP.showView("wettbewerb"); window.scrollTo(0, 0); }
           });
         }
-      });
-    }, function () {
-      delete mine.comp[key];
-      btn.disabled = false;
-      render();
+      };
+  }
+
+  /* after the language switch (app.js): the running competition round goes on, with the same
+     entry – once the own player doc is loaded again */
+  var mineWait = [];
+  function whenMine() {
+    return new Promise(function (res) {
+      if (mine) { res(mine); return; }
+      var t = setTimeout(function () { res(null); }, 20000);
+      mineWait.push(function (m) { clearTimeout(t); res(m); });
     });
   }
+  function mineReady() { mineWait.splice(0).forEach(function (fn) { fn(mine); }); }
+  APP.onResume("comp-fiqh", function (a) {
+    return whenMine().then(function (m) {
+      var cal = calendar(Date.now()), entry = m && m.comp[cal.key];
+      if (cal.key !== a.key || !entry || entry.done) return null;
+      return fiqhCompPreset(cal, entry);
+    });
+  });
+  APP.onResume("comp-arabic", function (a) {
+    return whenMine().then(function (m) {
+      var cal = calendar(Date.now()), entry = m && m.comp[cal.key + "a"];
+      if (cal.key !== a.key || !entry || entry.done || !window.FIQH_ARABIC) return null;
+      return arabicCompPreset(cal, arWeek(cal), entry, { score: entry.score, correct: entry.correct, answered: entry.answered });
+    });
+  });
   $all("[data-league]").forEach(function (b) {
     b.addEventListener("click", function () { league = b.getAttribute("data-league"); APP.store("league", league); render(); });
   });
@@ -941,7 +976,7 @@
     var sameUser = u && me === u.uid;
     authUser = u;
     if (!u) {
-      me = null; mine = null; friends = []; incoming = []; outgoing = []; blocked = []; stopFriends();
+      me = null; mine = null; friends = []; incoming = []; outgoing = []; blocked = []; stopFriends(); mineReady();
       updateBadge(); $("#acc-form").hidden = true; $("#acc-edit").hidden = false; render(); return;
     }
     if (sameUser && mine) { render(); return; }   // e.g. e-mail just confirmed
@@ -958,6 +993,7 @@
       legacyFriends = Array.isArray(f) ? f.filter(function (x) { return typeof x === "string" && x !== me; }) : [];
       var bl = snaps[1].exists ? snaps[1].data().blocked : [];
       blocked = Array.isArray(bl) ? bl.filter(function (x) { return typeof x === "string"; }) : [];
+      mineReady();
       if (!mine) showError(T("Zu deinem Konto gibt es kein Spielerprofil. Melde dich ab und registriere dich neu oder wende dich an die Betreiber."));
       render();
       migrate();

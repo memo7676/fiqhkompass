@@ -125,17 +125,27 @@
     if (a.sarf) { APP.showView("arabisch"); if (window.FIQH_ARABIC_RENDER) window.FIQH_ARABIC_RENDER("sarf"); window.scrollTo(0, 0); return; }
     var qs = focusList(a);
     if (!qs.length) return;
-    var before = measure(a.ids), correct = 0;
-    APP.startQuiz({
-      learn: true, questions: APP.shuffle(qs), label: T("Gezielt üben") + " · " + a.name,
+    APP.startQuiz(practisePreset(a, key, APP.shuffle(qs), measure(a.ids)));
+  }
+  function practisePreset(a, key, qs, before) {
+    var correct = 0;
+    return {
+      learn: true, questions: qs, label: T("Gezielt üben") + " · " + a.name,
+      resume: { kind: "progress", args: { subject: subject, key: key, before: before } },
       onAnswer: function (q, ok) { if (ok) correct++; return L.recordId(q._lid, ok); },
       onFinish: function (p) {
         lastRound = { name: a.name, key: key, answered: p.answered, correct: correct, before: before, after: measure(a.ids) };
         L.sync();
       },
       onLeave: function () { APP.showView("lernstand"); window.scrollTo(0, 0); }
-    });
+    };
   }
+  APP.onResume("progress", function (r, qs) {
+    var a = areasFor(r.subject).filter(function (x) { return x.key === r.key; })[0];
+    if (!a) return null;
+    subject = r.subject;
+    return practisePreset(a, r.key, qs, r.before);
+  });
   /* the most urgent area over both subjects (for the Fächer page) */
   function topProblem() {
     var best = null;

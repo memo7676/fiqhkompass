@@ -62,19 +62,24 @@
     var qs = APP.shuffle(wrong).concat(APP.shuffle(almost), APP.shuffle(rest));
     if (size) qs = qs.slice(0, size);
     if (!qs.length) return;
-    var before = count(), correct = 0;
-    APP.startQuiz({
+    APP.startQuiz(practicePreset(APP.shuffle(qs), label, back, count()));
+  }
+  function practicePreset(qs, label, back, before) {
+    var correct = 0;
+    return {
       learn: true,
-      questions: APP.shuffle(qs),
+      questions: qs,
       label: label,
+      resume: { kind: "mistakes", args: { label: label, back: back, before: before } },
       onAnswer: function (q, ok) { if (ok) correct++; return L.recordId(q._lid, ok); },
       onFinish: function (p) {
         last = { label: label, answered: p.answered, correct: correct, before: before, after: count(), back: back, wrong: p.wrong || [] };
         L.sync();
       },
       onLeave: function () { APP.showView("fehler"); window.scrollTo(0, 0); }
-    });
+    };
   }
+  APP.onResume("mistakes", function (a, qs) { return practicePreset(qs, APP.relang(a.label), a.back, a.before); });
   function goBack(name) {
     if (name === "quiz" || name === "wettbewerb") APP.renderSetup();
     APP.showView(name);

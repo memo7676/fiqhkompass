@@ -470,7 +470,7 @@
   var lastPos = {};
   try { lastPos = JSON.parse(localStorage.getItem("fiqh:optpos") || "{}") || {}; } catch (e) { lastPos = {}; }
   function withOptions(q, rnd) {
-    var opts = q.a.map(function (text, i) { return { text: text, correct: i === q.c }; });
+    var opts = q.a.map(function (text, i) { return { text: text, correct: i === q.c, i: i }; });
     var out = shuffle(opts, rnd);
     var key = q._lid || q.q;
     if (!rnd && key && opts.length > 1) {
@@ -500,6 +500,12 @@
     }
     game = { qs: qs, i: 0, score: 0, correct: 0, streak: 0, bestStreak: 0, joker: true, answers: [], key: preset ? null : bestKey(), preset: preset || null,
       mixed: !preset && setup.mode === "mixed" };
+    showPlay();
+    renderQuestion();
+    window.scrollTo(0, 0);
+  }
+  function showPlay() {
+    var preset = game.preset;
     showView("quiz");
     var learn = !!(preset && preset.learn);
     $("#quiz-play").classList.toggle("is-learn", learn);
@@ -507,8 +513,6 @@
     $("#quiz-setup").hidden = true;
     $("#quiz-result").hidden = true;
     $("#quiz-play").hidden = false;
-    renderQuestion();
-    window.scrollTo(0, 0);
   }
   $("#start-quiz").addEventListener("click", function () { startQuiz(); });
 
@@ -632,7 +636,11 @@
     if (!(game.preset && game.preset.learn)) noteForFolder(item.src, ok);
     if (game.preset && game.preset.onProgress) game.preset.onProgress(progress(false));
     var learnNote = game.preset && game.preset.onAnswer ? game.preset.onAnswer(item.src, ok) : "";
+    game.last = { idx: idx, time: timeBonus, streak: streakBonus, note: learnNote || "" };
+    showFeedback(item, idx, ok, timeBonus, streakBonus, learnNote);
+  }
 
+  function showFeedback(item, idx, ok, timeBonus, streakBonus, learnNote) {
     $all(".option").forEach(function (b) {
       var i = +b.getAttribute("data-opt");
       b.disabled = true;
@@ -667,6 +675,89 @@
     $("#next-q").focus({ preventScroll: true });
     fb.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
+
+  /* ---------- keeping a round across the language switch ----------
+     Changing the language reloads the page (i18n.js). A running round is written to
+     sessionStorage just before and set up again after the reload, now in the new language:
+     the same questions (found by id), the same order of the answers, points, series, joker,
+     the current question and – if it was already answered – its feedback.
+     Rounds started by other modules carry preset.resume = { kind, args }; the module registers
+     APP.onResume(kind, function (args, questions) -> preset or Promise) to rebuild its callbacks.
+     A preset may bring its own questions (competition: the same fixed set again). */
+  var RESUME_KEY = "fiqh:resume", resumers = {};
+  function onResume(kind, fn) { resumers[kind] = fn; }
+  function snapshot() {
+    if (!game || $("#quiz-play").hidden) return null;
+    var p = game.preset;
+    if (p && !p.resume) return null;
+    return {
+      kind: p ? p.resume.kind : "", args: p ? p.resume.args || null : null, key: game.key, mixed: game.mixed,
+      items: game.qs.map(function (it) { return { id: qid(it.src), o: it.options.map(function (o) { return o.i; }) }; }),
+      i: game.i, score: game.score, correct: game.correct, streak: game.streak, bestStreak: game.bestStreak, joker: game.joker,
+      hidden: game.hidden, last: game.answered ? game.last : null,
+      answers: game.answers.map(function (a) { return [game.qs.indexOf(a.item), a.chosen, a.ok]; }),
+      spent: Date.now() - game.startedAt, at: Date.now()
+    };
+  }
+  window.addEventListener("fiqh:beforelang", function () {
+    var snap = snapshot();
+    try { if (snap) sessionStorage.setItem(RESUME_KEY, JSON.stringify(snap)); } catch (e) {}
+  });
+  function questionIndex() {
+    var map = {};
+    QUESTIONS.forEach(function (q) { map[qid(q)] = q; });
+    var A = window.FIQH_ARABIC;
+    if (A) A.allQuestions.forEach(function (q) { map[qid(q)] = q; });
+    return map;
+  }
+  /* a line written in the old language (learn note) back into the new one */
+  function relang(s) {
+    var d = window.I18N_EN || {};
+    if (!s || d[s] !== undefined) return s && T(s);
+    for (var k in d) if (d[k] === s) return T(k);
+    return s;
+  }
+  function relangLabel(s) { return String(s || "").split(" · ").map(relang).join(" · "); }
+  function resume() {
+    var s = null;
+    try { s = JSON.parse(sessionStorage.getItem(RESUME_KEY) || "null"); sessionStorage.removeItem(RESUME_KEY); } catch (e) { s = null; }
+    if (!s || !s.items || Date.now() - s.at > 30 * 60e3) return;
+    var byId = questionIndex();
+    var found = s.items.map(function (it) { return byId[it.id] || null; });
+    var make = s.kind ? resumers[s.kind] : null;
+    if (s.kind && !make) return;
+    Promise.resolve(make ? make(s.args, found) : null).then(function (preset) {
+      if (s.kind && !preset) return;
+      if (game) return;   // a new round was started meanwhile
+      var src = preset && preset.questions || found;
+      if (src.length !== s.items.length || src.some(function (q, i) { return !q || q.a.length !== s.items[i].o.length; })) return;
+      if (preset) preset.questions = src;
+      var qs = src.map(function (q, i) {
+        return { src: q, options: s.items[i].o.map(function (j) { return { text: q.a[j], correct: j === q.c, i: j }; }) };
+      });
+      game = { qs: qs, i: s.i, score: s.score, correct: s.correct, streak: s.streak, bestStreak: s.bestStreak, joker: s.joker,
+        answers: s.answers.map(function (a) { return { item: qs[a[0]], chosen: a[1], ok: a[2] }; }),
+        key: s.key, preset: preset || null, mixed: s.mixed };
+      showPlay();
+      renderQuestion();
+      game.startedAt = Date.now() - (s.spent || 0);
+      (s.hidden || []).forEach(function (i) {
+        var b = $('[data-opt="' + i + '"]');
+        if (b) { b.disabled = true; b.classList.add("struck"); game.hidden.push(i); }
+      });
+      if (!game.joker) { $("#joker").disabled = true; $("#joker").textContent = T("Joker verbraucht"); }
+      if (s.last) {
+        stopTimer();
+        game.answered = true;
+        game.last = s.last;
+        var item = qs[game.i];
+        showFeedback(item, s.last.idx, item.options[s.last.idx].correct, s.last.time, s.last.streak, relang(s.last.note));
+      }
+      window.scrollTo(0, 0);
+    }, function () {});
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", resume);
+  else setTimeout(resume, 0);
 
   /* Begriffe: the foreign technical terms in question, answers and explanation, explained
      after answering (glossar.js). Iʿrāb answers are Arabic grammar terms, so those are looked up too. */
@@ -814,7 +905,7 @@
   window.FIQH_APP = {
     TOPICS: TOPICS, QUESTIONS: QUESTIONS, TOPIC_BY_ID: TOPIC_BY_ID, GROUPS: GROUPS,
     esc: esc, bidiHtml: bidiHtml, arOnly: arOnly, store: store, sourceLine: sourceLine, dalilHtml: dalilHtml, termsHtml: termsHtml, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
-    showView: showView, tabOf: TAB_OF, startQuiz: startQuiz, renderSetup: renderSetup, openTopic: openTopic,
+    showView: showView, tabOf: TAB_OF, startQuiz: startQuiz, onResume: onResume, relang: relangLabel, renderSetup: renderSetup, openTopic: openTopic,
     isPlaying: function () { return !!game && !$("#quiz-play").hidden; },
     on: function (name, fn) { (listeners[name] = listeners[name] || []).push(fn); }
   };
