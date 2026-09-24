@@ -1119,6 +1119,9 @@ dialog.auth { border-radius: 20px; }
 .hero-home .intro p small { font-size: .85em; opacity: .8; }
 .home { padding-block: 0 60px; }
 .subjects { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: -28px; position: relative; }
+/* the Lernstand card on top takes over the overlap into the hero; the subjects follow below it */
+#home-progress:not(:empty) { margin-top: -28px; position: relative; }
+#home-progress:not(:empty) + .subjects { margin-top: 0; }
 .subject {
   position: relative; display: grid; gap: 10px; align-content: start; padding: 20px 22px 18px; border-radius: 16px;
   border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow);
