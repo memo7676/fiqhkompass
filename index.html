@@ -688,6 +688,74 @@ h1, h2, h3, .brand-name, .tc-title, .ov-head, .q-text, .rank, .mode strong, .win
 .learn-stats { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 14px 0 16px; font-size: .9rem; color: var(--muted); }
 .learn-stats b { color: var(--ink); font-variant-numeric: tabular-nums; }
 .learn-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+/* Mein Lernstand (progress.js) */
+.lp-head { padding: 22px 24px; display: grid; gap: 14px; }
+.lp-head h2 { margin: 0 0 6px; font: 600 1.6rem/1.2 var(--display); }
+.lp-head p { margin: 0; color: var(--muted); max-width: 70ch; }
+.lp-head .segmented { justify-self: start; }
+.lp-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 560px) { .lp-tile { padding: 10px; } .lp-tile b { font-size: 1.35rem; } .lp-tile small { font-size: .72rem; } }
+.lp-tile { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--surface-2); display: grid; gap: 2px; }
+.lp-tile b { font: 600 1.7rem/1.1 var(--display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.lp-tile span { font-weight: 700; font-size: .9rem; }
+.lp-tile small { color: var(--muted); font-size: .8rem; }
+.lp-block { padding: 18px 22px; margin-top: 14px; }
+.lp-block h3, .lp-chart h3 { margin: 0 0 6px; font: 600 1.25rem/1.2 var(--display); }
+.lp-block > p { margin: 0 0 12px; color: var(--muted); font-size: .92rem; }
+.lp-problems { border-left: 3px solid var(--bad); }
+.lp-areas { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.lp-area { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+.lp-area.is-top { border-color: var(--bad); background: var(--bad-soft); }
+.lp-area-main { flex: 1 1 260px; display: grid; gap: 6px; min-width: 0; }
+.lp-area-main small, .lp-skills small, .lp-list small { color: var(--muted); font-size: .82rem; }
+.lp-skills, .lp-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.lp-skills li { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.lp-skills li:first-child { border-top: 0; }
+.lp-skills .lbar, .lp-skills small { grid-column: 1 / -1; }
+.lp-skills .btn { grid-column: 2; grid-row: 1; }
+.lp-skill-name { font-weight: 700; display: flex; gap: 8px; align-items: center; }
+.lp-badge { font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 99px; justify-self: start; }
+.lp-skills li { grid-template-columns: auto 1fr auto; }
+.lp-skills .lp-badge { grid-column: 2; grid-row: 1; }
+.lp-skills .btn { grid-column: 3; }
+.lp-badge.is-bad { background: var(--bad-soft); color: var(--bad); }
+.lp-badge.is-ok { background: var(--good-soft); color: var(--good); }
+.lp-badge.is-mid { background: var(--accent-soft); color: var(--ink); }
+.lp-badge.is-new { background: var(--surface-2); color: var(--muted); }
+.lp-strong { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.lp-strong li { padding: 6px 12px; border-radius: 99px; background: var(--good-soft); color: var(--good); font-weight: 600; font-size: .9rem; }
+.lp-strong small { color: var(--muted); font-weight: 400; }
+.lp-all summary { cursor: pointer; font: 600 1.15rem/1.2 var(--display); }
+.lp-all summary small { color: var(--muted); font: 600 .85rem var(--body); }
+.lp-list { margin-top: 12px; }
+.lp-list li { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); }
+.lp-list .lbar, .lp-list small { grid-column: 2 / -1; }
+.lp-list-name { font-weight: 600; font-size: .92rem; min-width: 0; }
+.lp-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.lp-dot.is-bad { background: var(--bad); } .lp-dot.is-ok { background: var(--good); } .lp-dot.is-mid { background: var(--accent); }
+.lp-chart { padding: 18px 22px; margin-top: 14px; }
+.lp-chart-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.lp-legend { font-size: .82rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.lp-sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; }
+.lp-sw.ok { background: var(--good); } .lp-sw.bad { background: var(--bad); margin-left: 8px; }
+.lp-bars { display: grid; grid-template-columns: repeat(14, 1fr); gap: 4px; align-items: end; height: 130px; margin-top: 10px; }
+.lp-day { display: grid; grid-template-rows: 1fr auto; height: 100%; gap: 4px; text-align: center; border-radius: 6px; }
+.lp-day:hover { background: var(--surface-2); }
+.lp-col { display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; border-bottom: 1px solid var(--line); }
+.lp-col span { display: block; width: 70%; max-width: 22px; margin: 0 auto; min-height: 2px; }
+.lp-ok { background: var(--good); border-radius: 0; }
+.lp-bad { background: var(--bad); border-radius: 4px 4px 0 0; }
+.lp-col .lp-ok:first-child { border-radius: 4px 4px 0 0; }
+.lp-day small { font-size: .7rem; color: var(--muted); }
+.lp-day.is-today small { color: var(--ink); font-weight: 700; }
+.lp-sum, .lp-empty { margin: 10px 0 0; color: var(--muted); font-size: .88rem; }
+.lp-note { color: var(--muted); font-size: .8rem; margin: 14px 2px 0; }
+.lp-hint { margin: 14px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--bad-soft); display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-size: .9rem; }
+.lp-hint span { flex: 1 1 240px; }
+.lp-home { padding: 18px 22px; margin-bottom: 18px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; border-left: 3px solid var(--primary); }
+.lp-home h3 { margin: 0 0 4px; font: 600 1.3rem/1.2 var(--display); }
+.lp-home p { margin: 0; color: var(--muted); font-size: .92rem; }
+.lp-home-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .learn-alldone { margin: 12px 0 0 !important; color: var(--good) !important; font-weight: 600; }
 
 .learn-round { padding: 20px 24px; display: grid; gap: 6px; border-left: 3px solid var(--primary); }
@@ -1195,6 +1263,7 @@ dialog.auth { border-radius: 20px; }
       </div>
     </div>
     <div class="wrap home">
+      <div id="home-progress"></div>
       <div class="subjects" id="subjects"></div>
     </div>
   </section>
@@ -1245,7 +1314,9 @@ dialog.auth { border-radius: 20px; }
             <button type="button" class="btn btn-primary btn-lg" id="learn-next">Loslegen</button>
             <button type="button" class="btn" id="learn-mistakes" hidden>Fehler wiederholen</button>
             <button type="button" class="btn btn-ghost" data-open-mistakes>📁 Fehlerordner<span data-mistakes-count></span></button>
+            <button type="button" class="btn btn-ghost" data-open-progress="fiqh">📈 Mein Lernstand</button>
           </div>
+          <div id="learn-focus"></div>
           <p class="learn-alldone" id="learn-alldone" hidden>Mā schāʾ Allāh – du hast alle Themen zu 100 % gelernt! Mit „Wiederholen“ hältst du das Wissen frisch.</p>
         </div>
       </div>
@@ -1268,6 +1339,29 @@ dialog.auth { border-radius: 20px; }
   </section>
 
   <!-- ================= FEHLERORDNER ================= -->
+  <section id="view-progress" aria-label="Mein Lernstand" hidden>
+    <nav class="subject-bar" aria-label="Mein Lernstand"><div class="wrap">
+      <button type="button" class="sb-back" data-go="start"><span aria-hidden="true">←</span> Fächer</button>
+      <span class="sb-title">Mein Lernstand <span lang="ar" dir="rtl">تَقَدُّمِي</span></span>
+    </div></nav>
+    <div class="wrap learn lp">
+      <div class="panel learn-round" id="lp-round" hidden aria-live="polite"></div>
+      <div class="panel lp-head">
+        <div>
+          <p class="eyebrow">Mein Lernstand</p>
+          <h2>Worin du stark bist – und wo du noch übst</h2>
+          <p>Hier siehst du, welche Bereiche sitzen und wo sich Fehler häufen. Mit <b>„Gezielt üben“</b> bekommst du eine Runde nur aus diesem Bereich: zuerst deine offenen Fehler, dann Fragen, die du früher falsch hattest.</p>
+        </div>
+        <div class="segmented" role="group" aria-label="Fach" id="lp-subjects">
+          <button type="button" data-lp-subject="arabisch" aria-pressed="true">Arabisch</button>
+          <button type="button" data-lp-subject="fiqh" aria-pressed="false">Fiqh</button>
+        </div>
+        <div class="lp-tiles" id="lp-tiles"></div>
+      </div>
+      <div id="lp-body"></div>
+    </div>
+  </section>
+
   <section id="view-mistakes" aria-label="Fehlerordner" hidden>
     <nav class="subject-bar" aria-label="Fehlerordner"><div class="wrap">
       <button type="button" class="sb-back" data-go="start"><span aria-hidden="true">←</span> Fächer</button>
@@ -1333,7 +1427,9 @@ dialog.auth { border-radius: 20px; }
             <button type="button" class="btn btn-primary btn-lg" id="ar-next">Loslegen</button>
             <button type="button" class="btn" id="ar-mistakes" hidden>Fehler wiederholen</button>
             <button type="button" class="btn btn-ghost" data-open-mistakes>📁 Fehlerordner<span data-mistakes-count></span></button>
+            <button type="button" class="btn btn-ghost" data-open-progress="arabisch">📈 Mein Lernstand</button>
           </div>
+          <div id="ar-focus"></div>
         </div>
       </div>
       <div class="ar-books" id="ar-books" role="group" aria-label="Buch" hidden></div>
@@ -1899,6 +1995,7 @@ dialog.auth { border-radius: 20px; }
 <script src="sarf.js"></script>
 <script src="arabic.js"></script>
 <script src="mistakes.js"></script>
+<script src="progress.js"></script>
 <script src="home.js"></script>
 <script src="install.js"></script>
 </body>

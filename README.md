@@ -52,6 +52,13 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - Freunde über den Spielernamen finden und Gesamtpunkte vergleichen
   - Freundschaft nur mit Anfrage: senden, annehmen oder ablehnen, zurückziehen, beenden; offene Anfragen zeigt eine Zahl am Reiter. Wie beim Chat nur unter Brüdern bzw. unter Schwestern, nicht bei Blockierung (`friendRequests`, `friendships`). Alte Freundeslisten werden einmalig zu Anfragen
 
+- **Mein Lernstand** (`progress.js`, Ansicht `#lernstand`): zeigt pro Fach (Arabisch / Fiqh), worin man stark ist und wo man noch Probleme hat.
+  - Kennzahlen: gelernt, offene Fehler, Trefferquote; Balken der letzten 14 Tage (richtig/falsch pro Tag)
+  - „Hier hast du noch Probleme“: die dringendsten Bereiche (offene Fehler zählen am meisten, dann kürzlich falsch beantwortete Fragen, dann eine niedrige Trefferquote); bei Lektionen steht dabei, welcher Teil hakt (Vokabeln, Grammatik, Iʿrāb)
+  - Arabisch zusätzlich nach Fähigkeiten: Vokabeln, Plural, Grammatik, Iʿrāb, Sarf; dazu „Darin bist du stark“ und alle Lektionen bzw. Themen im Überblick
+  - „Gezielt üben“ startet eine Runde nur aus diesem Bereich: offene Fehler, dann früher falsch beantwortete, dann neue Fragen
+  - Zu finden als Karte oben auf der Fächer-Seite, als Knopf „📈 Mein Lernstand“ in Arabisch und Fiqh-Lernen und als Hinweis „Größte Baustelle“ unter deren Fortschritt
+  - Daten: die Lernstufen von `learn.js` (mit dem Konto synchronisiert) und die Antwortzählung auf dem Gerät (`fiqh:tries` = Antworten/Fehler/letzter Fehler pro Frage, `fiqh:days` = Antworten pro Tag und Fach, 120 Tage)
 - **Chat** zwischen Spielern: Brüder mit Brüdern, Schwestern mit Schwestern, nie zwischen Bruder und Schwester. Mit Ungelesen-Anzeige, Blockieren und Melden.
 
   Ranglisten sieht jeder, mitspielen und chatten können alle mit bestätigter E-Mail-Adresse.
