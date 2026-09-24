@@ -16,10 +16,11 @@
       stats: function () { return L ? L.stats() : null; },
       actions: [{ label: T("Nachschlagen"), view: "nachschlagen", primary: true }, { label: T("Lernen"), view: "lernen", progress: true }] },
     { id: "arabisch", name: T("Arabisch"), ar: "اللُّغَةُ الْعَرَبِيَّةُ",
-      text: T("Madina-Buch 1: Vokabeln, Grammatik, Sarf nach der Emsile und Iʿrāb – bis du einen Satz vollständig analysieren kannst."),
+      text: T("Madina-Buch 1 und 2: Vokabeln, Grammatik, Sarf nach der Emsile und Iʿrāb – bis du einen Satz vollständig analysieren kannst."),
       meta: function () {
         if (!AR) return [];
-        return [[AR.lessons.length, T("Lektionen")], [AR.lessons.reduce(function (n, l) { return n + l.vocab.length; }, 0), T("Vokabeln")]];
+        var ls = AR.allLessons || AR.lessons;
+        return [[ls.length, T("Lektionen")], [ls.reduce(function (n, l) { return n + l.vocab.length; }, 0), T("Vokabeln")]];
       },
       stats: function () { return AR ? AR.stats() : null; },
       actions: [{ label: T("Lektionen öffnen"), view: "arabisch", primary: true }] },

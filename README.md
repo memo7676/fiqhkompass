@@ -17,7 +17,7 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - eine Frage ist gelernt, wenn sie gleich richtig beantwortet wird, nach einem Fehler erst nach zwei richtigen Antworten hintereinander
   - Runden mit 10 Fragen: zuerst die falschen, dann die fast gelernten, dann neue; „Fehler wiederholen“ über alle Themen
   - Fortschritt je Thema, Sachgebiet und gesamt (auch in der Themenübersicht), gespeichert auf dem Gerät und, angemeldet, in `progress/<id>`
-- **Arabisch** mit dem Madina-Buch 1 (Dr. V. Abdur Rahim), Lektionen 1–23, Erklärungen nach dem deutschen Schlüssel (Google-Drive-Ordner „Madina Books“):
+- **Arabisch** mit den Madina-Büchern 1 und 2 (Dr. V. Abdur Rahim), Buch 1 mit den Lektionen 1–23, Erklärungen nach dem deutschen Schlüssel (Google-Drive-Ordner „Madina Books“):
   - jede Lektion mit Grammatik, Beispielsätzen, Vokabeltabelle und Iʿrāb Schritt für Schritt
   - Lernen wie im Lernmodus, getrennt nach Vokabeln (Bedeutung, Arabisch, Plural), Grammatik und Iʿrāb
   - Vokabelliste aller Lektionen mit Suche (Deutsch oder Arabisch, Vokalzeichen egal)
@@ -25,6 +25,7 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - neue Iʿrāb-Sätze (`irabgen.js`): ein Generator baut aus dem Wortschatz des Buchs Sätze nach festen Mustern (Nominalsatz, Genitivverbindung, Präposition, Verbalsatz, Adjektiv, Demonstrativ) mit deutscher Übersetzung. Sitzen alle Iʿrāb-Sätze, kommen nach 24 Stunden 10 neue dazu (Kennungen `ar-x-…`; Paket k ist immer dasselbe, auf einem anderen Gerät wird es über den Lernstand wiedergefunden)
   - Sarf (`sarf.js`), aufgebaut wie die Emsile (Google-Drive-Ordner „Madina Books“): 47 gesunde dreiradikalige Verben aus allen sechs Abwāb, je bis zu 10 Formen – Vergangenheit und Gegenwart aktiv und passiv, Befehl, Verbot, Verneinung mit lam und lan, Partizip Aktiv und Passiv. Geübt wird, indem man die Formen einer Tabelle in die richtige Reihenfolge tippt (mit falschen Formen dazwischen); eine Tabelle ist gelernt, wenn sie fehlerfrei ist (Kennungen `ar-s-<Wurzel>-<Form>`). Zu jedem Verb gibt es die ganze Tabelle zum Nachschlagen
   - Daten in `arabisch/madina1-*.js`, Oberfläche in `arabic.js`; der Fortschritt teilt sich den Speicher mit dem Lernmodus (Kennungen `ar-…`)
+  - **Madina-Buch 2** (31 Lektionen, `arabisch/madina2-*.js`, Lektionen mit `book: 2`, Kennungen `b2-…`): Grammatik, Beispiele und Wörter nach dem deutschen Schlüssel zu Teil 2; die arabischen Wörter wurden von den Seitenbildern abgelesen, weil der Schlüssel sie nicht als Text enthält. Über dem Lektions-Tab wählt man Buch 1 oder Buch 2. Buch 2 ist gesperrt, bis die letzten fünf Lektionen von Buch 1 (19–23, `BOOK2_GATE` in `arabic.js`) zu 100 % ohne offene Fehler gelernt sind; danach bleibt es offen (`fiqh:book2`, oder Lernstand in Buch 2), auch wenn später in Buch 1 wieder ein Fehler passiert. „Arabisch-Fortschritt zurücksetzen“ sperrt es wieder. Die Arabisch-Liga und die neuen Iʿrāb-Sätze bleiben bei Buch 1
 - **Quiz**:
   - Themenquiz (einzelne Gebiete oder ganze Sachgebiete) oder gemischter Modus
   - 5/10/15 Fragen
