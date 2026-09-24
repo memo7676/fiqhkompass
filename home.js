@@ -6,7 +6,7 @@
   var APP = window.FIQH_APP, L = window.FIQH_LEARN, AR = window.FIQH_ARABIC;
   var box = document.getElementById("subjects");
   if (!APP || !box) return;
-  var esc = APP.esc, T = window.T || function (x) { return x; };
+  var esc = APP.esc, T = window.T || function (s, v) { return v ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return v[k] !== undefined ? v[k] : m; }) : s; };
   function num(n) { return Number(n).toLocaleString(window.I18N ? window.I18N.locale : "de-DE"); }
 
   var SUBJECTS = [

@@ -10,7 +10,7 @@
   if (!APP || !L || !view) return;
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
-  var esc = APP.esc, T = window.T || function (x) { return x; };
+  var esc = APP.esc, T = window.T || function (s, v) { return v ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return v[k] !== undefined ? v[k] : m; }) : s; };
   var ROUND = 10;
 
   function lv(q) { return L.levelOf(q._lid); }
@@ -82,6 +82,12 @@
   }
 
   /* ---------- rendering ---------- */
+  /* text that may mix German and Arabic: Arabic only → right to left, otherwise left to right with isolated Arabic runs */
+  function mixed(text, tag, cls) {
+    var c = cls ? ' class="' + cls + '"' : "";
+    if (APP.arOnly(text)) return "<" + tag + c + ' lang="ar" dir="rtl">' + esc(text) + "</" + tag + ">";
+    return "<" + tag + c + ' dir="ltr">' + APP.bidiHtml(text) + "</" + tag + ">";
+  }
   function arLine(q) {
     if (!q.ar) return "";
     return '<p class="mf-ar" lang="ar" dir="rtl">' + String(q.ar).split(/\s+/).map(function (w, i) {
@@ -92,9 +98,9 @@
     var l = lv(q);
     return '<li class="review-item">' +
       '<p class="rv-q">' + (l === -1 ? '<span class="rv-label bad">' + T("falsch") + "</span>" : '<span class="rv-label mid">' + T("fast · noch 1× richtig") + "</span>") +
-      '<span dir="auto">' + esc(q.q) + "</span></p>" + arLine(q) +
-      '<p class="rv-a"><span class="rv-label good">' + T("Richtig") + '</span> <span dir="auto">' + esc(q.a[q.c]) + "</span></p>" +
-      (q.e ? '<p class="rv-e" dir="auto">' + esc(q.e) + "</p>" : "") +
+      mixed(q.q, "span") + "</p>" + arLine(q) +
+      '<p class="rv-a"><span class="rv-label good">' + T("Richtig") + "</span> " + mixed(q.a[q.c], "span") + "</p>" +
+      (q.e ? mixed(q.e, "p", "rv-e") : "") +
       (q.s !== undefined && APP.sourceLine ? '<p class="fb-source">' + esc(APP.sourceLine(q)) + "</p>" : "") +
       (APP.dalilHtml && APP.dalilHtml(q) ? '<ul class="fb-dalil">' + APP.dalilHtml(q) + "</ul>" : "") + "</li>";
   }

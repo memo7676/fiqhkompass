@@ -536,7 +536,7 @@
     var box = $("#q-options");
     box.innerHTML = item.options.map(function (o, i) {
       return '<button type="button" class="option" data-opt="' + i + '"><span class="opt-key">' + letters[i] + "</span>" +
-        '<span class="opt-text' + (arOnly(o.text) ? ' opt-ar" lang="ar" dir="rtl"' : '" dir="auto"') + '>' + esc(o.text) + "</span></button>";
+        '<span class="opt-text' + (arOnly(o.text) ? ' opt-ar" lang="ar" dir="rtl">' + esc(o.text) : '" dir="ltr">' + bidiHtml(o.text)) + "</span></button>";
     }).join("");
     $all(".option", box).forEach(function (b) {
       b.addEventListener("click", function () { answer(+b.getAttribute("data-opt")); });
@@ -550,9 +550,17 @@
      font and right-to-left; mixed text finds its direction itself. */
   var AR_RE = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/;
   function arOnly(s) { return AR_RE.test(s) && !/[A-Za-zÄÖÜäöüß]/.test(s); }
+  /* Mixed text (German/English with Arabic words) always runs left to right; each Arabic
+     run is isolated right to left. "auto" would take the direction of the first letter, so an
+     explanation starting with an Arabic word came out mirrored (words and full stop swapped). */
+  var AR_RUN = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF](?:[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF\s،؛؟]*[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF])?/g;
+  function bidiHtml(s) {
+    return esc(s).replace(AR_RUN, function (m) { return '<bdi lang="ar" dir="rtl">' + m + "</bdi>"; });
+  }
   function setText(el, s) {
-    el.textContent = s;
-    el.setAttribute("dir", "auto");
+    s = s == null ? "" : String(s);
+    if (arOnly(s)) { el.textContent = s; el.setAttribute("dir", "rtl"); }
+    else { el.innerHTML = bidiHtml(s); el.setAttribute("dir", "ltr"); }
     el.classList.toggle("is-ar", arOnly(s));
     if (arOnly(s)) el.setAttribute("lang", "ar"); else el.removeAttribute("lang");
   }
@@ -563,7 +571,10 @@
     el.hidden = !q.ar;
     if (!q.ar) { el.innerHTML = ""; return; }
     el.innerHTML = String(q.ar).split(/\s+/).map(function (w, i) {
-      return i === q.arMark ? "<mark>" + esc(w) + "</mark>" : esc(w);
+      if (i !== q.arMark) return esc(w);
+      /* the full stop or comma after the word stays outside the highlight */
+      var m = w.match(/^(.*?)([.،؛؟!?,:]*)$/);
+      return "<mark>" + esc(m[1]) + "</mark>" + esc(m[2]);
     }).join(" ");
   }
 
@@ -786,7 +797,7 @@
   }
   window.FIQH_APP = {
     TOPICS: TOPICS, QUESTIONS: QUESTIONS, TOPIC_BY_ID: TOPIC_BY_ID, GROUPS: GROUPS,
-    esc: esc, store: store, sourceLine: sourceLine, dalilHtml: dalilHtml, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
+    esc: esc, bidiHtml: bidiHtml, arOnly: arOnly, store: store, sourceLine: sourceLine, dalilHtml: dalilHtml, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
     showView: showView, tabOf: TAB_OF, startQuiz: startQuiz, renderSetup: renderSetup, openTopic: openTopic,
     isPlaying: function () { return !!game && !$("#quiz-play").hidden; },
     on: function (name, fn) { (listeners[name] = listeners[name] || []).push(fn); }

@@ -14,7 +14,7 @@
   if (!APP || !L || !view) return;
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
-  var esc = APP.esc, T = window.T || function (x) { return x; };
+  var esc = APP.esc, T = window.T || function (s, v) { return v ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return v[k] !== undefined ? v[k] : m; }) : s; };
 
   /* ---------- letters ---------- */
   var FA = "َ", DA = "ُ", KA = "ِ", SU = "ْ", SH = "ّ", TUN = "ٌ";

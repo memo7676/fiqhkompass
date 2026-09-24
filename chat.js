@@ -3,7 +3,7 @@
    Uses window.FIQH_BACKEND and window.FIQH_SOCIAL (names, pictures, block list). */
 (function () {
   "use strict";
-  var T = window.T || function (x) { return x; }, LOC = window.I18N ? window.I18N.locale : "de-DE";
+  var T = window.T || function (s, v) { return v ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return v[k] !== undefined ? v[k] : m; }) : s; }, LOC = window.I18N ? window.I18N.locale : "de-DE";
   var B = window.FIQH_BACKEND, S = window.FIQH_SOCIAL, APP = window.FIQH_APP;
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }

@@ -2,7 +2,7 @@
    Uses window.FIQH_BACKEND (backend.js). */
 (function () {
   "use strict";
-  var T = window.T || function (x) { return x; };
+  var T = window.T || function (s, v) { return v ? String(s).replace(/\{(\w+)\}/g, function (m, k) { return v[k] !== undefined ? v[k] : m; }) : s; };
   var B = window.FIQH_BACKEND;
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
