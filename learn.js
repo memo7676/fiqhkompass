@@ -57,9 +57,40 @@
     saveTimer = setTimeout(pushCloud, 1500);
   }
 
+  /* ---------- tracking for the Lernstand (progress.js) ----------
+     tries: id -> [answers, mistakes, time of the last mistake]; day: "YYYY-MM-DD" -> {subject: [answers, right]}.
+     Kept on this device (localStorage "fiqh:tries", "fiqh:days"). */
+  var tries = {}, days = {};
+  try { tries = JSON.parse(localStorage.getItem("fiqh:tries") || "{}") || {}; } catch (e) { tries = {}; }
+  try { days = JSON.parse(localStorage.getItem("fiqh:days") || "{}") || {}; } catch (e) { days = {}; }
+  var trackTimer = null;
+  function dayKey(t) { var d = new Date(t); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
+  function subjectOf(id) { return String(id).indexOf("ar-") === 0 ? "arabisch" : "fiqh"; }
+  function track(id, ok) {
+    if (!id) return;
+    var now = Date.now(), t = tries[id] || [0, 0, 0];
+    t[0]++; if (!ok) { t[1]++; t[2] = now; }
+    tries[id] = t;
+    var k = dayKey(now), d = days[k] = days[k] || {}, sub = subjectOf(id), c = d[sub] = d[sub] || [0, 0];
+    c[0]++; if (ok) c[1]++;
+    /* keep the last 120 days */
+    var keys = Object.keys(days).sort();
+    while (keys.length > 120) delete days[keys.shift()];
+    clearTimeout(trackTimer);
+    trackTimer = setTimeout(saveTracking, 300);
+  }
+  function saveTracking() {
+    clearTimeout(trackTimer); trackTimer = null;
+    try { localStorage.setItem("fiqh:tries", JSON.stringify(tries)); localStorage.setItem("fiqh:days", JSON.stringify(days)); } catch (e) {}
+  }
+  /* closing the page right after an answer must not lose it */
+  window.addEventListener("pagehide", function () { if (trackTimer) saveTracking(); });
+  document.addEventListener("visibilitychange", function () { if (document.hidden && trackTimer) saveTracking(); });
+
   /* one answer -> new level and the line shown in the feedback box */
   function record(q, ok) { return recordId(q._lid, ok); }
   function recordId(id, ok) {
+    track(id, ok);
     var l = levelOf(id), next, note;
     if (!ok) {
       next = -1;
@@ -242,6 +273,8 @@
   /* the Arabic part (arabic.js) keeps its progress in the same store, ids start with "ar-" */
   function resetWhere(test) {
     Object.keys(prog).forEach(function (k) { if (test(k)) delete prog[k]; });
+    Object.keys(tries).forEach(function (k) { if (test(k)) delete tries[k]; });
+    try { localStorage.setItem("fiqh:tries", JSON.stringify(tries)); } catch (e) {}
     APP.store("learn", prog);
     pushCloud(true);
     changed();
@@ -286,7 +319,8 @@
 
   window.FIQH_LEARN = {
     stats: function () { return stats(allQuestions()); }, topicStats: topicStats,
-    hash: hash, levelOf: levelOf, recordId: recordId, sync: function () { pushCloud(); },
+    hash: hash, levelOf: levelOf, recordId: recordId, track: track, sync: function () { pushCloud(); },
+    tries: function (id) { return tries[id] || null; }, days: function () { return days; }, dayKey: dayKey,
     reset: resetWhere, onChange: function (fn) { changeFns.push(fn); }
   };
   render();

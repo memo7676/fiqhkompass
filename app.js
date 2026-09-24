@@ -126,8 +126,8 @@
 
   /* ---------- views ---------- */
   /* "start" is the page with all subjects (Fächer); a subject's views belong to that tab */
-  var views = { start: $("#view-home"), nachschlagen: $("#view-lookup"), lernen: $("#view-learn"), arabisch: $("#view-arabic"), fehler: $("#view-mistakes"), sarf: $("#view-sarf"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
-  var TAB_OF = { nachschlagen: "start", lernen: "start", arabisch: "start", fehler: "start", sarf: "start" };
+  var views = { start: $("#view-home"), nachschlagen: $("#view-lookup"), lernen: $("#view-learn"), arabisch: $("#view-arabic"), fehler: $("#view-mistakes"), lernstand: $("#view-progress"), sarf: $("#view-sarf"), quiz: $("#view-quiz"), wettbewerb: $("#view-social"), chat: $("#view-chat") };
+  var TAB_OF = { nachschlagen: "start", lernen: "start", arabisch: "start", fehler: "start", sarf: "start", lernstand: "start" };
   function showView(name, push) {
     if (!views[name]) name = "start";
     /* A learning round (Lernen, Arabisch, Fehler, Sarf) ends without the result screen and hides
@@ -673,6 +673,7 @@
     if (!L || !q._lid) return;
     var l = L.levelOf(q._lid);
     if (!ok || l === -1 || l === 1) L.recordId(q._lid, ok);
+    else if (L.track) L.track(q._lid, ok);   // right answers count for the Lernstand all the same
   }
 
   $("#next-q").addEventListener("click", function () {

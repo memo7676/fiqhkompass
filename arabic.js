@@ -536,7 +536,7 @@
   window.FIQH_ARABIC_RENDER = function (tab) { if (tab) { state.tab = tab; remember(); } render(); };
   /* questions/lessons: book 1 only (the Arabic league); allQuestions/allLessons: both books */
   window.FIQH_ARABIC = { questions: QS.filter(function (q) { return qBook(q) === 1; }), lessons: BOOKS[1],
-    allQuestions: QS, allLessons: LESSONS,
+    allQuestions: QS, allLessons: LESSONS, book2Open: function () { return book2Open(); },
     /* overall progress: book 2 counts only once it is open */
     stats: function () { return stats(book2Open() ? QS : QS.filter(function (q) { return qBook(q) === 1; })); } };
 })();
