@@ -251,12 +251,12 @@ window.FIQH_DALIL = {
 ],
 [
 "J",
-"Abū Ḥanīfa, Muḥammad",
+"Abū Ḥanīfa, Muḥammad – al-Hidāya (al-Marġīnānī)",
 "Der Vers befiehlt nur Rukūʿ und Suǧūd; die Ruhe darin ist durch Ḫabar al-wāḥid belegt und daher wadschib.",
 "The verse commands only rukūʿ and sujūd; stillness in them is established by a single-narrator report and is therefore wājib.",
 228,
 0,
-"Abū Ḥanīfa, Muḥammad"
+"Abū Ḥanīfa, Muḥammad – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Ab wann gilt man als Reisender (Musāfir)?": [
@@ -370,12 +370,12 @@ window.FIQH_DALIL = {
 "Was ist nach Abū Ḥanīfa die Pflichtmenge der Rezitation in einer Rakʿa?": [
 [
 "J",
-"Abū Ḥanīfa",
+"Abū Ḥanīfa – al-Hidāya (al-Marġīnānī)",
 "Der Vers „rezitiert, was euch leichtfällt“ ist mit einem Vers erfüllt; Abū Yūsuf und Muḥammad verlangen drei kurze Verse oder einen langen – das ist vorsichtiger.",
 "The verse “recite what is easy for you” is fulfilled with one verse; Abū Yūsuf and Muḥammad require three short verses or one long one – which is more cautious.",
 221,
 0,
-"Abū Ḥanīfa"
+"Abū Ḥanīfa – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Wie hoch darf die Niederwerfungsstelle höchstens über der Stelle der Füße liegen?": [
@@ -403,23 +403,23 @@ window.FIQH_DALIL = {
 "Wie gilt beten im fliegenden Flugzeug in Bezug auf das Stehen?": [
 [
 "J",
-"Abū Ḥanīfa",
+"Abū Ḥanīfa – al-Hidāya (al-Marġīnānī) (Gebet im Schiff)",
 "Im fahrenden Schiff darf man sitzend beten, weil dort meist Schwindel auftritt; stehend ist besser. Das Flugzeug wird dem gleichgestellt.",
 "In a moving ship one may pray sitting because dizziness usually occurs there; standing is better. The aeroplane is treated the same.",
 220,
 0,
-"Abū Ḥanīfa"
+"Abū Ḥanīfa – al-Hidāya (al-Marghīnānī) (prayer on a ship)"
 ]
 ],
 "Welche Handlung im Gebet ist nach Abū Ḥanīfa Fardh, nach den anderen Schulen aber anders geregelt?": [
 [
 "J",
-"Abū Ḥanīfa",
+"Abū Ḥanīfa – al-Hidāya (al-Marġīnānī)",
 "Das Gebet durch eigene Handlung zu verlassen ist fardh; der Salām selbst ist wadschib.",
 "Leaving the prayer by one's own act is farḍ; the salām itself is wājib.",
 229,
 0,
-"Abū Ḥanīfa"
+"Abū Ḥanīfa – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Welcher Teil des Salām ist hanafitisch wadschib?": [
@@ -524,12 +524,12 @@ window.FIQH_DALIL = {
 "Was gilt hanafitisch für das Lesen aus dem Muṣḥaf im Gebet?": [
 [
 "J",
-"Abū Ḥanīfa",
+"Abū Ḥanīfa – al-Hidāya (al-Marġīnānī)",
 "Den Muṣḥaf tragen, ansehen und blättern ist ʿamal kaṯīr und gleicht einer Belehrung von außen; die beiden Schüler halten es für makrūh.",
 "Carrying the muṣḥaf, looking at it and turning pages is ʿamal kathīr and resembles instruction from outside; the two students consider it makrūh.",
 255,
 0,
-"Abū Ḥanīfa"
+"Abū Ḥanīfa – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Nach welcher Regel der späteren Hanafiten verdirbt ein Fehler in der Vokalisierung (Iʿrāb) das Gebet?": [
@@ -1117,12 +1117,12 @@ window.FIQH_DALIL = {
 "Welches Begriffspaar ist nach Ibn ʿĀbidīn gleichbedeutend mit mustaḥabb?": [
 [
 "D",
-"Ibn ʿĀbidīn",
+"Ibn ʿĀbidīn (Radd al-Muḥtār)",
 "Mandūb, mustaḥabb, nāfila und taṭawwuʿ sind gleichbedeutend; sie zu lassen heißt, das Bessere zu lassen.",
 "Mandūb, mustaḥabb, nāfila and taṭawwuʿ are synonymous; leaving them means leaving what is better.",
 49,
 124,
-"Ibn ʿĀbidīn"
+"Ibn ʿĀbidīn (Radd al-Muḥtār)"
 ]
 ],
 "Wie nennen die Hanafiten einen Vertrag, bei dem nur eine Nebenbedingung fehlt?": [
@@ -2064,12 +2064,12 @@ window.FIQH_DALIL = {
 "Ein Reisender fasst im Ramaḍān die Niyya für ein Gelübdefasten. Was gilt nach Abū Ḥanīfa?": [
 [
 "J",
-"Abū Ḥanīfa",
+"Abū Ḥanīfa – al-Hidāya (al-Marġīnānī)",
 "Der Reisende muss im Ramaḍān nicht fasten; die Zeit ist für ihn nicht allein dem Ramaḍān bestimmt, deshalb zählt sein Fasten für das beabsichtigte Gelübde.",
 "The traveller need not fast in Ramaḍān; for him the time is not reserved for Ramaḍān alone, so his fast counts for the intended vow.",
 401,
 0,
-"Abū Ḥanīfa"
+"Abū Ḥanīfa – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Was sagte der Prophet ﷺ über das Fastenbrechen und den Saḥūr?": [
@@ -2784,12 +2784,12 @@ window.FIQH_DALIL = {
 "Was ist nach Abū Ḥanīfa die Abenddämmerung (Schafaq), mit deren Verschwinden Maghrib endet?": [
 [
 "J",
-"Abū Ḥanīfa",
+"Abū Ḥanīfa – al-Hidāya (al-Marġīnānī)",
 "Die Šafaq ist das Weiß nach der Röte; die beiden Schüler und die anderen Schulen verstehen darunter die Röte (Ibn ʿUmar: „Die Šafaq ist die Röte“).",
 "The shafaq is the whiteness after the redness; the two students and the other schools take it to be the redness (Ibn ʿUmar: “The shafaq is the redness”).",
 181,
 44,
-"Abū Ḥanīfa"
+"Abū Ḥanīfa – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Was geschieht nach hanafitischer Lehre, wenn während des Fadschr-Gebets die Sonne aufgeht?": [
@@ -3348,12 +3348,12 @@ window.FIQH_DALIL = {
 "Welcher Imam verlangt keinen Ġusl, wenn sich Manī mit Lust löste, aber erst nach Abklingen der Lust austrat?": [
 [
 "J",
-"Abū Yūsuf",
+"Abū Yūsuf – al-Hidāya (al-Marġīnānī)",
 "Löst sich der Manī mit Lust, tritt aber erst danach aus, verlangen Abū Ḥanīfa und Muḥammad Ġusl, Abū Yūsuf nicht; seine Meinung erleichtert auf Reisen und im Winter.",
 "If semen detaches with desire but leaves only afterwards, Abū Ḥanīfa and Muḥammad require ghusl, Abū Yūsuf does not; his view gives relief when travelling and in winter.",
 152,
 0,
-"Abū Yūsuf"
+"Abū Yūsuf – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Welche Art von Pflicht ist das Waschen eines verstorbenen Muslims?": [
@@ -3863,12 +3863,12 @@ window.FIQH_DALIL = {
 "Wie definiert Abū Ḥanīfa den Īmān?": [
 [
 "D",
-"Abū Ḥanīfa; Māturīdī",
+"Abū Ḥanīfa (al-Fiqh al-Akbar, al-Waṣiyya); al-Māturīdī",
 "Īmān ist Bestätigung mit dem Herzen und Bekenntnis mit der Zunge; Māturīdī hält das Bekenntnis nur für die diesseitigen Urteile für nötig.",
 "Īmān is affirmation with the heart and declaration with the tongue; Māturīdī holds the declaration necessary only for worldly rulings.",
 57,
 0,
-"Abū Ḥanīfa; Māturīdī"
+"Abū Ḥanīfa (al-Fiqh al-Akbar, al-Waṣiyya); al-Māturīdī"
 ]
 ],
 "Sind Taten nach der Ahl as-Sunna ein Teil des Īmān?": [
@@ -4160,12 +4160,12 @@ window.FIQH_DALIL = {
 "Wie ist der Qadar nach Abū Ḥanīfa auf der Tafel geschrieben?": [
 [
 "D",
-"Abū Ḥanīfa",
+"Abū Ḥanīfa (al-Fiqh al-Akbar)",
 "Alles ist auf der Tafel „durch Beschreibung“ geschrieben (z. B. „X wird als Gläubiger leben und Gutes tun“), nicht als Befehl – so entsteht kein Zwang.",
 "Everything is written on the Tablet “by description” (e.g. “X will live as a believer and do good”), not as a command – so there is no compulsion.",
 112,
 182,
-"Abū Ḥanīfa"
+"Abū Ḥanīfa (al-Fiqh al-Akbar)"
 ]
 ],
 "Was sagte ʿUmar, als er wegen der Pest nicht nach Damaskus ging?": [
@@ -4640,23 +4640,23 @@ window.FIQH_DALIL = {
 "Wie definierte Abū Yūsuf eine „Stadt“ für das Freitagsgebet?": [
 [
 "J",
-"Abū Yūsuf",
+"Abū Yūsuf – al-Hidāya (al-Marġīnānī)",
 "Eine Stadt ist, wo die größte Moschee die zum Freitag Verpflichteten nicht fasst; danach geben die späteren Hanafiten meist Fatwa.",
 "A town is where the largest mosque cannot hold those obliged to attend Friday; the later Ḥanafīs mostly give fatwā on this.",
 302,
 0,
-"Abū Yūsuf"
+"Abū Yūsuf – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Wie viele Männer außer dem Imam braucht das Freitagsgebet nach Abū Ḥanīfa mindestens?": [
 [
 "J",
-"Abū Ḥanīfa",
+"Abū Ḥanīfa – al-Hidāya (al-Marġīnānī)",
 "Die Gemeinschaft (Ǧamāʿa) ist mindestens eine Mehrzahl von drei außer dem Imam; die beiden Schüler: zwei; Schafiiten und Hanbaliten: 40.",
 "The congregation (jamāʿa) is at least a plural of three besides the imam; the two students: two; Shāfiʿīs and Ḥanbalīs: 40.",
 303,
 0,
-"Abū Ḥanīfa"
+"Abū Ḥanīfa – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Ist die Erlaubnis des Staates hanafitisch eine Bedingung des Freitagsgebets?": [
@@ -5406,12 +5406,12 @@ window.FIQH_DALIL = {
 "Wie definierte Imām Abū Ḥanīfa den Fiqh?": [
 [
 "D",
-"Abū Ḥanīfa",
-"„Fiqh ist, dass der Mensch kennt, was für ihn und was gegen ihn ist.“ Das war damals eine allgemeine Definition, die auch Glauben und Ethik umfasste.",
-"“Fiqh is that a person knows what is for him and what is against him.” At that time this general definition also covered belief and ethics.",
+"Abū Ḥanīfa – überliefert bei Ṣadr aš-Šarīʿa, at-Tawḍīḥ",
+"„Fiqh ist, dass der Mensch kennt, was für ihn und was gegen ihn ist“ (maʿrifatu n-nafsi mā lahā wa mā ʿalayhā). Das war damals eine allgemeine Definition, die auch Glauben und Ethik umfasste.",
+"“Fiqh is that a person knows what is for him and what is against him” (maʿrifatu n-nafsi mā lahā wa mā ʿalayhā). At that time this general definition also covered belief and ethics.",
 35,
 0,
-"Abū Ḥanīfa"
+"Abū Ḥanīfa – reported by Ṣadr ash-Sharīʿa, at-Tawḍīḥ"
 ]
 ],
 "Wie nennt man die Person, die einem Mujtahid bzw. Madhab folgt, weil sie selbst nicht zum Idschtihād fähig ist?": [
@@ -6344,12 +6344,12 @@ window.FIQH_DALIL = {
 "Kot von Schafen und Rindern gehört zu welcher Unreinheit?": [
 [
 "J",
-"Abū Yūsuf, Muḥammad (Fatwa)",
+"Abū Yūsuf, Muḥammad (Fatwa) – al-Hidāya (al-Marġīnānī)",
 "Urin und Kot essbarer Tiere sind leichte Unreinheit, weil die Belege dazu nicht übereinstimmen; Abū Ḥanīfa zählt sie zur schweren.",
 "The urine and dung of edible animals are light impurity because the evidence about them conflicts; Abū Ḥanīfa counts them as heavy.",
 124,
 0,
-"Abū Yūsuf, Muḥammad (fatwā)"
+"Abū Yūsuf, Muḥammad (fatwa) – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Wer zu übermäßigen Zweifeln neigt: Wie oft wäscht er nicht sichtbare Unreinheit?": [
@@ -6366,12 +6366,12 @@ window.FIQH_DALIL = {
 "Darf man mit Rosenwasser oder Essig Unreinheit von Kleidung entfernen?": [
 [
 "J",
-"Abū Ḥanīfa, Abū Yūsuf (Fatwa)",
+"Abū Ḥanīfa, Abū Yūsuf (Fatwa) – al-Hidāya (al-Marġīnānī)",
 "Rosenwasser, Essig und Fruchtsäfte entfernen Unreinheit von Kleidung und Körper; für Wuḍūʾ und Ġusl taugen sie nach Übereinstimmung nicht.",
 "Rose water, vinegar and fruit juices remove impurity from clothes and body; by agreement they are not valid for wuḍūʾ or ghusl.",
 117,
 0,
-"Abū Ḥanīfa, Abū Yūsuf (fatwā)"
+"Abū Ḥanīfa, Abū Yūsuf (fatwa) – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Wie wird ein Messer oder Glas nach hanafitischer Ansicht von Unreinheit gereinigt?": [
@@ -6589,12 +6589,12 @@ window.FIQH_DALIL = {
 "Welche der folgenden Unreinheiten gilt nach der Fatwa (Abū Yūsuf und Muḥammad) als leicht (ḫafīfa)?": [
 [
 "J",
-"Abū Yūsuf, Muḥammad (Fatwa)",
+"Abū Yūsuf, Muḥammad (Fatwa) – al-Hidāya (al-Marġīnānī)",
 "Urin von Pferd, Schaf und anderen essbaren Tieren ist leichte Unreinheit, weil die Belege dazu nicht übereinstimmen.",
 "The urine of horses, sheep and other edible animals is light impurity because the evidence about it conflicts.",
 124,
 0,
-"Abū Yūsuf, Muḥammad (fatwā)"
+"Abū Yūsuf, Muḥammad (fatwa) – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Wie ist es hanafitisch, sich beim Austreten mit der Rückseite zur Qibla zu wenden – auch in einem geschlossenen Raum?": [
@@ -6774,12 +6774,12 @@ window.FIQH_DALIL = {
 "Nach welchem Imam ist die Niyya beim Tayammum nicht Pflicht?": [
 [
 "J",
-"Zufar",
+"Zufar – al-Hidāya (al-Marġīnānī)",
 "Nach Zufar ist die Niyya beim Tayammum keine Pflicht; nach allen anderen gehört sie zu den Pflichten.",
 "According to Zufar the niyya is not obligatory in tayammum; according to everyone else it is one of the obligations.",
 160,
 0,
-"Zufar"
+"Zufar – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Was tat der Prophet ﷺ, als ʿAmr ibn al-ʿĀṣ nach Iḥtilām in einer kalten Nacht mit Tayammum vorbetete?": [
@@ -6807,12 +6807,12 @@ window.FIQH_DALIL = {
 "Man hat das vorhandene Wasser vergessen und erinnert sich erst nach dem Gebet mit Tayammum. Was gilt nach Abū Ḥanīfa?": [
 [
 "J",
-"Abū Ḥanīfa, Muḥammad",
+"Abū Ḥanīfa, Muḥammad – al-Hidāya (al-Marġīnānī)",
 "Vergessen wird wie Unfähigkeit behandelt, das Wasser zu benutzen; erinnert man sich erst nach dem Gebet, wird es nicht wiederholt, im Gebet aber bricht man ab.",
 "Forgetting is treated like being unable to use the water; if one remembers only after the prayer it is not repeated, but during prayer one stops.",
 161,
 158,
-"Abū Ḥanīfa, Muḥammad"
+"Abū Ḥanīfa, Muḥammad – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Ein Junub hat Tayammum gemacht und lässt dann einen Wind. Was ist sein Zustand?": [
@@ -6937,12 +6937,12 @@ window.FIQH_DALIL = {
 "Bei welchen Gütern erlauben Abū Ḥanīfa und Abū Yūsuf den Weiterverkauf vor der Inbesitznahme?": [
 [
 "S",
-"Abū Ḥanīfa, Abū Yūsuf",
+"Abū Ḥanīfa, Abū Yūsuf – al-Hidāya (al-Marġīnānī)",
 "Das Verbot, vor der Inbesitznahme weiterzuverkaufen, gilt wegen der Gefahr des Untergangs der Ware; bei Immobilien ist sie gering – daher aus Istiḥsān erlaubt.",
 "The prohibition on reselling before taking possession is due to the risk of the goods perishing; with real estate it is small – so permitted by istiḥsān.",
 584,
 0,
-"Abū Ḥanīfa, Abū Yūsuf"
+"Abū Ḥanīfa, Abū Yūsuf – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Was ist „Talaqqī ar-rukbān“?": [
@@ -6981,12 +6981,12 @@ window.FIQH_DALIL = {
 "Ist ein Ratenaufschlag (vade farkı) erlaubt?": [
 [
 "J",
-"as-Saraḫsī",
+"as-Saraḫsī (al-Mabsūṭ)",
 "Bar- und Terminverkauf sind beide Handel; der Preis darf für die Frist höher sein, wenn er beim Vertrag fest vereinbart wird.",
 "Cash and deferred sale are both trade; the price may be higher for the term if it is firmly agreed at the contract.",
 587,
 0,
-"as-Sarakhsī"
+"as-Sarakhsī (al-Mabsūṭ)"
 ],
 [
 "Q",
@@ -7438,12 +7438,12 @@ window.FIQH_DALIL = {
 ],
 [
 "J",
-"Abū Ḥanīfa, Muḥammad",
+"Abū Ḥanīfa, Muḥammad – al-Hidāya (al-Marġīnānī)",
 "Weil der Hadith die Zeit (waqt) nennt, endet der Wuḍūʾ mit dem Ende der Zeit. asch-Schāfiʿī: für jedes Gebet neu.",
 "Because the hadith names the time (waqt), the wuḍūʾ ends when the time ends. Al-Shāfiʿī: anew for every prayer.",
 151,
 0,
-"Abū Ḥanīfa, Muḥammad"
+"Abū Ḥanīfa, Muḥammad – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Wie lange darf ein Ansässiger (Muqīm) über die Mests streichen?": [
@@ -7659,12 +7659,12 @@ window.FIQH_DALIL = {
 ],
 [
 "J",
-"Abū Yūsuf, Muḥammad",
+"Abū Yūsuf, Muḥammad – al-Hidāya (al-Marġīnānī)",
 "Dicke Socken, in denen man gehen kann, gleichen dem Mest. Abū Ḥanīfa schloss sich dem am Lebensende an; so lautet die Fatwa.",
 "Thick socks one can walk in are like khuffs. Abū Ḥanīfa adopted this at the end of his life; this is the fatwā.",
 146,
 116,
-"Abū Yūsuf, Muḥammad"
+"Abū Yūsuf, Muḥammad – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Welche Regel gilt für das Bestreichen eines Gipsverbandes (Ǧabīra)?": [
@@ -7895,12 +7895,12 @@ window.FIQH_DALIL = {
 "Jemand hat 239 Dirham Silber. Worauf zahlt er nach Abū Ḥanīfa?": [
 [
 "J",
-"Abū Ḥanīfa",
+"Abū Ḥanīfa – al-Hidāya (al-Marġīnānī)",
 "Über 200 Dirham zählt der Überschuss erst ab 40 Dirham (ein Fünftel des Niṣāb), gestützt auf Berichte von ʿAlī und Muʿāḏ; die beiden Schüler berechnen alles anteilig.",
 "Above 200 dirhams the surplus only counts from 40 dirhams (a fifth of the niṣāb), based on reports from ʿAlī and Muʿādh; the two students calculate everything proportionally.",
 465,
 0,
-"Abū Ḥanīfa"
+"Abū Ḥanīfa – al-Hidāya (al-Marghīnānī)"
 ]
 ],
 "Zählt beim Gold-Niṣāb das Gewicht oder der Wert?": [
@@ -8232,12 +8232,12 @@ window.FIQH_DALIL = {
 "Was verstand al-Kāsānī unter „fī sabīlillāh“?": [
 [
 "J",
-"al-Kāsānī",
+"al-Kāsānī (Badāʾiʿ aṣ-Ṣanāʾiʿ)",
 "„Fī sabīlillāh“ sind alle Werke, die Allah näher bringen, für Bedürftige; einige Hanafiten zählten auch den Wissenserwerb dazu.",
 "“Fī sabīlillāh” covers all works bringing one closer to Allah, for the needy; some Ḥanafīs also counted the pursuit of knowledge.",
 505,
 0,
-"al-Kāsānī"
+"al-Kāsānī (Badāʾiʿ aṣ-Ṣanāʾiʿ)"
 ]
 ],
 "Darf man hanafitisch die ganze Zakāt einer einzigen Person geben?": [
