@@ -17,6 +17,15 @@
   var BY_ID = {};
   LESSONS.forEach(function (l) { BY_ID[l.id] = l; });
   function bookOf(l) { return l.book || 1; }
+  /* English: the meanings of the words come from madina-en.js. v.de keeps the German meaning,
+     so the question ids (and with them the progress) stay the same in both languages. */
+  var MEAN_EN = window.I18N && window.I18N.lang === "en" ? window.MADINA_EN : null;
+  LESSONS.forEach(function (l) {
+    l.vocab.forEach(function (v) {
+      v.de = v.de || v[1];
+      if (MEAN_EN && MEAN_EN[v.de]) v[1] = MEAN_EN[v.de];
+    });
+  });
   var BOOKS = { 1: LESSONS.filter(function (l) { return bookOf(l) === 1; }), 2: LESSONS.filter(function (l) { return bookOf(l) === 2; }) };
   var BOOK2_GATE = 5;
 
@@ -84,7 +93,7 @@
       return q;
     }
     l.vocab.forEach(function (v) {
-      var word = v[0], de = v[1], pl = v[2], key = hash(pre + word + "|" + de), rnd = seeded(key);
+      var word = v[0], de = v[1], pl = v[2], key = hash(pre + word + "|" + v.de), rnd = seeded(key);
       var sameDe = near(l.vocab, de, 1), sameAr = near(l.vocab, word, 0);
       var info = word + " = " + de + (pl ? " · Plural: " + pl : "");
       var wrongDe = pickOthers(sameDe, [de], 3, rnd);
@@ -195,8 +204,10 @@
     var saved = JSON.parse(localStorage.getItem("fiqh:arabic") || "null");
     if (saved && saved.tab) state.tab = saved.tab;
     if (saved && saved.book === 2 && BOOKS[2].length) state.book = 2;
+    /* the open lesson survives a reload (e.g. switching the language) */
+    if (saved && saved.lesson && BY_ID[saved.lesson] && bookOf(BY_ID[saved.lesson]) === state.book) state.lesson = saved.lesson;
   } catch (e) {}
-  function remember() { try { localStorage.setItem("fiqh:arabic", JSON.stringify({ tab: state.tab, book: state.book })); } catch (e) {} }
+  function remember() { try { localStorage.setItem("fiqh:arabic", JSON.stringify({ tab: state.tab, book: state.book, lesson: state.lesson })); } catch (e) {} }
   function lessons() { return BOOKS[state.book]; }
   function bookQs() { return QS.filter(function (q) { return qBook(q) === state.book; }); }
   function irabList() { return state.book === 2 ? IRAB2 : ALL_IRAB; }
@@ -257,6 +268,7 @@
   }
 
   function render() {
+    remember();
     var qs = bookQs(), all = stats(qs), irab = stats(irabList()), ls = lessons(), lock = locked();
     $("#ar-ring").innerHTML = ring(all.pct);
     var done = ls.filter(function (l) { return stats(lessonQs(l.id)).pct === 100; }).length;
@@ -346,7 +358,7 @@
       (next ? '<button type="button" class="btn" data-ar-lesson="' + next.id + '">' + T("Lektion") + " " + esc(next.n) + " →</button>" : "") + "</nav></div>";
   }
   function vocabTable(list, withLesson) {
-    return '<div class="ar-table-wrap"><table class="ar-table ar-vocab"><thead><tr><th>' + T("Arabisch") + "</th><th>" + T("Deutsch") + "</th><th>" + T("Plural") + "</th>" + (withLesson ? "<th>" + T("Lek.") + "</th>" : "") + "</tr></thead><tbody>" +
+    return '<div class="ar-table-wrap"><table class="ar-table ar-vocab"><thead><tr><th>' + T("Arabisch") + "</th><th>" + T("Bedeutung") + "</th><th>" + T("Plural") + "</th>" + (withLesson ? "<th>" + T("Lek.") + "</th>" : "") + "</tr></thead><tbody>" +
       list.map(function (v) {
         return "<tr><td>" + ar(v[0], "ar-word") + "</td><td>" + esc(v[1]) + "</td><td>" + (v[2] ? ar(v[2], "ar-word") : "") + "</td>" + (withLesson ? '<td class="ar-lek">' + esc(v[3]) + "</td>" : "") + "</tr>";
       }).join("") + "</tbody></table></div>";
