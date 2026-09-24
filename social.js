@@ -78,8 +78,8 @@
   };
   function LG() { return LEAGUES[league]; }
   function lkey(cal) { return cal.key + LG().sfx; }
-  /* Week 1 of season 1 was already played with the first rules; it keeps them. */
-  var AR_BALANCED_FROM = 1;
+  /* The balanced rules apply from the first week on (index 0). */
+  var AR_BALANCED_FROM = 0;
   function arVocab(pool, rnd) {
     var keys = [], seen = {};
     APP.shuffle(pool.filter(function (q) { return /^ar-v-/.test(q._lid); }), rnd).forEach(function (q) {
