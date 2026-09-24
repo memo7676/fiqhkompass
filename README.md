@@ -77,13 +77,12 @@ Im Quiz-Modus „Gemischt“ merkt sich `app.js` in `localStorage` („fiqh:mixs
 
 ## Arabisch-Liga: jede Woche gleich schwer
 
-Ab Woche 2 der ersten Saison (`AR_BALANCED_FROM` in `social.js`) gilt:
+Seit Woche 1 der ersten Saison (`AR_BALANCED_FROM` in `social.js`) gilt:
 - **Vokabeln**: 10 Wörter aus den Lektionen der Woche, immer 5 × Arabisch → Deutsch und 5 × Deutsch → Arabisch, jedes Wort nur einmal.
 - **Grammatik**: nicht mehr an die Lektionen gebunden. Alle Grammatikfragen des Buchs werden in Buchreihenfolge in 10 Stufen geteilt (leicht → schwer), jede Woche kommt je eine Frage aus jeder Stufe. Innerhalb einer Stufe wiederholt sich eine Frage erst, wenn alle dran waren.
 - **Iʿrāb**: die Satzmuster von `irabgen.js` kommen der Reihe nach dran (`make(…, balanced)`), jede Woche also dieselbe Mischung.
 - **Sarf**: drei Verben aus drei verschiedenen Abwāb.
 
-Woche 1 behält die alten Regeln, weil sie schon gespielt wurde.
 
 ## Belege (Dalīl) zu den Antworten
 
