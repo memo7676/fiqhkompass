@@ -368,6 +368,24 @@
       '<p class="ar-count">' + T("{n} von {m} Vokabeln · der Trainer fragt Bedeutung, Arabisch und Plural ab und beginnt mit deinen Fehlern.", { n: hit.length, m: rows.length }) + "</p>" +
       vocabTable(hit.slice(0, 400), true) + "</div>";
   }
+  /* technical terms in categories (indices into M.glossary); anything not listed lands in „Weitere“ */
+  var GLOSS_CATS = [
+    ["Fälle und Fallzeichen", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 49]],
+    ["Satzarten und Satzteile", [16, 17, 18, 19, 20, 21, 25, 26, 40, 41, 42]],
+    ["Verben", [22, 23, 24]],
+    ["Genitivverbindung, Adjektiv, Präposition", [27, 28, 29, 30, 31, 32, 33]],
+    ["Pronomen und Fragewörter", [34, 35, 36, 37, 38, 39]],
+    ["Zahl, Plural und besondere Nomen", [43, 44, 45, 46, 47, 48, 50]]
+  ];
+  function glossGroups() {
+    var used = {}, out = GLOSS_CATS.map(function (c) {
+      var items = c[1].filter(function (i) { return M.glossary[i]; }).map(function (i) { used[i] = 1; return M.glossary[i]; });
+      return { name: T(c[0]), items: items };
+    });
+    var rest = M.glossary.filter(function (g, i) { return !used[i]; });
+    if (rest.length) out.push({ name: T("Weitere Begriffe"), items: rest });
+    return out.filter(function (g) { return g.items.length; });
+  }
   function irabPane() {
     genCheck();
     var list = irabList(), is = stats(list), b1 = state.book === 1;
@@ -383,10 +401,13 @@
         return "<details class=\"ar-intro\"" + (i === 0 ? " open" : "") + "><summary>" + esc(sec.t) + "</summary>" +
           sec.p.map(function (p) { return "<p>" + rich(p) + "</p>"; }).join("") + "</details>";
       }).join("") + "</section>" +
-      '<section class="ar-block"><h3>' + T("Fachbegriffe") + " <small>" + M.glossary.length + "</small></h3>" +
-      '<div class="ar-table-wrap"><table class="ar-table ar-gloss"><thead><tr><th>' + T("Begriff") + "</th><th>" + T("Umschrift") + "</th><th>" + T("Bedeutung") + "</th></tr></thead><tbody>" +
-      M.glossary.map(function (g) { return "<tr><td>" + ar(g[0], "ar-word") + "</td><td><i>" + esc(g[1]) + "</i></td><td>" + esc(g[2]) + "</td></tr>"; }).join("") +
-      "</tbody></table></div></section>" +
+      '<section class="ar-block"><details class="ar-intro ar-gloss-box"><summary>' + T("Fachbegriffe") + " <small>" + M.glossary.length + "</small></summary>" +
+      glossGroups().map(function (g) {
+        return '<details class="ar-gloss-cat"><summary>' + esc(g.name) + " <small>" + g.items.length + "</small></summary>" +
+          '<ul class="ar-gloss-list">' + g.items.map(function (x) {
+            return '<li>' + ar(x[0], "ar-word") + '<i class="ar-gloss-tr">' + esc(x[1]) + "</i><span>" + esc(x[2]) + "</span></li>";
+          }).join("") + "</ul></details>";
+      }).join("") + "</details></section>" +
       '<section class="ar-block"><h3>' + T("Musteranalysen") + " <small>" + models.length + "</small></h3>" +
       models.map(function (x) { return '<p class="ar-model-src">' + T("Lektion") + " " + esc(x[0].n) + " · " + esc(x[0].title) + "</p>" + modelHtml(x[1]); }).join("") +
       "</section></div>";
