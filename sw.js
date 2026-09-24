@@ -1,7 +1,7 @@
 /* Service worker: makes Ṭālibu l-ʿIlm installable and usable offline.
    Own files: network first (always the newest version when online), cache as fallback.
    Fonts and the Firebase SDK: cache first. Firebase data itself is never cached here. */
-var CACHE = "fiqh-kompass-v15";
+var CACHE = "fiqh-kompass-v16";
 var CORE = [
   "./", "index.html", "datenschutz.html", "manifest.webmanifest", "i18n-en.js", "i18n.js",
   "data.js", "fiqh-en.js", "fiqh-belege.js", "app.js", "learn.js", "irabgen.js", "sarf.js", "arabic.js", "mistakes.js", "home.js", "arabisch/madina1-a.js", "arabisch/madina1-b.js", "arabisch/madina1-c.js", "social.js", "chat.js", "install.js", "auth.js", "backend.js", "firebase-config.js",
