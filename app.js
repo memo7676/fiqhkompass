@@ -463,9 +463,23 @@
   var game = null;
   var timerId = null;
 
+  /* Where the right answer stood the last time a question was shown (per question id).
+     When the question comes again – above all after a wrong answer – it gets a new place,
+     so the order can not be learned by heart. Competition rounds (seeded rnd) keep their
+     fixed order, which is the same for everyone. */
+  var lastPos = {};
+  try { lastPos = JSON.parse(localStorage.getItem("fiqh:optpos") || "{}") || {}; } catch (e) { lastPos = {}; }
   function withOptions(q, rnd) {
     var opts = q.a.map(function (text, i) { return { text: text, correct: i === q.c }; });
-    return { src: q, options: shuffle(opts, rnd) };
+    var out = shuffle(opts, rnd);
+    var key = q._lid || q.q;
+    if (!rnd && key && opts.length > 1) {
+      var prev = lastPos[key];
+      for (var n = 0; n < 20 && typeof prev === "number" && out[prev] && out[prev].correct; n++) out = shuffle(opts);
+      lastPos[key] = out.findIndex(function (o) { return o.correct; });
+      try { localStorage.setItem("fiqh:optpos", JSON.stringify(lastPos)); } catch (e) {}
+    }
+    return { src: q, options: out };
   }
 
   /* preset (optional): { questions, rnd, label, onProgress(p), onFinish(p), onLeave() }
