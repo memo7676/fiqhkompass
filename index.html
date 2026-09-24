@@ -948,6 +948,12 @@ dialog.auth { border-radius: 20px; }
 .arabic { display: grid; gap: 18px; }
 .ar-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--line); scroll-margin-top: 90px; }
 .ar-tab { flex: 1; padding: 9px 10px; border-radius: 10px; border: 0; background: none; font: 600 .95rem/1.2 var(--body); color: var(--muted); cursor: pointer; }
+.ar-books { display: flex; gap: 8px; margin-bottom: 10px; }
+.ar-book { flex: 1; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font: 600 .95rem/1.2 var(--body); color: var(--muted); cursor: pointer; }
+.ar-book[aria-pressed="true"] { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 0 1px var(--primary) inset; }
+.ar-lock { text-align: center; }
+.ar-lock .ar-lessons { text-align: left; margin-top: 14px; }
+.ar-lock-icon { font-size: 2rem; margin: 0; }
 .ar-tab[aria-selected="true"] { background: var(--surface); color: var(--primary); box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 0 0 1px var(--line); }
 .ar-lessons { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .ar-lessons .lt { display: block; padding: 0; }
@@ -1302,7 +1308,7 @@ dialog.auth { border-radius: 20px; }
     <div class="hero hero-ar">
       <div class="wrap intro">
         <p class="hero-eyebrow">Arabisch <span lang="ar" dir="rtl">·&nbsp;دُرُوسُ اللُّغَةِ الْعَرَبِيَّةِ</span></p>
-        <h1>Arabisch mit dem Madina-Buch 1</h1>
+        <h1>Arabisch mit den Madina-Büchern</h1>
         <p>Vokabeln, Grammatik und alles drumherum – Lektion für Lektion, bis du einen Satz vollständig analysieren kannst: den <b>Iʿrāb</b>. Die deutschen Erklärungen folgen dem Schlüssel zum Buch.</p>
         <div class="stats"><span><b id="ar-count-lessons">0</b> Lektionen</span><span><b id="ar-count-vocab">0</b> Vokabeln</span><span><b id="ar-count-q">0</b> Übungsfragen</span></div>
       </div>
@@ -1323,6 +1329,7 @@ dialog.auth { border-radius: 20px; }
           </div>
         </div>
       </div>
+      <div class="ar-books" id="ar-books" role="group" aria-label="Buch" hidden></div>
       <div class="ar-tabs" id="ar-tabs" role="tablist" aria-label="Arabisch-Bereich">
         <button type="button" class="ar-tab" role="tab" data-ar-tab="lektionen" aria-selected="true">Lektionen</button>
         <button type="button" class="ar-tab" role="tab" data-ar-tab="vokabeln" aria-selected="false">Vokabeln</button>
@@ -1878,6 +1885,9 @@ dialog.auth { border-radius: 20px; }
 <script src="arabisch/madina1-a.js"></script>
 <script src="arabisch/madina1-b.js"></script>
 <script src="arabisch/madina1-c.js"></script>
+<script src="arabisch/madina2-a.js"></script>
+<script src="arabisch/madina2-b.js"></script>
+<script src="arabisch/madina2-c.js"></script>
 <script src="irabgen.js"></script>
 <script src="sarf.js"></script>
 <script src="arabic.js"></script>

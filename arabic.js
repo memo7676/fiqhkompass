@@ -1,5 +1,7 @@
-/* Arabisch: Madina-Buch 1 – Lektionen, Vokabeln, Grammatik und Iʿrāb.
-   Data: arabisch/madina1-*.js (window.MADINA). Learning uses the quiz engine (learn mode)
+/* Arabisch: Madina-Buch 1 und 2 – Lektionen, Vokabeln, Grammatik und Iʿrāb.
+   Data: arabisch/madina1-*.js and madina2-*.js (window.MADINA; book-2 lessons carry book: 2).
+   Book 2 opens once the last BOOK2_GATE lessons of book 1 are learned to 100 % (no open mistakes).
+   Learning uses the quiz engine (learn mode)
    and the shared progress of learn.js; ids start with "ar-":
      ar-v-… meaning of a word · ar-d-… German → Arabic · ar-p-… plural
      ar-g-… grammar question · ar-i-… iʿrāb of a marked word */
@@ -14,6 +16,9 @@
   var LESSONS = M.lessons;
   var BY_ID = {};
   LESSONS.forEach(function (l) { BY_ID[l.id] = l; });
+  function bookOf(l) { return l.book || 1; }
+  var BOOKS = { 1: LESSONS.filter(function (l) { return bookOf(l) === 1; }), 2: LESSONS.filter(function (l) { return bookOf(l) === 2; }) };
+  var BOOK2_GATE = 5;
 
   /* ---------- text helpers ---------- */
   var AR = "\\u0600-\\u06FF\\u0750-\\u077F\\uFB50-\\uFDFF\\uFE70-\\uFEFF";
@@ -70,14 +75,16 @@
   }
   LESSONS.forEach(function (l) {
     var s = SETS[l.id] = { vocab: [], gram: [], irab: [] };
-    var tt = T("Arabisch · Lektion {n}", { n: l.n }), srcText = T("Quelle: Madina-Buch 1, Lektion {n}", { n: l.n }) + " – " + l.title;
+    var b2 = bookOf(l) === 2, pre = b2 ? "b2|" : "";
+    var tt = b2 ? T("Arabisch · Buch 2 · Lektion {n}", { n: l.n }) : T("Arabisch · Lektion {n}", { n: l.n });
+    var srcText = T("Quelle: Madina-Buch {b}, Lektion {n}", { b: bookOf(l), n: l.n }) + " – " + l.title;
     function base(id, extra) {
       var q = { t: "arabisch", tt: tt, srcText: srcText, c: 0, lesson: l.id, _lid: id };
       Object.keys(extra).forEach(function (k) { q[k] = extra[k]; });
       return q;
     }
     l.vocab.forEach(function (v) {
-      var word = v[0], de = v[1], pl = v[2], key = hash(word + "|" + de), rnd = seeded(key);
+      var word = v[0], de = v[1], pl = v[2], key = hash(pre + word + "|" + de), rnd = seeded(key);
       var sameDe = near(l.vocab, de, 1), sameAr = near(l.vocab, word, 0);
       var info = word + " = " + de + (pl ? " · Plural: " + pl : "");
       var wrongDe = pickOthers(sameDe, [de], 3, rnd);
@@ -93,15 +100,18 @@
       }
     });
     l.quiz.forEach(function (g) {
-      add(s.gram, base("ar-g-" + hash(g.q + "|" + g.a[0]), { q: strip(g.q), ar: g.ar, a: g.a, e: strip(g.e) }));
+      add(s.gram, base("ar-g-" + hash(pre + g.q + "|" + g.a[0]), { q: strip(g.q), ar: g.ar, a: g.a, e: strip(g.e) }));
     });
     l.irab.forEach(function (it) {
-      add(s.irab, base("ar-i-" + hash(it.s + "|" + it.w), { q: T("Iʿrāb des markierten Wortes:"), ar: it.s, arMark: it.w, a: it.a, e: strip(it.e) }));
+      add(s.irab, base("ar-i-" + hash(pre + it.s + "|" + it.w), { q: T("Iʿrāb des markierten Wortes:"), ar: it.s, arMark: it.w, a: it.a, e: strip(it.e) }));
     });
   });
   function lessonQs(id) { var s = SETS[id]; return s.vocab.concat(s.gram, s.irab); }
-  var ALL_IRAB = [];
-  LESSONS.forEach(function (l) { ALL_IRAB = ALL_IRAB.concat(SETS[l.id].irab); });
+  /* ALL_IRAB: book 1 plus the generated sentences (irabgen.js works with the book-1 vocabulary) */
+  var ALL_IRAB = [], IRAB2 = [];
+  BOOKS[1].forEach(function (l) { ALL_IRAB = ALL_IRAB.concat(SETS[l.id].irab); });
+  BOOKS[2].forEach(function (l) { IRAB2 = IRAB2.concat(SETS[l.id].irab); });
+  function qBook(q) { return q.lesson === "gen" ? 1 : bookOf(BY_ID[q.lesson]); }
 
   /* ---------- new Iʿrāb sentences (irabgen.js) ----------
      When every Iʿrāb sentence is learned, 10 new ones are unlocked after GEN_WAIT.
@@ -180,9 +190,29 @@
   }
 
   /* ---------- state ---------- */
-  var state = { tab: "lektionen", lesson: null, filter: "" };
-  try { var saved = JSON.parse(localStorage.getItem("fiqh:arabic") || "null"); if (saved && saved.tab) state.tab = saved.tab; } catch (e) {}
-  function remember() { try { localStorage.setItem("fiqh:arabic", JSON.stringify({ tab: state.tab })); } catch (e) {} }
+  var state = { tab: "lektionen", lesson: null, filter: "", book: 1 };
+  try {
+    var saved = JSON.parse(localStorage.getItem("fiqh:arabic") || "null");
+    if (saved && saved.tab) state.tab = saved.tab;
+    if (saved && saved.book === 2 && BOOKS[2].length) state.book = 2;
+  } catch (e) {}
+  function remember() { try { localStorage.setItem("fiqh:arabic", JSON.stringify({ tab: state.tab, book: state.book })); } catch (e) {} }
+  function lessons() { return BOOKS[state.book]; }
+  function bookQs() { return QS.filter(function (q) { return qBook(q) === state.book; }); }
+  function irabList() { return state.book === 2 ? IRAB2 : ALL_IRAB; }
+  function gateLessons() { return BOOKS[1].slice(-BOOK2_GATE); }
+  /* Once earned, book 2 stays open: a later mistake in book 1 does not lock it again. Progress in
+     book 2 (synced with the account) counts as proof, so it also opens on a new device. */
+  var b2Earned = false;
+  try { b2Earned = localStorage.getItem("fiqh:book2") === "1"; } catch (e) {}
+  function book2Open() {
+    if (b2Earned) return true;
+    var ok = gateLessons().every(function (l) { return stats(lessonQs(l.id)).pct === 100; }) ||
+      QS.some(function (q) { return qBook(q) === 2 && lv(q) !== 0; });
+    if (ok) { b2Earned = true; try { localStorage.setItem("fiqh:book2", "1"); } catch (e) {} }
+    return ok;
+  }
+  function locked() { return state.book === 2 && !book2Open(); }
   var lastRound = null;
 
   function start(list, label, info, size) {
@@ -203,12 +233,14 @@
   }
   function startLesson(id, part) {
     var l = BY_ID[id], s = SETS[id];
+    if (bookOf(l) === 2 && !book2Open()) return;
     var list = part ? s[part] : lessonQs(id);
     var names = { vocab: T("Vokabeln"), gram: T("Grammatik"), irab: "Iʿrāb" };
-    start(list, T("Lektion") + " " + l.n + (part ? " · " + names[part] : ""), { lesson: id, part: part });
+    start(list, (bookOf(l) === 2 ? T("Buch 2") + " · " : "") + T("Lektion") + " " + l.n + (part ? " · " + names[part] : ""), { lesson: id, part: part });
   }
   function nextLesson() {
-    for (var i = 0; i < LESSONS.length; i++) if (stats(lessonQs(LESSONS[i].id)).pct < 100) return LESSONS[i];
+    var ls = lessons();
+    for (var i = 0; i < ls.length; i++) if (stats(lessonQs(ls[i].id)).pct < 100) return ls[i];
     return null;
   }
 
@@ -225,25 +257,27 @@
   }
 
   function render() {
-    var all = stats(QS), irab = stats(ALL_IRAB);
+    var qs = bookQs(), all = stats(qs), irab = stats(irabList()), ls = lessons(), lock = locked();
     $("#ar-ring").innerHTML = ring(all.pct);
-    var done = LESSONS.filter(function (l) { return stats(lessonQs(l.id)).pct === 100; }).length;
+    var done = ls.filter(function (l) { return stats(lessonQs(l.id)).pct === 100; }).length;
     $("#ar-stats").innerHTML =
-      "<span>" + T("<b>{n}</b> von {m} Lektionen bei 100 %", { n: done, m: LESSONS.length }) + "</span>" +
-      "<span>" + T("<b>{n}</b> Vokabelfragen gelernt", { n: stats(QS.filter(function (q) { return q._lid.indexOf("ar-g-") && q._lid.indexOf("ar-i-"); })).learned }) + "</span>" +
+      "<span>" + T("<b>{n}</b> von {m} Lektionen bei 100 %", { n: done, m: ls.length }) + "</span>" +
+      "<span>" + T("<b>{n}</b> Vokabelfragen gelernt", { n: stats(qs.filter(function (q) { return q._lid.indexOf("ar-g-") && q._lid.indexOf("ar-i-"); })).learned }) + "</span>" +
       "<span><b>" + irab.pct + " %</b> Iʿrāb</span>";
-    var nl = nextLesson(), go = $("#ar-next");
+    renderBooks();
+    var nl = lock ? null : nextLesson(), go = $("#ar-next");
     go.hidden = !nl;
     if (nl) go.textContent = (all.learned ? T("Weiter: Lektion {n}", { n: nl.n }) : T("Loslegen: Lektion {n}", { n: nl.n }));
     var open = all.wrong + all.almost, mis = $("#ar-mistakes");
-    mis.hidden = !open;
+    mis.hidden = !open || lock;
     mis.textContent = T("Fehler wiederholen ({n})", { n: open });
     $all(".ar-tab").forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-ar-tab") === state.tab ? "true" : "false"); });
     renderRound();
     var body = $("#ar-body");
+    if (state.tab === "sarf" && S) { body.innerHTML = S.pane(); S.wire(body, render); return; }
+    if (lock) { body.innerHTML = lockPane(); wire(body); return; }
     if (state.tab === "vokabeln") body.innerHTML = vocabPane();
     else if (state.tab === "irab") body.innerHTML = irabPane();
-    else if (state.tab === "sarf" && S) { body.innerHTML = S.pane(); S.wire(body, render); return; }
     else body.innerHTML = state.lesson ? lessonPane(BY_ID[state.lesson]) : listPane();
     wire(body);
   }
@@ -270,7 +304,7 @@
   }
 
   function listPane() {
-    return '<ol class="ar-lessons">' + LESSONS.map(function (l) {
+    return '<ol class="ar-lessons">' + lessons().map(function (l) {
       var s = stats(lessonQs(l.id)), st = s.pct === 100 ? "done" : s.learned + s.almost + s.wrong ? "busy" : "new";
       return '<li class="lt lt-' + st + '"><button type="button" class="ar-lesson" data-ar-lesson="' + l.id + '">' +
         '<span class="ar-num">' + esc(l.n) + "</span>" +
@@ -295,11 +329,11 @@
       }).join("") + "</tbody></table></div></figure>";
   }
   function lessonPane(l) {
-    var s = stats(lessonQs(l.id)), idx = LESSONS.indexOf(l);
-    var prev = LESSONS[idx - 1], next = LESSONS[idx + 1];
+    var s = stats(lessonQs(l.id)), ls = BOOKS[bookOf(l)], idx = ls.indexOf(l);
+    var prev = ls[idx - 1], next = ls[idx + 1];
     return '<div class="ar-lesson-view">' +
       '<button type="button" class="linkish ar-back" data-ar-back>← ' + T("Alle Lektionen") + "</button>" +
-      '<header class="ar-lesson-head"><p class="eyebrow">' + T("Lektion") + " " + esc(l.n) + "</p>" + '<h2>' + esc(l.title) + "</h2>" + ar(l.ar, "ar-title") + "</header>" +
+      '<header class="ar-lesson-head"><p class="eyebrow">' + (bookOf(l) === 2 ? T("Buch 2") + " · " : "") + T("Lektion") + " " + esc(l.n) + "</p>" + '<h2>' + esc(l.title) + "</h2>" + ar(l.ar, "ar-title") + "</header>" +
       '<div class="ar-parts">' + partBtn(l.id, "vocab", T("Vokabeln")) + partBtn(l.id, "gram", T("Grammatik")) + partBtn(l.id, "irab", "Iʿrāb") + "</div>" +
       '<button type="button" class="btn btn-primary" data-ar-learn="' + l.id + '">' + (s.pct === 100 ? T("✓ Ganze Lektion wiederholen") : T("Ganze Lektion lernen · {n} %", { n: s.pct })) + "</button>" +
       '<section class="ar-block"><h3>' + T("Grammatik") + "</h3>" + '<ul class="ar-grammar">' + l.grammar.map(function (g) { return "<li>" + rich(g) + "</li>"; }).join("") + "</ul></section>" +
@@ -323,10 +357,10 @@
   }
   function vocabPane() {
     var rows = [];
-    LESSONS.forEach(function (l) { l.vocab.forEach(function (v) { rows.push([v[0], v[1], v[2], l.n]); }); });
+    lessons().forEach(function (l) { l.vocab.forEach(function (v) { rows.push([v[0], v[1], v[2], l.n]); }); });
     var f = fold(state.filter.trim());
     var hit = f ? rows.filter(function (r) { return fold(r[0] + " " + r[1] + " " + (r[2] || "")).indexOf(f) !== -1; }) : rows;
-    var vs = stats(QS.filter(function (q) { return /^ar-[vdp]-/.test(q._lid); }));
+    var vs = stats(bookQs().filter(function (q) { return /^ar-[vdp]-/.test(q._lid); }));
     return '<div class="ar-vocab-pane"><div class="ar-vocab-head">' +
       '<form class="search" role="search" data-ar-search><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>' +
       '<input id="ar-filter" type="search" dir="auto" autocomplete="off" aria-label="' + T("Vokabeln durchsuchen") + '" placeholder="' + T("Suchen: Haus, بيت …") + '" value="' + esc(state.filter) + '"></form>' +
@@ -336,12 +370,13 @@
   }
   function irabPane() {
     genCheck();
-    var is = stats(ALL_IRAB);
+    var list = irabList(), is = stats(list), b1 = state.book === 1;
     var models = [];
-    LESSONS.forEach(function (l) { l.model.forEach(function (m) { models.push([l, m]); }); });
+    lessons().forEach(function (l) { l.model.forEach(function (m) { models.push([l, m]); }); });
     return '<div class="ar-irab-pane">' +
       '<div class="panel ar-irab-cta"><div><p class="eyebrow">' + T("Ziel des Kurses") + "</p><h3>" + T("Einen Satz vollständig analysieren") + "</h3>" +
-      "<p>" + T("{n} Iʿrāb-Aufgaben aus allen Lektionen: Du siehst einen Satz mit einem markierten Wort und wählst die richtige Analyse. Wenn alle sitzen, kommen nach einem Tag neue Sätze dazu.", { n: ALL_IRAB.length }) + "</p>" + genNote() + "</div>" +
+      "<p>" + (b1 ? T("{n} Iʿrāb-Aufgaben aus allen Lektionen: Du siehst einen Satz mit einem markierten Wort und wählst die richtige Analyse. Wenn alle sitzen, kommen nach einem Tag neue Sätze dazu.", { n: list.length })
+        : T("{n} Iʿrāb-Aufgaben aus allen Lektionen von Buch 2: Du siehst einen Satz mit einem markierten Wort und wählst die richtige Analyse.", { n: list.length })) + "</p>" + (b1 ? genNote() : "") + "</div>" +
       '<div class="ar-irab-actions"><button type="button" class="btn btn-primary" data-ar-irab-train>' + T("Iʿrāb-Training") + " · " + is.pct + " %</button>" +
       '<button type="button" class="btn" data-ar-irab-exam>' + T("Prüfung: 20 gemischte Sätze") + "</button></div></div>" +
       '<section class="ar-block"><h3>' + T("Einführung") + "</h3>" + M.irabIntro.map(function (sec, i) {
@@ -357,7 +392,39 @@
       "</section></div>";
   }
 
+  /* book switch above the tabs */
+  function renderBooks() {
+    var box = $("#ar-books");
+    box.hidden = !BOOKS[2].length;
+    var open = book2Open();
+    box.innerHTML = [1, 2].map(function (b) {
+      var lockIcon = b === 2 && !open ? ' <span aria-hidden="true">🔒</span>' : "";
+      return '<button type="button" class="ar-book" data-ar-book="' + b + '" aria-pressed="' + (state.book === b) + '">' +
+        T("Madina-Buch {n}", { n: b }) + lockIcon + "</button>";
+    }).join("");
+  }
+  /* book 2 is locked: show what is still missing */
+  function lockPane() {
+    var gate = gateLessons(), left = gate.filter(function (l) { return stats(lessonQs(l.id)).pct < 100; }).length;
+    return '<div class="panel ar-lock"><p class="ar-lock-icon" aria-hidden="true">🔒</p>' +
+      "<h3>" + T("Madina-Buch 2 ist noch gesperrt") + "</h3>" +
+      "<p>" + T("Buch 2 wird frei, sobald du die letzten {n} Lektionen von Buch 1 (Lektion {a}–{b}) ohne Fehler gelernt hast: jede zu 100 %, keine offenen Fehler.",
+        { n: BOOK2_GATE, a: gate[0].n, b: gate[gate.length - 1].n }) + "</p>" +
+      "<p><b>" + T(left === 1 ? "Noch {n} Lektion" : "Noch {n} Lektionen", { n: left }) + "</b></p>" +
+      '<ol class="ar-lessons">' + gate.map(function (l) {
+        var s = stats(lessonQs(l.id)), st = s.pct === 100 ? "done" : s.learned + s.almost + s.wrong ? "busy" : "new";
+        return '<li class="lt lt-' + st + '"><button type="button" class="ar-lesson" data-ar-gate="' + l.id + '">' +
+          '<span class="ar-num">' + esc(l.n) + "</span>" +
+          '<span class="lt-main"><span class="lt-title"><strong>' + esc(l.title) + "</strong>" + ar(l.ar, "lt-ar") + "</span>" + bar(s) +
+          '<small class="lt-meta">' + (s.wrong + s.almost ? T("{n} offene Fehler", { n: s.wrong + s.almost }) + " · " : "") + T("{n} % gelernt", { n: s.pct }) + "</small></span>" +
+          '<span class="lt-pct">' + (st === "done" ? "✓" : s.pct + " %") + "</span></button></li>";
+      }).join("") + "</ol></div>";
+  }
+
   function wire(body) {
+    $all("[data-ar-gate]", body).forEach(function (b) {
+      b.addEventListener("click", function () { state.book = 1; state.lesson = b.getAttribute("data-ar-gate"); state.tab = "lektionen"; remember(); render(); scrollToPane(); });
+    });
     $all("[data-ar-lesson]", body).forEach(function (b) {
       b.addEventListener("click", function () { state.lesson = b.getAttribute("data-ar-lesson"); state.tab = "lektionen"; render(); scrollToPane(); });
     });
@@ -380,23 +447,24 @@
     }
     var vt = $("[data-ar-vocab-train]", body);
     if (vt) vt.addEventListener("click", function () {
-      start(QS.filter(function (q) { return /^ar-[vdp]-/.test(q._lid); }), T("Vokabeltrainer"), {});
+      start(bookQs().filter(function (q) { return /^ar-[vdp]-/.test(q._lid); }), T("Vokabeltrainer"), {});
     });
     var it = $("[data-ar-irab-train]", body);
     if (it) it.addEventListener("click", function () {
+      if (state.book === 2) { start(IRAB2, T("Iʿrāb-Training"), {}); return; }
       var fresh = gen.fresh ? genBatch(gen.n) : null;
       gen.fresh = 0;
       start(fresh && fresh.some(function (q) { return lv(q) !== 2; }) ? fresh : ALL_IRAB, fresh ? T("Neue Iʿrāb-Sätze") : T("Iʿrāb-Training"), {});
     });
     var ex = $("[data-ar-irab-exam]", body);
     if (ex) ex.addEventListener("click", function () {
-      var qs = APP.shuffle(ALL_IRAB.slice()).slice(0, 20), correct = 0;
+      var pool = irabList(), qs = APP.shuffle(pool.slice()).slice(0, 20), correct = 0;
       APP.startQuiz({
         learn: true, questions: qs, label: T("Iʿrāb-Prüfung"),
         onAnswer: function (q, ok) { if (ok) correct++; return L.recordId(q._lid, ok); },
         onFinish: function (p) {
-          var s = stats(ALL_IRAB);
-          lastRound = { label: T("Iʿrāb-Prüfung"), info: {}, answered: p.answered, correct: correct, before: s, after: s, list: ALL_IRAB, wrong: p.wrong || [] };
+          var s = stats(pool);
+          lastRound = { label: T("Iʿrāb-Prüfung"), info: {}, answered: p.answered, correct: correct, before: s, after: s, list: pool, wrong: p.wrong || [] };
           L.sync();
         },
         onLeave: function () { APP.showView("arabisch"); render(); window.scrollTo(0, 0); }
@@ -417,24 +485,37 @@
   });
   $("#ar-next").addEventListener("click", function () { var l = nextLesson(); if (l) startLesson(l.id); });
   $("#ar-mistakes").addEventListener("click", function () {
-    start(QS.filter(function (q) { var l = lv(q); return l === -1 || l === 1; }), T("Fehler wiederholen"), {});
+    start(bookQs().filter(function (q) { var l = lv(q); return l === -1 || l === 1; }), T("Fehler wiederholen"), {});
   });
   $("#ar-reset").addEventListener("click", function () { var b = $("#ar-reset-confirm"); b.hidden = !b.hidden; });
   $("#ar-reset-no").addEventListener("click", function () { $("#ar-reset-confirm").hidden = true; });
   $("#ar-reset-yes").addEventListener("click", function () {
     $("#ar-reset-confirm").hidden = true;
     lastRound = null;
+    b2Earned = false;
+    try { localStorage.removeItem("fiqh:book2"); } catch (e) {}
     L.reset(function (k) { return k.indexOf("ar-") === 0; });
   });
 
   APP.on("view", function (name) { if (name === "arabisch") render(); });
   L.onChange(function () { genSync(); if (!$("#view-arabic").hidden) render(); });
   $("#ar-count-lessons").textContent = LESSONS.length;
+  $("#ar-books").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-ar-book]");
+    if (!b) return;
+    var n = +b.getAttribute("data-ar-book");
+    if (n === state.book) return;
+    state.book = n; state.lesson = null; state.filter = ""; lastRound = null; remember(); render();
+  });
   $("#ar-count-vocab").textContent = LESSONS.reduce(function (n, l) { return n + l.vocab.length; }, 0);
   $("#ar-count-q").textContent = QS.length;
   render();
 
   /* sarf.js comes back here after a round of tables */
   window.FIQH_ARABIC_RENDER = function (tab) { if (tab) { state.tab = tab; remember(); } render(); };
-  window.FIQH_ARABIC = { questions: QS, lessons: LESSONS, stats: function () { return stats(QS); } };
+  /* questions/lessons: book 1 only (the Arabic league); allQuestions/allLessons: both books */
+  window.FIQH_ARABIC = { questions: QS.filter(function (q) { return qBook(q) === 1; }), lessons: BOOKS[1],
+    allQuestions: QS, allLessons: LESSONS,
+    /* overall progress: book 2 counts only once it is open */
+    stats: function () { return stats(book2Open() ? QS : QS.filter(function (q) { return qBook(q) === 1; })); } };
 })();

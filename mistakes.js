@@ -31,9 +31,9 @@
     /* Arabic questions grow (new Iʿrāb sentences), so its folders are built when needed */
     if (AR) SUBJECTS.push({ id: "arabisch", name: T("Arabisch"), back: "arabisch", make: function () {
       var byLesson = {};
-      AR.questions.forEach(function (q) { (byLesson[q.lesson] = byLesson[q.lesson] || []).push(q); });
-      var out = AR.lessons.filter(function (l) { return byLesson[l.id]; }).map(function (l) {
-        return { key: "a-" + l.id, title: T("Lektion") + " " + l.n + " · " + l.title, ar: l.ar, qs: byLesson[l.id] };
+      (AR.allQuestions || AR.questions).forEach(function (q) { (byLesson[q.lesson] = byLesson[q.lesson] || []).push(q); });
+      var out = (AR.allLessons || AR.lessons).filter(function (l) { return byLesson[l.id]; }).map(function (l) {
+        return { key: "a-" + l.id, title: (l.book === 2 ? T("Buch 2") + " · " : "") + T("Lektion") + " " + l.n + " · " + l.title, ar: l.ar, qs: byLesson[l.id] };
       });
       if (byLesson.gen) out.push({ key: "a-gen", title: T("Iʿrāb · neue Sätze"), ar: "إِعْرَابٌ", qs: byLesson.gen });
       return out;
