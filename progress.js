@@ -327,6 +327,8 @@
       '</div><div class="lp-home-actions">' + (top ? '<button type="button" class="btn btn-primary" data-lp-go="' + top.sub + '" data-lp-key="' + esc(top.a.key) + '">' + T("Gezielt üben") + "</button>" : "") +
       '<button type="button" class="btn" data-lp-open="' + (top ? top.sub : subject) + '">📈 ' + T("Lernstand ansehen") + "</button></div></div>";
     wireHints(box);
+    // a class instead of :not(:empty) – Safari does not always restyle the next card after the fill
+    if (box.parentNode) box.parentNode.classList.add("has-progress");
   }
   $all("[data-open-progress]").forEach(function (b) {
     b.addEventListener("click", function () { open(b.getAttribute("data-open-progress")); });
