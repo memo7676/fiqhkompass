@@ -130,6 +130,9 @@
   var TAB_OF = { nachschlagen: "start", lernen: "start", arabisch: "start", fehler: "start", sarf: "start" };
   function showView(name, push) {
     if (!views[name]) name = "start";
+    /* A learning round (Lernen, Arabisch, Fehler, Sarf) ends without the result screen and hides
+       the quiz panels; without a running round the quiz tab would stay empty. */
+    if (name === "quiz" && !game && $("#quiz-setup").hidden) renderSetup();
     Object.keys(views).forEach(function (k) { views[k].hidden = k !== name; });
     var tab = TAB_OF[name] || name;
     $all(".tab").forEach(function (b) {
