@@ -1,7 +1,7 @@
 /* Service worker: makes Ṭālibu l-ʿIlm installable and usable offline.
    Own files: network first (always the newest version when online), cache as fallback.
    Fonts and the Firebase SDK: cache first. Firebase data itself is never cached here. */
-var CACHE = "fiqh-kompass-v22";
+var CACHE = "fiqh-kompass-v23";
 var CORE = [
   "./", "index.html", "datenschutz.html", "manifest.webmanifest", "i18n-en.js", "i18n.js",
   "data.js", "fiqh-en.js", "fiqh-belege.js", "app.js", "learn.js", "irabgen.js", "sarf.js", "arabic.js", "mistakes.js", "home.js", "arabisch/madina1-a.js", "arabisch/madina1-b.js", "arabisch/madina1-c.js", "arabisch/madina2-a.js", "arabisch/madina2-b.js", "arabisch/madina2-c.js", "social.js", "chat.js", "install.js", "auth.js", "backend.js", "firebase-config.js",
@@ -31,8 +31,10 @@ self.addEventListener("fetch", function (e) {
 
   if (url.origin === self.location.origin) {
     e.respondWith(fetch(req).then(function (res) {
-      if (res.ok) { var copy = res.clone(); caches.open(CACHE).then(function (c) { c.put(req, copy); }); }
-      return res;
+      if (res.ok) { var copy = res.clone(); caches.open(CACHE).then(function (c) { c.put(req, copy); }); return res; }
+      /* e.g. a short 404 while GitHub Pages deploys: a broken script (i18n.js) would leave the
+         whole page without texts, so the cached copy is used when there is one */
+      return caches.match(req, { ignoreSearch: true }).then(function (hit) { return hit || res; });
     }).catch(function () {
       return caches.match(req, { ignoreSearch: true }).then(function (hit) {
         return hit || (req.mode === "navigate" ? caches.match("index.html") : Response.error());
