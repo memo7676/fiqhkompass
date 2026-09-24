@@ -48,7 +48,7 @@ Eine Lernseite zum Fiqh-Unterricht. Grundlage sind die Folien „Fiqh Unterricht
   - Arabisch-Liga (Schlüssel `s<Saison>w<Woche>a` in `comp`): 10 Vokabeln und 10 Grammatikfragen aus den Lektionen der Woche (vier Blöcke von Lektion 1 bis 23), 10 jede Woche neu erzeugte Iʿrāb-Sätze, danach der Sarf von 2 Verben (Vergangenheit und Gegenwart, 4 Tabellen, 10 Punkte je Feld, 50 Bonus je fehlerfreier Tabelle). Eigene Ranglisten; die Punkte zählen nicht zum Quiz-Gesamtstand, daher bleiben die Firestore-Regeln unverändert
   - jede Woche ein anderes Sachgebiet, der Reihe nach: Glaube & Grundlagen, Reinheit, Gebet, Fasten, Zakāt & Ḥaǧǧ, Alltag & Gesellschaft
   - eine Saison dauert 4 Wochen (Start: Montag, 21.09.2026). Die Summe der vier Wochen entscheidet
-  - Top 10 weltweit (diese Saison oder aller Zeiten, alle, nur Brüder oder nur Schwestern) und Saisonrangliste
+  - Top 10 weltweit (diese Saison oder aller Zeiten) und Saisonrangliste. Schwestern sind nur für Schwestern sichtbar: Brüder und Gäste sehen in keiner Rangliste (Top 10, Saisonrangliste, Saisongewinner) eine Schwester, und der Filter „Alle / Brüder / Schwestern“ erscheint nur für Schwestern (`seesSisters` in `social.js`)
   - Freunde über den Spielernamen finden und Gesamtpunkte vergleichen
   - Freundschaft nur mit Anfrage: senden, annehmen oder ablehnen, zurückziehen, beenden; offene Anfragen zeigt eine Zahl am Reiter. Wie beim Chat nur unter Brüdern bzw. unter Schwestern, nicht bei Blockierung (`friendRequests`, `friendships`). Alte Freundeslisten werden einmalig zu Anfragen
 
