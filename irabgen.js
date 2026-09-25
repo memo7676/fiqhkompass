@@ -172,6 +172,40 @@
     isharaK: "is a demonstrative pronoun: indeclinable (mabnī on kasra), in the position of a nominative – mubtadaʾ."
   };
 
+  /* why a wrong analysis does not fit (shown after answering) */
+  var WHY_NOT = {
+    mubtada: "Ein Mubtadaʾ eröffnet den Nominalsatz; das markierte Wort ist hier nicht das Subjekt, über das etwas ausgesagt wird.",
+    mubtadaMudaf: "Das markierte Wort ist hier nicht das Subjekt am Satzanfang.",
+    khabar: "Ein Khabar ist die Aussage über ein Mubtadaʾ; das markierte Wort sagt hier nichts über ein Subjekt aus.",
+    fail: "Einen Fāʿil gibt es nur nach einem Verb – als den, der die Handlung tut; das trifft auf das markierte Wort nicht zu.",
+    maful: "Ein Mafʿūl bihi braucht ein Verb, dessen Handlung auf das Wort fällt, und hätte die Endung -a/-an.",
+    mudafIlayh: "Ein Muḍāf ilaihi folgt direkt auf ein Nomen ohne Artikel und Tanwīn (Muḍāf); ein solches steht hier nicht davor.",
+    natN: "Ein Naʿt stimmt mit seinem Bezugswort in Fall und Bestimmtheit überein; das passt hier nicht.",
+    natA: "Ein Naʿt im Akkusativ bräuchte ein Bezugswort im Akkusativ; ein solches gibt es hier nicht.",
+    natG: "Ein Naʿt im Genitiv bräuchte ein Bezugswort im Genitiv direkt davor; das ist hier nicht so.",
+    khabarA: "Im einfachen Nominalsatz steht das Khabar im Nominativ; Akkusativ gäbe es erst nach كَانَ.",
+    majrur: "Vor dem markierten Wort steht nicht diese Präposition.",
+    ishara: "Das Demonstrativ steht hier nicht an Subjektstelle.",
+    isharaK: "Das Demonstrativ steht hier nicht an Subjektstelle.",
+    isharaA: "Ein Demonstrativ als Objekt gäbe es nur nach einem Verb; hier steht keines davor."
+  };
+  var WHY_NOT_EN = {
+    mubtada: "A mubtadaʾ opens the nominal sentence; here the marked word is not the subject something is said about.",
+    mubtadaMudaf: "Here the marked word is not the subject at the start of the sentence.",
+    khabar: "A khabar is what is said about a mubtadaʾ; here the marked word says nothing about a subject.",
+    fail: "A fāʿil only exists after a verb – the one who does the action; that does not fit the marked word.",
+    maful: "A mafʿūl bihi needs a verb whose action falls on the word, and it would end in -a/-an.",
+    mudafIlayh: "A muḍāf ilaihi follows directly after a noun without article and tanwīn (muḍāf); there is none before it here.",
+    natN: "A naʿt agrees with the word it describes in case and definiteness; that does not fit here.",
+    natA: "A naʿt in the accusative would need a word in the accusative to describe; there is none here.",
+    natG: "A naʿt in the genitive would need a word in the genitive right before it; that is not the case here.",
+    khabarA: "In a simple nominal sentence the khabar is nominative; the accusative only comes after كَانَ.",
+    majrur: "This preposition does not stand before the marked word.",
+    ishara: "Here the demonstrative is not in the subject position.",
+    isharaK: "Here the demonstrative is not in the subject position.",
+    isharaA: "A demonstrative as object would need a verb before it; there is none here."
+  };
+
   /* ---------- random ---------- */
   function rng(str) {
     var h = 2166136261;
@@ -256,13 +290,17 @@
 
   function question(r, s, role) {
     var idx = role[0], kind = role[1], right = kind === "majrur" ? majrur(role[2]) : LAB[kind];
-    var wrong = shuffle(r, WRONG[kind]).map(function (k) { return k === "majrur" ? majrur(role[2] === "فِي" ? "عَلَى" : "فِي") : LAB[k]; })
-      .filter(function (x, i, all) { return x !== right && all.indexOf(x) === i; }).slice(0, 3);
-    var sentence = s.w.join(" ") + ".", en = window.I18N && window.I18N.lang === "en";
+    var en = window.I18N && window.I18N.lang === "en", seenLab = {}, wrong = [], why = [null];
+    shuffle(r, WRONG[kind]).forEach(function (k) {
+      var lab = k === "majrur" ? majrur(role[2] === "فِي" ? "عَلَى" : "فِي") : LAB[k];
+      if (lab === right || seenLab[lab] || wrong.length >= 3) return;
+      seenLab[lab] = 1; wrong.push(lab); why.push((en ? WHY_NOT_EN : WHY_NOT)[k] || null);
+    });
+    var sentence = s.w.join(" ") + ".";
     return {
       q: en ? "Iʿrāb of the marked word:" : "Iʿrāb des markierten Wortes:", ar: sentence, arMark: idx, a: [right].concat(wrong),
       e: en ? "“" + s.en + "” – " + s.w[idx] + " " + EXPLAIN_EN[kind] : "„" + s.de + "“ – " + s.w[idx] + " " + EXPLAIN[kind],
-      key: sentence + "|" + idx
+      key: sentence + "|" + idx, why: why
     };
   }
 

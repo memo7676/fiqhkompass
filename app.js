@@ -664,6 +664,9 @@
     var dl = dalilHtml(item.src);
     $("#fb-dalil").innerHTML = dl;
     $("#fb-dalil").hidden = !dl;
+    var wh = whyHtml(item.src, item.options, idx);
+    $("#fb-why").innerHTML = wh;
+    $("#fb-why").hidden = !wh;
     var th = termsHtml(item.src, item.options.map(function (o) { return o.text; }));
     $("#fb-terms").innerHTML = th;
     $("#fb-terms").hidden = !th;
@@ -758,6 +761,22 @@
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", resume);
   else setTimeout(resume, 0);
+
+  /* „Warum falsch?“: q.why[i] explains why answer q.a[i] is wrong (Arabic questions, see arabic.js).
+     options: the answers in the order shown (o.i = index in q.a); chosen: the tapped option, if any. */
+  function whyHtml(q, options, chosen) {
+    if (!q.why) return "";
+    var letters = ["A", "B", "C", "D"];
+    var rows = (options || q.a.map(function (t, i) { return { text: t, correct: i === q.c, i: i }; })).map(function (o, pos) {
+      var r = !o.correct && q.why[o.i];
+      if (!r) return "";
+      var mine = pos === chosen;
+      return '<li' + (mine ? ' class="is-mine"' : "") + '><span class="why-opt" dir="auto"><b>' + (options ? letters[pos] + " · " : "") + "</b>" + bidiHtml(o.text) + "</span>" +
+        (mine ? ' <small class="why-me">' + esc(T("deine Antwort")) + "</small>" : "") + '<span class="why-r" dir="ltr">' + bidiHtml(r) + "</span></li>";
+    }).filter(Boolean);
+    if (!rows.length) return "";
+    return '<p class="fb-terms-h">' + esc(T("Warum die anderen Antworten nicht passen")) + "</p><ul>" + rows.join("") + "</ul>";
+  }
 
   /* Begriffe: the foreign technical terms in question, answers and explanation, explained
      after answering (glossar.js). Iʿrāb answers are Arabic grammar terms, so those are looked up too. */
@@ -904,7 +923,7 @@
   }
   window.FIQH_APP = {
     TOPICS: TOPICS, QUESTIONS: QUESTIONS, TOPIC_BY_ID: TOPIC_BY_ID, GROUPS: GROUPS,
-    esc: esc, bidiHtml: bidiHtml, arOnly: arOnly, store: store, sourceLine: sourceLine, dalilHtml: dalilHtml, termsHtml: termsHtml, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
+    esc: esc, bidiHtml: bidiHtml, arOnly: arOnly, store: store, sourceLine: sourceLine, dalilHtml: dalilHtml, termsHtml: termsHtml, whyHtml: whyHtml, shuffle: shuffle, pickQuestions: pickQuestions, maxScore: maxScore,
     showView: showView, tabOf: TAB_OF, startQuiz: startQuiz, onResume: onResume, relang: relangLabel, renderSetup: renderSetup, openTopic: openTopic,
     isPlaying: function () { return !!game && !$("#quiz-play").hidden; },
     on: function (name, fn) { (listeners[name] = listeners[name] || []).push(fn); }
