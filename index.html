@@ -328,6 +328,12 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
 .fb-why .why-me { color: var(--bad); font-weight: 700; font-size: .78rem; }
 .fb-why .fb-terms-h { font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 .3rem; }
 .fb-terms .fb-terms-h { font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: .2rem; }
+/* both boxes open on tap of their heading */
+.fb-why summary.fb-terms-h, .fb-terms summary.fb-terms-h { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; }
+.fb-why summary.fb-terms-h::-webkit-details-marker, .fb-terms summary.fb-terms-h::-webkit-details-marker { display: none; }
+.fb-why summary.fb-terms-h::after, .fb-terms summary.fb-terms-h::after { content: "▾"; font-size: 1rem; transition: transform .15s; }
+.fb-why details[open] > summary.fb-terms-h::after, .fb-terms details[open] > summary.fb-terms-h::after { transform: rotate(180deg); }
+.fb-why details[open] > summary.fb-terms-h, .fb-terms details[open] > summary.fb-terms-h { margin-bottom: .35rem; }
 .fb-terms .fb-term + .fb-term { margin-top: .2rem; }
 .fb-terms bdi[lang="ar"] { font-size: 1.1em; }
 .kbd-hint { font-size: .8rem; color: var(--muted); text-align: center; margin: 0; }
