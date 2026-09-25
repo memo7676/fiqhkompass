@@ -128,7 +128,7 @@
       var lessonPool = A.questions.filter(function (q) { return ids.indexOf(q.lesson) !== -1; });
       var list = arVocab(lessonPool, rnd).concat(arGrammar(A, cal.index));
       if (G) list = list.concat(G.make("liga-" + cal.key, AR_Q, null, true).map(function (x) {
-        return { t: "arabisch", tt: T("Arabisch-Liga") + " · Iʿrāb", srcText: T("Neuer Satz dieser Woche"), c: 0, q: x.q, ar: x.ar, arMark: x.arMark, a: x.a, e: x.e };
+        return { t: "arabisch", tt: T("Arabisch-Liga") + " · Iʿrāb", srcText: T("Neuer Satz dieser Woche"), c: 0, q: x.q, ar: x.ar, arMark: x.arMark, a: x.a, e: x.e, why: x.why };
       }));
       var tabs = [];
       if (S) arVerbs(S, rnd).forEach(function (v) { tabs.push(S.table(v.id, "madi"), S.table(v.id, "mudari")); });
@@ -138,7 +138,7 @@
     function take(re) { return APP.shuffle(pool.filter(function (q) { return re.test(q._lid); }), rnd).slice(0, AR_Q); }
     var qs = take(/^ar-[vd]-/).concat(take(/^ar-g-/));
     if (G) qs = qs.concat(G.make("liga-" + cal.key, AR_Q).map(function (x) {
-      return { t: "arabisch", tt: T("Arabisch-Liga") + " · Iʿrāb", srcText: T("Neuer Satz dieser Woche"), c: 0, q: x.q, ar: x.ar, arMark: x.arMark, a: x.a, e: x.e };
+      return { t: "arabisch", tt: T("Arabisch-Liga") + " · Iʿrāb", srcText: T("Neuer Satz dieser Woche"), c: 0, q: x.q, ar: x.ar, arMark: x.arMark, a: x.a, e: x.e, why: x.why };
     }));
     var verbs = S ? APP.shuffle(S.VERBS, rnd).slice(0, AR_VERBS) : [];
     var tables = [];

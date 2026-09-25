@@ -319,6 +319,14 @@ mark { background: var(--accent-soft); color: inherit; padding: 0 2px; border-ra
 .feedback .btn { justify-self: start; margin-top: 6px; }
 .fb-terms { margin: .5rem 0 0; padding: .55rem .7rem; border-radius: 10px; background: color-mix(in srgb, var(--surface, #fff) 70%, transparent); font-size: .86rem; line-height: 1.45; }
 .fb-terms p { margin: 0; }
+.fb-why { margin: .3rem 0 0; padding: .55rem .7rem; border-radius: 10px; background: color-mix(in srgb, var(--surface, #fff) 70%, transparent); font-size: .88rem; line-height: 1.45; }
+.fb-why ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; }
+.fb-why li { display: grid; gap: .1rem; padding-left: .6rem; border-left: 3px solid var(--line, #d9d4c7); }
+.fb-why li.is-mine { border-left-color: var(--bad); }
+.fb-why .why-opt { font-weight: 600; }
+.fb-why .why-opt bdi[lang="ar"], .fb-why .why-r bdi[lang="ar"] { font-size: 1.15em; }
+.fb-why .why-me { color: var(--bad); font-weight: 700; font-size: .78rem; }
+.fb-why .fb-terms-h { font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 .3rem; }
 .fb-terms .fb-terms-h { font-weight: 700; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: .2rem; }
 .fb-terms .fb-term + .fb-term { margin-top: .2rem; }
 .fb-terms bdi[lang="ar"] { font-size: 1.1em; }
@@ -1541,6 +1549,7 @@ dialog.auth { border-radius: 20px; }
           <div class="feedback" id="q-feedback" hidden aria-live="polite">
             <div class="fb-head"><strong id="fb-title"></strong><span class="fb-points" id="fb-points"></span></div>
             <p id="fb-text"></p>
+            <div class="fb-why" id="fb-why" hidden></div>
             <p class="fb-source" id="fb-source"></p>
             <ul class="fb-dalil" id="fb-dalil" hidden></ul>
             <div class="fb-terms" id="fb-terms" hidden></div>
@@ -2003,6 +2012,7 @@ dialog.auth { border-radius: 20px; }
 <script src="arabisch/madina2-b.js"></script>
 <script src="arabisch/madina2-c.js"></script>
 <script src="arabisch/madina-en.js"></script>
+<script src="arabisch/warum.js"></script>
 <script src="irabgen.js"></script>
 <script src="sarf.js"></script>
 <script src="arabic.js"></script>

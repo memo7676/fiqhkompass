@@ -74,6 +74,36 @@
     /* distractors: first from the same lesson, then from all */
     return list.map(function (v) { return v[field]; }).filter(function (x) { return x && x !== key; });
   }
+  /* „Warum falsch?“: for every wrong answer a short reason, aligned with q.a (null for the right one).
+     Vocabulary questions get it from the word list, grammar and Iʿrāb from arabisch/warum.js. */
+  var WHY = window.MADINA_WHY || {};
+  var WORD_OF = {}, MEAN_OF = {}, PL_OF = {}, SG_OF = {};
+  LESSONS.forEach(function (l) {
+    l.vocab.forEach(function (v) {
+      if (!WORD_OF[v[1]]) WORD_OF[v[1]] = v[0];
+      if (!MEAN_OF[v[0]]) MEAN_OF[v[0]] = v[1];
+      if (v[2] && !PL_OF[v[2]]) PL_OF[v[2]] = v;
+    });
+  });
+  function whyMeaning(opts) {         // wrong German/English meanings: which Arabic word they belong to
+    return [null].concat(opts.slice(1).map(function (m) { return WORD_OF[m] ? T("„{m}“ heißt {w}.", { m: m, w: WORD_OF[m] }) : null; }));
+  }
+  function whyWord(opts) {            // wrong Arabic words: what they mean
+    return [null].concat(opts.slice(1).map(function (w) {
+      if (MEAN_OF[w]) return T("{w} heißt „{m}“.", { w: w, m: MEAN_OF[w] });
+      if (PL_OF[w]) return T("{w} ist der Plural von {s} („{m}“).", { w: w, s: PL_OF[w][0], m: PL_OF[w][1] });
+      return null;
+    }));
+  }
+  function whyPlural(opts, word) {
+    return [null].concat(opts.slice(1).map(function (w) {
+      if (w === word) return T("Das ist der Singular selbst.");
+      if (PL_OF[w]) return T("{w} ist der Plural von {s} („{m}“).", { w: w, s: PL_OF[w][0], m: PL_OF[w][1] });
+      if (MEAN_OF[w]) return T("{w} ist ein Singular: „{m}“.", { w: w, m: MEAN_OF[w] });
+      return null;
+    }));
+  }
+  function whyList(list) { return list ? [null].concat(list) : null; }
   var SETS = {};     // lessonId -> { vocab: [...], gram: [...], irab: [...] }
   var QS = [];       // all questions
   var seenIds = {};
@@ -98,21 +128,22 @@
       var info = word + " = " + de + (pl ? " · Plural: " + pl : "");
       var wrongDe = pickOthers(sameDe, [de], 3, rnd);
       if (wrongDe.length < 3) wrongDe = wrongDe.concat(pickOthers(ALL_DE, [de].concat(wrongDe), 3 - wrongDe.length, rnd));
-      add(s.vocab, base("ar-v-" + key, { q: T("Was bedeutet dieses Wort?"), ar: word, a: [de].concat(wrongDe), e: info }));
+      add(s.vocab, base("ar-v-" + key, { q: T("Was bedeutet dieses Wort?"), ar: word, a: [de].concat(wrongDe), e: info, why: whyMeaning([de].concat(wrongDe)) }));
       var wrongAr = pickOthers(sameAr, [word], 3, rnd);
       if (wrongAr.length < 3) wrongAr = wrongAr.concat(pickOthers(ALL_AR, [word].concat(wrongAr), 3 - wrongAr.length, rnd));
-      add(s.vocab, base("ar-d-" + key, { q: T("Wie heißt „{w}“ auf Arabisch?", { w: de }), a: [word].concat(wrongAr), e: info }));
+      add(s.vocab, base("ar-d-" + key, { q: T("Wie heißt „{w}“ auf Arabisch?", { w: de }), a: [word].concat(wrongAr), e: info, why: whyWord([word].concat(wrongAr)) }));
       if (pl && pl.indexOf("/") === -1) {
         var wrongPl = pickOthers(near(l.vocab, pl, 2), [pl, word], 3, rnd);
         if (wrongPl.length < 3) wrongPl = wrongPl.concat(pickOthers(ALL_PL, [pl, word].concat(wrongPl), 3 - wrongPl.length, rnd));
-        add(s.vocab, base("ar-p-" + key, { q: T("Wie lautet der Plural von „{w}“?", { w: de }), ar: word, a: [pl].concat(wrongPl), e: info }));
+        add(s.vocab, base("ar-p-" + key, { q: T("Wie lautet der Plural von „{w}“?", { w: de }), ar: word, a: [pl].concat(wrongPl), e: info, why: whyPlural([pl].concat(wrongPl), word) }));
       }
     });
-    l.quiz.forEach(function (g) {
-      add(s.gram, base("ar-g-" + hash(pre + g.q + "|" + g.a[0]), { q: strip(g.q), ar: g.ar, a: g.a, e: strip(g.e) }));
+    var why = WHY[l.id] || {};
+    l.quiz.forEach(function (g, i) {
+      add(s.gram, base("ar-g-" + hash(pre + g.q + "|" + g.a[0]), { q: strip(g.q), ar: g.ar, a: g.a, e: strip(g.e), why: whyList(why.q && why.q[i]) }));
     });
-    l.irab.forEach(function (it) {
-      add(s.irab, base("ar-i-" + hash(pre + it.s + "|" + it.w), { q: T("Iʿrāb des markierten Wortes:"), ar: it.s, arMark: it.w, a: it.a, e: strip(it.e) }));
+    l.irab.forEach(function (it, i) {
+      add(s.irab, base("ar-i-" + hash(pre + it.s + "|" + it.w), { q: T("Iʿrāb des markierten Wortes:"), ar: it.s, arMark: it.w, a: it.a, e: strip(it.e), why: whyList(why.i && why.i[i]) }));
     });
   });
   function lessonQs(id) { var s = SETS[id]; return s.vocab.concat(s.gram, s.irab); }
@@ -137,7 +168,7 @@
       var list = GEN.make("batch" + (genBatches.length + 1), GEN_SIZE, genSkip).map(function (x) {
         genSkip[x.key] = 1;
         return { t: "arabisch", tt: T("Arabisch · Iʿrāb (neue Sätze)"), srcText: T("Neue Sätze aus dem Wortschatz von Madina-Buch 1"),
-          c: 0, lesson: "gen", _lid: "ar-x-" + hash(x.key), q: x.q, ar: x.ar, arMark: x.arMark, a: x.a, e: x.e };
+          c: 0, lesson: "gen", _lid: "ar-x-" + hash(x.key), q: x.q, ar: x.ar, arMark: x.arMark, a: x.a, e: x.e, why: x.why };
       });
       genBatches.push(list);
     }
