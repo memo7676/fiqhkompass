@@ -449,7 +449,7 @@ window.I18N_EN = {
  "Weitere Begriffe": "Other terms",
  "Begriffe in dieser Frage": "Terms in this question",
  "Warum die anderen Antworten nicht passen": "Why the other answers do not fit",
- "Warum deine Antwort falsch ist": "Why your answer is wrong",
+ "deine Antwort": "your answer",
  "„{m}“ heißt {w}.": "“{m}” is {w}.",
  "{w} heißt „{m}“.": "{w} means “{m}”.",
  "{w} ist der Plural von {s} („{m}“).": "{w} is the plural of {s} (“{m}”).",

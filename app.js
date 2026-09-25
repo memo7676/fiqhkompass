@@ -763,18 +763,16 @@
   else setTimeout(resume, 0);
 
   /* „Warum falsch?“: q.why[i] explains why answer q.a[i] is wrong (Arabic questions, see arabic.js).
-     After answering (chosen = the tapped option): only the tapped answer, and only if it was wrong.
-     Without chosen (Fehlerordner): all wrong answers. options: the answers as shown (o.i = index in q.a). */
+     options: the answers in the order shown (o.i = index in q.a); chosen: the tapped option, if any. */
   function whyHtml(q, options, chosen) {
     if (!q.why) return "";
-    var list = options || q.a.map(function (t, i) { return { text: t, correct: i === q.c, i: i }; });
-    if (chosen != null) {
-      var o = list[chosen], r = o && !o.correct && q.why[o.i];
-      return r ? '<p class="fb-terms-h">' + esc(T("Warum deine Antwort falsch ist")) + '</p><p class="why-one" dir="ltr">' + bidiHtml(r) + "</p>" : "";
-    }
-    var rows = list.map(function (o) {
+    var letters = ["A", "B", "C", "D"];
+    var rows = (options || q.a.map(function (t, i) { return { text: t, correct: i === q.c, i: i }; })).map(function (o, pos) {
       var r = !o.correct && q.why[o.i];
-      return r ? '<li><span class="why-opt" dir="auto">' + bidiHtml(o.text) + '</span><span class="why-r" dir="ltr">' + bidiHtml(r) + "</span></li>" : "";
+      if (!r) return "";
+      var mine = pos === chosen;
+      return '<li' + (mine ? ' class="is-mine"' : "") + '><span class="why-opt" dir="auto"><b>' + (options ? letters[pos] + " · " : "") + "</b>" + bidiHtml(o.text) + "</span>" +
+        (mine ? ' <small class="why-me">' + esc(T("deine Antwort")) + "</small>" : "") + '<span class="why-r" dir="ltr">' + bidiHtml(r) + "</span></li>";
     }).filter(Boolean);
     if (!rows.length) return "";
     return '<p class="fb-terms-h">' + esc(T("Warum die anderen Antworten nicht passen")) + "</p><ul>" + rows.join("") + "</ul>";
