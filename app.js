@@ -775,7 +775,7 @@
         (mine ? ' <small class="why-me">' + esc(T("deine Antwort")) + "</small>" : "") + '<span class="why-r" dir="ltr">' + bidiHtml(r) + "</span></li>";
     }).filter(Boolean);
     if (!rows.length) return "";
-    return '<p class="fb-terms-h">' + esc(T("Warum die anderen Antworten nicht passen")) + "</p><ul>" + rows.join("") + "</ul>";
+    return '<details><summary class="fb-terms-h">' + esc(T("Warum die anderen Antworten nicht passen")) + "</summary><ul>" + rows.join("") + "</ul></details>";
   }
 
   /* Begriffe: the foreign technical terms in question, answers and explanation, explained
@@ -785,9 +785,9 @@
     var ar = q.t === "arabisch";
     var list = window.FIQH_TERMS([q.arMark != null ? "" : q.q].concat(answers || q.a || [], [q.e]), ar ? "a" : "f", ar && q.arMark != null).slice(0, 8);
     if (!list.length) return "";
-    return '<p class="fb-terms-h">' + esc(T("Begriffe in dieser Frage")) + "</p>" + list.map(function (t) {
+    return '<details><summary class="fb-terms-h">' + esc(T("Begriffe in dieser Frage")) + "</summary>" + list.map(function (t) {
       return '<p class="fb-term" dir="ltr"><b>' + bidiHtml(t[0]) + "</b> – " + bidiHtml(t[1]) + "</p>";
-    }).join("");
+    }).join("") + "</details>";
   }
 
   /* Quiz and Wettbewerb feed the Fehlerordner (mistakes.js): a wrong answer puts the question in,
