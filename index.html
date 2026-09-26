@@ -1064,6 +1064,24 @@ dialog.auth { border-radius: 20px; }
 .ar-block { display: grid; gap: 10px; }
 .ar-block h3 { margin: 6px 0 0; font: 600 1.45rem/1.2 var(--display); display: flex; align-items: baseline; gap: 8px; }
 .ar-block h3 small { font: 600 .8rem/1 var(--body); color: var(--muted); }
+.ar-trans details > summary { cursor: pointer; list-style: none; }
+.ar-trans details > summary::-webkit-details-marker { display: none; }
+.ar-trans details > summary h3::after { content: "▾"; margin-left: auto; font-size: 1rem; color: var(--muted); transition: transform .15s; }
+.ar-trans details[open] > summary h3::after { transform: rotate(180deg); }
+.ar-trans summary p { margin: 4px 0 0; color: var(--muted); font-size: .92rem; }
+.tr-item { display: grid; gap: 8px; margin-top: 14px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.tr-title { margin: 0; font-weight: 700; font-size: .85rem; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+.tr-mark { font-weight: 800; }
+.tr-mark.ok { color: var(--good); } .tr-mark.again { color: var(--bad); }
+.tr-ar { margin: 0; font: 400 1.45rem/2 var(--arabic); text-align: right; }
+.tr-in { width: 100%; box-sizing: border-box; font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); color: inherit; resize: vertical; }
+.tr-item .btn { justify-self: start; }
+.tr-sol { display: grid; gap: 10px; }
+.tr-sol ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 6px; }
+.tr-sol li { display: grid; gap: 2px; }
+.tr-sar { font: 400 1.15rem/1.8 var(--arabic); text-align: right; }
+.tr-de { font-weight: 600; }
+.tr-rate { display: flex; gap: 8px; flex-wrap: wrap; }
 .ar-grammar { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; max-width: 72ch; }
 .ar-grammar li::marker { color: var(--gold); }
 .ar-examples { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
@@ -2020,6 +2038,7 @@ dialog.auth { border-radius: 20px; }
 <script src="arabisch/madina-en.js"></script>
 <script src="arabisch/warum.js"></script>
 <script src="arabisch/grammatik-plus.js"></script>
+<script src="arabisch/texte.js"></script>
 <script src="irabgen.js"></script>
 <script src="sarf.js"></script>
 <script src="arabic.js"></script>
