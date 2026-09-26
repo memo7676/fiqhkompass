@@ -388,6 +388,15 @@
     return '<button type="button" class="ar-part' + (s.pct === 100 ? " is-done" : "") + '" data-ar-learn="' + id + '" data-part="' + part + '">' +
       "<strong>" + label + "</strong>" + bar(s) + "<small>" + (s.pct === 100 ? T("✓ gelernt") : T("{n} von {m} gelernt", { n: s.learned, m: s.total })) + "</small></button>";
   }
+  function transBtn(l) {
+    var items = transItems(l);
+    if (!items.length) return "";
+    var s = { total: items.length, learned: 0, almost: 0, wrong: 0 };
+    items.forEach(function (x) { var v = L.levelOf(x.id); if (v === 2) s.learned++; else if (v === -1) s.wrong++; });
+    var done = s.learned === s.total;
+    return '<button type="button" class="ar-part' + (done ? " is-done" : "") + '" data-ar-gotrans>' +
+      "<strong>" + T("Übersetzen") + "</strong>" + bar(s) + "<small>" + (done ? T("✓ alles übersetzt") : T("{n} von {m} richtig", { n: s.learned, m: s.total })) + "</small></button>";
+  }
   function modelHtml(m) {
     return '<figure class="ar-model"><p class="ar-sentence" lang="ar" dir="rtl">' + esc(m.s) + "</p><figcaption>" + esc(m.de) + "</figcaption>" +
       '<div class="ar-table-wrap"><table class="ar-table ar-irab-table"><thead><tr><th>' + T("Wort") + "</th><th>Iʿrāb</th><th>" + T("Erklärung") + "</th></tr></thead><tbody>" +
@@ -429,7 +438,11 @@
   function wireTrans(body) {
     var box = $("[data-ar-trans]", body);
     if (!box) return;
-    var l = BY_ID[box.getAttribute("data-ar-trans")], items = transItems(l);
+    var l = BY_ID[box.getAttribute("data-ar-trans")], items = transItems(l), go = $("[data-ar-gotrans]", body);
+    if (go) go.addEventListener("click", function () {
+      box.open = true; state.trans = l.id;
+      box.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
     box.addEventListener("toggle", function () { state.trans = box.open ? l.id : null; });
     function save(it, x, ok) {
       L.recordId(x.id, ok);
@@ -491,7 +504,7 @@
     return '<div class="ar-lesson-view">' +
       '<button type="button" class="linkish ar-back" data-ar-back>← ' + T("Alle Lektionen") + "</button>" +
       '<header class="ar-lesson-head"><p class="eyebrow">' + (bookOf(l) === 2 ? T("Buch 2") + " · " : "") + T("Lektion") + " " + esc(l.n) + "</p>" + '<h2>' + esc(l.title) + "</h2>" + ar(l.ar, "ar-title") + "</header>" +
-      '<div class="ar-parts">' + partBtn(l.id, "vocab", T("Vokabeln")) + partBtn(l.id, "gram", T("Grammatik")) + partBtn(l.id, "irab", "Iʿrāb") + "</div>" +
+      '<div class="ar-parts">' + partBtn(l.id, "vocab", T("Vokabeln")) + partBtn(l.id, "gram", T("Grammatik")) + partBtn(l.id, "irab", "Iʿrāb") + transBtn(l) + "</div>" +
       '<button type="button" class="btn btn-primary" data-ar-learn="' + l.id + '">' + (s.pct === 100 ? T("✓ Ganze Lektion wiederholen") : T("Ganze Lektion lernen · {n} %", { n: s.pct })) + "</button>" +
       '<section class="ar-block"><h3>' + T("Grammatik") + "</h3>" + '<ul class="ar-grammar">' + l.grammar.map(function (g) { return "<li>" + rich(g) + "</li>"; }).join("") + "</ul></section>" +
       (l.examples.length ? '<section class="ar-block"><h3>' + T("Beispiele") + "</h3>" + '<ul class="ar-examples">' + l.examples.map(function (e) {

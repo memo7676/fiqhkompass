@@ -59,6 +59,7 @@ window.I18N_EN = {
  "Deine Fehler wiederholen": "Repeat your mistakes",
  "Alle wiederholen": "Repeat all",
  "Prüfen": "Check",
+ "✓ alles übersetzt": "✓ all translated",
  "Beenden": "Stop",
  "Arabisch mit den Madina-Büchern": "Arabic with the Madina books",
  "Dein Fortschritt": "Your progress",
