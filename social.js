@@ -99,7 +99,7 @@
   function arGrammar(A, weekIndex) {
     var order = {};
     A.lessons.forEach(function (l, i) { order[l.id] = i; });
-    var all = A.questions.filter(function (q) { return /^ar-g-/.test(q._lid); })
+    var all = A.questions.filter(function (q) { return /^ar-g-/.test(q._lid) && !q.plus; })
       .map(function (q, i) { return { q: q, i: i }; })
       .sort(function (a, b) { return order[a.q.lesson] - order[b.q.lesson] || a.i - b.i; })
       .map(function (x) { return x.q; });
@@ -135,7 +135,7 @@
       return { theme: theme, questions: list, tables: tabs };
     }
     var pool = A.questions.filter(function (q) { return ids.indexOf(q.lesson) !== -1; });
-    function take(re) { return APP.shuffle(pool.filter(function (q) { return re.test(q._lid); }), rnd).slice(0, AR_Q); }
+    function take(re) { return APP.shuffle(pool.filter(function (q) { return re.test(q._lid) && !q.plus; }), rnd).slice(0, AR_Q); }
     var qs = take(/^ar-[vd]-/).concat(take(/^ar-g-/));
     if (G) qs = qs.concat(G.make("liga-" + cal.key, AR_Q).map(function (x) {
       return { t: "arabisch", tt: T("Arabisch-Liga") + " · Iʿrāb", srcText: T("Neuer Satz dieser Woche"), c: 0, q: x.q, ar: x.ar, arMark: x.arMark, a: x.a, e: x.e, why: x.why };
