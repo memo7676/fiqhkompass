@@ -395,6 +395,56 @@
         return "<tr><td>" + ar(w[0], "ar-word") + "</td><td>" + ar(w[1], "ar-irab") + "</td><td>" + esc(w[2]) + "</td></tr>";
       }).join("") + "</tbody></table></div></figure>";
   }
+  /* ---------- Übersetzen (Arabisch → Deutsch) ----------
+     From Book 1, lesson 12 on and in all of Book 2: a short text of the lesson (arabisch/texte.js)
+     and the lesson's example sentences. One writes one's own translation, shows the solution and
+     marks it „richtig“ or „noch üben“ (progress ids ar-t-…, synced like the rest of the Lernstand). */
+  var TEXTE = window.MADINA_TEXTE || {}, TRANS_FROM = BY_ID.m12 ? LESSONS.indexOf(BY_ID.m12) : 0;
+  function transItems(l) {
+    if (bookOf(l) === 1 && LESSONS.indexOf(l) < TRANS_FROM) return [];
+    var out = [], t = TEXTE[l.id];
+    if (t) out.push({ id: "ar-t-" + hash(l.id + "|text"), title: t.t, s: t.s });
+    l.examples.forEach(function (e) { out.push({ id: "ar-t-" + hash(l.id + "|" + e[0]), s: [e] }); });
+    return out;
+  }
+  function transPane(l) {
+    var items = transItems(l);
+    if (!items.length) return "";
+    var done = items.filter(function (x) { return L.levelOf(x.id) === 2; }).length;
+    return '<section class="ar-block ar-trans"><details' + (state.trans === l.id ? " open" : "") + ' data-ar-trans="' + l.id + '"><summary><h3>' + T("Übersetzen") +
+      " <small>" + T("{n} von {m} richtig", { n: done, m: items.length }) + "</small></h3><p>" +
+      T("Übersetze ins Deutsche, dann zeig die Lösung und vergleiche.") + "</p></summary>" +
+      items.map(function (x, i) {
+        var lv = L.levelOf(x.id), mark = lv === 2 ? '<span class="tr-mark ok">✓</span>' : lv === -1 ? '<span class="tr-mark again">↺</span>' : "";
+        return '<div class="tr-item" data-tr="' + i + '">' + (x.title ? '<p class="tr-title">' + mark + T("Text") + ": " + esc(x.title) + "</p>" : '<p class="tr-title">' + mark + T("Satz {n}", { n: x.title === undefined && items[0].title ? i : i + 1 }) + "</p>") +
+          '<p class="tr-ar" lang="ar" dir="rtl">' + x.s.map(function (p) { return esc(p[0]); }).join(" ") + "</p>" +
+          '<textarea class="tr-in" rows="' + (x.s.length > 1 ? 4 : 2) + '" placeholder="' + esc(T("Deine Übersetzung …")) + '"></textarea>' +
+          '<button type="button" class="btn btn-sm" data-tr-show="' + i + '">' + T("Lösung zeigen") + "</button>" +
+          '<div class="tr-sol" hidden><ol>' + x.s.map(function (p) { return "<li>" + ar(p[0], "tr-sar") + '<span class="tr-de">' + esc(p[1]) + "</span></li>"; }).join("") + "</ol>" +
+          '<div class="tr-rate"><button type="button" class="btn btn-sm btn-primary" data-tr-ok="' + i + '">' + T("✓ Richtig übersetzt") + '</button><button type="button" class="btn btn-sm" data-tr-again="' + i + '">' + T("Noch üben") + "</button></div></div></div>";
+      }).join("") + "</details></section>";
+  }
+  function wireTrans(body) {
+    var box = $("[data-ar-trans]", body);
+    if (!box) return;
+    var l = BY_ID[box.getAttribute("data-ar-trans")], items = transItems(l);
+    box.addEventListener("toggle", function () { state.trans = box.open ? l.id : null; });
+    $all("[data-tr-show]", box).forEach(function (b) {
+      b.addEventListener("click", function () { var it = b.closest(".tr-item"); $(".tr-sol", it).hidden = false; b.hidden = true; });
+    });
+    function rate(attr, ok) {
+      $all("[" + attr + "]", box).forEach(function (b) {
+        b.addEventListener("click", function () {
+          var x = items[+b.getAttribute(attr)];
+          L.recordId(x.id, ok);
+          if (L.sync) L.sync();
+          state.trans = l.id;
+          var y = window.scrollY; render(); window.scrollTo(0, y);
+        });
+      });
+    }
+    rate("data-tr-ok", true); rate("data-tr-again", false);
+  }
   function lessonPane(l) {
     var s = stats(lessonQs(l.id)), ls = BOOKS[bookOf(l)], idx = ls.indexOf(l);
     var prev = ls[idx - 1], next = ls[idx + 1];
@@ -407,6 +457,7 @@
       (l.examples.length ? '<section class="ar-block"><h3>' + T("Beispiele") + "</h3>" + '<ul class="ar-examples">' + l.examples.map(function (e) {
         return "<li>" + ar(e[0], "ar-ex") + '<span class="ar-de">' + esc(e[1]) + "</span></li>";
       }).join("") + "</ul></section>" : "") +
+      transPane(l) +
       '<section class="ar-block"><h3>' + T("Vokabeln") + " <small>" + l.vocab.length + "</small></h3>" + vocabTable(l.vocab) + "</section>" +
       (l.model.length ? '<section class="ar-block"><h3>' + T("Iʿrāb Schritt für Schritt") + "</h3>" + l.model.map(modelHtml).join("") + "</section>" : "") +
       '<nav class="ar-pager">' + (prev ? '<button type="button" class="btn" data-ar-lesson="' + prev.id + '">← ' + T("Lektion") + " " + esc(prev.n) + "</button>" : "<span></span>") +
@@ -516,6 +567,7 @@
     $all("[data-ar-lesson]", body).forEach(function (b) {
       b.addEventListener("click", function () { state.lesson = b.getAttribute("data-ar-lesson"); state.tab = "lektionen"; render(); scrollToPane(); });
     });
+    wireTrans(body);
     var back = $("[data-ar-back]", body);
     if (back) back.addEventListener("click", function () { state.lesson = null; render(); scrollToPane(); });
     $all("[data-ar-learn]", body).forEach(function (b) {
