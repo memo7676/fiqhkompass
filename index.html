@@ -1054,7 +1054,7 @@ dialog.auth { border-radius: 20px; }
 .ar-back { justify-self: start; }
 .ar-lesson-head h2 { margin: 2px 0 4px; font: 600 clamp(1.7rem, 4vw, 2.2rem)/1.15 var(--display); }
 .ar-title { font-size: 1.5rem; color: var(--accent); }
-.ar-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.ar-parts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
 @media (max-width: 560px) { .ar-parts { grid-template-columns: 1fr; } }
 .ar-part { display: grid; gap: 6px; text-align: left; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: inherit; font: inherit; cursor: pointer; }
 .ar-part:hover { border-color: var(--primary); }
@@ -1065,6 +1065,7 @@ dialog.auth { border-radius: 20px; }
 .ar-block h3 { margin: 6px 0 0; font: 600 1.45rem/1.2 var(--display); display: flex; align-items: baseline; gap: 8px; }
 .ar-block h3 small { font: 600 .8rem/1 var(--body); color: var(--muted); }
 .ar-trans details > summary { cursor: pointer; list-style: none; }
+.ar-trans details { scroll-margin-top: 80px; }
 .ar-trans details > summary::-webkit-details-marker { display: none; }
 .ar-trans details > summary h3::after { content: "▾"; margin-left: auto; font-size: 1rem; color: var(--muted); transition: transform .15s; }
 .ar-trans details[open] > summary h3::after { transform: rotate(180deg); }
