@@ -413,13 +413,15 @@
     var done = items.filter(function (x) { return L.levelOf(x.id) === 2; }).length;
     return '<section class="ar-block ar-trans"><details' + (state.trans === l.id ? " open" : "") + ' data-ar-trans="' + l.id + '"><summary><h3>' + T("Übersetzen") +
       " <small>" + T("{n} von {m} richtig", { n: done, m: items.length }) + "</small></h3><p>" +
-      T("Übersetze ins Deutsche, dann zeig die Lösung und vergleiche.") + "</p></summary>" +
+      T("Übersetze ins Deutsche und lass deine Übersetzung prüfen.") + "</p></summary>" +
       items.map(function (x, i) {
         var lv = L.levelOf(x.id), mark = lv === 2 ? '<span class="tr-mark ok">✓</span>' : lv === -1 ? '<span class="tr-mark again">↺</span>' : "";
         return '<div class="tr-item" data-tr="' + i + '">' + (x.title ? '<p class="tr-title">' + mark + T("Text") + ": " + esc(x.title) + "</p>" : '<p class="tr-title">' + mark + T("Satz {n}", { n: x.title === undefined && items[0].title ? i : i + 1 }) + "</p>") +
           '<p class="tr-ar" lang="ar" dir="rtl">' + x.s.map(function (p) { return esc(p[0]); }).join(" ") + "</p>" +
           '<textarea class="tr-in" rows="' + (x.s.length > 1 ? 4 : 2) + '" placeholder="' + esc(T("Deine Übersetzung …")) + '"></textarea>' +
-          '<button type="button" class="btn btn-sm" data-tr-show="' + i + '">' + T("Lösung zeigen") + "</button>" +
+          '<div class="tr-btns"><button type="button" class="btn btn-sm btn-primary" data-tr-check="' + i + '">' + T("Prüfen") + '</button>' +
+          '<button type="button" class="btn btn-sm" data-tr-show="' + i + '">' + T("Lösung zeigen") + "</button></div>" +
+          '<p class="tr-res" hidden></p>' +
           '<div class="tr-sol" hidden><ol>' + x.s.map(function (p) { return "<li>" + ar(p[0], "tr-sar") + '<span class="tr-de">' + esc(p[1]) + "</span></li>"; }).join("") + "</ol>" +
           '<div class="tr-rate"><button type="button" class="btn btn-sm btn-primary" data-tr-ok="' + i + '">' + T("✓ Richtig übersetzt") + '</button><button type="button" class="btn btn-sm" data-tr-again="' + i + '">' + T("Noch üben") + "</button></div></div></div>";
       }).join("") + "</details></section>";
@@ -429,17 +431,55 @@
     if (!box) return;
     var l = BY_ID[box.getAttribute("data-ar-trans")], items = transItems(l);
     box.addEventListener("toggle", function () { state.trans = box.open ? l.id : null; });
+    function save(it, x, ok) {
+      L.recordId(x.id, ok);
+      if (L.sync) L.sync();
+      var t = $(".tr-title", it), old = $(".tr-mark", t);
+      if (old) old.remove();
+      t.insertAdjacentHTML("afterbegin", ok ? '<span class="tr-mark ok">✓</span>' : '<span class="tr-mark again">↺</span>');
+      var done = items.filter(function (y) { return L.levelOf(y.id) === 2; }).length;
+      $("summary small", box).textContent = T("{n} von {m} richtig", { n: done, m: items.length });
+    }
+    function solution(it, x, res) {
+      var ol = $(".tr-sol ol", it);
+      if (res) ol.innerHTML = x.s.map(function (p, j) {
+        return "<li>" + ar(p[0], "tr-sar") + '<span class="tr-de">' + res.parts[j].map(function (g) {
+          return g.k ? '<mark class="' + (g.k === 1 ? "tr-hit" : "tr-miss") + '">' + esc(g.t) + "</mark>" : esc(g.t);
+        }).join("") + "</span></li>";
+      }).join("");
+      $(".tr-sol", it).hidden = false;
+      $("[data-tr-show]", it).hidden = true;
+    }
     $all("[data-tr-show]", box).forEach(function (b) {
-      b.addEventListener("click", function () { var it = b.closest(".tr-item"); $(".tr-sol", it).hidden = false; b.hidden = true; });
+      b.addEventListener("click", function () { var it = b.closest(".tr-item"); solution(it, items[+b.getAttribute("data-tr-show")]); });
+    });
+    $all("[data-tr-check]", box).forEach(function (b) {
+      b.addEventListener("click", function () {
+        var it = b.closest(".tr-item"), x = items[+b.getAttribute("data-tr-check")], txt = $(".tr-in", it).value.trim(), out = $(".tr-res", it);
+        out.hidden = false;
+        if (!txt) { out.className = "tr-res"; out.textContent = T("Schreib zuerst deine Übersetzung."); return; }
+        var r = window.TR_CHECK(txt, x.s), miss = [];
+        r.parts.forEach(function (ps) { ps.forEach(function (g) { if (g.k === 2 && miss.indexOf(g.t) < 0) miss.push(g.t); }); });
+        var msg = r.verdict === "ok" ? T("✓ Richtig! {h} von {n} Kernwörtern getroffen.", { h: r.hit, n: r.total })
+          : (r.verdict === "close" ? T("Fast – {h} von {n} Kernwörtern getroffen.", { h: r.hit, n: r.total }) : T("Noch nicht – nur {h} von {n} Kernwörtern getroffen.", { h: r.hit, n: r.total })) +
+            (miss.length ? " " + T("Es fehlt: {w}", { w: miss.slice(0, 6).join(", ") }) : "") +
+            (r.neg ? " " + T("Achte auf die Verneinung (nicht / kein).") : "");
+        out.className = "tr-res " + (r.verdict === "ok" ? "ok" : r.verdict === "close" ? "close" : "no");
+        out.textContent = msg;
+        save(it, x, r.verdict === "ok");
+        solution(it, x, r);
+        var ok = $("[data-tr-ok]", it), again = $("[data-tr-again]", it);
+        again.hidden = true;
+        ok.hidden = r.verdict === "ok";
+        ok.textContent = T("Meine Übersetzung stimmt auch");
+      });
     });
     function rate(attr, ok) {
       $all("[" + attr + "]", box).forEach(function (b) {
         b.addEventListener("click", function () {
-          var x = items[+b.getAttribute(attr)];
-          L.recordId(x.id, ok);
-          if (L.sync) L.sync();
-          state.trans = l.id;
-          var y = window.scrollY; render(); window.scrollTo(0, y);
+          var it = b.closest(".tr-item");
+          save(it, items[+b.getAttribute(attr)], ok);
+          $(".tr-rate", it).hidden = true;
         });
       });
     }
